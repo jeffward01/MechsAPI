@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0C2E27FA-2C3E-4BC3-8804-0DEAD2A5E45F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UMPG.USL.API.Business</RootNamespace>
+    <AssemblyName>UMPG.USL.API.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AWSSDK.Core">
+      <HintPath>..\..\SolutionFiles\packages\AWSSDK.Core.3.1.2.1\lib\net45\AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.S3">
+      <HintPath>..\..\SolutionFiles\packages\AWSSDK.S3.3.1.3.1\lib\net45\AWSSDK.S3.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\SolutionFiles\packages\Castle.Core.3.3.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\..\SolutionFiles\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SolutionFiles\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\SolutionFiles\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\..\SolutionFiles\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\..\SolutionFiles\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\..\SolutionFiles\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\..\SolutionFiles\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\..\SolutionFiles\packages\Microsoft.Owin.Security.3.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\..\SolutionFiles\packages\Microsoft.Owin.Security.Facebook.3.0.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\..\SolutionFiles\packages\Microsoft.Owin.Security.Google.3.0.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\..\SolutionFiles\packages\Microsoft.Owin.Security.OAuth.3.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SolutionFiles\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\..\SolutionFiles\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\..\SolutionFiles\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audits\IAuditManager.cs" />
+    <Compile Include="Audits\AuditManager.cs" />
+    <Compile Include="AuthManager.cs" />
+    <Compile Include="BaseManager.cs" />
+    <Compile Include="Contacts\ContactDefaultManager.cs" />
+    <Compile Include="Contacts\ContactGenerateLicenseQueueManager.cs" />
+    <Compile Include="Contacts\ContactManager.cs" />
+    <Compile Include="Contacts\IContactDefaultManager.cs" />
+    <Compile Include="Contacts\IContactGenerateLicenseQueueManager.cs" />
+    <Compile Include="Licenses\GenerateLicenseManager.cs" />
+    <Compile Include="Licenses\IGenerateLicenseManager.cs" />
+    <Compile Include="Licenses\ILicenseAttachmentManager.cs" />
+    <Compile Include="Licenses\ILicenseeManager.cs" />
+    <Compile Include="Contacts\IContactManager.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="IAuthManager.cs" />
+    <Compile Include="IBaseManager.cs" />
+    <Compile Include="Installer\CoreComponentInstaller.cs" />
+    <Compile Include="Licenses\ILicenseProductConfigurationManager.cs" />
+    <Compile Include="Licenses\ILicenseProductWriterNoteManager.cs" />
+    <Compile Include="Licenses\ILicensePRWriterRateManager.cs" />
+    <Compile Include="Licenses\ILicenseNoteManager.cs" />
+    <Compile Include="Licenses\ILicenseProductManager.cs" />
+    <Compile Include="Licenses\ILicenseRecordingMedleyManager.cs" />
+    <Compile Include="Licenses\ILicenseSolrManager.cs" />
+    <Compile Include="Licenses\LicenseAttachmentManager.cs" />
+    <Compile Include="Licenses\LicenseeManager.cs" />
+    <Compile Include="Licenses\LicenseProductConfigurationManager.cs" />
+    <Compile Include="Licenses\LicenseProductWriterNoteManager.cs" />
+    <Compile Include="Licenses\LicensePRWriterRateManager.cs" />
+    <Compile Include="Licenses\LicenseNoteManager.cs" />
+    <Compile Include="Licenses\LicenseProductManager.cs" />
+    <Compile Include="Licenses\LicenseRecordingMedleyManager.cs" />
+    <Compile Include="Licenses\LicenseSequenceIntercepror.cs" />
+    <Compile Include="Licenses\LicenseProductSolrManager.cs" />
+    <Compile Include="Licenses\LicenseUpdateInterceptor.cs" />
+    <Compile Include="Licenses\List.cs" />
+    <Compile Include="LookUps\ILicenseTypeManager.cs" />
+    <Compile Include="LookUps\IPaidQuarterManager.cs" />
+    <Compile Include="LookUps\IScheduleManager.cs" />
+    <Compile Include="LookUps\ITrackTypeManager.cs" />
+    <Compile Include="LookUps\TrackTypeManager.cs" />
+    <Compile Include="LookUps\IWritersConsentTypeManager.cs" />
+    <Compile Include="LookUps\ISpecialStatusManager.cs" />
+    <Compile Include="LookUps\IRateTypeManager.cs" />
+    <Compile Include="LookUps\ILicenseStatusManager.cs" />
+    <Compile Include="LookUps\IPriorityManager.cs" />
+    <Compile Include="LookUps\ILicenseMethodManager.cs" />
+    <Compile Include="LookUps\LicenseTypeManager.cs" />
+    <Compile Include="LookUps\PaidQuarterManager.cs" />
+    <Compile Include="LookUps\ScheduleManager.cs" />
+    <Compile Include="LookUps\WritersConsentTypeManager.cs" />
+    <Compile Include="LookUps\SpecialStatusManager.cs" />
+    <Compile Include="LookUps\RateTypeManager.cs" />
+    <Compile Include="LookUps\LicenseStatusManager.cs" />
+    <Compile Include="LookUps\PriorityManager.cs" />
+    <Compile Include="LookUps\LicenseMethodManager.cs" />
+    <Compile Include="Licenses\LicenseManager.cs" />
+    <Compile Include="Licenses\ILicenseManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\FacebookAuthProvider.cs" />
+    <Compile Include="Providers\GoogleAuthProvider.cs" />
+    <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
+    <Compile Include="Providers\SimpleRefreshTokenProvider.cs" />
+    <Compile Include="Recs\AutosuggestManager.cs" />
+    <Compile Include="Recs\ConfigurationManager.cs" />
+    <Compile Include="Recs\IAutosuggestManager.cs" />
+    <Compile Include="Recs\IConfigurationManager.cs" />
+    <Compile Include="Recs\ILabelManager.cs" />
+    <Compile Include="Recs\IProductManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Recs\LabelManager.cs" />
+    <Compile Include="Recs\ProductManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Reports\IReportQueueManager.cs" />
+    <Compile Include="Reports\ReportQueueManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\UMPG.USL.Common\UMPG.USL.Common.csproj">
+      <Project>{72c862be-d318-4118-bd78-fb9e2db99a4d}</Project>
+      <Name>UMPG.USL.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shared\UMPG.USL.Models\UMPG.USL.Models.csproj">
+      <Project>{47a581c5-6a3d-4ee4-94e8-cd088e44e288}</Project>
+      <Name>UMPG.USL.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shared\UMPG.USL.Security\UMPG.USL.Security.csproj">
+      <Project>{2a603921-78b9-4184-8437-4efb062b02e3}</Project>
+      <Name>UMPG.USL.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UMPG.USL.API.Data\UMPG.USL.API.Data.csproj">
+      <Project>{dd3ad709-3d6f-44d4-8fea-f2064e8f4c9c}</Project>
+      <Name>UMPG.USL.API.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="NLog.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

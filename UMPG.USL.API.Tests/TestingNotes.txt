@@ -1,0 +1,3 @@
+﻿How to Mock Protected Virtual Members with FakeItEasy:
+
+A.CallTo(foo).Where(x => x.Method.Name == "MyProtectedMethod").WithReturnType<int>().Returns(10);

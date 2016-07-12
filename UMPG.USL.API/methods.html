@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        table {width:100%; margin:10px; font-family:Arial, Georgia, sans-serif;}
+        tr {border-bottom:solid 1px #EFEFEF;}
+        th {background-color:#EFEFEF;}
+        th, td {padding:6px 10px;}
+    </style>
+</head>
+<body>
+    <h2>USL Methods</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Component</th>
+                <th>Method</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Recs/Works</td>
+                <td><a href="http://ukbcewvapp029:9988/works.router/http/recs/product/header/12451">http://ukbcewvapp029:9988/works.router/http/recs/product/header/12451</a></td>
+                <td>Product Header, and Configurations passing in Product_id</td>
+            </tr>
+            <tr>
+                <td>Recs/Works</td>
+                <td><a href="http://ukbcewvapp029:9988/works.router/http/recs/product/trackListing/12451/US2">http://ukbcewvapp029:9988/works.router/http/recs/product/trackListing/12451/US2</a></td>
+                <td>Track Listing details passing in track_id </td>
+            </tr>
+            <tr>
+                <td>Recs/Works</td>
+                <td><a href="http://ukbcewvapp029:9988/works.router/http/work/composers/CZ7457/UK1">http://ukbcewvapp029:9988/works.router/http/work/composers/CZ7457/UK1</a></td>
+                <td>Writer listing by passing in Work Code (pips)</td>
+            </tr>
+            
+
+            <tr>
+                <td>Audit</td>
+                <td><a href="/api/auditCTRL/audits">/api/auditCTRL/audits</a></td>
+                <td>Returns List Get All the Audit records (Top 100) as this can get large</td>
+            </tr>
+
+            <tr>
+                <td>Contact</td>
+                <td><a href="/api/ContactCTRL/contacts/getAssignees">http://spa.service/api/ContactCTRL/contacts/getAssignees</a></td>
+                <td>Returns List GetAssignees() All the Contacts with licenseeId = null (internal people) (Order by FullName)</td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td><a href="/api/ContactCTRL/contacts">http://spa.service/api/ContactCTRL/contacts</a></td>
+                <td>Returns List GetAll() All the Contacts from Contact table (Order by FullName)</td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td><a href="/api/contactCTRL/contacts/GetLabelsForLicensee/1">http://spa.service/api/contactCTRL/contacts/GetLabelsForLicensee/1</a></td>
+                <td>Returns List LabelGroups linked directly to Licensee = 1</td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td><a href="/api/contactCTRL/contacts/GetContactsForLicenseeLabel/1">http://spa.service/api/contactCTRL/contacts/GetContactsForLicenseeLabel/1</a></td>
+                <td>Returns List contactIds linked LicenseeLabelGroup = 1</td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td><a href="/api/contactCTRL/contacts/GetContactsForLicensee/1">http://spa.service/api/contactCTRL/contacts/GetContactsForLicensee/1</a></td>
+                <td>Returns List Contacts linked directly to Licensee = 1</td>
+            </tr>
+            <tr>
+                <td>License</td>
+                <td><a href="/api/licenseCTRL/licenseAttachments/GetAllAttachmentsByLicenseId/1">http://spa.service/api/licenseCTRL/licenseAttachments/GetAllAttachmentsByLicenseId/1</a></td>
+                <td>Returns List of LicenseAttachments for LicenseId=1 from LicenseAttachmetn table</td>
+            </tr>
+            <tr>
+                <td>License</td>
+                <td><a href="/api/LicenseCTRL/licenses">http://spa.service/api/LicenseCTRL/licenses</a></td>
+                <td>Returns List GetAll() All the Licenses from License table</td>
+            </tr>
+            <tr>
+                <td>License</td>
+                <td><a href="/api/LicenseCTRL/licensees">http://spa.service/api/LicenseCTRL/licensees</a></td>
+                <td>Returns List GetAll() All the Licensees (Companies) from Licensee table (Order by Name)</td>
+            </tr>
+			<tr>
+                <td>License</td>
+                <td><a href="/api/LicenseCTRL/licenses/getproducts/4">http://spa.service/api/LicenseCTRL/licenses/getproducts/4</a></td>
+                <td>Returns List GetProducts/{licenseId} products for LicenseId</td>
+            </tr>
+            <tr>
+                <td>License</td>
+                <td><a href="/api/LicenseCTRL/licenses/GetLicenseDetails/4">http://spa.service/api/LicenseCTRL/licenses/GetLicenseDetails/4</a></td>
+                <td>Returns List GetLicenseDetails/{licenseId} for LicenseId</td>
+            </tr>
+
+            <tr>
+                <td>License</td>
+                <td><a href="/api/LicenseCTRL/licenses/GetLicenseProductRecordings/4">http://spa.service/api/LicenseCTRL/licenses/GetLicenseProductRecordings/4</a></td>
+                <td>Returns List of recs recordings GetLicenseProductRecordings(int licenseproductId)</td>
+            </tr>
+
+            <tr>
+                <td>License Note</td>
+                <td><a href="/api/LicenseCTRL/licenseNote/GetLicenseNotes/4">http://spa.service/api/LicenseCTRL/licenseNote/GetLicenseNotes/4</a></td>
+                <td>Returns List GetLicenseNotes/{licenseId} for LicenseId</td>
+            </tr>
+
+            <tr>
+                <td>License Note</td>
+                <td><a href="/api/LicenseCTRL/licenseNote/GetLicenseNote/12">http://spa.service/api/LicenseCTRL/licenseNote/GetLicenseNote/12</a></td>
+                <td>Returns GetLicenseNote/{licenseNoteId} for LicenseNoteId</td>
+            </tr>
+            
+            <tr>
+                <td>License Product</td>
+                <td><a href="/api/licenseProductCTRL/licenseproducts/GetLicensePreview/2015">http://spa.service/api/licenseProductCTRL/licenseproducts/GetLicensePreview/2015</a></td>
+                <td>Returns treeview of everything pertaining to a License GetLicensePreview/{licenseId} for LicenseId</td>
+            </tr>
+
+            <tr>
+                <td>License Product</td>
+                <td><a href="/api/LicenseProductCTRL/licenseproducts/GetLicenseProductConfigurations/4">http://spa.service/api/LicenseProductCTRL/licenseproducts/GetLicenseProductConfigurations/4</a></td>
+                <td>Returns List GetLicenseProductConfigurations/{licenseId} products for LicenseId</td>
+            </tr>
+
+            <tr>
+                <td>License Product</td>
+                <td><a href="/api/LicenseProductCTRL/licenseproducts/GetLicenseProductConfigurationsAll/4">http://spa.service/api/LicenseProductCTRL/licenseproducts/GetLicenseProductConfigurationsAll/4</a></td>
+                <td>Returns List GetLicenseProductConfigurationsAll/{licenseId} products for LicenseId</td>
+            </tr>
+
+            <tr>
+                <td>License Product</td>
+                <td><a href="/api/licenseProductCTRL/licenseproducts/GetRecordings/25">http://spa.service/api/licenseProductCTRL/licenseproducts/GetRecordings/25</a></td>
+                <td>Returns List licenseproducts/GetRecordings/{licenseproductId} </td>
+            </tr>       
+            <tr>
+                <td>License Product</td>
+                <td><a href="/api/licenseProductCTRL/licenseproducts/GetLicenseWriters/172">http://spa.service/api/licenseProductCTRL/licenseproducts/GetLicenseWriters/172</a></td>
+                <td>Returns List licenseproducts/GetLicenseWriters/{licenseRecordingId} (licenseRecordingId = 172) </td>
+            </tr>       
+            <tr>
+                <td>License Product</td>
+                <td><a href="/api/licenseProductCTRL/licenseproducts/GetLicenseWritersNo/172">http://spa.service/api/licenseProductCTRL/licenseproducts/GetLicenseWritersNo/172</a></td>
+                <td>Returns List licenseproducts/GetLicenseWritersNo/{licenseRecordingId} Count  licenseRecordingId = 172 </td>
+            </tr>                            
+            <tr>
+                <td>License Product</td>
+                <td><a href="/api/licenseProductCTRL/licenseproducts/GetLicensePRWriterRates/4">http://spa.service/api/licenseProductCTRL/licenseproducts/GetLicensePRWriterRates/4</a></td>
+                <td>Returns List licenseproducts/GetLicensePRWriterRates/{licenseWriterId} licenseWrtierId = 4 </td>
+            </tr>             
+            <tr>
+                <td>License Product</td>
+                <td><a href="/api/licenseProductCTRL/licenseproducts/GetLicenseProductDropDown/4">http://spa.service/api/licenseProductCTRL/licenseproducts/GetLicenseProductDropDown/4</a></td>
+                <td>Returns List licenseproducts/GetLicenseProductDropDown/{licenseId} licenseId = 4 </td>
+            </tr>             
+            <tr>
+                <td>REC-Products</td>
+                <td><a href="/api/RECsCTRL/Products">http://spa.service/api/RECsCTRL/Products</a></td>
+                <td>Returns All products</td>
+            </tr>
+            <tr>
+                <td>REC-Products</td>
+                <td><a href="/api/RECsCTRL/Products/GetProductDetails/12817">http://spa.service/api/RECsCTRL/GetProducts/12817</a></td>
+                <td>Returns Product Details for product Id = 12817</td>
+            </tr>
+
+            <tr>
+                <td>REC-Products</td>
+                <td><a href="/api/RECsCTRL/Products/GetProductRecordings/764">http://spa.service/api/RECsCTRL/GetProductRecordings/764</a></td>
+                <td>Returns Product Recordings for product Id = 764</td>
+            </tr>
+
+            <tr>
+                <td>REC-Labels</td>
+                <td><a href="/api/RECsCTRL/Labels">http://spa.service/api/RECsCTRL/Labels</a></td>
+                <td>Returns All Labels (over 1400+)</td>
+            </tr>
+
+            <tr>
+                <td>REC-Configurations</td>
+                <td><a href="/api/RECsCTRL/Configurations">http://spa.service/api/RECsCTRL/Configurations</a></td>
+                <td>Returns All Configurations (recs_configuration table)</td>
+            </tr>
+            
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookUpCTRL/paidquarters">http://spa.service/api/LookUpCTRL/paidquarters</a></td>
+                <td>Returns All the LU_PaidQuarter records </td>
+            </tr>
+            
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookUpCTRL/paidquarters/GetRolling10years">http://spa.service/api/LookUpCTRL/paidquarters/GetRolling10years</a></td>
+                <td>Returns a rolling 10 years in decending order with current year </td>
+            </tr>
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookUpCTRL/WritersConsentTypes">http://spa.service/api/LookUpCTRL/WritersConsentTypes</a></td>
+                <td>Returns All the LU_WritersConsentTypes from LU_WritersConsentTypes table</td>
+            </tr>
+            <tr>
+                <td>Lookup</td>
+                <td><a href="//api/LookUpCTRL/schedules">http://spa.service//api/LookUpCTRL/schedules</a></td>
+                <td>Returns All the LU_Scheudles from LU_Schedule table</td>
+            </tr>
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookUpCTRL/WritersConsentTypes/GetWritersConsentForLookup">http://spa.service/api/LookUpCTRL/WritersConsentTypes/GetWritersConsentForLookup</a></td>
+                <td>Returns ALL (NOT Ordered) the LU_WritersConsentTypes from LU_WritersConsentTypes table</td>
+            </tr>
+            
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookupCTRL/LicenseConfigurations">http://spa.service/api/LookupCTRL/LicenseConfigurations</a></td>
+                <td>Returns All the LicenseConfigurations from LicenseConfigurations table</td>
+            </tr>
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookupCTRL/LicenseMethods">http://spa.service/api/LookupCTRL/LicenseMethods</a></td>
+                <td>Returns All the LicenseMethods from LicenseMethods table</td>
+            </tr>
+
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookupCTRL/LicenseMethods/GetLicenseMethod/2">http://spa.service/api/LookupCTRL/LicenseMethods/GetLicenseMethod/2</a></td>
+                <td>Returns GetLicenseMethod/{priorityId} the LU_LicenseMethod from LicenseMethods table</td>
+            </tr>
+
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookupCTRL/RateTypes">http://spa.service/api/LookupCTRL/RateTypes</a></td>
+                <td>Returns All the RateTypes from LU_RateType table</td>
+            </tr>
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookupCTRL/RateTypes/GetRateType/2">http://spa.service/api/LookupCTRL/RateTypes/GetRateType/2</a></td>
+                <td>Returns GetRateType/{ratetypeId} the RateTypes from LU_RateTypes table</td>
+            </tr>
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookupCTRL/WritersConsentTypes">http://spa.service/api/LookupCTRL/WritersConsentTypes</a></td>
+                <td>Returns All the WritersConsentTypes from LU_WritersConsentType table</td>
+            </tr>
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookupCTRL/WritersConsentTypes/GetWritersConsentType/2">http://spa.service/api/LookupCTRL/WritersConsentTypes/GetWritersConsentType/2</a></td>
+                <td>Returns GetWritersConsentType/{writersConsentTypeId} the WritersConsentTypes from LU_WritersConsentTypes table</td>
+            </tr>
+
+
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookupCTRL/Priorities">http://spa.service/api/LookupCTRL/Priorities</a></td>
+                <td>Returns All the Priorities from Priority table</td>
+            </tr>
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookupCTRL/Priorities/GetPriority/2">http://spa.service/api/LookupCTRL/Priorities/GetPriority/2</a></td>
+                <td>Returns GetPriority/{priorityId} the LU_Priority from LU_Prorities table</td>
+            </tr>
+
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookupCTRL/SpecialStatuses">http://spa.service/api/LookupCTRL/SpecialStatuses</a></td>
+                <td>Returns GetAll the SpecialStatuses from SpecialStatus table</td>
+            </tr>
+            <tr>
+                <td>Lookup</td>
+                <td><a href="/api/LookupCTRL/SpecialStatuses/GetSpecialStatus/2">http://spa.service/api/LookupCTRL/SpecialStatuses/GetSpecialStatus/2</a></td>
+                <td>Returns GetSpecialStatus/{specialstatusId} the SpecialStatus from LU_SpecialStatus table</td>
+            </tr>
+
+            <tr>
+                <td>Authenticate Safe Username</td>
+                <td><a href="/api/AuthenticateCTRL/authenticate/Test/hovist/internal">http://spa.service/api/AuthenticateCTRL/authenticate/Test - Good</a></td>
+                <td>Test Authentication for Safe username</td>
+            </tr>
+            <tr>
+                <td>Authenticate</td>
+                <td><a  href="/api/AuthenticateCTRL/authenticate/Test/tom.hovis@umusic.com/tH1234567">http://spa.service/api/AuthenticateCTRL/authenticate/Test - Good</a></td>
+                <td>Test Authentication for username/password</td>
+            </tr>
+            <tr>
+                <td>Authenticate</td>
+                <td><a href="/api/AuthenticateCTRL/authenticate/Test/noone@umusic.com/nopassword">http://spa.service/api/AuthenticateCTRL/authenticate/Test - Bad</a></td>
+                <td>Test Authentication for invalid username/password</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

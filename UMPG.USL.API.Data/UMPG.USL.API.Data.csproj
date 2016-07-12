@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DD3AD709-3D6F-44D4-8FEA-F2064E8F4C9C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UMPG.USL.API.Data</RootNamespace>
+    <AssemblyName>UMPG.USL.API.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AWSSDK.Core">
+      <HintPath>..\..\SolutionFiles\packages\AWSSDK.Core.3.1.2.1\lib\net45\AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.S3">
+      <HintPath>..\..\SolutionFiles\packages\AWSSDK.S3.3.1.3.1\lib\net45\AWSSDK.S3.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\SolutionFiles\packages\Castle.Core.3.3.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\..\SolutionFiles\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SolutionFiles\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\..\SolutionFiles\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\..\SolutionFiles\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\..\SolutionFiles\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuditContext.cs" />
+    <Compile Include="AuditData\AuditLicenseAttachmentRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\AuditLicenseeRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\AuditLicenseNoteRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\AuditLicenseProductRecordingRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\AuditLicenseProductRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\AuditLicensePRWriterNoteRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\AuditLicensePRWriterRateRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\AuditLicensePRWriterRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\AuditLicensePRWriterStatusRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\AuditLicenseRecordingMedleyRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\IAuditLicenseAttachmentRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\IAuditLicenseeRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\IAuditLicenseNoteRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\IAuditLicenseProductRecordingRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\IAuditLicenseProductRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\IAuditLicensePRWriterNoteRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\IAuditLicensePRWriterRateRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\IAuditLicensePRWriterRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\IAuditLicensePRWriterStatusRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\IAuditLicenseRecordingMedleyRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuditData\IAuditRepository.cs" />
+    <Compile Include="AuditData\AuditRepository.cs" />
+    <Compile Include="AuditData\IAuditLicenseRepository.cs" />
+    <Compile Include="AuditData\AuditLicenseRepository.cs" />
+    <Compile Include="AuditData\IAuditLicenseProductConfigurationRepository.cs" />
+    <Compile Include="AuditData\AuditLicenseProductConfigurationRepository.cs" />
+    <Compile Include="AuthContext.cs" />
+    <Compile Include="AuthRepository.cs" />
+    <Compile Include="AuthContext2.cs" />
+    <Compile Include="ContactData\ContactDefaultRepository.cs" />
+    <Compile Include="ContactData\ContactEmailRepository.cs" />
+    <Compile Include="ContactData\ContactGenerateLicenseQueueRepository.cs" />
+    <Compile Include="ContactData\IContactDefaultRepository.cs" />
+    <Compile Include="ContactData\IContactEmailRepository.cs" />
+    <Compile Include="ContactData\IContactGenerateLicenseQueueRepository.cs" />
+    <Compile Include="ContactData\IRoleRepository.cs" />
+    <Compile Include="ContactData\LicenseeAdminRequest.cs" />
+    <Compile Include="ContactData\RoleRepository.cs" />
+    <Compile Include="LicenseData\GenerateLicenseQueueRepository.cs" />
+    <Compile Include="LicenseData\IGenerateLicenseQueueRepository.cs" />
+    <Compile Include="LicenseData\ILicenseAttachmentRepository.cs" />
+    <Compile Include="LicenseData\ILicenseProductConfigurationRepository.cs" />
+    <Compile Include="LicenseData\ILicenseProductRecordingRepository.cs" />
+    <Compile Include="LicenseData\ILicenseProductRepository.cs" />
+    <Compile Include="LicenseData\ILicenseNoteRepository.cs" />
+    <Compile Include="LicenseData\ILicensePRWriterStatusRepository.cs" />
+    <Compile Include="LicenseData\ILicensePRWriterRateRepository.cs" />
+    <Compile Include="LicenseData\ILicensePRWriterRepository.cs" />
+    <Compile Include="LicenseData\ILicensePRWriterNoteRepository.cs" />
+    <Compile Include="LicenseData\ILicenseSequenceRepository.cs" />
+    <Compile Include="LicenseData\ILicenseUploadPreviewLicenseRepository.cs" />
+    <Compile Include="LicenseData\IRecordingMedleyRepository.cs" />
+    <Compile Include="LicenseData\ISolrIndexQueueRepository.cs" />
+    <Compile Include="LicenseData\ISolrSynchronizationJobs.cs" />
+    <Compile Include="LicenseData\LicenseAttachmentRepository.cs" />
+    <Compile Include="LicenseData\LicenseProductRecordingRepository.cs" />
+    <Compile Include="LicenseData\LicenseProductRepository.cs" />
+    <Compile Include="LicenseData\LicenseNoteRepository.cs" />
+    <Compile Include="LicenseData\LicensePRWriterNoteRepository.cs" />
+    <Compile Include="LicenseData\LicensePRWriterStatusRepository.cs" />
+    <Compile Include="LicenseData\LicensePRWriterRateRepository.cs" />
+    <Compile Include="LicenseData\LicensePRWriterRepository.cs" />
+    <Compile Include="LicenseData\LicenseProductConfigurationRepository.cs" />
+    <Compile Include="LicenseData\LicenseSequenceRepository.cs" />
+    <Compile Include="LicenseData\LicenseUploadPreviewLicenseRepository.cs" />
+    <Compile Include="LicenseData\RecordingMedleyRepository.cs" />
+    <Compile Include="LicenseData\SolrSynchronizationJobsRepository.cs" />
+    <Compile Include="LicenseData\SolrIndexQueueRepository.cs" />
+    <Compile Include="LookupData\AgreementStatutoryRateRepository.cs" />
+    <Compile Include="LookupData\IAgreementStatutoryRateRepository.cs" />
+    <Compile Include="LookupData\ILicenseTypeRepository.cs" />
+    <Compile Include="LookupData\INoteTypeRepository.cs" />
+    <Compile Include="LicenseData\ILicenseRecordingMedleyRepository.cs" />
+    <Compile Include="LookupData\IPaidQuarterRepository.cs" />
+    <Compile Include="LookupData\IScheduleRepository.cs" />
+    <Compile Include="LookupData\IStatRateRepository.cs" />
+    <Compile Include="LookupData\ITrackTypeRepository.cs" />
+    <Compile Include="LicenseData\LicenseRecordingMedleyRepository.cs" />
+    <Compile Include="LookupData\LicenseStatusRepository.cs" />
+    <Compile Include="LookupData\IWritersConsentTypeRepository.cs" />
+    <Compile Include="LookupData\ISpecialStatusRepository.cs" />
+    <Compile Include="LookupData\IRateTypeRepository.cs" />
+    <Compile Include="LookupData\ILicenseStatusRepository.cs" />
+    <Compile Include="LookupData\IPriorityRepository.cs" />
+    <Compile Include="LookupData\ILicenseMethodRepository.cs" />
+    <Compile Include="LicenseData\ILicenseRepository.cs" />
+    <Compile Include="ContactData\IPhoneRepository.cs" />
+    <Compile Include="LicenseData\ILicenseeRepository.cs" />
+    <Compile Include="IAuthRepository.cs" />
+    <Compile Include="ContactData\IAddressRepository.cs" />
+    <Compile Include="ContactData\IContactRepository.cs" />
+    <Compile Include="Installer\RepositoryInstaller.cs" />
+    <Compile Include="LookupData\LicenseTypeRepository.cs" />
+    <Compile Include="LookupData\NoteTypeRepository.cs" />
+    <Compile Include="LookupData\PaidQuarter.cs" />
+    <Compile Include="LookupData\ScheduleRepository.cs" />
+    <Compile Include="LookupData\TrackTypeRepository.cs" />
+    <Compile Include="LookupData\WritersConsentType.cs" />
+    <Compile Include="LookupData\SpecialStatus.cs" />
+    <Compile Include="LookupData\RateType.cs" />
+    <Compile Include="LookupData\Priority.cs" />
+    <Compile Include="LookupData\LicenseMethodRepository.cs" />
+    <Compile Include="LookupData\StatRateRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="LicenseData\LicenseRepository.cs" />
+    <Compile Include="ContactData\AddressRepository.cs" />
+    <Compile Include="ContactData\PhoneRepository.cs" />
+    <Compile Include="LicenseData\LicenseeRepository.cs" />
+    <Compile Include="ContactData\ContactRepository.cs" />
+    <Compile Include="Recs\Configuration\ISolrConfigurationRetriever.cs" />
+    <Compile Include="Recs\Configuration\IRecsConfigurationRetriever.cs" />
+    <Compile Include="Recs\Configuration\ISolrUpdateServerConfigurationRetriever.cs" />
+    <Compile Include="Recs\Configuration\RecsConfiguration.cs" />
+    <Compile Include="Recs\Configuration\SolrConfigurationRetriever.cs" />
+    <Compile Include="Recs\Configuration\RecsConfigurationRetriever.cs" />
+    <Compile Include="Recs\IRecs.cs" />
+    <Compile Include="Recs\IRecsDataProvider.cs" />
+    <Compile Include="Recs\ISolrSearch.cs" />
+    <Compile Include="Recs\ISearchProvider.cs" />
+    <Compile Include="Recs\ISolrUpdate.cs" />
+    <Compile Include="Recs\Mappers\LicenseSearchCriteriaMapper.cs" />
+    <Compile Include="Recs\Mappers\LicenseSOLRMapper.cs" />
+    <Compile Include="Recs\Mappers\SolrLicenseUpdateFieldsMapper.cs" />
+    <Compile Include="Recs\Mappers\WritersRecsMapper.cs" />
+    <Compile Include="Recs\Mappers\TracksRecsMapper.cs" />
+    <Compile Include="Recs\Mappers\ProductSOLRMapper.cs" />
+    <Compile Include="Recs\Mappers\ProductSearchCriteriaMapper.cs" />
+    <Compile Include="Recs\RecsDataProvider.cs" />
+    <Compile Include="Recs\SolrUpdate.cs" />
+    <Compile Include="Recs\SolrSearch.cs" />
+    <Compile Include="Recs\Recs.cs" />
+    <Compile Include="Recs\SearchProvider.cs" />
+    <Compile Include="Recs\Configuration\SolrUpdateServerConfigurationRetriever.cs" />
+    <Compile Include="Reports\IReportQueueRepository.cs" />
+    <Compile Include="Reports\ReportQueueRepository.cs" />
+    <Compile Include="Utils\PredicateBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\UMPG.USL.Common\UMPG.USL.Common.csproj">
+      <Project>{72c862be-d318-4118-bd78-fb9e2db99a4d}</Project>
+      <Name>UMPG.USL.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shared\UMPG.USL.Models\UMPG.USL.Models.csproj">
+      <Project>{47a581c5-6a3d-4ee4-94e8-cd088e44e288}</Project>
+      <Name>UMPG.USL.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LicenseSearchData\" />
+    <Folder Include="LookupData\ProductSearchData\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
