@@ -17,8 +17,8 @@ namespace UMPG.USL.API.Business.Licenses
 
         List<LicenseProduct> GetProductsNew(int licenseId);
 
-
-        bool DeleteLicenseProduct(int licenseId, int productId);
+        LicenseProductOverview2 BuildLicenseProductOverview2(long licenseProductId);
+       bool DeleteLicenseProduct(int licenseId, int productId);
 
         LicenseProduct GetSelectedProduct(int licenseId, int productId);
 

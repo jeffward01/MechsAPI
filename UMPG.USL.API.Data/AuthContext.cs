@@ -207,6 +207,8 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<LicenseProduct>().Ignore(c => c.RelatedLicensesNo);
             modelBuilder.Entity<LicenseProduct>().Ignore(c => c.LicenseClaimException);
             modelBuilder.Entity<LicenseProduct>().Ignore(c => c.TotalLicenseConfigAmount);
+            modelBuilder.Entity<LicenseProduct>().Ignore(c => c.LicenseProductConfigurations);
+            modelBuilder.Entity<LicenseProduct>().Ignore(c => c.LicenseProductRecordings);
 
             //LicenseProductConfiguration
             modelBuilder.Entity<LicenseProductConfiguration>().ToTable("LicenseProductConfiguration");

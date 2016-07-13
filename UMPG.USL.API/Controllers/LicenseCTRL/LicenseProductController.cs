@@ -41,6 +41,15 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseProductManager.GetLicenseProductOverview(recProductId);
         }
 
+       [Route("GetLicenseProductOverview2/{productId}")] // 17775
+       [HttpGet]
+       public LicenseProductOverview2 GetLicenseProductOverview2(long productId)
+       {
+            return _licenseProductManager.BuildLicenseProductOverview2(productId);
+
+
+        }
+
         [Route("GetSelectedProduct/{licenseId}/{productId}")]
         [HttpGet]
         public LicenseProduct GetSelectedProduct(int licenseId, int productId)
