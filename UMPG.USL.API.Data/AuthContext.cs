@@ -270,6 +270,8 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().Ignore(c => c.RateNoteCount);
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().Ignore(c => c.MostRecentNote);
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().Ignore(c => c.configuration_type);
+            modelBuilder.Entity<LicenseProductRecordingWriterRate>().Ignore(c => c.upc);
+            modelBuilder.Entity<LicenseProductRecordingWriterRate>().Ignore(c => c.LicenseTitle);
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().Property(c => c.Rate).HasPrecision(7,6);
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().Property(c => c.PerSongRate).HasPrecision(7, 6);
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().Property(c => c.ProRataRate).HasPrecision(7, 6);

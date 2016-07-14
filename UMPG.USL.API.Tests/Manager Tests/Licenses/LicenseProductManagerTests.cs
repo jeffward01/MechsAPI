@@ -53,7 +53,8 @@ namespace UMPG.USL.API.Tests.Manager_Tests.Licenses
             var mockIStatRateRepository = A.Fake<IStatRateRepository>();
             var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
             var mockILicenseAttachmentManager = A.Fake<ILicenseAttachmentManager>();
-            var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>(); var mockIRecRepository = A.Fake<IRecs>();
+            var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
+            var mockIRecRepository = A.Fake<IRecs>();
 
             //Build expected
             List<ProductConfiguration> expected = new List<ProductConfiguration> { };

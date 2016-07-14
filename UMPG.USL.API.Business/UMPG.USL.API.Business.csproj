@@ -124,10 +124,10 @@
     <Compile Include="Licenses\LicenseAttachmentManager.cs" />
     <Compile Include="Licenses\LicenseeManager.cs" />
     <Compile Include="Licenses\LicenseProductConfigurationManager.cs" />
+    <Compile Include="Licenses\LicenseProductManager.cs" />
     <Compile Include="Licenses\LicenseProductWriterNoteManager.cs" />
     <Compile Include="Licenses\LicensePRWriterRateManager.cs" />
     <Compile Include="Licenses\LicenseNoteManager.cs" />
-    <Compile Include="Licenses\LicenseProductManager.cs" />
     <Compile Include="Licenses\LicenseRecordingMedleyManager.cs" />
     <Compile Include="Licenses\LicenseSequenceIntercepror.cs" />
     <Compile Include="Licenses\LicenseProductSolrManager.cs" />

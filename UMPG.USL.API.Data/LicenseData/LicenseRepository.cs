@@ -77,6 +77,7 @@ namespace UMPG.USL.API.Data.LicenseData
             }
         }
 
+        //This gets all related licneses
         public List<License> GetProductLicenses(long productId)
         {
             using (var context = new AuthContext())
@@ -112,7 +113,168 @@ namespace UMPG.USL.API.Data.LicenseData
 
                 return licenses;
             }
-        } 
+        }
+
+        public List<License> GetProductMostRecentLicenses(long productId)
+        {
+            using (var context = new AuthContext())
+            {
+                //Get related ID's
+                var licensesIds =
+                    context.LicenseProducts.Where(lp => lp.Deleted == null && lp.ProductId == productId)
+                        .Select(lp => lp.LicenseId)
+                        .ToList();
+
+                //Get Related Licneses
+                var licenses = context.Licenses
+                    .Include("LicenseType")
+                    .Include("LicensePriority")
+                    .Include("LicenseStatus")
+                    .Include("Licensee")
+                    .Include("LicenseMethod")
+                    .Include("Contact")
+                    .Include("Contact2")
+                    .Include("LicenseeContact")
+                    .Include("LicenseeContact.Address")
+                    .Where(l => licensesIds.Contains(l.LicenseId)).ToList();
+                foreach (var license in licenses)
+                {
+                    license.LicenseNoteList = context.LicenseNotes
+                                           .Include("NoteType")
+                                           .Include("Contact")
+                                           .Where(a => a.licenseId == license.LicenseId && !a.Deleted.HasValue).ToList();
+                    //license.Licensee.Address = context.Addresses
+                    //                           .Where(a => a.ContactId == license.ContactId).ToList();
+
+                    license.Licensee.LicenseeLabelGroup = context.LicenseeLabelGroups
+                               .Where(a => a.LicenseeId == license.Licensee.LicenseeId).ToList();
+                }
+
+                List<string> methodTypes = new List<string>();
+                //get Mehthod types
+                foreach (var license in licenses)
+                {
+                    var method = license.LicenseMethod.LicenseMethod;
+                    if (!methodTypes.Contains(method))
+                    {
+                        methodTypes.Add(method);
+                    }
+                }
+
+               
+
+
+                //Get most recent for each method type
+                //foreach (var license in licenses)
+                //{
+                var filteredLicenses = new List<License>();
+                
+                    foreach (var method in methodTypes)
+                    {
+                        var matchedLicenses = new List<License>();
+                        //Build MatchedLiceneses
+                        foreach (var license in licenses)
+                        {
+                            if (license.LicenseMethod.LicenseMethod == method)
+                            {
+                                matchedLicenses.Add(license);
+                            }
+                        }
+
+                        //find mostRecent matchedLicenses
+                        var mostRecentLicense = matchedLicenses.OrderByDescending(l => l.CreatedDate).FirstOrDefault();   // from license in matchedLicenses
+                            filteredLicenses.Add(mostRecentLicense);
+                    }
+                //}
+
+           
+
+              //  return licenses;
+                return filteredLicenses;
+            }
+        }
+
+        public List<int> GetProductMostRecentLicenseIds(long productId)
+        {
+            using (var context = new AuthContext())
+            {
+                //Get related ID's
+                var licensesIds =
+                    context.LicenseProducts.Where(lp => lp.Deleted == null && lp.ProductId == productId)
+                        .Select(lp => lp.LicenseId)
+                        .ToList();
+
+                //Get Related Licneses
+                var licenses = context.Licenses
+                    .Include("LicenseType")
+                    .Include("LicensePriority")
+                    .Include("LicenseStatus")
+                    .Include("Licensee")
+                    .Include("LicenseMethod")
+                    .Include("Contact")
+                    .Include("Contact2")
+                    .Include("LicenseeContact")
+                    .Include("LicenseeContact.Address")
+                    .Where(l => licensesIds.Contains(l.LicenseId)).ToList();
+                foreach (var license in licenses)
+                {
+                    license.LicenseNoteList = context.LicenseNotes
+                                           .Include("NoteType")
+                                           .Include("Contact")
+                                           .Where(a => a.licenseId == license.LicenseId && !a.Deleted.HasValue).ToList();
+                    //license.Licensee.Address = context.Addresses
+                    //                           .Where(a => a.ContactId == license.ContactId).ToList();
+
+                    license.Licensee.LicenseeLabelGroup = context.LicenseeLabelGroups
+                               .Where(a => a.LicenseeId == license.Licensee.LicenseeId).ToList();
+                }
+
+                List<string> methodTypes = new List<string>();
+                //get Mehthod types
+                foreach (var license in licenses)
+                {
+                    var method = license.LicenseMethod.LicenseMethod;
+                    if (!methodTypes.Contains(method))
+                    {
+                        methodTypes.Add(method);
+                    }
+                }
+
+
+
+
+                //Get most recent for each method type
+                //foreach (var license in licenses)
+                //{
+                var filteredLicenses = new List<int>();
+
+                foreach (var method in methodTypes)
+                {
+                    var matchedLicenses = new List<License>();
+                    //Build MatchedLiceneses
+                    foreach (var license in licenses)
+                    {
+                        if (license.LicenseMethod.LicenseMethod == method)
+                        {
+                            matchedLicenses.Add(license);
+                        }
+                    }
+
+                    //find mostRecent matchedLicenses
+                    var mostRecentLicense = matchedLicenses.OrderByDescending(l => l.CreatedDate).FirstOrDefault();   // from license in matchedLicenses
+                    if (mostRecentLicense != null)
+                    {
+                        filteredLicenses.Add(mostRecentLicense.LicenseId);
+                    }
+                }
+                //}
+
+
+
+                //  return licenses;
+                return filteredLicenses;
+            }
+        }
 
         public List<License> GetAll()
         {
@@ -607,12 +769,13 @@ namespace UMPG.USL.API.Data.LicenseData
                 var productids = context.LicenseProducts
                     .Where(x => x.ProductId == recProductId)
                     .Select(x => x.LicenseProductId)
+                    
                     .DefaultIfEmpty(0)  // set to zero if no results
                     .ToList();
 
                 return productids;
             }
-        }
+        }// NOTE: most recent ONLY
 
     }
 }

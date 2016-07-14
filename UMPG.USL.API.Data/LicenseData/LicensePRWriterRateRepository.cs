@@ -180,6 +180,20 @@ namespace UMPG.USL.API.Data.LicenseData
             }
 
         }
-        
+
+        public List<int> GetLicensedProductConfigIds(int licenseWriterId)
+        {
+
+            using (var context = new AuthContext())
+            {
+                var configIds = context.LicenseProductRecordingWriterRates
+                    .Where(w => w.LicenseWriterId == licenseWriterId && !w.Deleted.HasValue && w.licenseDate.HasValue)
+                    .Select(w => w.product_configuration_id).Distinct().ToList();
+
+                return configIds;
+
+            }
+
+        }
     }
 }

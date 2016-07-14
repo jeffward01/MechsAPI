@@ -26,5 +26,7 @@ namespace UMPG.USL.API.Data.LicenseData
 
         List<int> GetLicenseProductConfigurationIds(int licenseproductId);
 
+        List<LicenseProductProductConfigurationTotals> GetLicenseProductProductConfigurationIds(int licenseproductId);
+
     }
 }

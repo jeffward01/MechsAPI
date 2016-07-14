@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using UMPG.USL.Models.LicenseModel;
@@ -92,6 +95,25 @@ namespace UMPG.USL.API.Data.LicenseData
                 return configIds;
             }
         }
-        
+
+        public List<LicenseProductProductConfigurationTotals> GetLicenseProductProductConfigurationIds(int licenseproductId)
+        {
+            using (var context = new AuthContext())
+            {
+                var configIds =
+                    (from c in context.LicenseProductConfigurations
+                        where c.LicenseProductId == licenseproductId && !c.Deleted.HasValue
+                        select
+                            new LicenseProductProductConfigurationTotals()
+                            {
+                                configuration_id = (int) c.configuration_id,
+                                product_configuration_id = (int) c.product_configuration_id,
+                                LicensedAmount = 0.0
+                            });
+
+                return configIds.ToList();
+            }
+        }
+
     }
 }

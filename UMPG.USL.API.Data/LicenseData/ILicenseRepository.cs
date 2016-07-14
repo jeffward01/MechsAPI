@@ -27,7 +27,8 @@ namespace UMPG.USL.API.Data.LicenseData
         List<int> GetLicenseProductIds(int licenseid);
 
         // List<LicenseProduct> GetLicenseProducts(int licenseid);
-
+        List<License> GetProductMostRecentLicenses(long productId);
+        List<int> GetProductMostRecentLicenseIds(long productId);
         List<int> GetLicenseRecordingsTrackIds(int licenseproductid);
 
         License GetLite(int id);

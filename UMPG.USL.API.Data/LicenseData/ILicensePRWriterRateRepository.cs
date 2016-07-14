@@ -35,5 +35,6 @@ namespace UMPG.USL.API.Data.LicenseData
 
         List<int> GetLicensedConfigIds(int licenseWriterId);
 
+        List<int> GetLicensedProductConfigIds(int licenseWriterId);
     }
 }
