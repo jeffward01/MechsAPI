@@ -712,12 +712,13 @@ namespace UMPG.USL.API.Business.Licenses
 
 
             //Gets mathcing UPC Code
-            foreach (var license in licneseProductOverview.RelatedLicenseProducts)
+            //populates recording with licenseProduct UPC cpde
+            foreach (var licenseProduct in licneseProductOverview.RelatedLicenseProducts)
             {
-                foreach (var recording in license.LicenseProductConfigurations)
+                foreach (var recording in licenseProduct.LicenseProductConfigurations)
                 {
-                    recording.upc_code = GetMatchingUpcCode(license.LicenseProductConfigurations,
-                        license.ProductHeader.Configurations);
+                    recording.upc_code = GetMatchingUpcCode(licenseProduct.LicenseProductConfigurations,
+                        licenseProduct.ProductHeader.Configurations);
                 }
             }
 
@@ -752,7 +753,9 @@ namespace UMPG.USL.API.Business.Licenses
             licneseProductOverview.RelatedLicenses = listOfLicenses;
 
 
-            //Builds WorkRecordings
+            //NEEDED
+#region
+            //Builds WorkRecordings (Recording)
             foreach (var licenseProduct in licneseProductOverview.RelatedLicenseProducts)
             {
                 foreach (var license in licneseProductOverview.RelatedLicenses)
@@ -763,13 +766,15 @@ namespace UMPG.USL.API.Business.Licenses
                 }
             }
 
+#endregion
+
 
             //to organize UPC Code in licneseProductOverview.Recordings.Writers.LicenseProductRecordingWriter.RateList
-            foreach (var relatedLicense in licneseProductOverview.RelatedLicenseProducts)
+            foreach (var relatedLicenseProduct in licneseProductOverview.RelatedLicenseProducts)
             {
-                foreach (var license in licneseProductOverview.RelatedLicenses)
+                foreach (var license in licneseProductOverview.RelatedLicenses) //EXCEPTION: license is null.  Investigate
                 {
-                    foreach (var config in relatedLicense.ProductHeader.Configurations)
+                    foreach (var config in relatedLicenseProduct.ProductHeader.Configurations)
                     {
 
                         foreach (var record in licneseProductOverview.Recordings)
@@ -779,17 +784,18 @@ namespace UMPG.USL.API.Business.Licenses
                                 foreach (var rate in writer.LicenseProductRecordingWriter.RateList)
                                 {
                                     OrganizeUpcCodes(rate, config);
-                                    MatchLicenseName(license, relatedLicense, rate);
+                                   
                                 }
                             }
                         }
                     }
                 }
             }
-
+            MatchLicenseName2(licneseProductOverview.RelatedLicenses, licneseProductOverview.RelatedLicenseProducts, licneseProductOverview.Recordings);
             //Match LicenseId's (related licenses)[licneseProductOverview.relatedLicenses.licenseId] with  (relatedLicenseProducts)[licneseProductOverview.relattedLicenseProducts.licenseId] licenseId..
             //Save match licenseTitle to licneseProductOverview.Recordings.Writers.LicenseProductRecordingWriter.RateList
 
+            //Build configurations from writer.ratelist and put on ProductOverview
 
 
 
@@ -803,6 +809,56 @@ namespace UMPG.USL.API.Business.Licenses
                 licenseProductRecordingWriterRate.LicenseTitle = license.LicenseName;
             }
         }
+
+        public void MatchLicenseName2(List<License> listOfLicenses, List<LicenseProduct> listOfLicenseProducts,
+            List<WorksRecording> recordings)
+        {
+            foreach (var license in listOfLicenses)
+            {
+                foreach (var licenseProduct in listOfLicenseProducts)
+                {
+                    //null handling
+                    if (license == null || licenseProduct == null)
+                    {
+                        return;
+                    }
+
+                    if (license.LicenseId == licenseProduct.LicenseId)
+                    {
+                        foreach (var config in licenseProduct.ProductHeader.Configurations)
+                        {
+                            LicenseProductRecordingWriterRate recording = GetRecording(recordings,
+                                (int)config.configuration_id);
+                            if (recording != null)
+                            {
+                                recording.LicenseTitle = license.LicenseName;
+                            }
+                        }
+                       
+                    }       
+                }
+            }
+        }
+
+        public LicenseProductRecordingWriterRate GetRecording(List<WorksRecording> worksRecordings,
+            int productConfigurationId)
+        {
+            foreach (var recording in worksRecordings)
+            {
+                foreach (var writer in recording.Writers)
+                {
+                    foreach (var rate in writer.LicenseProductRecordingWriter.RateList)
+                    {
+                        if (rate.product_configuration_id == productConfigurationId)
+                        {
+                            return rate;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
 
         public string GetMatchingUpcCode(List<LicenseProductConfiguration> licenseProductConfigurations,
             List<RecsConfiguration> configurations)
@@ -827,7 +883,6 @@ namespace UMPG.USL.API.Business.Licenses
             if (recsConfiguration.configuration_id == licenseProductRecordingWriterRate.product_configuration_id)
             {
                 licenseProductRecordingWriterRate.upc = recsConfiguration.UPC;
-                licenseProductRecordingWriterRate.LicenseTitle = recsConfiguration.
             }
         }
 
