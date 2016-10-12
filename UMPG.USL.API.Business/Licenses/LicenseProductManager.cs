@@ -1,13 +1,9 @@
-﻿using System;
+﻿using NLog;
+using NLog.Config;
+using NLog.Targets;
+using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Objects.DataClasses;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Configuration;
-using Amazon.S3.Model;
 using UMPG.USL.API.Data;
 using UMPG.USL.API.Data.LicenseData;
 using UMPG.USL.API.Data.LookupData;
@@ -16,14 +12,9 @@ using UMPG.USL.Models.LicenseModel;
 using UMPG.USL.Models.LicenseTemplateModel;
 using UMPG.USL.Models.Recs;
 using UMPG.USL.Models.StaticDropdownsData;
-using NLog;
-using NLog.Config;
-using NLog.Targets;
-using UMPG.USL.Common;
 
 namespace UMPG.USL.API.Business.Licenses
 {
-
     public class LicenseProductManager : ILicenseProductManager
     {
         private readonly ILicenseRepository _licenseRepository;
@@ -32,8 +23,10 @@ namespace UMPG.USL.API.Business.Licenses
         private readonly ILicenseProductRecordingRepository _licenseProductRecordingRepository;
         private readonly ILicensePRWriterRepository _licensePRWriterRepository;
         private readonly ILicensePRWriterRateRepository _licensePRWriterRateRepository;
+
         //        private readonly ILicensePRWriterRateNoteRepository _licensePRWriterRateNoteRepository;
         private readonly ILicensePRWriterNoteRepository _licensePRWriterNoteRepository;
+
         private readonly ILicensePRWriterRateStatusRepository _licensePRWriterRateStatusRepository;
         private readonly ILicenseProductConfigurationRepository _licenseProductConfigurationRepository;
         private readonly IRecsDataProvider _recsProvider;
@@ -44,6 +37,9 @@ namespace UMPG.USL.API.Business.Licenses
         private readonly ILicenseAttachmentManager _licenseAttachmentManager;
         private readonly IRecordingMedleyRepository _medleyRepository;
         private readonly IRecs _recsRepository;
+        private readonly IRateTypeRepository _rateTypeRepository;
+        private readonly IWritersConsentTypeRepository _writersConsentTypeRepository;
+        private readonly ILicenseProductConfigurationManager _licenseProductConfigurationManager;
 
         private TimeSpan _ts5minutes = new TimeSpan(0, 5, 0);
 
@@ -67,7 +63,10 @@ namespace UMPG.USL.API.Business.Licenses
             ILicenseSolrManager licenseSolrManager,
             ILicenseAttachmentManager licenseAttachmentManager,
             IRecordingMedleyRepository medleyRepository,
-            IRecs recsRepository)
+            IRecs recsRepository,
+            IRateTypeRepository rateTypeRepository,
+            IWritersConsentTypeRepository writersConsentTypeRepository,
+            ILicenseProductConfigurationManager licneseLicenseProductConfigurationManager)
         {
             _licenseRepository = licenseRepository;
             _licenseSequenceRepository = licenseSequenceRepository;
@@ -87,14 +86,13 @@ namespace UMPG.USL.API.Business.Licenses
             _licenseAttachmentManager = licenseAttachmentManager;
             _medleyRepository = medleyRepository;
             _recsRepository = recsRepository;
-
+            _rateTypeRepository = rateTypeRepository;
+            _writersConsentTypeRepository = writersConsentTypeRepository;
+            _licenseProductConfigurationManager = licneseLicenseProductConfigurationManager;
         }
-
-
 
         public List<ProductConfiguration> GetProductConfigurationsAll(GetProductConfigurationsAllRequest request)
         {
-
             var productConfigurationsList = new List<ProductConfiguration>();
             var productIds = request.ProductIds;
             var licenseId = request.LicenseId;
@@ -120,7 +118,6 @@ namespace UMPG.USL.API.Business.Licenses
 
             return productConfigurationsList;
         }
-
 
         public bool UpdateProductConfigurationsAll(List<UpdateProductConfigurationsAllRequest> requests)
         {
@@ -164,7 +161,6 @@ namespace UMPG.USL.API.Business.Licenses
                 foreach (var productRecording in productRecordings)
                 {
                     var newLicenseRecording = new LicenseRecording
-
                 }
                 */
 
@@ -183,6 +179,7 @@ namespace UMPG.USL.API.Business.Licenses
             var modifiedBy = 1;
 
             var licenseProduct = _licenseProductRepository.GetLicenseProduct(licenseId, productId);
+
             if (licenseProduct != null)
             {
                 var licenseProductIds = new List<int> { licenseProduct.LicenseProductId };
@@ -224,7 +221,6 @@ namespace UMPG.USL.API.Business.Licenses
                         licenseWriterRateStatus.ModifiedBy = modifiedBy;
                         licenseWriterRateStatus.ModifiedDate = modifiedDate;
                         _licensePRWriterRateStatusRepository.Update(licenseWriterRateStatus);
-
                     }
 
                     var licenseWriterNotes = _licensePRWriterNoteRepository.GetLicenseProductRecordingWriterNotes(licenseWriterIds);
@@ -237,7 +233,6 @@ namespace UMPG.USL.API.Business.Licenses
                         _licensePRWriterNoteRepository.Update(licenseWriterNote);
                     }
 
-
                     foreach (var licenseWriter in licenseWriters)
                     {
                         //  LicenseWriter
@@ -245,7 +240,6 @@ namespace UMPG.USL.API.Business.Licenses
                         licenseWriter.ModifiedBy = modifiedBy;
                         licenseWriter.ModifiedDate = modifiedDate;
                         _licensePRWriterRepository.Update(licenseWriter);
-
                     }
 
                     //  License Recording
@@ -253,7 +247,6 @@ namespace UMPG.USL.API.Business.Licenses
                     licenseProductRecording.ModifiedBy = modifiedBy;
                     licenseProductRecording.ModifiedDate = modifiedDate;
                     _licenseProductRecordingRepository.Update(licenseProductRecording);
-
                 }
 
                 //LicenseProductConfiguration
@@ -272,17 +265,15 @@ namespace UMPG.USL.API.Business.Licenses
                 licenseProduct.Deleted = modifiedDate;
                 licenseProduct.ModifiedDate = modifiedDate;
                 licenseProduct.ModifiedBy = modifiedBy;
+
                 _licenseProductRepository.Update(licenseProduct);
 
                 rv = true;
             }
 
-
             UpdateLicenseProductRollups(licenseId);
 
             return rv;
-
-
         }
 
         public void UpdateLicenseProductRollups(int licenseId)
@@ -339,7 +330,6 @@ namespace UMPG.USL.API.Business.Licenses
                                 }
                             }
                         }
-
                     }
                 }
 
@@ -366,13 +356,10 @@ namespace UMPG.USL.API.Business.Licenses
             {
                 _licenseRepository.UpdateLicense(license);
             }
-
         }
-
 
         public LicenseProduct GetSelectedProduct(int licenseId, int productId)
         {
-
             var licenseProduct = new LicenseProduct();
 
             if (licenseId > 0)
@@ -411,7 +398,6 @@ namespace UMPG.USL.API.Business.Licenses
                         }
                     }
                 }
-
             }
             else
             {
@@ -423,11 +409,9 @@ namespace UMPG.USL.API.Business.Licenses
                 var productHeader = _recsProvider.RetrieveProductHeader(productId);
                 licenseProduct.ProductHeader = productHeader;
                 licenseProduct.title = productHeader.Title;
-
             }
 
             return licenseProduct;
-
         }
 
         public List<LicenseProductConfigurationTotals> GetLicenseProductConfigurationIdTotals(int licenseProductId)
@@ -468,7 +452,6 @@ namespace UMPG.USL.API.Business.Licenses
 
         public List<LicenseProduct> GetProductsNew(int licenseId)
         {
-
             // get license
             //Fix #3 pass this into Details routine to avoid another call
             var license = _licenseRepository.GetLite(licenseId);
@@ -498,7 +481,6 @@ namespace UMPG.USL.API.Business.Licenses
 
             foreach (var licenseProduct in products)
             {
-
                 starttime = DateTime.Now;
                 //RECS get Product Header
                 licenseProduct.ProductHeader = _recsProvider.RetrieveProductHeader(licenseProduct.ProductId); // same hit
@@ -521,7 +503,7 @@ namespace UMPG.USL.API.Business.Licenses
                 List<LicenseProductProductConfigurationTotals> licenseProductConfigIdTotals;
 
                 starttime = DateTime.Now;
-                //Call to Details              
+                //Call to Details
                 //fix #3 pass in the license object (details was calling it again)
                 //fix #4 pass in the LicenseProduct so you dont need to call again
                 licenseProduct.Recordings = this.GetLicenseProductRecordingsForLicenseDetailsNew(licenseProduct.LicenseProductId, license, licenseProduct, out licenseProductConfigIdTotals);
@@ -556,7 +538,6 @@ namespace UMPG.USL.API.Business.Licenses
                             (int)licenseProduct.ProductHeader.Configurations[i].configuration_id);
                     if (licenseProductConfiguration != null)
                     {
-
                         // 20160526 - per Ryan display the total product config amount
                         //licenseProductConfiguration.TotalAmount = Convert.ToDecimal(totalpercentage / licenseProductConfigIdTotals.Count);
                         licenseProductConfiguration.TotalAmount = Convert.ToDecimal(totalpercentage);
@@ -567,7 +548,6 @@ namespace UMPG.USL.API.Business.Licenses
                             //if (licenseProductConfigIdTotal.configuration_id == licenseProductConfiguration.configuration_id)
                             if (licenseProductConfigIdTotal.product_configuration_id == licenseProductConfiguration.product_configuration_id)
                             {
-
                                 //USL-1085-2 7/13/2016 - do not divide by anything
                                 licenseProductConfiguration.LicensedAmount = Convert.ToDecimal(licenseProductConfigIdTotal.LicensedAmount);
                                 licenseProductConfiguration.NotLicensedAmount = Convert.ToDecimal((totalpercentage - licenseProductConfigIdTotal.LicensedAmount));
@@ -585,7 +565,6 @@ namespace UMPG.USL.API.Business.Licenses
                             licenseProductConfiguration;
                     }
                 }
-
             }
 
             //fix #2 this is already done from the Product loop above... comment this code out.
@@ -597,7 +576,6 @@ namespace UMPG.USL.API.Business.Licenses
             //    }
             //}
 
-
             logger.Debug("GetProductsNew (__CURRENT__) total elapsed :" + (DateTime.Now - begintime).ToString());
             logger.Debug("-------------------------------------");
             logger.Debug("-------------------------------------");
@@ -605,6 +583,11 @@ namespace UMPG.USL.API.Business.Licenses
             logger.Debug("-------------------------------------");
             logger.Debug("-------------------------------------");
             return products;
+        }
+
+        public string GetCatalogNumber(int productConfigId)
+        {
+            return _licenseProductConfigurationRepository.GetCatalogNummber(productConfigId);
         }
 
         //http://spa.service/api/licenseProductCTRL/licenseproducts/GetLicenseProductOverview/2201 Test call
@@ -640,14 +623,11 @@ namespace UMPG.USL.API.Business.Licenses
 
                 config.upc_code = GetMatchingUpcCode(licenseProductOverview.LicenseProductConfigurations,
                     licenseProductOverview.ProductHeader.Configurations);
-
             }
-
 
             licenseProductOverview.LicenseProductRecordings =
                 _licenseProductRecordingRepository.GetLicenseRecordingsByLicenseProductId(
                     licenseProduct.LicenseProductId);
-
 
             //Fill LicenseProductRecordings
             foreach (var recording in licenseProductOverview.LicenseProductRecordings)
@@ -661,8 +641,6 @@ namespace UMPG.USL.API.Business.Licenses
                         recording.LicenseRecordingId);
                 recording.LicensePRWriters =
                     _licensePRWriterRepository.GetLicenseProductRecordingWriters(recording.LicenseRecordingId);
-
-
             }
 
             licenseProductOverview.RelatedLicenseIds = _licenseRepository.GetProductMostRecentLicenseIds(licenseProduct.ProductId);
@@ -685,11 +663,399 @@ namespace UMPG.USL.API.Business.Licenses
             licenseProductOverview.LicenseClaimException = licenseProduct.LicenseClaimException;
             licenseProductOverview.TotalLicenseConfigAmount = licenseProduct.TotalLicenseConfigAmount;
 
-
-
             return licenseProductOverview;
         }
 
+        public List<LicenseOverview> BuildLicenseProductOverview_tom(int productId, int trackId, int caecode)
+        {
+            // look up all of the licenseIds that are attached to the Recs ProductId
+            var licenseIds = _licenseProductRepository.GetLicenseIds(productId);
+
+            // Get all the license data in loop based on LicenseIds
+            List<LicenseOverview> listOfLicenses = new List<LicenseOverview>();
+            foreach (var licenseId in licenseIds)
+            {
+                LicenseOverview license = _licenseRepository.GetLicenseOverview(licenseId);
+                license.LicenseId = licenseId;
+
+                //Fill LicenseProduct
+                List<LicenseProduct> licenseProducts = _licenseProductRepository.GetLicenseProductsByRecsProductId(productId);
+                license.LicenseProducts = licenseProducts;
+
+                // get Recs Product Configs with UPCs
+                var recs_ProductConfigs = _recsProvider.RetrieveProductHeader(productId);
+
+                //Fill LicenseProductConfigurations
+                List<LicenseProductConfiguration> licenseProductConfiguration = _licenseProductConfigurationRepository.GetLicenseConfigurationList(licenseProducts.Select(x => x.LicenseProductId).ToList());
+                license.LicenseProductConfigurations = licenseProductConfiguration;
+                //marry up the recs configs with the mechs configs.
+                foreach (var mechsconfig in license.LicenseProductConfigurations)
+                {
+                    var recsconfig_row = recs_ProductConfigs.Configurations.Where(x => x.configuration_id == mechsconfig.product_configuration_id).FirstOrDefault();
+                    mechsconfig.upc_code = recsconfig_row.UPC;
+                }
+
+                //Fill LicenseProductRecordings
+                List<LicenseProductRecording> licenseProductRecordings = _licenseProductRecordingRepository.GetLicenseProductRecordingsFromList(licenseProducts.Select(x => x.LicenseProductId).ToList());
+                license.LicenseProductRecordings = licenseProductRecordings;
+
+                //Fill LicenseProductWriter
+                List<LicenseProductRecordingWriter> licenseProductRecordingWriters = _licensePRWriterRepository.GetLicenseWriterList(licenseProductRecordings.Select(x => x.LicenseRecordingId).ToList());
+                license.LicenseProductRecordingWriters = licenseProductRecordingWriters;
+
+                foreach (var writer in license.LicenseProductRecordingWriters)
+                {
+                    List<int> writerIds = new List<int>();
+                    writerIds.Add(writer.LicenseWriterId);
+                    writer.RateList = _licensePRWriterRateRepository.GetLicenseRecordingWriterRatesFromIds(writerIds, licenseProductConfiguration.Select(x => (int)x.product_configuration_id).ToList());
+
+                    //Populate RateList with UPC codes & Populate  License Name/Id/Number
+
+                    var writerCaeCode = writer.CAECode;
+                    foreach (var rate in writer.RateList)
+                    {
+                        foreach (var config in license.LicenseProductConfigurations)
+                        {
+                            if (config.product_configuration_id == rate.product_configuration_id)
+                            {
+                                rate.CaeCode = writerCaeCode;
+                                rate.LicenseId = license.LicenseId;
+                                rate.LicenseNumber = license.LicenseNumber;
+                                rate.LicenseTitle = license.LicenseName;
+                                rate.upc = config.upc_code;
+                                //This call is slow and we can fill it in JavaScript much faster.
+                                //if (rate.RateTypeId != null)
+                                //{
+                                //    rate.RateType = _rateTypeRepository.Get((int)rate.RateTypeId);
+                                //}
+                                //if (rate.writersConsentTypeId != null)
+                                //{
+                                //    rate.WritersConsentType = _writersConsentTypeRepository.Get((int)rate.writersConsentTypeId);
+                                //}
+                            }
+                        }
+                    }
+
+                    // add notes here as well
+                    writer.WriterNotes = _licensePRWriterNoteRepository.GetLicenseProductRecordingWriterNotes(writerIds);
+                }
+
+                //Fill LicenseProductWriterRate
+                //List<LicenseProductRecordingWriterRate> licenseProductRecordingWriterRates = _licensePRWriterRateRepository.GetLicenseRecordingWriterRatesFromIds(licenseProductRecordingWriters.Select(x => x.LicenseWriterId).ToList(), licenseProductConfiguration.Select(x => (int)x.product_configuration_id).ToList());
+                //license.LicenseProductRecordingWriterRates = licenseProductRecordingWriterRates;
+
+                //Fill LicenseProductWriterRate
+                //List<LicenseProductRecordingWriterNote> licenseProductRecordingWriterNotes = _licensePRWriterNoteRepository.GetLicenseProductRecordingWriterNotes(licenseProductRecordingWriters.Select(x => x.LicenseWriterId).ToList());
+                //license.LicenseProductRecordingWriterRates = licenseProductRecordingWriterRates;
+
+                listOfLicenses.Add(license);
+            }
+
+            return listOfLicenses;
+        }
+
+        public List<LicenseProductRecordingWriterRate> GetWriterRateOverviewSkinny(int productId, int trackId,
+            int caecode)
+        {
+            var bigRateList = new List<LicenseProductRecordingWriterRate>();
+
+            // look up all of the licenseIds that are attached to the Recs ProductId
+            var licenseIds = _licenseProductRepository.GetLicenseIds(productId);
+
+            // Get all the license data in loop based on LicenseIds
+            List<LicenseOverview> listOfLicenses = new List<LicenseOverview>();
+            foreach (var licenseId in licenseIds)
+            {
+                LicenseOverview license = _licenseRepository.GetLicenseOverview(licenseId);
+                license.LicenseId = licenseId;
+
+                //Fill LicenseProduct
+                List<LicenseProduct> licenseProducts = _licenseProductRepository.GetLicenseProductsByRecsProductId(productId);
+                license.LicenseProducts = licenseProducts;
+
+                // get Recs Product Configs with UPCs
+                var recs_ProductConfigs = _recsProvider.RetrieveProductHeader(productId);
+
+                //Fill LicenseProductConfigurations
+                List<LicenseProductConfiguration> licenseProductConfiguration = _licenseProductConfigurationRepository.GetLicenseConfigurationList(licenseProducts.Select(x => x.LicenseProductId).ToList());
+                license.LicenseProductConfigurations = licenseProductConfiguration;
+                //marry up the recs configs with the mechs configs.
+                foreach (var mechsconfig in license.LicenseProductConfigurations)
+                {
+                    var recsconfig_row = recs_ProductConfigs.Configurations.Where(x => x.configuration_id == mechsconfig.product_configuration_id).FirstOrDefault();
+                    mechsconfig.upc_code = recsconfig_row.UPC;
+                }
+
+                //Fill LicenseProductRecordings
+                List<LicenseProductRecording> licenseProductRecordings = _licenseProductRecordingRepository.GetLicenseProductRecordingsFromList(licenseProducts.Select(x => x.LicenseProductId).ToList());
+                license.LicenseProductRecordings = licenseProductRecordings;
+
+                //Fill LicenseProductWriter
+                List<LicenseProductRecordingWriter> licenseProductRecordingWriters = _licensePRWriterRepository.GetLicenseWriterList(licenseProductRecordings.Select(x => x.LicenseRecordingId).ToList());
+                license.LicenseProductRecordingWriters = licenseProductRecordingWriters;
+
+                foreach (var writer in license.LicenseProductRecordingWriters)
+                {
+                    List<int> writerIds = new List<int>();
+                    writerIds.Add(writer.LicenseWriterId);
+                    var result = _licensePRWriterRateRepository.GetLicenseRecordingWriterRatesFromIds(writerIds, licenseProductConfiguration.Select(x => (int)x.product_configuration_id).ToList());
+                    foreach (var item in result)
+                    {
+                        bigRateList.Add(item);
+                    }
+
+                    //Populate RateList with UPC codes & Populate  License Name/Id/Number
+
+                    foreach (var rate in bigRateList)
+                    {
+                        foreach (var config in license.LicenseProductConfigurations)
+                        {
+                            if (config.product_configuration_id == rate.product_configuration_id)
+                            {
+                                rate.LicenseId = license.LicenseId;
+                                rate.LicenseNumber = license.LicenseNumber;
+                                rate.LicenseTitle = license.LicenseName;
+                                rate.upc = config.upc_code;
+                                if (rate.RateTypeId != null)
+                                {
+                                    rate.RateType = _rateTypeRepository.Get((int)rate.RateTypeId);
+                                }
+                                if (rate.writersConsentTypeId != null)
+                                {
+                                    rate.WritersConsentType = _writersConsentTypeRepository.Get((int)rate.writersConsentTypeId);
+                                }
+                            }
+                        }
+                    }
+
+                    // add notes here as well
+                    writer.WriterNotes = _licensePRWriterNoteRepository.GetLicenseProductRecordingWriterNotes(writerIds);
+                }
+
+                listOfLicenses.Add(license);
+            }
+            return bigRateList;
+        }
+
+        public List<LicenseOverview> BuildLicenseProductOverview_tom_Original(int productId, int trackId, int caecode) //17775
+        {
+            // look up all of the licenseIds that are attached to the Recs ProductId
+            var licenseIds = _licenseProductRepository.GetLicenseIds(productId);
+
+            //Filter out duplicate License Id's.  || When plugged in productId: 67555; licenseId: 18655 is returned twice
+            List<int> uniqueLicenseIds = licenseIds.Distinct().ToList();
+            var claimExceptionCount = 0;
+
+            var totalpercentage = 0.0;
+            var licensedpercentage = 0.0;
+            var actualContribution = 0.0;
+
+            // Get all the license data in loop based on LicenseIds
+            List<LicenseOverview> listOfLicenses = new List<LicenseOverview>();
+            foreach (var licenseId in uniqueLicenseIds)
+            {
+                LicenseOverview license = _licenseRepository.GetLicenseOverview(licenseId);
+                license.LicenseId = licenseId;
+                var thisLicense = _licenseRepository.GetLite(licenseId);
+                //Fill LicenseProduct
+                // This fills with wrong data, it fills with ALL license products causing duplicates
+                //   List<LicenseProduct> licenseProducts = _licenseProductRepository.GetLicenseProductsByRecsProductId(productId);
+
+                List<LicenseProduct> licenseProducts = _licenseProductRepository.GetLicenseProducts(licenseId);
+
+                //Filter out other products
+                var filteredLicenseProducts = licenseProducts.Where(lp => lp.ProductId == productId).ToList();
+                license.LicenseProducts = filteredLicenseProducts;
+                List<LicenseProductProductConfigurationTotals> licenseProductConfigIdTotals;
+                foreach (var licenseProduct in filteredLicenseProducts)
+                {
+                    totalpercentage = 0.0;
+                    licensedpercentage = 0.0;
+                    actualContribution = 0.0;
+                    var total = 0.0;
+                    var licensed = 0.0;
+                    licenseProduct.Message = new List<string>();
+
+                    licenseProduct.Recordings = this.GetLicenseProductRecordingsForLicenseDetailsNew(licenseProduct.LicenseProductId, thisLicense, licenseProduct, out licenseProductConfigIdTotals);
+
+                    foreach (var rec in licenseProduct.Recordings)
+                    {
+                        if (rec.Track.ClaimException)
+                        {
+                            licenseProduct.LicenseClaimException = "CLAIM EXCEPTION";
+                            claimExceptionCount++;
+                        }
+                        totalpercentage = totalpercentage + rec.UmpgPercentageRollup;
+                        total = total + rec.UmpgPercentageRollup;
+                        licensed = licensed + rec.LicensedRollup;
+                    }
+
+                    licenseProduct.ProductHeader = _recsProvider.RetrieveProductHeader(productId);
+
+                    licenseProduct.TotalLicenseConfigAmount = (licensed * 100) / total;
+                    for (int i = 0; i < licenseProduct.ProductHeader.Configurations.Count; i++)
+                    {
+                        var licenseProductConfiguration1 =
+                            _licenseProductConfigurationRepository.GetLicenseProductConfiguration(
+                                (int)licenseProduct.LicenseProductId,
+                                (int)licenseProduct.ProductHeader.Configurations[i].configuration_id);
+                        if (licenseProductConfiguration1 != null)
+                        {
+                            // 20160526 - per Ryan display the total product config amount
+                            //licenseProductConfiguration.TotalAmount = Convert.ToDecimal(totalpercentage / licenseProductConfigIdTotals.Count);
+                            licenseProductConfiguration1.TotalAmount = Convert.ToDecimal(totalpercentage);
+                            //licenseProductConfiguration.LicensedAmount = Convert.ToDecimal(licensedpercentage);
+                            //licenseProductConfiguration.NotLicensedAmount = Convert.ToDecimal(totalpercentage - licensedpercentage);
+                            foreach (var licenseProductConfigIdTotal in licenseProductConfigIdTotals)
+                            {
+                                //if (licenseProductConfigIdTotal.configuration_id == licenseProductConfiguration.configuration_id)
+                                if (licenseProductConfigIdTotal.product_configuration_id == licenseProductConfiguration1.product_configuration_id)
+                                {
+                                    //USL-1085-2 7/13/2016 - do not divide by anything
+                                    licenseProductConfiguration1.LicensedAmount = Convert.ToDecimal(licenseProductConfigIdTotal.LicensedAmount);
+                                    licenseProductConfiguration1.NotLicensedAmount = Convert.ToDecimal((totalpercentage - licenseProductConfigIdTotal.LicensedAmount));
+
+                                    //USL-1085 - divide by the total number of unique configuration_ids, not the total number of configuration_ids
+                                    //licenseProductConfiguration.LicensedAmount = Convert.ToDecimal(licenseProductConfigIdTotal.LicensedAmount / licenseProductUniqueConfigIdCount);
+                                    //licenseProductConfiguration.NotLicensedAmount = Convert.ToDecimal((totalpercentage - licenseProductConfigIdTotal.LicensedAmount) / licenseProductUniqueConfigIdCount);
+
+                                    //licenseProductConfiguration.LicensedAmount = Convert.ToDecimal(licenseProductConfigIdTotal.LicensedAmount / licenseProductConfigIdTotals.Count);
+                                    //licenseProductConfiguration.NotLicensedAmount = Convert.ToDecimal((totalpercentage - licenseProductConfigIdTotal.LicensedAmount) / licenseProductConfigIdTotals.Count);
+                                }
+                            }
+
+                            licenseProduct.ProductHeader.Configurations[i].LicenseProductConfiguration =
+                                licenseProductConfiguration1;
+                        }
+                    }
+                }
+
+                //foreach (var licenseProduct in licenseProducts)
+                //{
+                //    licenseProduct.ProductHeader = _recsProvider.RetrieveProductHeader(productId);
+                //}
+
+                // get Recs Product Configs with UPCs
+                var recs_ProductConfigs = _recsProvider.RetrieveProductHeader(productId);
+                //marry up the recs configs with the mechs configs.
+                //Fill LicenseProductConfigurations
+                List<LicenseProductConfiguration> licenseProductConfiguration = _licenseProductConfigurationRepository.GetLicenseConfigurationList(licenseProducts.Select(x => x.LicenseProductId).ToList());
+                license.LicenseProductConfigurations = licenseProductConfiguration;
+                foreach (var mechsconfig in license.LicenseProductConfigurations)
+                {
+                    var recsconfig_row = recs_ProductConfigs.Configurations.Where(x => x.configuration_id == mechsconfig.product_configuration_id).FirstOrDefault();
+                    if (recsconfig_row != null)
+                    {
+                        mechsconfig.upc_code = recsconfig_row.UPC;
+                    }
+                }
+
+                foreach (var licenseProduct in license.LicenseProducts)
+                {
+                    foreach (var recording in licenseProduct.Recordings)
+                    {
+                        if (recording.Writers != null)
+                        {
+                            foreach (var writer in recording.Writers)
+                            {
+                                //Check for null value
+                                if (writer.LicenseProductRecordingWriter != null)
+                                {
+                                    var licenseWriterId = writer.LicenseProductRecordingWriter.LicenseWriterId;
+                                    writer.LicenseProductRecordingWriter.WriterNotes =
+                                        _licensePRWriterNoteRepository
+                                            .GetLicenseProductRecordingWriterNotesForLicenseWriterId(licenseWriterId);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                //Fill LicenseProductRecordings
+                List<LicenseProductRecording> licenseProductRecordings = _licenseProductRecordingRepository.GetLicenseProductRecordingsFromList(licenseProducts.Select(x => x.LicenseProductId).ToList());
+                license.LicenseProductRecordings = licenseProductRecordings;
+
+                //       var filteredLicenseProductRecordings = licenseProductRecordings.Where(lpr => lpr.TrackId == trackId);
+
+                //Fill LicenseProductWriter
+                List<LicenseProductRecordingWriter> licenseProductRecordingWriters = _licensePRWriterRepository.GetLicenseWriterList(licenseProductRecordings.Select(x => x.LicenseRecordingId).ToList());
+                license.LicenseProductRecordingWriters = licenseProductRecordingWriters;
+
+                //Fill LicenseProductWriterRate
+                //        List<LicenseProductRecordingWriterRate> licenseProductRecordingWriterRates = _licensePRWriterRateRepository.GetLicenseRecordingWriterRatesFromIds(licenseProductRecordingWriters.Select(x => x.LicenseWriterId).ToList(), licenseProductConfiguration.Select(x => (int)x.product_configuration_id).ToList());
+                //      license.LicenseProductRecordingWriterRates = licenseProductRecordingWriterRates;
+
+                //16612 ms w/o looping
+                //39552 ms w/ looping
+                //29024-30976 ms w/ looping and igore duplicate licenseId's
+                //31408 ms w/ looping and igore duplicate licenseId's AND not sorting properties (RateList with UPC codes & Populate  License Name/Id/Number)
+                //1148875 ms w/ looping and igore duplicate licenseId's AND not sorting properties (RateList with UPC codes & Populate  License Name/Id/Number) AND populating WriterConsent & RateType
+
+                //Fill LicenseProductWriter
+                //        foreach (var writer in license.LicenseProductRecordingWriters)
+                //        {
+                //            List<int> writerIds = new List<int>();
+                //            writerIds.Add(writer.LicenseWriterId);
+                //            writer.RateList = _licensePRWriterRateRepository.GetLicenseRecordingWriterRatesFromIds(writerIds, licenseProductConfiguration.Select(x => (int)x.product_configuration_id).ToList());
+                //            var writerCaeCode = writer.CAECode;
+
+                //            var licenseRecordingId = writer.LicenseRecordingId;
+
+                //                //Populate RateList with UPC codes & Populate  License Name/Id/Number || And populate RateType + WriterConsent
+                //                foreach (var rate in writer.RateList)
+                //                {
+                //                    foreach (var config in license.LicenseProductConfigurations)
+                //                    {
+                //                        if (config.product_configuration_id == rate.product_configuration_id)
+                //                        {
+                //                            rate.CaeCode = writerCaeCode;
+                //                            rate.LicenseId = license.LicenseId;
+                //                            rate.LicenseNumber = license.LicenseNumber;
+                //                            rate.LicenseTitle = license.LicenseName;
+                //                            rate.upc = config.upc_code;
+
+                //                        }
+
+                //                        //if (rate.RateTypeId != null)
+                //                        //{
+                //                        //    rate.RateType = _rateTypeRepository.Get((int)rate.RateTypeId);
+                //                        //}
+                //                        //if (rate.writersConsentTypeId != null)
+                //                        //{
+                //                        //    rate.WritersConsentType = _writersConsentTypeRepository.Get((int)rate.writersConsentTypeId);
+                //                        //}
+
+                //                    }
+
+                //            }
+
+                //            // add notes here as well
+                //           writer.WriterNotes = _licensePRWriterNoteRepository.GetLicenseProductRecordingWriterNotes(writerIds);
+
+                //}
+
+                //Fill WriterConsent and RateType  || Works, but slow
+                //foreach (var rate in licenseProductRecordingWriterRates)
+                //{
+                //    if (rate.RateTypeId != null)
+                //    {
+                //        rate.RateType = _rateTypeRepository.Get((int)rate.RateTypeId);
+                //    }
+                //    if (rate.writersConsentTypeId != null)
+                //    {
+                //        rate.WritersConsentType = _writersConsentTypeRepository.Get((int)rate.writersConsentTypeId);
+                //    }
+                //}
+
+                //Fill LicenseProductWriterNotes
+                List<LicenseProductRecordingWriterNote> licenseProductRecordingWriterNotes = _licensePRWriterNoteRepository.GetLicenseProductRecordingWriterNotes(licenseProductRecordingWriters.Select(x => x.LicenseWriterId).ToList());
+                license.LicenseProductRecordingWriterNotes = licenseProductRecordingWriterNotes;
+
+                listOfLicenses.Add(license);
+            }
+
+            return listOfLicenses;
+        }
 
         //http://spa.service/api/licenseProductCTRL/licenseproducts/GetLicenseProductOverview2/17775
         public LicenseProductOverview2 BuildLicenseProductOverview2(long licenseProductId)
@@ -707,21 +1073,17 @@ namespace UMPG.USL.API.Business.Licenses
 
                 license.LicenseProductRecordings = _licenseProductRecordingRepository.GetLicenseRecordingsByLicenseProductId(
                     license.LicenseProductId);
-
             }
-
 
             //Gets mathcing UPC Code
-            //populates recording with licenseProduct UPC cpde
-            foreach (var licenseProduct in licneseProductOverview.RelatedLicenseProducts)
+            foreach (var license in licneseProductOverview.RelatedLicenseProducts)
             {
-                foreach (var recording in licenseProduct.LicenseProductConfigurations)
+                foreach (var recording in license.LicenseProductConfigurations)
                 {
-                    recording.upc_code = GetMatchingUpcCode(licenseProduct.LicenseProductConfigurations,
-                        licenseProduct.ProductHeader.Configurations);
+                    recording.upc_code = GetMatchingUpcCode(license.LicenseProductConfigurations,
+                        license.ProductHeader.Configurations);
                 }
             }
-
 
             foreach (var license in licneseProductOverview.RelatedLicenseProducts)
             {
@@ -752,10 +1114,7 @@ namespace UMPG.USL.API.Business.Licenses
             }
             licneseProductOverview.RelatedLicenses = listOfLicenses;
 
-
-            //NEEDED
-#region
-            //Builds WorkRecordings (Recording)
+            //Builds WorkRecordings
             foreach (var licenseProduct in licneseProductOverview.RelatedLicenseProducts)
             {
                 foreach (var license in licneseProductOverview.RelatedLicenses)
@@ -766,17 +1125,13 @@ namespace UMPG.USL.API.Business.Licenses
                 }
             }
 
-#endregion
-
-
             //to organize UPC Code in licneseProductOverview.Recordings.Writers.LicenseProductRecordingWriter.RateList
-            foreach (var relatedLicenseProduct in licneseProductOverview.RelatedLicenseProducts)
+            foreach (var relatedLicense in licneseProductOverview.RelatedLicenseProducts)
             {
                 foreach (var license in licneseProductOverview.RelatedLicenses) //EXCEPTION: license is null.  Investigate
                 {
-                    foreach (var config in relatedLicenseProduct.ProductHeader.Configurations)
+                    foreach (var config in relatedLicense.ProductHeader.Configurations)
                     {
-
                         foreach (var record in licneseProductOverview.Recordings)
                         {
                             foreach (var writer in record.Writers)
@@ -784,7 +1139,6 @@ namespace UMPG.USL.API.Business.Licenses
                                 foreach (var rate in writer.LicenseProductRecordingWriter.RateList)
                                 {
                                     OrganizeUpcCodes(rate, config);
-                                   
                                 }
                             }
                         }
@@ -794,10 +1148,6 @@ namespace UMPG.USL.API.Business.Licenses
             MatchLicenseName2(licneseProductOverview.RelatedLicenses, licneseProductOverview.RelatedLicenseProducts, licneseProductOverview.Recordings);
             //Match LicenseId's (related licenses)[licneseProductOverview.relatedLicenses.licenseId] with  (relatedLicenseProducts)[licneseProductOverview.relattedLicenseProducts.licenseId] licenseId..
             //Save match licenseTitle to licneseProductOverview.Recordings.Writers.LicenseProductRecordingWriter.RateList
-
-            //Build configurations from writer.ratelist and put on ProductOverview
-
-
 
             return licneseProductOverview;
         }
@@ -834,8 +1184,7 @@ namespace UMPG.USL.API.Business.Licenses
                                 recording.LicenseTitle = license.LicenseName;
                             }
                         }
-                       
-                    }       
+                    }
                 }
             }
         }
@@ -859,7 +1208,6 @@ namespace UMPG.USL.API.Business.Licenses
             return null;
         }
 
-
         public string GetMatchingUpcCode(List<LicenseProductConfiguration> licenseProductConfigurations,
             List<RecsConfiguration> configurations)
         {
@@ -876,7 +1224,6 @@ namespace UMPG.USL.API.Business.Licenses
             return null;
         }
 
-
         public void OrganizeUpcCodes(LicenseProductRecordingWriterRate licenseProductRecordingWriterRate,
             RecsConfiguration recsConfiguration)
         {
@@ -885,8 +1232,6 @@ namespace UMPG.USL.API.Business.Licenses
                 licenseProductRecordingWriterRate.upc = recsConfiguration.UPC;
             }
         }
-
-
 
         public List<LicenseProduct> GetProducts(int licenseId)
         {
@@ -915,7 +1260,6 @@ namespace UMPG.USL.API.Business.Licenses
 
             foreach (var licenseProduct in products)
             {
-
                 starttime = DateTime.Now;
                 licenseProduct.ProductHeader =
                     _recsProvider.RetrieveProductHeader(licenseProduct.ProductId); // same hit
@@ -940,7 +1284,6 @@ namespace UMPG.USL.API.Business.Licenses
                 licenseProduct.Recordings = this.GetLicenseProductRecordingsForLicenseDetails(licenseProduct.LicenseProductId, out licenseProductConfigIdTotals);
                 logger.Debug("***End GetLicenseProductRecordingsForLicenseDetails (" + licenseProduct.LicenseProductId + ") : elapsed :" + (DateTime.Now - starttime).ToString());
 
-
                 foreach (var rec in licenseProduct.Recordings)
                 {
                     if (rec.Track.ClaimException)
@@ -962,7 +1305,6 @@ namespace UMPG.USL.API.Business.Licenses
                             (int)licenseProduct.ProductHeader.Configurations[i].configuration_id);
                     if (licenseProductConfiguration != null)
                     {
-
                         // 20160526 - per Ryan display the total product config amount
                         //licenseProductConfiguration.TotalAmount = Convert.ToDecimal(totalpercentage / licenseProductConfigIdTotals.Count);
                         licenseProductConfiguration.TotalAmount = Convert.ToDecimal(totalpercentage);
@@ -981,7 +1323,6 @@ namespace UMPG.USL.API.Business.Licenses
                             licenseProductConfiguration;
                     }
                 }
-
             }
             if (claimExceptionCount > 0)
             {
@@ -999,7 +1340,6 @@ namespace UMPG.USL.API.Business.Licenses
             logger.Debug("-------------------------------------");
             return products;
         }
-
 
         public List<LicenseProduct> GetProductsV2(int licenseId)
         {
@@ -1024,16 +1364,12 @@ namespace UMPG.USL.API.Business.Licenses
                             licenseProductConfiguration;
                     }
                 }
-
             }
             return products;
         }
 
         public GetWritersRatesRequest GetAllLicenseRelatedIds(int licenseid)
         {
-
-
-
             GetWritersRatesRequest test = new GetWritersRatesRequest();
 
             // Get LicenseProductIds
@@ -1060,15 +1396,11 @@ namespace UMPG.USL.API.Business.Licenses
             test.LicenseWriterIds = _licensePRWriterRepository.GetLicenseRecordingWriterIds(test.LicenseRecordingIds)
                 .ToList();
 
-
-
             return test;
         }
 
-
         public List<int> GetLicenseWriterRateIdsWithOutHolds(int licenseid)
         {
-
             List<string> test2;
 
             // Get LicenseProductIds
@@ -1093,7 +1425,6 @@ namespace UMPG.USL.API.Business.Licenses
                 .Select(x => x.LicenseWriterRateId)
                 .ToList();
 
-
             var licenseWriterRateIdsWithoutHolds = _licensePRWriterRateStatusRepository.GetLicenseWriterRatesWithOutStatus(licenseWriterRateIds)
                 .ToList();
 
@@ -1107,9 +1438,7 @@ namespace UMPG.USL.API.Business.Licenses
 
         public GetWritersRatesRequest GetAllLicenseRecordingRelatedIds(List<int> licenseProductids)
         {
-
             GetWritersRatesRequest test = new GetWritersRatesRequest();
-
 
             // Get LicenseConfigs
             test.LicenseConfigIds =
@@ -1129,12 +1458,8 @@ namespace UMPG.USL.API.Business.Licenses
             test.LicenseWriterIds = _licensePRWriterRepository.GetLicenseRecordingWriterIds(test.LicenseRecordingIds)
                 .ToList();
 
-
-
             return test;
         }
-
-
 
         public List<LicenseProductRecording> GetLicenseProductRecordings(int licenseproductId)
         {
@@ -1146,8 +1471,6 @@ namespace UMPG.USL.API.Business.Licenses
             {
                 recordings[i].LicensePRWriterNo =
                 _licensePRWriterRepository.GetLicenseProductRecordingWritersNo(recordings[i].LicenseRecordingId);
-
-
             }
 
             return recordings;
@@ -1172,12 +1495,9 @@ namespace UMPG.USL.API.Business.Licenses
             return recordings;
         }
 
-
-
         public List<LicenseProductRecordingWriter> GetLicenseWriters(int licenseRecordingId)
         {
-
-            // get Licensewriters Ids 
+            // get Licensewriters Ids
 
             var localWriters = _licensePRWriterRepository.GetLicenseWriters(licenseRecordingId);
 
@@ -1194,7 +1514,6 @@ namespace UMPG.USL.API.Business.Licenses
 
         public List<LicenseProductRecordingWritersRateStatusDropdown> GetLicenseWriterRateStatusList(List<int> licenseWritersIds)
         {
-
             // get a list of license Writer names for dropdown purpose
 
             var localWriterRateStatuses = _licensePRWriterRateStatusRepository.GetLicenseWriterRateStatusList(licenseWritersIds);
@@ -1202,11 +1521,9 @@ namespace UMPG.USL.API.Business.Licenses
             return localWriterRateStatuses;
         }
 
-
         public List<LicenseProductRecordingWriter> GetLicenseProductRecordingWriters(int licenseRecordingId,
             string worksCode)
         {
-
             var localWriters = _licensePRWriterRepository.GetLicenseProductRecordingWriters(licenseRecordingId);
             var recsWriters = _recsProvider.RetrieveTrackWriters(worksCode);
             foreach (var writer in localWriters)
@@ -1218,28 +1535,23 @@ namespace UMPG.USL.API.Business.Licenses
                 //        writer.Writer = recsWriter;
                 //    }
                 //}
-
             }
             return localWriters;
         }
 
         public List<LicenseProductRecordingWriterRate> GetLicensePRWriterRates(int licenseWriterId)
         {
-
             return _licensePRWriterRateRepository.GetLicenseProductRecordingWriterRates(licenseWriterId);
         }
 
         public int GetLicenseProductRecordingWritersNo(int licenseRecordingId)
         {
             return _licensePRWriterRepository.GetLicenseProductRecordingWritersNo(licenseRecordingId);
-
         }
-
 
         // delete?
         public List<LicenseProductConfiguration> GetLicenseProductConfigurations(int licenseId)
         {
-
             // returns licenseProduct, licenseProductConfiguration
             var licenseProductConfigurations = _licenseProductRepository.GetLicenseProductConfigurations(licenseId);
 
@@ -1284,12 +1596,10 @@ namespace UMPG.USL.API.Business.Licenses
                 licenseProductConfiguration.TotalAmount = Convert.ToDecimal(total);
                 licenseProductConfiguration.LicensedAmount = Convert.ToDecimal(licensed);
                 licenseProductConfiguration.NotLicensedAmount = Convert.ToDecimal(notlicensed);
-
             }
 
             return licenseProductConfigurations;
         }
-
 
         public bool UpdateLicenseProductConfigurations(UpdateLicenseProductConfigurationsStatusRequest request)
         {
@@ -1305,8 +1615,6 @@ namespace UMPG.USL.API.Business.Licenses
 
             return result;
         }
-
-
 
         public bool UpdateLicenseProducts(UpdateLicenseProductsRequest request)
         {
@@ -1362,7 +1670,6 @@ namespace UMPG.USL.API.Business.Licenses
                     licenseProductConfiguration.Deleted = DateTime.Now;
                     //todo update
                 }
-
             }
             var i = 0;
             foreach (var addedProduct in addedProducts)
@@ -1375,7 +1682,6 @@ namespace UMPG.USL.API.Business.Licenses
                     LicenseId = request.LicenseId,
                     CreatedDate = DateTime.Now,
                     ModifiedDate = DateTime.Now
-
                 });
                 // var recordings = productRecordings.SingleOrDefault(pr => pr.Key == addedProduct).Value;
                 var recordings = _recsProvider.RetrieveProductRecordings(addedProduct);
@@ -1400,18 +1706,13 @@ namespace UMPG.USL.API.Business.Licenses
                             ModifiedDate = DateTime.Now,
                         });
                     }
-
-
                 }
-
-
             }
             return result;
         }
 
         public List<LicenseProductConfigurations> GetLicenseProductConfigurationsAll(int licenseId)
         {
-
             var licenseProductConfigurationList = new List<LicenseProductConfigurations>();
 
             var licenseProducts = _licenseProductRepository.GetLicenseProducts(licenseId);
@@ -1439,7 +1740,6 @@ namespace UMPG.USL.API.Business.Licenses
                          where pc.product_configuration_id == productConfiguration.product_configuration_id
                          select pc).FirstOrDefault();
 
-
                     productConfiguration.LicenseProductConfiguration = licenseProductConfiguration;
                 }
 
@@ -1454,7 +1754,6 @@ namespace UMPG.USL.API.Business.Licenses
             return licenseProductConfigurationList;
         }
 
-
         //todo: to be deleted... think is not used anymore
         //public List<LicenseProductDropdown> GetLicenseProductDropDown(int licenseId)
         //{
@@ -1465,7 +1764,6 @@ namespace UMPG.USL.API.Business.Licenses
         //    }
         //        return licenseProductLite;
         //}
-
 
         public bool UpdateLicenseProductConfigurationsAll(List<UpdateLicenseProductConfigurationsRequest> requests)
         {
@@ -1480,7 +1778,6 @@ namespace UMPG.USL.API.Business.Licenses
                 //get all associated product configurations
                 foreach (UpdateLicenseProductConfigurationsRequest config in configs)
                 {
-
                     bool ConfigUpdates = config.originalLicenseProductConfigurationId != config.licenseProductConfigurationId;
                     //bool ProductUpdates = config.originalLicenseProductId != config.licenseProductId;
                     //LicenseProductConfiguration licenseProductConfiguration;
@@ -1491,12 +1788,11 @@ namespace UMPG.USL.API.Business.Licenses
 
                     if (ConfigUpdates)
                     {
-                        //add, update, delete LicenseProductConfiguration 
-
+                        //add, update, delete LicenseProductConfiguration
 
                         if (config.originalLicenseProductConfigurationId == 0)
                         {
-                            // add 
+                            // add
                             licenseProductConfiguration = new LicenseProductConfiguration();
                             licenseProductConfiguration.LicenseProductId = config.licenseProductId;
                             licenseProductConfiguration.configuration_id = config.configuration_id;
@@ -1511,7 +1807,6 @@ namespace UMPG.USL.API.Business.Licenses
 
                             var temp = _licenseProductConfigurationRepository.Add(licenseProductConfiguration);
                             licenseProductConfiguration = _licenseProductConfigurationRepository.Get(temp.LicenseProductConfigurationId);
-
                         }
                         else
                         {
@@ -1528,17 +1823,12 @@ namespace UMPG.USL.API.Business.Licenses
 
                             //do we ever update?
                         }
-
                     }
-
-                    
                 }
-
             }
             */
             return true;
         }
-
 
         /// <summary>
         /// New method that gets recordings upside down
@@ -1564,7 +1854,6 @@ namespace UMPG.USL.API.Business.Licenses
             var licenseProductConfigIdTotals = GetLicenseProductConfigurationIdTotals(licenseProductId);
             foreach (var worksRecording in recsTracks)
             {
-
                 var totalpercentage = 0.00;
 
                 worksRecording.Message = string.Empty;
@@ -1645,10 +1934,8 @@ namespace UMPG.USL.API.Business.Licenses
                                                     }
                                                 }
                                                 licensedpercentage += (actualcontribution * licensedConfigFactor);
-
                                             }
                                             totalpercentage = totalpercentage + actualcontribution;
-
                                         }
                                     }
                                 }
@@ -1661,7 +1948,6 @@ namespace UMPG.USL.API.Business.Licenses
                         }
                         var listOfWriterIds = new List<int>();
 
-
                         listOfWriterIds.Add(worksRecording.LicenseRecording.LicenseRecordingId);
                         var licenseWriterIds = _licensePRWriterRepository.GetLicenseRecordingWriterIds(listOfWriterIds)
                             .ToList();
@@ -1671,16 +1957,13 @@ namespace UMPG.USL.API.Business.Licenses
                         if (worksRecording.LicenseRecording != null)
                             worksRecording.LicenseRecording.StatusRollup = GetStatusRollup(licenseWriterRateIds);
 
-
                         worksRecording.UmpgPercentageRollup = totalpercentage;
                         worksRecording.LicensedRollup = licensedpercentage;
-
                     }
 
                     if (worksRecording.LicenseRecording == null)
                     {
                         worksRecording.LicensedRollup = 0.00;
-
                     }
                 }
             }
@@ -1764,7 +2047,6 @@ namespace UMPG.USL.API.Business.Licenses
                             var firstOrDefault = worksRecording.Track.Copyrights.FirstOrDefault();
                             if (firstOrDefault != null)
                             {
-
                                 var worksWriters = firstOrDefault.Composers;
                                 if (worksWriters != null)
                                 {
@@ -1780,7 +2062,6 @@ namespace UMPG.USL.API.Business.Licenses
                                                 var licenseProductRecordingWriter = licenseProductRecordingWriters.Where(x => x.CAECode == writer.CaeNumber && x.isLicensed == true).FirstOrDefault();
                                                 if (licenseProductRecordingWriter != null)
                                                 {
-
                                                     var writerLicensedConfigIds = _licensePRWriterRateRepository.GetLicensedConfigIds(licenseProductRecordingWriter.LicenseWriterId);
 
                                                     double licensedConfigFactor = 1;
@@ -1808,10 +2089,8 @@ namespace UMPG.USL.API.Business.Licenses
                                                         }
                                                     }
                                                     licensedpercentage += (actualcontribution * licensedConfigFactor);
-
                                                 }
                                                 totalpercentage = totalpercentage + actualcontribution;
-
                                             }
                                         }
                                     }
@@ -1825,7 +2104,6 @@ namespace UMPG.USL.API.Business.Licenses
                         }
                         var listOfWriterIds = new List<int>();
 
-
                         listOfWriterIds.Add(worksRecording.LicenseRecording.LicenseRecordingId);
                         var licenseWriterIds = _licensePRWriterRepository.GetLicenseRecordingWriterIds(listOfWriterIds)
                             .ToList();
@@ -1835,16 +2113,13 @@ namespace UMPG.USL.API.Business.Licenses
                         if (worksRecording.LicenseRecording != null)
                             worksRecording.LicenseRecording.StatusRollup = GetStatusRollup(licenseWriterRateIds);
 
-
                         worksRecording.UmpgPercentageRollup = totalpercentage;
                         worksRecording.LicensedRollup = licensedpercentage;
-
                     }
 
                     if (worksRecording.LicenseRecording == null)
                     {
                         worksRecording.LicensedRollup = 0.00;
-
                     }
                 }
             }
@@ -1945,7 +2220,6 @@ namespace UMPG.USL.API.Business.Licenses
                                WriterName = worksWriter.FullName
                            });
             return lReturn.GroupBy(x => x.Cae).Select(y => y.First()).ToList();
-
         }
 
         public List<int> GetWritersNoForEditRates(GetWritersRatesRequest request)
@@ -1990,7 +2264,6 @@ namespace UMPG.USL.API.Business.Licenses
             //delete rates first
             foreach (var writerId in request.SelectedWritersIds)
             {
-
                 foreach (var productConfigId in request.ProductConfigurationIds)
                 {
                     var ratesToDelete =
@@ -2004,7 +2277,6 @@ namespace UMPG.USL.API.Business.Licenses
 
                         _licensePRWriterRateRepository.Update(ratesToDelete[i]);
                     }
-
                 }
                 /*
                 foreach (var configId in request.ConfigurationIds)
@@ -2054,7 +2326,6 @@ namespace UMPG.USL.API.Business.Licenses
                         {
                             var duration = GetSongDuration(rate, request.Writers);
                             statRate = _statRateRepository.GetStatRate(duration, new DateTime((int)rateToEditInfo.StatYear, 01, 01));
-
                         }
                         rateToEditInfo.Rate = (decimal)statRate;
                         decimal? lwriterSplit = request.SplitOverride;
@@ -2078,6 +2349,7 @@ namespace UMPG.USL.API.Business.Licenses
                         rateToEditInfo.StatYear = null;
                         //escalted rate portion has been moved
                         break;
+
                     case 4: //Controlled: min Stat
                     case 7: //Reduced: min Stat
                         var statsRate = (float)_agreementStatutoryRateRepository.Get(rateToEditInfo.StatYear).Rate;
@@ -2091,6 +2363,7 @@ namespace UMPG.USL.API.Business.Licenses
                         }
                         rateToEditInfo.ProRata = CalculateProRataRate(rateToEditInfo.SongRate, lsplit);
                         break;
+
                     case 3: //Controlled: Stat
                     case 6: //Reduced:Stat
                     case 10:
@@ -2104,7 +2377,6 @@ namespace UMPG.USL.API.Business.Licenses
                         {
                             var duration = GetSongDuration(rate, request.Writers);
                             statRate = _statRateRepository.GetStatRate(duration, new DateTime((int)rateToEditInfo.StatYear, 01, 01));
-
                         }
                         rateToEditInfo.Rate = CalculateRate(statRate, rateToEditInfo.PercentOfStat);
                         rateToEditInfo.SongRate = CalculateSongRate(statRate, rateToEditInfo.PercentOfStat);
@@ -2130,7 +2402,6 @@ namespace UMPG.USL.API.Business.Licenses
                         rateToEditInfo.modifiedBy = request.modifiedBy;
                         rateToEditInfo.StatYear = null;
                         break;
-
                 }
 
                 //check changes to rates
@@ -2179,8 +2450,6 @@ namespace UMPG.USL.API.Business.Licenses
                 rate.StatYear = rateToEditInfo.StatYear;
                 rate.StatYear = rateToEditInfo.StatYear;
 
-
-
                 var allStatuses =
                     _licensePRWriterRateStatusRepository.GetLicenseWriterRateStatus(new List<int>()
                     {
@@ -2193,7 +2462,6 @@ namespace UMPG.USL.API.Business.Licenses
                     status.ModifiedDate = DateTime.Now;
                     status.ModifiedBy = request.modifiedBy;
                     _licensePRWriterRateStatusRepository.Update(status);
-
                 }
                 foreach (var statusId in request.SelectedStatusesIds)
                 {
@@ -2243,37 +2511,31 @@ namespace UMPG.USL.API.Business.Licenses
 
                 var writerRateInclude = rate.WriterRateInclude;
 
-
                 if (rateToEditInfo.SelectedRateTypeId == 2 || rateToEditInfo.SelectedRateTypeId == 5)
                 {
                     if (request.Rates.Count > 1)
                     {
-
                         if (deletedRates.Count + 1 == request.Rates.Count)
                         {
-
                             for (int i = 1; i < request.Rates.Count; i++)
                             {
-
                                 if (request.Rates[i].EscalatedRate != deletedRates[i - 1].EscalatedRate || request.Rates[i].Rate != deletedRates[i - 1].Rate)
                                 {
                                     ok = true;
                                 }
-
                             }
-
                         }
-
                     }
                 }
-
-
-
+                if (rateToEditInfo.Rate == 0 && rateToEditInfo.SelectedRateTypeId != 12) //This allows rates of 0 to be entered && be included
+                {
+                    ok = false;
+                    rate.WriterRateInclude = true;
+                    writerRateInclude = true;
+                }
 
                 if (ok)
                 {
-
-
                     writerRateInclude = true;
 
                     if (currentRequestSpecialStatusList.Count > 0)
@@ -2295,7 +2557,6 @@ namespace UMPG.USL.API.Business.Licenses
                         }
                     }
 
-
                     //if (writerRateInclude)
                     //{
                     //    List<int> currentWriters = new List<int>(rate.LicenseWriterId);
@@ -2313,13 +2574,9 @@ namespace UMPG.USL.API.Business.Licenses
                 //escaleted continue
                 if (rateToEditInfo.SelectedRateTypeId == 2 || rateToEditInfo.SelectedRateTypeId == 5)
                 {
-
                     //this is for escaladed rates
                     if (request.Rates.Count > 1)
                     {
-
-
-
                         for (int i = 1; i < request.Rates.Count; i++)
                         {
                             var escaladedRate = new LicenseProductRecordingWriterRate();
@@ -2337,27 +2594,20 @@ namespace UMPG.USL.API.Business.Licenses
                             /* */
                             escaladedRate.product_configuration_id = rate.product_configuration_id;
 
-
                             escaladedRate.WriterRateInclude = writerRateInclude;
 
                             if (deletedRates.Count + 1 == request.Rates.Count && !ok)
                             {
                                 escaladedRate.WriterRateInclude = deletedRates[i - 1].WriterRateInclude;
                                 escaladedRate.licenseDate = deletedRates[i - 1].licenseDate;
-
                             }
 
                             _licensePRWriterRateRepository.Add(escaladedRate);
-
                         }
                     }
-
                 }
 
-
-
                 _licensePRWriterRateRepository.Update(rate);
-
             }
             foreach (var writer in writers)
             {
@@ -2378,7 +2628,6 @@ namespace UMPG.USL.API.Business.Licenses
                 writer.ModifiedDate = DateTime.Now;
                 writer.ModifiedBy = request.modifiedBy;
                 _licensePRWriterRepository.Update(writer);
-
             }
             UpdatePaidQrt(request.LicenseId);
             return true;
@@ -2405,7 +2654,6 @@ namespace UMPG.USL.API.Business.Licenses
             //    }
             //}
             return GetLicenseTemplateV2(licenseId);
-
         }
 
         //this method uses Get track with writers for better performance
@@ -2431,6 +2679,7 @@ namespace UMPG.USL.API.Business.Licenses
             }
             return licenseTemplate;
         }
+
         //
         // This function for Cloning Entity Frame work entities
         //
@@ -2451,11 +2700,8 @@ namespace UMPG.USL.API.Business.Licenses
             cloneLicenseResult.errorMessage = string.Empty;
             cloneLicenseResult.licenseId = 0;
 
-
-
             try
             {
-
                 var newLicenseId = 0;
 
                 using (var context = new AuthContext())
@@ -2473,7 +2719,7 @@ namespace UMPG.USL.API.Business.Licenses
                     newLicense.CreatedDate = DateTime.Now.AddHours(-8);
                     newLicense.ModifiedDate = DateTime.Now.AddHours(-8);
 
-                    // Increment the LicneseNumber with Dash and version 
+                    // Increment the LicneseNumber with Dash and version
                     // increment version if already present
                     // check if "-" in string, if not add -1 if so, increment
                     if (clonetype == "Addendum")
@@ -2499,9 +2745,7 @@ namespace UMPG.USL.API.Business.Licenses
                             {
                                 newLicense.LicenseName = newLicense.LicenseName.Substring(0, newLicense.LicenseName.Length - 2) + newversionnum.ToString();
                             }
-
                         }
-
                     }
                     else
                     {
@@ -2541,10 +2785,7 @@ namespace UMPG.USL.API.Business.Licenses
                             }
                         }
                     }
-
                 }
-
-
 
                 // run thru the related tables and add records accordingly
                 //  LicenseNotes
@@ -2571,10 +2812,7 @@ namespace UMPG.USL.API.Business.Licenses
 
                 cloneLicenseResult.success = true;
 
-
-
                 //return true;
-
             }
             catch (Exception ex)
             {
@@ -2585,14 +2823,13 @@ namespace UMPG.USL.API.Business.Licenses
             }
             return cloneLicenseResult;
 
-
             /* using the LicenseTemplate approach was significantly slower
             if (type == "template")
             {
                 var oldLicenseTemplate = GetLicenseTemplate(licenseId);
 
                 //  need to add notes to Template if necessary
-                //  LicenseNotes 
+                //  LicenseNotes
 
                 var oldLicenseNotes = _licenseNoteRepository.GetLicenseNotes(licenseId);
                 foreach (var licenseNote in oldLicenseNotes)
@@ -2601,7 +2838,6 @@ namespace UMPG.USL.API.Business.Licenses
                     licenseNote.licenseNoteId = 0;
                     var newLicenseNote = _licenseNoteRepository.Add(licenseNote);
                 }
-
 
                 //  LicenseProduct
                 foreach (var oldLicenseProduct in oldLicenseTemplate.LicenseProducts)
@@ -2615,7 +2851,6 @@ namespace UMPG.USL.API.Business.Licenses
                     //  LicenseProductConfiguration
                     foreach (var oldLicenseProductConfiguration in oldLicenseProduct.ProductHeader.Configurations)
                     {
-
                         var oldLicenseProductConfigurationId = oldLicenseProductConfiguration.LicenseProductConfiguration.LicenseProductConfigurationId;
 
                         var newLicenseProductConfiguration = oldLicenseProductConfiguration.LicenseProductConfiguration;
@@ -2661,7 +2896,7 @@ namespace UMPG.USL.API.Business.Licenses
                                 newWriterRate.WriterRateNotes = null;
                                 newWriterRate.LicenseWriterId = newWriter.LicenseWriterId;
                                 newWriterRate.LicenseWriterRateId = 0;
-                                    
+
                                 //var newWriterRate = new LicenseProductRecordingWriterRate
                                 //{
                                 //    LicenseWriterId = newWriter.LicenseWriterId,
@@ -2680,10 +2915,10 @@ namespace UMPG.USL.API.Business.Licenses
                                 //    PerSongRate = oldWriterRate.PerSongRate,
                                 //    ProRataRate = oldWriterRate.ProRataRate,
                                 //    Rate = oldWriterRate.Rate,
-                                //    RateNoteCount = oldWriterRate.RateNoteCount, 
+                                //    RateNoteCount = oldWriterRate.RateNoteCount,
                                 //    RateType = oldWriterRate.RateType
                                 //};
-                                    
+
                                 newWriterRate = _licensePRWriterRateRepository.Add(newWriterRate);
 
                                 //  LicenseWriterRateNotes
@@ -2694,20 +2929,13 @@ namespace UMPG.USL.API.Business.Licenses
                                     newWriterRateNote.LicenseWriterRateNoteId = 0;
                                     newWriterRateNote = _licensePRWriterRateNoteRepository.Add(newWriterRateNote);
                                 }
-
-
                             }
                         }
-
                     }
-
                 }
             }
             */
-
         }
-
-
 
         public bool EditWriterIsIncluded(EditWriterIncludedSaveRequest request)
         {
@@ -2725,9 +2953,9 @@ namespace UMPG.USL.API.Business.Licenses
                         rate.WriterRateInclude = request.IsIncluded;
                         rate.ModifiedDate = DateTime.Now;
                         _licensePRWriterRateRepository.Update(rate);
-
                     }
                     break;
+
                 case 2: // (Applies consent to the track, including all configurations )
                     lwritersRates = _licensePRWriterRateRepository.GetLicenseRecordingWriterRatesFromIds(
                     request.SaveWriterIds, new List<int>());
@@ -2736,9 +2964,9 @@ namespace UMPG.USL.API.Business.Licenses
                         rate.WriterRateInclude = request.IsIncluded;
                         rate.ModifiedDate = DateTime.Now;
                         _licensePRWriterRateRepository.Update(rate);
-
                     }
                     break;
+
                 case 3:  // (Applies consent to all like configurations for that writer)
                     writers = new List<int>();
                     foreach (var recId in request.SelectedRecordingIds)
@@ -2752,9 +2980,9 @@ namespace UMPG.USL.API.Business.Licenses
                         rate.WriterRateInclude = request.IsIncluded;
                         rate.ModifiedDate = DateTime.Now;
                         _licensePRWriterRateRepository.Update(rate);
-
                     }
                     break;
+
                 case 4:  // (Applies consent to that Writer across all tracks)
                     writers = new List<int>();
                     foreach (var recId in request.SelectedRecordingIds)
@@ -2768,9 +2996,9 @@ namespace UMPG.USL.API.Business.Licenses
                         rate.WriterRateInclude = request.IsIncluded;
                         rate.ModifiedDate = DateTime.Now;
                         _licensePRWriterRateRepository.Update(rate);
-
                     }
                     break;
+
                 case 5:  // (Clears All)
                     writers = new List<int>();
                     foreach (var recId in request.SelectedRecordingIds)
@@ -2784,13 +3012,11 @@ namespace UMPG.USL.API.Business.Licenses
                         rate.WriterRateInclude = request.IsIncluded;
                         rate.ModifiedDate = DateTime.Now;
                         _licensePRWriterRateRepository.Update(rate);
-
                     }
                     break;
             };
             return true;
         }
-
 
         public bool EditWriterConsent(EditWriterConsentSaveRequest request)
         {
@@ -2811,6 +3037,7 @@ namespace UMPG.USL.API.Business.Licenses
                         _licensePRWriterRateRepository.Update(rate);
                     }
                     break;
+
                 case 2: // (Applies consent to the track, including all configurations )
                     lwritersRates = _licensePRWriterRateRepository.GetLicenseRecordingWriterRatesFromIds(
                     request.SaveWriterIds, new List<int>());
@@ -2822,6 +3049,7 @@ namespace UMPG.USL.API.Business.Licenses
                         _licensePRWriterRateRepository.Update(rate);
                     }
                     break;
+
                 case 3:  // (Applies consent to all like configurations for that writer)
                     writers = new List<int>();
                     foreach (var recId in request.SelectedRecordingIds)
@@ -2838,6 +3066,7 @@ namespace UMPG.USL.API.Business.Licenses
                         _licensePRWriterRateRepository.Update(rate);
                     }
                     break;
+
                 case 4:  // (Applies consent to that Writer across all tracks)
                     writers = new List<int>();
                     foreach (var recId in request.SelectedRecordingIds)
@@ -2854,6 +3083,7 @@ namespace UMPG.USL.API.Business.Licenses
                         _licensePRWriterRateRepository.Update(rate);
                     }
                     break;
+
                 case 5:  // (Clears All)
                     writers = new List<int>();
                     foreach (var recId in request.SelectedRecordingIds)
@@ -2900,6 +3130,7 @@ namespace UMPG.USL.API.Business.Licenses
                         _licensePRWriterRepository.Update(licenseProductRecordingWriter);
                     }
                     break;
+
                 case 2: // (Applies consent to the track, including all configurations )
                     lwritersRates = _licensePRWriterRateRepository.GetLicenseRecordingWriterRatesFromIds(
                     request.SaveWriterIds, new List<int>());
@@ -2917,6 +3148,7 @@ namespace UMPG.USL.API.Business.Licenses
                         _licensePRWriterRepository.Update(licenseProductRecordingWriter);
                     }
                     break;
+
                 case 3:  // (Applies consent to all like configurations for that writer)
                     writers = new List<int>();
                     foreach (var recId in request.SelectedRecordingIds)
@@ -2940,6 +3172,7 @@ namespace UMPG.USL.API.Business.Licenses
                         _licensePRWriterRepository.Update(licenseProductRecordingWriter);
                     }
                     break;
+
                 case 4:  // (Applies consent to that Writer across all tracks)
                     writers = new List<int>();
                     foreach (var recId in request.SelectedRecordingIds)
@@ -2964,6 +3197,7 @@ namespace UMPG.USL.API.Business.Licenses
                         _licensePRWriterRepository.Update(licenseProductRecordingWriter);
                     }
                     break;
+
                 case 5:  // (Clears All)
                     writers = new List<int>();
                     foreach (var recId in request.SelectedRecordingIds)
@@ -3023,7 +3257,7 @@ namespace UMPG.USL.API.Business.Licenses
             }
 
             //Song length greater than 5 min and 0 seconds return FALSE
-            //USL-1110 
+            //USL-1110
             try
             {
                 var minutes = int.Parse(duration.Substring(3, 2));
@@ -3033,7 +3267,6 @@ namespace UMPG.USL.API.Business.Licenses
                 {
                     rv = true;
                 }
-
             }
             catch (Exception e)
             {
@@ -3082,6 +3315,7 @@ namespace UMPG.USL.API.Business.Licenses
             }
             return split;
         }
+
         private int GetWriterId(LicenseProductRecordingWriterRate rate, List<WorksWriter> writers)
         {
             int writerId = 0;
@@ -3103,10 +3337,12 @@ namespace UMPG.USL.API.Business.Licenses
         {
             return (decimal)statRate * statPercentage / 100;
         }
+
         private decimal CalculateSongRate(float statRate, decimal statPercentage)
         {
             return (decimal)statRate * statPercentage / 100;
         }
+
         private decimal CalculateProRataRate(decimal perSongRate, decimal? split)
         {
             if (split != null) return perSongRate * (decimal)split / 100;
@@ -3191,11 +3427,11 @@ namespace UMPG.USL.API.Business.Licenses
                             lreturn = paidQrts[i];
                         }
                     }
-
                 }
             }
             return lreturn;
         }
+
         private Dictionary<string, int> GetStatusRollup(List<int> writerRatesIds)
         {
             var lReturnlist = new Dictionary<string, int>();
@@ -3203,7 +3439,6 @@ namespace UMPG.USL.API.Business.Licenses
 
             foreach (var status in statuses)
             {
-
                 if (lReturnlist.ContainsKey(status.LU_SpecialStatuses.SpecialStatus.ToLower()))
                 {
                     lReturnlist[status.LU_SpecialStatuses.SpecialStatus.ToLower()]++;
@@ -3240,7 +3475,7 @@ namespace UMPG.USL.API.Business.Licenses
 
             //get recording details
 
-            //            // RECs Recordings data 
+            //            // RECs Recordings data
             var recsTracks = _recsProvider.RetrieveTracksWithWriters(licenseProduct.ProductId);
 
             //            var licenseProductConfigIdTotals = GetLicenseProductConfigurationIdTotals(licenseProductId);
@@ -3253,7 +3488,6 @@ namespace UMPG.USL.API.Business.Licenses
             //iterate through the Recording details
             foreach (var worksRecording in recsTracks)
             {
-
                 var totalpercentage = 0.00;
 
                 worksRecording.Message = string.Empty;
@@ -3370,7 +3604,6 @@ namespace UMPG.USL.API.Business.Licenses
                                                 }
                                             }
                                             totalpercentage = totalpercentage + actualcontribution;
-
                                         }
                                     }
                                 }
@@ -3393,24 +3626,43 @@ namespace UMPG.USL.API.Business.Licenses
                         if (worksRecording.LicenseRecording != null)
                             worksRecording.LicenseRecording.StatusRollup = GetStatusRollup(licenseWriterRateIds);
 
-
                         worksRecording.UmpgPercentageRollup = totalpercentage;
                         worksRecording.LicensedRollup = licensedpercentage;
 
                         // fix #5 break out when matching tracks
                         break;
-
                     }
 
                     if (worksRecording.LicenseRecording == null)
                     {
                         worksRecording.LicensedRollup = 0.00;
-
                     }
                 }
             }
             totals = licenseProductConfigIdTotals;
+
+            //remove recsTracks that are not in MechsTracks.  We do this so that the mechdata is shown, not the rec data.  Keep it on MEchs side
+
+            recsTracks = FilterNonMechTracksOut(recsTracks, mechsRecordings);
             return recsTracks;
+        }
+
+        //USL-1175 //This prevents new tracks from showing up on previous executedLicenses
+        private List<WorksRecording> FilterNonMechTracksOut(List<WorksRecording> recsTracks,
+            List<LicenseProductRecording> mechsTracks)
+        {
+            var newList = new List<WorksRecording>();
+            foreach (var worksRecording in recsTracks)
+            {
+                foreach (var mechRecording in mechsTracks)
+                {
+                    if (mechRecording.TrackId == worksRecording.Track.Id)
+                    {
+                        newList.Add(worksRecording);
+                    }
+                }
+            }
+            return newList;
         }
 
         private List<WorksRecording> GetLicenseProductRecordingsForLicenseOverview(int licenseProductId, License license, LicenseProduct licenseProduct, out List<LicenseProductConfigurationTotals> totals)
@@ -3438,11 +3690,9 @@ namespace UMPG.USL.API.Business.Licenses
             //        isExecuted = license.LicenseStatusId == 5 || license.LicenseStatusId == 7;
             //    }
 
-
-
             //get recording details
 
-            //            // RECs Recordings data 
+            //            // RECs Recordings data
             var recsTracks = _recsProvider.RetrieveTracksWithWriters(licenseProduct.ProductId);
 
             var licenseProductConfigIdTotals = GetLicenseProductConfigurationIdTotals(licenseProductId);
@@ -3454,7 +3704,6 @@ namespace UMPG.USL.API.Business.Licenses
             //iterate through the Recording details
             foreach (var worksRecording in recsTracks)
             {
-
                 var totalpercentage = 0.00;
 
                 worksRecording.Message = string.Empty;
@@ -3565,7 +3814,6 @@ namespace UMPG.USL.API.Business.Licenses
                                                 }
                                             }
                                             totalpercentage = totalpercentage + actualcontribution;
-
                                         }
                                     }
                                 }
@@ -3588,19 +3836,16 @@ namespace UMPG.USL.API.Business.Licenses
                         if (worksRecording.LicenseRecording != null)
                             worksRecording.LicenseRecording.StatusRollup = GetStatusRollup(licenseWriterRateIds);
 
-
                         worksRecording.UmpgPercentageRollup = totalpercentage;
                         worksRecording.LicensedRollup = licensedpercentage;
 
                         // fix #5 break out when matching tracks
                         break;
-
                     }
 
                     if (worksRecording.LicenseRecording == null)
                     {
                         worksRecording.LicensedRollup = 0.00;
-
                     }
                 }
             }
@@ -3635,7 +3880,6 @@ namespace UMPG.USL.API.Business.Licenses
             //iterate through the Recording details
             foreach (var worksRecording in recsTracks)
             {
-
                 var totalpercentage = 0.00;
 
                 worksRecording.Message = string.Empty;
@@ -3741,7 +3985,6 @@ namespace UMPG.USL.API.Business.Licenses
                                                 }
                                             }
                                             totalpercentage = totalpercentage + actualcontribution;
-
                                         }
                                     }
                                 }
@@ -3764,29 +4007,25 @@ namespace UMPG.USL.API.Business.Licenses
                         if (worksRecording.LicenseRecording != null)
                             worksRecording.LicenseRecording.StatusRollup = GetStatusRollup(licenseWriterRateIds);
 
-
                         worksRecording.UmpgPercentageRollup = totalpercentage;
                         worksRecording.LicensedRollup = licensedpercentage;
-
-
                     }
 
                     if (worksRecording.LicenseRecording == null)
                     {
                         worksRecording.LicensedRollup = 0.00;
-
                     }
                 }
             }
             totals = licenseProductConfigIdTotals;
             return recsTracks;
         }
+
         private double GetContribution(WorksWriter writer)
         {
             double contribution = (from originalPublisher in writer.OriginalPublishers from writerBase in originalPublisher.Administrator where writerBase.Controlled select writerBase).Aggregate<WriterBase, double>(0, (current, writerBase) => current + (double)writerBase.MechanicalCollectablePercentage);
             return writer.OriginalPublishers.Where(originalPublisher => originalPublisher.Controlled).Aggregate(contribution, (current, originalPublisher) => current + (double)originalPublisher.MechanicalCollectablePercentage);
         }
-
 
         private void getProductConfigs(LicenseProduct product, List<LicenseProductConfigurationTotals> licenseProductConfigIdTotals, double totalpercentage)
         {
@@ -3843,8 +4082,8 @@ namespace UMPG.USL.API.Business.Licenses
 
             //NLOG  Step 5. Activate the configuration
             LogManager.Configuration = config;
-
         }
+
         private List<LicenseProduct> setLicenseClaimException(List<LicenseProduct> products)
         {
             foreach (var licenseProduct in products)
@@ -3878,7 +4117,28 @@ namespace UMPG.USL.API.Business.Licenses
 
         private void CloneLicenseProducts(int licenseId, int oldLicenseProductId, int oldLicenseProductRecordingId, int oldTrackId, string clonetype, int contactid, int newLicenseId)
         {
-            var oldLicenseProducts = _licenseProductRepository.GetLicenseProducts(licenseId);
+            // run thru the related tables and add records accordingly
+            //  LicenseNotes
+            //  LicenseProducts
+            //      LicenseProductConfigurations
+            //      LicenesRecordings
+            //          LicenseWriters
+            //              LicenseWriterNotes
+            //              LicenseWriterRatesb
+            //                  LicenseWriterRateStatus
+
+            //These are the licenseProductRecordingIds to avoid
+            // var licenseProductRecordingIds1 = _licenseProductRecordingRepository.GetLicenseRecordingsIdsByLicenseProductId(oldLicenseProductId); //request.licenseProductId);
+
+            //   var oldLicenseProducts1 = _licenseProductRepository.GetLicenseProducts(licenseId);
+
+            var oldLicenseProducts = GetProductsNew(licenseId);
+
+            var licenseStatus = _licenseRepository.GetLicneseStatus(licenseId);
+            var licenseStatusId = licenseStatus.LicenseStatusId;
+
+            bool isExecuted = licenseStatusId == 5 || licenseStatusId == 7;
+
             foreach (var licenseProduct in oldLicenseProducts)
             {
                 oldLicenseProductId = licenseProduct.LicenseProductId;
@@ -3901,13 +4161,12 @@ namespace UMPG.USL.API.Business.Licenses
                 }
 
                 //  LicenseRecordings
-                //  new method
                 var oldLicenseProductRecordings = _licenseProductRecordingRepository.GetLicenseRecordingsByLicenseProductId(oldLicenseProductId);
+
                 foreach (var licenseProductRecording in oldLicenseProductRecordings)
                 {
                     oldLicenseProductRecordingId = licenseProductRecording.LicenseRecordingId;
                     oldTrackId = licenseProductRecording.TrackId;
-
 
                     //  change old LicenseProductId to new LicenseProductId, add the record
                     licenseProductRecording.LicenseProductId = newLicenseProduct.LicenseProductId;
@@ -3917,10 +4176,10 @@ namespace UMPG.USL.API.Business.Licenses
                     var newLicenseProductRecording = _licenseProductRecordingRepository.Add(licenseProductRecording);
 
                     //  LicenseWriters
-                    var oldWriters = _licensePRWriterRepository.GetLicenseProductRecordingWriters(oldLicenseProductRecordingId);
+                    var oldWriters =
+                        _licensePRWriterRepository.GetLicenseProductRecordingWriters(oldLicenseProductRecordingId);
                     foreach (var writer in oldWriters)
                     {
-
                         var oldLicenseWriterId = writer.LicenseWriterId;
                         List<int> writerIdList = new List<int> { oldLicenseWriterId };
 
@@ -3933,9 +4192,9 @@ namespace UMPG.USL.API.Business.Licenses
                         writer.SplitOverride = null;
                         var newWriter = _licensePRWriterRepository.Add(writer);
 
-
                         //  LicenseWriterNotes
-                        var oldWriterNotes = _licensePRWriterNoteRepository.GetLicenseProductRecordingWriterNotes(writerIdList);
+                        var oldWriterNotes =
+                            _licensePRWriterNoteRepository.GetLicenseProductRecordingWriterNotes(writerIdList);
                         foreach (var writerNote in oldWriterNotes)
                         {
                             writerNote.LicenseWriterId = newWriter.LicenseWriterId;
@@ -3948,13 +4207,20 @@ namespace UMPG.USL.API.Business.Licenses
 
                         //  LicenseWriterRates
 
-                        var oldWriterRates = _licensePRWriterRateRepository.GetLicenseProductRecordingWriterRates(oldLicenseWriterId);
-
+                        var oldWriterRates =
+                            _licensePRWriterRateRepository.GetLicenseProductRecordingWriterRates(oldLicenseWriterId);
 
                         foreach (var writerRate in oldWriterRates)
                         {
                             List<int> writerRateIdList = new List<int> { writerRate.LicenseWriterRateId };
 
+                            //USL-1240
+                            //This is for ProductOverview and the Creation of Addendum on Executed/Accepted licenses.
+                            //The modified date should stay the same for the writerRate IF the license is in Executed/Accepted state.
+                            if (isExecuted)
+                            {
+                                writerRate.ModifiedDate = writerRate.ModifiedDate;
+                            }
                             writerRate.LicenseWriterId = newWriter.LicenseWriterId;
                             writerRate.LicenseWriterRateId = 0;
                             writerRate.CreatedBy = contactid;
@@ -3965,27 +4231,157 @@ namespace UMPG.USL.API.Business.Licenses
                             }
                             var newWriterRate = _licensePRWriterRateRepository.Add(writerRate);
 
-
                             //  LicenseWriterRateStatus
-                            var oldWriterStatuses = _licensePRWriterRateStatusRepository.GetLicenseWriterRateStatus(writerRateIdList);
+                            var oldWriterStatuses =
+                                _licensePRWriterRateStatusRepository.GetLicenseWriterRateStatus(writerRateIdList);
                             foreach (var writerStatus in oldWriterStatuses)
                             {
-
                                 writerStatus.LicenseWriterRateId = newWriterRate.LicenseWriterRateId;
                                 writerStatus.LicenseWriterRateStatusId = 0;
                                 writerStatus.CreatedBy = contactid;
                                 writerStatus.ModifiedBy = contactid;
                                 var newWriterStatus = _licensePRWriterRateStatusRepository.Add(writerStatus);
                             }
-
                         }
-
                     }
                 }
 
-
+                // saves new WorksRecordings USL-1175
+                HarmonizeRecsWithNewLicense(newLicenseProduct, oldLicenseProductId);
             }
         }
 
+        private void HarmonizeRecsWithNewLicense(LicenseProduct newLicenseProduct, int oldLicenseProductId)
+        {
+            _licenseProductConfigurationManager.AddLicenseRecordingForProductSafe(newLicenseProduct.ProductId,
+                   newLicenseProduct.LicenseProductId);
+
+            var licenseProductRecordingIds = _licenseProductRecordingRepository.GetLicenseRecordingsIdsByLicenseProductId(newLicenseProduct.LicenseProductId);
+            var OldlicenseProductRecordingIds = _licenseProductRecordingRepository.GetLicenseRecordingsIdsByLicenseProductId(oldLicenseProductId);//request.licenseProductId);
+            newLicenseProduct.LicenseProductConfigurations = _licenseProductConfigurationRepository.GetLicenseProductConfigurations(newLicenseProduct.LicenseProductId);
+
+            foreach (var config in newLicenseProduct.LicenseProductConfigurations)
+            {
+                var product_configuration_id = (int)config.product_configuration_id;
+                var configuration_id = (int)config.configuration_id;
+                var configuration_name = config.configuration_name;
+
+                if (licenseProductRecordingIds.Count > 0)
+                {
+                    if (licenseProductRecordingIds[0] != 0)
+                    {
+                        var licenseWriterIds =
+                            _licensePRWriterRepository.GetLicenseRecordingWriterIds(licenseProductRecordingIds);
+                        //  var avoidTheseLicenseWriterIds =
+                        //      _licensePRWriterRepository.GetLicenseRecordingWriterIds(OldlicenseProductRecordingIds);
+
+                        foreach (var licenseWriterId in licenseWriterIds)
+                        {
+                            AddPRWriterRate(product_configuration_id, configuration_name, configuration_id,
+                                licenseWriterId);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void AddPRWriterRate(int product_configuration_id, string configuration_name, int configuration_id, int licenseWriterId)
+        {
+            var createdBy = 1;
+            var createdDate = DateTime.Now;
+
+            if (!_licensePRWriterRateRepository.LicenseProductHasWriterRate(product_configuration_id, licenseWriterId))
+            {
+                if (product_configuration_id == 0)
+                {
+                }
+                var licenseProductRecordingWriterRate = new LicenseProductRecordingWriterRate
+                {
+                    LicenseWriterId = licenseWriterId,
+                    product_configuration_id = product_configuration_id,
+                    configuration_id = configuration_id,
+                    configuration_name = configuration_name,
+                    CreatedBy = createdBy,
+                    CreatedDate = createdDate,
+                    writersConsentTypeId = 5,
+                    Rate = Convert.ToDecimal(0),
+                    PerSongRate = Convert.ToDecimal(0),
+                    ProRataRate = Convert.ToDecimal(0),
+                    RateTypeId = 12,
+                    //NA   //was 1 for Stat Rate temp/default for now so config rates show up
+                    WriterRateInclude = false
+                };
+
+                _licensePRWriterRateRepository.Add(licenseProductRecordingWriterRate);
+            }
+        }
+
+        //private void createLicenseProductRecordingIds(int licenseProductId, int configuration_id, string configuration_name, DateTime createdDate, int createdBy, int product_configuration_id, bool writerRateInclude)
+        //{
+        //    var licenseProductRecordingIds = _licenseProductRecordingRepository.GetLicenseRecordingsIdsByLicenseProductId(licenseProductId); //request.licenseProductId);
+
+        //    if (licenseProductRecordingIds.Count > 0)
+        //    {
+        //        if (licenseProductRecordingIds[0] != 0)
+        //        {
+        //            var licenseWriterIds =
+        //                _licensePRWriterRepository.GetLicenseRecordingWriterIds(licenseProductRecordingIds);
+        //            foreach (var licenseWriterId in licenseWriterIds)
+        //            {
+        //                if (product_configuration_id == 0)
+        //                {
+        //                }
+        //                var licenseProductRecordingWriterRate = new LicenseProductRecordingWriterRate
+        //                {
+        //                    LicenseWriterId = licenseWriterId,
+        //                    product_configuration_id = product_configuration_id,
+        //                    configuration_id = configuration_id,
+        //                    configuration_name = configuration_name,
+        //                    CreatedBy = createdBy,
+        //                    CreatedDate = createdDate,
+        //                    writersConsentTypeId = 5,
+        //                    Rate = Convert.ToDecimal(0),
+        //                    PerSongRate = Convert.ToDecimal(0),
+        //                    ProRataRate = Convert.ToDecimal(0),
+        //                    RateTypeId = 12,
+        //                    //NA   //was 1 for Stat Rate temp/default for now so config rates show up
+        //                    WriterRateInclude = writerRateInclude
+        //                };
+
+        //                licenseProductRecordingWriterRate =
+        //                    _licensePRWriterRateRepository.Add(licenseProductRecordingWriterRate);
+        //            }
+        //        }
+        //    }
+        //}
+
+        //private List<LicenseProductRecording> BuildMechsLicenseProductRecording(List<WorksRecording> recsTracks)
+        //{
+        //    var listOfLicenseProductRecordings = new List<LicenseProductRecording>();
+
+        //    foreach (var recTrack in recsTracks)
+        //    {
+        //        var productId = recTrack.ProductId;
+        //        var trackId = recTrack.Track.Id;
+        //        var newLicenseProductRecording = new LicenseProductRecording();
+        //        recTrack.LicenseRecording =
+
+        //    }
+
+        //    return listOfLicenseProductRecordings;
+
+        //}
+        //private List<WorksRecording> AddMissingTracksToMechs(int trackId, List<WorksRecording> recsTracks)
+        //{
+        //    var newList = new List<WorksRecording>();
+        //    foreach (var recTrack in recsTracks)
+        //    {
+        //        if (recTrack.Track.Id != trackId)
+        //        {
+        //            newList.Add(recTrack);
+        //        }
+        //    }
+        //    return newList;
+        //}
     }
 }

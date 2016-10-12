@@ -10,11 +10,13 @@ using UMPG.USL.API.Business.Contacts;
 using UMPG.USL.Models;
 using UMPG.USL.Models.ContactModel;
 using UMPG.USL.API;
+using UMPG.USL.API.ActionFilters;
 using UMPG.USL.Models.LicenseModel;
 
 namespace UMPG.USL.API.Controllers.ContactCTRL
 {
     [RoutePrefix("api/ContactCTRL/Contacts")]
+    //[AuthorizationRequired]
     public class ContactController : ApiController
     {
         private readonly IContactManager _contactManager ;
@@ -139,7 +141,15 @@ namespace UMPG.USL.API.Controllers.ContactCTRL
             return _contactManager.DeleteContactandLink(contact);
         }
 
+        [Route("DeleteContactFromLabelGroup")]
+        [HttpPost]
+        public bool DeleteContactFromLabelGroup(DeleteContactFromLabelGroupRequest request)
+        {
+            return _contactManager.DeleteContactFromLabelGroup(request);
+        }
         
+
+
         [Route("DeleteLicenseeContactAndLink")]
         [HttpPost]
         public bool DeleteLicenseeContactAndLink(DeleteContactRequest contact)

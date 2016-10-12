@@ -13,6 +13,7 @@ namespace UMPG.USL.API.Data.LicenseData
         List<LicenseProductConfiguration> GetLicenseProductConfigurations(int licenseproductId);
 
         LicenseProductConfiguration Get(int licenseProductConfigurationId);
+        string GetCatalogNummber(int productConfigId);
 
         LicenseProductConfiguration Add(LicenseProductConfiguration licenseProductConfiguration);
 

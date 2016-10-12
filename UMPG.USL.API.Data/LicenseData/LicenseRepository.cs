@@ -5,6 +5,7 @@ using System;
 using UMPG.USL.API.Data.Utils;
 using UMPG.USL.Models;
 using UMPG.USL.Models.LicenseModel;
+using UMPG.USL.Models.LookupModel;
 using EntityState = System.Data.Entity.EntityState;
 
 namespace UMPG.USL.API.Data.LicenseData
@@ -52,6 +53,37 @@ namespace UMPG.USL.API.Data.LicenseData
             }
         }
 
+        public LicenseOverview GetLicenseOverview(int licenseid)
+        {
+            using (var context = new AuthContext())
+            {
+               var license = context.Licenses
+                    .Include("LicenseType")
+                    .Include("LicensePriority")
+                    .Include("Licensee.LicenseeLabelGroup")
+                    .Include("LicenseStatus")
+                    .Include("Licensee")
+                    .Include("LicenseMethod")
+                    .FirstOrDefault(c => c.LicenseId == licenseid);
+
+                LicenseOverview licenseOverview = new LicenseOverview();
+
+                licenseOverview.Licensee = license.Licensee;
+                licenseOverview.LicenseeId = license.LicenseeId;
+                licenseOverview.LicenseName = license.LicenseName;
+                licenseOverview.LicenseNumber = license.LicenseNumber;
+                licenseOverview.LicenseMethod = license.LicenseMethod;
+                licenseOverview.LicenseNoteList = license.LicenseNoteList;
+                licenseOverview.LicensePriority = license.LicensePriority;
+                licenseOverview.LicenseStatus = license.LicenseStatus;
+                licenseOverview.LicenseType = license.LicenseType;
+                licenseOverview.Licensee = license.Licensee;
+
+
+                return licenseOverview;
+            }
+        }
+
         public License GetLicnese(int id)
         {
             using (var context = new AuthContext())
@@ -74,6 +106,16 @@ namespace UMPG.USL.API.Data.LicenseData
                 //           .Where(a => a.LicenseeId == license.Licensee.LicenseeId).ToList();
 
                 return license;
+            }
+        }
+
+        public LU_LicenseStatus GetLicneseStatus(int licenseId)
+        {
+            using (var context = new AuthContext())
+            {
+                var license = context.Licenses.Include("LicenseStatus").FirstOrDefault(l => l.LicenseId == licenseId);
+                return license.LicenseStatus;
+
             }
         }
 

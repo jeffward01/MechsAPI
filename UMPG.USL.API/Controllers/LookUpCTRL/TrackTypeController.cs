@@ -10,11 +10,13 @@ using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.API.Business.LookUps;
 using UMPG.USL.Models.LookupModel;
 using UMPG.USL.API;
+using UMPG.USL.API.ActionFilters;
 using UMPG.USL.API.Business.Lookups;
 
 namespace UMPG.USL.API.Controllers.LookUpCTRL
 {
     [RoutePrefix("api/LookUpCTRL/TrackType")]
+    [AuthorizationRequired]
     public class TrackTypeController : ApiController
     {
         private readonly ITrackTypeManager _trackTypeManager;

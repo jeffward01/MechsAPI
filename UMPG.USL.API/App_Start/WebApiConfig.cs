@@ -15,7 +15,7 @@ namespace UMPG.USLAPI
         public static void Register(HttpConfiguration config)
         {
             //Toggle Logging  || Comment out 'NLog.LogManager.DisableLogging();' if you wish to turn logging ON.
-            NLog.LogManager.DisableLogging();
+            //NLog.LogManager.DisableLogging();
 
             config.EnableCors();
 
@@ -39,7 +39,7 @@ namespace UMPG.USLAPI
             //};
             //settings.Converters.Add(dateConverter);
 
-            config.Filters.Add(new ExceptionFilter());
+           // config.Filters.Add(new ExceptionFilter());  | Depreciated Old Unused Logging
         }
     }
 }

@@ -146,9 +146,9 @@ namespace UMPG.USL.API.Business.Licenses
                         licenseSolrRequest.TrackTitle.Add(productTrack.Title);
                     }
                 }
-                if (product.ProductConfigurations != null && product.ProductConfigurations.Count > 0)
+                if (product.ProductConfigurations != null && product.ProductConfigurations.Count > 0 )
                 {
-                    product.ProductConfigurations = product.ProductConfigurations.Where(p => productsConfigurationList.Contains(p.ConfigurationId)).ToList();
+                    product.ProductConfigurations = product.ProductConfigurations.Where(p => p.ConfigurationId.HasValue && productsConfigurationList.Contains(p.ConfigurationId.Value)).ToList();
                 }
                 if (product.ProductConfigurations != null && product.ProductConfigurations.Count > 0)
                 {

@@ -461,6 +461,7 @@ namespace UMPG.USL.API.Business.Contacts
                    CreatedDate = DateTime.Now,
                    CreatedBy = request.CreatedBy
                };
+
                //need to revisit
                _contactRepository.AddLabelGroupLink(newlink);
 
@@ -500,5 +501,18 @@ namespace UMPG.USL.API.Business.Contacts
             _contactRepository.EditContact(contactToDelete);
             return true;
         }
+
+        public bool DeleteContactFromLabelGroup(DeleteContactFromLabelGroupRequest request)
+        {
+            var relatedLinks = _contactRepository.GetLinksForContact(request.ContactId);
+            var linkToDelete = relatedLinks.FirstOrDefault(c => c.LicenseeLabelGroupId == request.LicenseeLabelGroupId);
+            if (linkToDelete != null)
+            {
+                linkToDelete.ModifiedBy = request.ModifiedBy;
+                linkToDelete.Deleted = DateTime.Now;
+            }
+            _contactRepository.EditLabelGroupLink(linkToDelete);
+            return true;
+        } 
     }
 }

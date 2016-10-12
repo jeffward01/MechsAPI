@@ -1,0 +1,16 @@
+2016-10-03 09:57:24.7306|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-03 09:57:24.7586|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-03 09:57:24.7586|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-03 09:57:24.7586|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-03 09:57:24.7586|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-03 09:57:24.7586|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2016-10-03 09:57:24.7906|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :10/3/2016 9:57:24 AM
+2016-10-03 09:57:25.0696|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (22739) : elapsed :00:00:00.2790000
+2016-10-03 09:57:25.4256|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (67580) : elapsed :00:00:00.3560000
+2016-10-03 09:57:32.3616|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (21742) : elapsed :00:00:06.7060000
+2016-10-03 09:57:32.6136|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:07.8840000
+2016-10-03 09:57:32.6136|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-03 09:57:32.6136|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-03 09:57:32.6136|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-03 09:57:32.6136|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-03 09:57:32.6136|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------

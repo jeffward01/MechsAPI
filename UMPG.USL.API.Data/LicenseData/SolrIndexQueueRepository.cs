@@ -41,6 +41,14 @@ namespace UMPG.USL.API.Data.LicenseData
             }
         }
 
+        public int GetQueueSize()
+        {
+            using (var context = new AuthContext())
+            {
+               return context.SolrIndexQueues.Count(i => i.SolrQueueStatus == (int) SolrIndexQueueState.Pending);
+            }
+        }
+
         public SolrIndexQueueItem ProcessItemFromQueue()
         {
             using (var context = new AuthContext())
@@ -50,6 +58,15 @@ namespace UMPG.USL.API.Data.LicenseData
                         .OrderBy(i => i.SolrIndexQueueId)
                         .FirstOrDefault();
                 return solrItem;
+            }
+        }
+
+        public int GetFailedCount()
+        {
+            using (var context = new AuthContext())
+            {
+                return
+                    context.SolrIndexQueues.Count(i => i.SolrQueueStatus == (int) SolrIndexQueueState.Failed);
             }
         }
     }

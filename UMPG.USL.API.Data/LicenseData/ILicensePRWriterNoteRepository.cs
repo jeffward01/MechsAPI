@@ -20,6 +20,10 @@ namespace UMPG.USL.API.Data.LicenseData
         void Update(LicenseProductRecordingWriterNote licenseProductRecordingWriterNote);
 
         List<LicenseProductRecordingWriterNote> GetLicenseProductRecordingWriterNotes(List<int> licenseWriterIds);
-    
+
+        List<LicenseProductRecordingWriterNote> GetLicenseProductRecordingWriterNotesForLicenseWriterId(
+            int licenseWriterId);
+
+
     }
 }

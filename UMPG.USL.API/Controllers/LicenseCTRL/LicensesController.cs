@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using UMPG.USL.API.ActionFilters;
 using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.Models;
 using UMPG.USL.Models.LicenseModel;
@@ -18,7 +19,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
     using UMPG.USL.Common;
     using UMPG.USL.Models.ContactModel;
     using UMPG.USL.Models.LicenseGenerate;
-
+  
     [RoutePrefix("api/licenseCTRL/licenses")]
     public class LicenseController : BaseController
     {
@@ -27,6 +28,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
         private readonly IContactGenerateLicenseQueueManager _contactGenerateLicenseQueueManager;
         private readonly IGenerateLicenseManager _generateLicenseManager;
 
+     
         public LicenseController(ILicenseManager licenseManager, IContactManager contactManager, IContactGenerateLicenseQueueManager contactGenerateLicenseQueueManager, IGenerateLicenseManager generateLicenseManager)
         {
             _licenseManager = licenseManager;
@@ -34,7 +36,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             _contactGenerateLicenseQueueManager = contactGenerateLicenseQueueManager;
             _generateLicenseManager = generateLicenseManager;
         }
-        //[Authorize]
+        [AuthorizationRequired]
         [Route("")]
         [HttpGet]
         [ActionName("GetAll")]
@@ -43,7 +45,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseManager.GetAll();
         }
 
-        //[Authorize]
+        [AuthorizationRequired]
         [Route("Search")]
         [HttpPost]
         public List<License> Search([FromBody]string query)
@@ -52,6 +54,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseManager.Search(query);
         }
 
+        [AuthorizationRequired]
         [Route("PagedSearch")]
         [HttpPost]
         public PagedResponse<License> PagedSearch(LicenseRequest request)
@@ -59,7 +62,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
 
             return _licenseManager.PagedSearch(request);
         }
-
+        [AuthorizationRequired]
         [HttpPost]
         [ActionName("Add")]
         public License Add(License contact)
@@ -67,7 +70,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseManager.Add(contact);
         }
 
-
+        [AuthorizationRequired]
         [Route("UpdateLicense")]
         [HttpPost]
         public bool UpdateLicense(UpdateLicenseAssigneeRequest request)
@@ -75,7 +78,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseManager.UpdateLicense(request);
         }
 
-
+        [AuthorizationRequired]
         [Route("UploadGeneratedLicensePreview")]
         [HttpPost]
         public bool UploadGeneratedLicensePreview(UploadGeneratedLicensePreviewRequest data)
@@ -158,7 +161,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
         }
 
 
-
+        [AuthorizationRequired]
         [Route("UpdateGeneratedLicenseStatus")]
         [HttpPost]
         public bool UpdateGeneratedLicenseStatus(LicenseUserAction data )
@@ -167,7 +170,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return true;
         }
 
-
+        [AuthorizationRequired]
         [Route("GetInboxLicenses/{assigneeId}")]
         [HttpGet]
         public List<License> GetInboxLicenses(int assigneeId)
@@ -175,7 +178,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseManager.GetInboxLicenses(assigneeId);
         }
 
-
+        [AuthorizationRequired]
         [Route("GetLicenseDetails/{licenseId}")]
         [HttpGet]
         public License GetLicenseDetails(int licenseId)
@@ -189,7 +192,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return licDetails;
         }
 
-
+        [AuthorizationRequired]
         [Route("GetProductLicenses/{productId}")]
         [HttpGet]
         public List<License> GetProductLicenses(int productId)
@@ -197,6 +200,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseManager.GetLicensesForProduct(productId);
         }
 
+        [AuthorizationRequired]
         [Route("EditLicense")]
         [HttpPost]
         public License UpdateLicense(License request)
@@ -204,7 +208,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseManager.EditLicense(request);
         }
 
-
+        [AuthorizationRequired]
         [Route("CreateLicense")]
         [HttpPost]
         public License CreateLicense(License request)
@@ -212,7 +216,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseManager.Add(request);
         }
 
-
+        [AuthorizationRequired]
         [Route("EditStatus")]
         [HttpPost]
         public bool EditStatus(License request)
@@ -220,6 +224,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseManager.EditStatus(request, false, null);
         }
 
+        [AuthorizationRequired]
         [Route("GetSendLicenseInfo/{licenseId}")]
         [HttpGet]
         public SendLicenseInfo GetSendLicenseInfo(int licenseId)
@@ -227,6 +232,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseManager.GetSendLicenseInfo(licenseId);
         }
 
+        [AuthorizationRequired]
         [Route("SaveSendLicenseInfo")]
         [HttpPost]
         public bool UpdateSendLicenseInfo(SendLicenseInfo request)
@@ -246,6 +252,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseManager.EditStatusLicenseProcessor(licenseId, signedDateTime);
         }
 
+        [AuthorizationRequired]
         [Route("EditLicenseStatusReport/{licenseId}")]
         [HttpPost]
         public bool EditLicenseStatusReport(int licenseId)

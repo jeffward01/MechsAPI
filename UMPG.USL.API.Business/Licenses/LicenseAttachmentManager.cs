@@ -29,6 +29,11 @@ namespace UMPG.USL.API.Business.Licenses
             return _licenseAttachmentRepository.Get(id);
         }
 
+        public bool UpdateLicenseAttachement(LicenseAttachment licenseAttachment)
+        {
+           var result = _licenseAttachmentRepository.UpdateLicenseAttachment(licenseAttachment);
+            return result;
+        }
         
         public List<LicenseAttachment> GetAll()
         {
@@ -49,6 +54,7 @@ namespace UMPG.USL.API.Business.Licenses
             LicenseAttachment existingAttachment = _licenseAttachmentRepository.Get(licenseAttachment.fileName, licenseAttachment.licenseId);
             if (existingAttachment != null)
             {
+                existingAttachment.AttachmentTypeId = licenseAttachment.AttachmentTypeId;
                 existingAttachment.uploaddedDate = licenseAttachment.uploaddedDate;
                 existingAttachment.ModifiedDate = DateTime.Now;
                 existingAttachment.ModifiedBy = licenseAttachment.ModifiedBy;

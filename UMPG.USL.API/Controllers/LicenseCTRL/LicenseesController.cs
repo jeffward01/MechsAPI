@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using UMPG.USL.API.ActionFilters;
 using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.API.Data.ContactData;
 using UMPG.USL.Models;
@@ -9,6 +10,7 @@ using UMPG.USL.Models.Recs;
 namespace UMPG.USL.API.Controllers.LicenseCTRL
 {
     [RoutePrefix("api/licenseCTRL/licensees")]
+    [AuthorizationRequired]
     public class LicenseeController : ApiController
     {
         private readonly ILicenseeManager _licenseeManager;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UMPG.USL.Models.Recs;
 using UMPG.USL.Models.LicenseModel;
 using UMPG.USL.Models;
+using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Business.Recs
 {
@@ -26,6 +27,7 @@ namespace UMPG.USL.API.Business.Recs
         List<GetProductLink> GetProductLinks(int productId);
         UpdateProductLinkResult DeleteProductLink(ProductLink productLink);
         bool UpdateProductPriority(UpdatePriorityRequest request);
+        List<RecsProductChanges> FindOutOfSyncRecItems(List<LicenseProduct> licenseId);
 
     }
 }

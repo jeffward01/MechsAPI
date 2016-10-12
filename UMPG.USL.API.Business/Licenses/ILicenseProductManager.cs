@@ -14,13 +14,21 @@ namespace UMPG.USL.API.Business.Licenses
     public interface ILicenseProductManager
     {
         List<LicenseProduct> GetProducts(int licenseId);
+        string GetCatalogNumber(int productConfigId);
 
         List<LicenseProduct> GetProductsNew(int licenseId);
 
         LicenseProductOverview2 BuildLicenseProductOverview2(long licenseProductId);
+
+        List<LicenseOverview> BuildLicenseProductOverview_tom(int productId, int trackId, int caecode);
+
+        List<LicenseProductRecordingWriterRate> GetWriterRateOverviewSkinny(int productId, int trackId,
+            int caecode);
+
        bool DeleteLicenseProduct(int licenseId, int productId);
 
         LicenseProduct GetSelectedProduct(int licenseId, int productId);
+        List<LicenseOverview> BuildLicenseProductOverview_tom_Original(int productId, int trackId, int caecode); //17775
 
         List<LicenseProductRecording> GetLicenseProductRecordings(int licenseproductId);
 
@@ -70,6 +78,7 @@ namespace UMPG.USL.API.Business.Licenses
 
         //Method for geting the license preview 
         LicenseTemplate GetLicenseTemplate(int licenseId);
+
 
         CloneLicenseResult CloneLicense(int licenseId, string clonetype, int contactid);
 

@@ -944,7 +944,62 @@ namespace UMPG.USL.API.Business.Licenses
             }
         }
 
-        private void AddLicenseRecordingForProduct(int productId, DateTime createdDate, int createdBy,int licenseProductId)
+        public void AddLicenseRecordingForProductSafe(int productId, int licenseProductId)
+        {
+            var createdBy = 1;
+            var createdDate = DateTime.Now;
+            var worksRecordings = _recsRepository.RetrieveTracks(productId);
+
+
+            foreach (var worksRecording in worksRecordings)
+            {
+                //if not already present.
+                if (!IsAlreadyPresent(worksRecording.Track.Id, licenseProductId))
+                {
+                    var newlicenseProductRecording = new LicenseProductRecording()
+                    {
+                        LicenseProductId = licenseProductId,
+                        TrackId = worksRecording.Track.Id,
+                        CreatedBy = createdBy,
+                        CreatedDate = createdDate
+                    };
+
+                    var licenseProductRecording = _licenseProductRecordingRepository.Add(newlicenseProductRecording);
+                        //Hit needed
+
+
+                    var worksWriters = new List<UMPG.USL.Models.Recs.WorksWriter>();
+
+                    if (worksRecording.Track.Copyrights != null)
+                    {
+                        var workcode = worksRecording.Track.Copyrights[0].WorkCode.ToString();
+
+                        //var worksWriters = _recsRepository.RetrieveWriters(workcode);
+                        //moved out of loop so we do not have to call again if we have samples/medleys
+
+                        //licenseProductRecording.LicenseRecordingId
+
+                        worksWriters = _recsRepository.RetrieveWriters(workcode);
+
+                        CreateWorksRecordingForWriter(worksWriters, licenseProductRecording.LicenseRecordingId,
+                            createdBy, createdDate);
+                    }
+
+                    //
+                    // Samples/Medleys
+                    //
+                    var licenseRecordingMedleys =
+                        _licenseRecordingMedleyRepository.GetMedleysByTrackId(worksRecording.Track.Id); //Hit needed
+                    ProcessSamplesAndMedleys(licenseRecordingMedleys, createdDate, createdBy, licenseProductId);
+                }
+            }
+        }
+
+       private bool IsAlreadyPresent(int trackId, int licenseProductId)
+       {
+           return _licenseProductRecordingRepository.IsAlreadyPresent(trackId, licenseProductId);
+       }
+        public void AddLicenseRecordingForProduct(int productId, DateTime createdDate, int createdBy, int licenseProductId)
         {
             var worksRecordings = _recsRepository.RetrieveTracks(productId);
 
@@ -985,6 +1040,6 @@ namespace UMPG.USL.API.Business.Licenses
                 var licenseRecordingMedleys = _licenseRecordingMedleyRepository.GetMedleysByTrackId(worksRecording.Track.Id); //Hit needed
                 ProcessSamplesAndMedleys(licenseRecordingMedleys, createdDate, createdBy, licenseProductId);
             }
-        }     
-   }
+        }
+    }
 }

@@ -2,17 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Tracing;
+using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.Models;
 
 namespace UMPG.USL.API.Controllers
 {
-    [RoutePrefix("api/TestData")]
-  //  [EnableCors(origins: "http://spa.local", headers: "*", methods: "*")]
+    [RoutePrefix("api/testCTRL/testMethods")]
+    //  [EnableCors(origins: "http://spa.local", headers: "*", methods: "*")]
     public class TestDataController:ApiController
     {
+
+        private readonly ITraceWriter _tracer;
+        
+        public TestDataController()
+        {
+            _tracer = GlobalConfiguration.Configuration.Services.GetTraceWriter();
+        }
         [Authorize]
         [Route("")]
         public IHttpActionResult Get()
@@ -26,6 +36,23 @@ namespace UMPG.USL.API.Controllers
             return Ok(song);
         }
 
+
+        //ToDo Start Exception testing here
+        [Route("test")]
+        [HttpGet]
+        public HttpResponseMessage Retrieve()
+        {
+            // _tracer.Warn(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName, "Cannot find id to delete: " + 2);
+            // _tracer.Debug(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName, "Cannot find id to delete: " + 2);
+            // _tracer.Error(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+            //     "Cannot find id to delete: " + 2);
+            // _tracer.Info(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+            //     "Cannot find id to delete: " + 2);
+            _tracer.Error(Request, this.ControllerContext.ControllerDescriptor.ControllerType.FullName,
+           "Cannot find id to delete: " + 2); //This is an example of a custo loggin message
+            throw new ApplicationException("Ooops!");
+            //throw new ArgumentOutOfRangeException();
+        }
     }
     #region Helpers
 

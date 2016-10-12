@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UMPG.USL.Models.LicenseModel;
-using UMPG.USL.Models.StaticDropdownsData;
 
 namespace UMPG.USL.API.Business.Licenses
 {
     public interface ILicenseProductConfigurationManager
     {
+        void AddLicenseRecordingForProductSafe(int productId, int licenseProductId);
+
         List<LicenseProductConfiguration> GetLicenseProductConfigurations(int licenseproductId);
 
         List<LicenseProductConfiguration> GetLicenseConfigurationList(List<int> licenseProductIds);
@@ -20,6 +18,8 @@ namespace UMPG.USL.API.Business.Licenses
         UpdateLicenseProductConfigurationResult AddLicenseProductConfiguration(UpdateLicenseProductConfigurationRequest request);
 
         List<UpdateLicenseProductConfigurationResult> UpdateLicenseProductConfiguration(List<UpdateLicenseProductConfigurationRequest> requests);
+
+        void AddLicenseRecordingForProduct(int productId, DateTime createdDate, int createdBy, int licenseProductId);
 
         bool UpdateAllLicensesConfiguration(int startLicenseIdIndex, int endLicenseIdIndex);
     }

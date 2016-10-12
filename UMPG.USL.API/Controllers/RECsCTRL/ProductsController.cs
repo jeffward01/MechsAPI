@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using UMPG.USL.API.ActionFilters;
 using UMPG.USL.API.Business.Recs;
 using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.Models;
+using UMPG.USL.Models.DataHarmonization;
 using UMPG.USL.Models.Recs;
 using UMPG.USL.Models.LicenseModel;
 
@@ -19,8 +21,7 @@ namespace UMPG.USL.API.Controllers.RECsCTRL
         }
        
 
-        //[Authorize]
-       
+        [AuthorizationRequired]
         [Route("PagedSearch")]
         [HttpPost]
         public PagedResponse<Product> PagedSearch(ProductRequest request)
@@ -82,6 +83,20 @@ namespace UMPG.USL.API.Controllers.RECsCTRL
         public List<WorksWriter> GetWorksWriters([FromBody]string worksCode)
         {
             return _productManager.GetWorksWriters(worksCode);
+        }
+        //[Route("FindOutOfSyncRecItems/{licenseId}")]
+        //[HttpGet]
+        //public List<RecsProductChanges> FindOutOfSyncRecItems(int licenseId)
+        //{
+        //    return _productManager.FindOutOfSyncRecItems(licenseId);
+        //}
+
+
+        [Route("FindOutOfSyncRecItems")]
+        [HttpPost]
+        public List<RecsProductChanges> FindOutOfSyncRecItems(List<LicenseProduct> products)
+        {
+            return _productManager.FindOutOfSyncRecItems(products);
         }
 
         /*

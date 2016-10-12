@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using UMPG.USL.API.ActionFilters;
 using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.Models.LicenseModel;
 
 namespace UMPG.USL.API.Controllers.LicenseCTRL
 {
     [RoutePrefix("api/licenseProductConfigurationCTRL")]
+    [AuthorizationRequired]
     public class LicenseProductConfigurationController: ApiController
     {
         private readonly ILicenseProductConfigurationManager _licenseProductConfigurationManager;

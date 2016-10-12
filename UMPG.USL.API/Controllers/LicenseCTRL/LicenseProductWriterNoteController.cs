@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using UMPG.USL.API.ActionFilters;
 using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.Models;
 using UMPG.USL.Models.LicenseModel;
@@ -10,6 +11,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
 {
 
     [RoutePrefix("api/licenseCTRL/licensePRWriterNote")]
+    [AuthorizationRequired]
     public class LicenseProductWriterNoteController : ApiController
     {
         private readonly ILicenseProductWriterNoteManager _licenseProductWriterNoteManager ;

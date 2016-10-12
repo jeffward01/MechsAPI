@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UMPG.USL.Models;
 using UMPG.USL.Models.LicenseModel;
+using UMPG.USL.Models.LookupModel;
 
 namespace UMPG.USL.API.Data.LicenseData
 {
@@ -52,5 +53,7 @@ namespace UMPG.USL.API.Data.LicenseData
         //   LicenseProduct GetMechLicenseProduct(int recsProductId);
         List<int> GetAllRelatedLicenseIds(int recProductId);
         License GetLicnese(int id);
+        LicenseOverview GetLicenseOverview(int licenseid);
+        LU_LicenseStatus GetLicneseStatus(int licenseId);
     }
 }

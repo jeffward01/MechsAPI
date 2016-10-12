@@ -59,6 +59,14 @@ namespace UMPG.USL.API.Data.LicenseData
             }
         }
 
+        public List<LicenseProductRecordingWriterNote> GetLicenseProductRecordingWriterNotesForLicenseWriterId(int licenseWriterId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.LicenseProductRecordingWriterNotes.Where(x => licenseWriterId == x.LicenseWriterId && x.Deleted == null).ToList();
+            }
+        }
+
         //public LicenseProductRecordingWriterRate Get(int id)
         //{
         //    using (var context = new AuthContext())
@@ -84,7 +92,7 @@ namespace UMPG.USL.API.Data.LicenseData
         //    using (var context = new AuthContext())
         //    {
         //        var licensePRwriterrates = context.LicenseProductRecordingWriterRates
-                    
+
         //            .ToList();
 
         //        return licensePRwriterrates;
@@ -142,7 +150,7 @@ namespace UMPG.USL.API.Data.LicenseData
 
 
         //        return test.ToList();
-                    
+
 
         //    }
 
@@ -153,7 +161,7 @@ namespace UMPG.USL.API.Data.LicenseData
         //    using (var context = new AuthContext())
         //    {
 
-                
+
         //        context.Entry(licenseProductRecordingWriterRate).State = (EntityState) System.Data.EntityState.Modified;
         //        context.SaveChanges();
         //    }

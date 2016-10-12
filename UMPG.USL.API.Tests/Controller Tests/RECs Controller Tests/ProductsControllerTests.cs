@@ -58,7 +58,7 @@ namespace UMPG.USL.API.Tests.Controller_Tests.RECs_Controller_Tests
             };
             //Build expected
             PagedResponse<Product> expected = new PagedResponse<Product> { };
-            
+          
             //Call  
             ProductController controller = new ProductController(mockProductManager);
             var returnedResult = controller.PagedSearchDummy(request);

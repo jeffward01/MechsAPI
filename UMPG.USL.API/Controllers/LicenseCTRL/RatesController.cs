@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using UMPG.USL.API.ActionFilters;
 using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.Models.LicenseModel;
 
 namespace UMPG.USL.API.Controllers.LicenseCTRL
 {
     [RoutePrefix("api/licenseCTRL/Rates")]
+    [AuthorizationRequired]
     public class RatesController : ApiController
     {
         private readonly ILicensePRWriterRateManager _ratesManager ;

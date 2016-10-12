@@ -7,5 +7,8 @@ namespace UMPG.USL.API.Data.LicenseData
         SolrIndexQueueItem Add(SolrIndexQueueItem indexQueueItem);
         SolrIndexQueueItem Update(SolrIndexQueueItem indexQueueItem);
         SolrIndexQueueItem ProcessItemFromQueue();
+        int GetQueueSize();
+
+        int GetFailedCount();
     }
 }

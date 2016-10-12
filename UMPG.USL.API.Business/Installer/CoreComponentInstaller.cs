@@ -1,4 +1,5 @@
-﻿using Castle.DynamicProxy;
+﻿using BusinessServices;
+using Castle.DynamicProxy;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
@@ -9,6 +10,7 @@ using UMPG.USL.API.Business.Lookups;
 using UMPG.USL.API.Business.Recs;
 using UMPG.USL.API.Business.Audits;
 using UMPG.USL.API.Business.Reports;
+using UMPG.USL.API.Business.Token;
 
 
 namespace UMPG.USL.API.Business.Installer
@@ -51,7 +53,8 @@ namespace UMPG.USL.API.Business.Installer
             container.Register(Component.For<ITrackTypeManager>().ImplementedBy<TrackTypeManager>());
             container.Register(Component.For<ILicenseRecordingMedleyManager>().ImplementedBy<LicenseRecordingMedleyManager>());
             container.Register(Component.For<IReportQueueManager>().ImplementedBy<ReportQueueManager>());
-
+            container.Register(Component.For<ITokenServices>().ImplementedBy<TokenServices>());
+            container.Register(Component.For<IAttachmentTypeManager>().ImplementedBy<AttachmentTypeManager>());
         }
     }
 }

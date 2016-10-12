@@ -17,6 +17,10 @@ using UMPG.USL.API.Filters;
 using UMPG.USL.API.Installers;
 using System.Net;
 using System.Net.Security;
+using System.Web.Http.ExceptionHandling;
+using System.Web.Http.Tracing;
+using Microsoft.Owin.Extensions;
+using UMPG.USL.API.Logging;
 
 [assembly: OwinStartup(typeof(UMPG.USLAPI.Startup))]
 
@@ -40,13 +44,21 @@ namespace UMPG.USLAPI
             Container.Kernel.Resolver.AddSubResolver(new ArrayResolver(Container.Kernel, true));
             Container.Install(FromAssembly.InThisApplication());
             config.DependencyResolver = new WindsorDependencyResolver(Container);
-            
-            
+            ConfigureLogging(app, config);
             ConfigureOAuth(app);
             WebApiConfig.Register(config);
             app.UseWebApi(config);
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
-            config.Filters.Add(new ExceptionFilter());
+            
+
+            app.UseStageMarker(PipelineStage.PostAcquireState);
+
+        }
+
+        public void ConfigureLogging(IAppBuilder app, HttpConfiguration config)
+        {
+            config.Services.Add(typeof(IExceptionLogger), new NLogExceptionLogger());
+            GlobalConfiguration.Configuration.Services.Replace(typeof(ITraceWriter), new NLogger());
         }
        
         public void ConfigureOAuth(IAppBuilder app)
@@ -86,7 +98,10 @@ namespace UMPG.USLAPI
                 Provider = new FacebookAuthProvider()
             };
             app.UseFacebookAuthentication(facebookAuthOptions);
+
+
         }
+
 
     }
 }

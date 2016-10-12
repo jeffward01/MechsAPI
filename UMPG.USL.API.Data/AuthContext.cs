@@ -1,4 +1,5 @@
-﻿using System.Data.Entity.ModelConfiguration.Conventions;
+﻿using System;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using UMPG.USL.Models;
 using UMPG.USL.Models.ContactModel;
 using UMPG.USL.Models.LookupModel;
@@ -10,6 +11,9 @@ using UMPG.USL.Models.AuditModel;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using NLog;
+using UMPG.USL.Models.Authorization;
+using Action = UMPG.USL.Models.Security.Action;
 
 
 namespace UMPG.USL.API.Data
@@ -18,14 +22,25 @@ namespace UMPG.USL.API.Data
 
     public class AuthContext : IdentityDbContext<IdentityUser>
     {
-        public AuthContext(): base("AuthContext")
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+        public AuthContext() : base("AuthContext")
         {
-            Database.SetInitializer<AuthContext>(null);
-            Configuration.ProxyCreationEnabled = false;
-            Configuration.AutoDetectChangesEnabled = false;
+            try
+            {
+                Database.SetInitializer<AuthContext>(null);
+                Configuration.ProxyCreationEnabled = false;
+                Configuration.AutoDetectChangesEnabled = false;
+            }
+            catch (Exception e)
+            {
+                Logger.Debug("_____CRTIICAL ERROR_____________");
+                Logger.Debug("An Error occured trying to connect to the dayabase " + e.ToString());
+            }
+
 
         }
-        
+
         public DbSet<Contact> Contacts { get; set; }
 
         public DbSet<ContactDefault> ContactDefaults { get; set; }
@@ -57,7 +72,7 @@ namespace UMPG.USL.API.Data
         public DbSet<LicenseProductRecordingWriterRate> LicenseProductRecordingWriterRates { get; set; }
 
         //public DbSet<LicenseProductRecordingWriterRateNote> LicenseProductRecordingWriterRateNotes { get; set; }
-        
+
         public DbSet<LU_LicenseType> LU_LicenseTypes { get; set; }
 
         public DbSet<LU_LicenseMethod> LU_LicenseMethods { get; set; }
@@ -78,6 +93,8 @@ namespace UMPG.USL.API.Data
 
         public DbSet<LU_TrackType> Lu_TrackTypes { get; set; }
 
+        public DbSet<LU_AttachmentType> LU_AttachmentTypes { get; set; }
+
         public DbSet<LU_NoteType> LU_NoteTypes { get; set; }
 
         public DbSet<LU_PaidQuarter> LU_PaidQuarters { get; set; }
@@ -91,7 +108,7 @@ namespace UMPG.USL.API.Data
 
         //public DbSet<ProductRecordingLink> ProductRecordingLink { get; set; }
         public DbSet<LicenseRecordingMedley> LicenseRecordingMedleys { get; set; }
-       
+
         public DbSet<Phone> Phones { get; set; }
 
         public DbSet<LicenseeLabelGroup> LicenseeLabelGroups { get; set; }
@@ -139,6 +156,8 @@ namespace UMPG.USL.API.Data
         public DbSet<ReportQueue> ReportQueues { get; set; }
         public DbSet<ReportType> ReportTypes { get; set; }
 
+        public DbSet<Models.Authorization.TokenEntity> Tokens { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -152,6 +171,11 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Contact>().HasMany(c => c.Address).WithOptional().HasForeignKey(c => c.ContactId);
             modelBuilder.Entity<Contact>().HasMany(c => c.Phone).WithOptional().HasForeignKey(c => c.ContactId);
             modelBuilder.Entity<Contact>().HasMany(c => c.Email).WithOptional().HasForeignKey(c => c.ContactId);
+
+            //Tokens
+            modelBuilder.Entity<TokenEntity>().ToTable("Tokens");
+            modelBuilder.Entity<TokenEntity>().HasKey(t => t.Id);
+            modelBuilder.Entity<TokenEntity>().HasRequired(t => t.User).WithMany().HasForeignKey(t => t.UserId);
 
             //Phone
             modelBuilder.Entity<Phone>().ToTable("Phone");
@@ -178,7 +202,7 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<ContactEmail>().HasKey(c => c.ContactEmailId);
 
             // Licenses
-            modelBuilder.Entity<License>().ToTable("License","dbo");
+            modelBuilder.Entity<License>().ToTable("License", "dbo");
             modelBuilder.Entity<License>().HasKey(c => c.LicenseId);
             modelBuilder.Entity<License>().HasRequired(c => c.LicenseType).WithMany().HasForeignKey(c => c.LicenseTypeId);
             modelBuilder.Entity<License>().HasRequired(c => c.LicensePriority).WithMany().HasForeignKey(c => c.PriorityId);
@@ -240,12 +264,12 @@ namespace UMPG.USL.API.Data
             // Role
             modelBuilder.Entity<Role>().ToTable("Role");
             modelBuilder.Entity<Role>().HasMany(r => r.Actions).WithMany().Map(m => { m.ToTable("RoleAction"); m.MapLeftKey("RoleId"); m.MapRightKey("ActionId"); });
-            
+
             // Action
             modelBuilder.Entity<Action>().ToTable("Action");
             modelBuilder.Entity<Action>().HasKey(c => c.ActionId);
             modelBuilder.Entity<Action>().Property(a => a.Name).HasColumnName("Action");
-            
+
             //LicenseProductRecordingWriter
             modelBuilder.Entity<LicenseProductRecordingWriter>().ToTable("LicenseWriter");
             modelBuilder.Entity<LicenseProductRecordingWriter>().HasKey(c => c.LicenseWriterId);
@@ -261,7 +285,7 @@ namespace UMPG.USL.API.Data
             //LicenseProductRecordingWriterNote
             modelBuilder.Entity<LicenseProductRecordingWriterNote>().ToTable("LicenseWriterNote");
             modelBuilder.Entity<LicenseProductRecordingWriterNote>().HasKey(c => c.LicenseWriterNoteId);
-            
+
             //LicenseProductRecordingWriterRate
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().ToTable("LicenseWriterRate");
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().HasKey(c => c.LicenseWriterRateId);
@@ -272,22 +296,27 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().Ignore(c => c.configuration_type);
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().Ignore(c => c.upc);
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().Ignore(c => c.LicenseTitle);
-            modelBuilder.Entity<LicenseProductRecordingWriterRate>().Property(c => c.Rate).HasPrecision(7,6);
+            modelBuilder.Entity<LicenseProductRecordingWriterRate>().Ignore(c => c.LicenseId);
+            modelBuilder.Entity<LicenseProductRecordingWriterRate>().Ignore(c => c.LicenseNumber);
+            modelBuilder.Entity<LicenseProductRecordingWriterRate>().Ignore(c => c.CaeCode);
+            modelBuilder.Entity<LicenseProductRecordingWriterRate>().Ignore(c => c.licenseRecordingId);
+            modelBuilder.Entity<LicenseProductRecordingWriterRate>().Ignore(c => c.trackId);
+            modelBuilder.Entity<LicenseProductRecordingWriterRate>().Property(c => c.Rate).HasPrecision(7, 6);
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().Property(c => c.PerSongRate).HasPrecision(7, 6);
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().Property(c => c.ProRataRate).HasPrecision(7, 6);
-         
+
 
             //LicenseProductRecordingWriterRateNote
             //modelBuilder.Entity<LicenseProductRecordingWriterRateNote>().ToTable("LicenseWriterRateNote");
             //modelBuilder.Entity<LicenseProductRecordingWriterRateNote>().HasKey(c => c.LicenseWriterRateNoteId);
-            
-            
+
+
             //LicenseProductRecordingWriterRateStatus
             modelBuilder.Entity<LicenseProductRecordingWriterRateStatus>().ToTable("LicenseWriterRateStatus");
             modelBuilder.Entity<LicenseProductRecordingWriterRateStatus>().HasKey(c => c.LicenseWriterRateStatusId);
             modelBuilder.Entity<LicenseProductRecordingWriterRateStatus>().Ignore(c => c.LU_SpecialStatuses);
             //modelBuilder.Entity<LicenseProductRecordingWriterRateStatus>().HasRequired(c => c.LU_SpecialStatuses).WithMany().HasForeignKey(c => c.SpecialStatusId);
-            
+
             // LU_LicenseTypes      
             modelBuilder.Entity<LU_LicenseType>().ToTable("LU_LicenseType");
             modelBuilder.Entity<LU_LicenseType>().HasKey(c => c.LicenseTypeId);
@@ -311,17 +340,22 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<LU_Schedule>().ToTable("LU_Schedule");
             modelBuilder.Entity<LU_Schedule>().HasKey(c => c.ScheduleId);
 
+            //LU_AttachmentType
+            modelBuilder.Entity<LU_AttachmentType>().ToTable("LU_AttachmentType");
+            modelBuilder.Entity<LU_AttachmentType>().HasKey(c => c.AttachmentTypeId);
+
+
             // Licensee
             modelBuilder.Entity<Licensee>().ToTable("Licensee");
             modelBuilder.Entity<Licensee>().HasKey(c => c.LicenseeId);
-        //    modelBuilder.Entity<Licensee>().HasRequired(c => c.Contact).WithMany().HasForeignKey(c => c.ContactId);
+            //    modelBuilder.Entity<Licensee>().HasRequired(c => c.Contact).WithMany().HasForeignKey(c => c.ContactId);
             modelBuilder.Entity<Licensee>().HasMany(r => r.LicenseeLabelGroup).WithOptional().HasForeignKey(c => c.LicenseeId);
             modelBuilder.Entity<Licensee>().HasMany(r => r.LicenseeContacts).WithOptional().HasForeignKey(c => c.LicenseeId);
             //modelBuilder.Entity<Licensee>().HasMany(c => c.Address).WithOptional().HasForeignKey(c => c.LicenseeId);
             //modelBuilder.Entity<Licensee>().HasMany(s => s.LicenseeLabelGroup).WithRequired(s=>s.Licensee).HasForeignKey(s => s.LicenseeId);
             modelBuilder.Entity<Licensee>().Ignore(c => c.LicenseeLabelGroupFiltered);
             modelBuilder.Entity<Licensee>().Ignore(c => c.LicenseeContactsFiltered);
-        
+
             // LicenseeLabelGroupLink
             modelBuilder.Entity<LicenseeLabelGroupLink>().ToTable("LicenseeLabelGroupLink");
             modelBuilder.Entity<LicenseeLabelGroupLink>().HasKey(c => c.LicenseeLabelGroupLinkId);
@@ -334,15 +368,17 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<LicenseeLabelGroup>().HasKey(c => c.LicenseeLabelGroupId);
             //modelBuilder.Entity<LicenseeLabelGroup>().HasRequired(p => p.Licensee).WithMany().HasForeignKey(p => p.LicenseeId);
             modelBuilder.Entity<LicenseeLabelGroup>().HasMany(r => r.LabelGroupLinks).WithOptional().HasForeignKey(c => c.LicenseeLabelGroupId);
-           // modelBuilder.Entity<LicenseeLabelGroup>().HasRequired(c => c.Licensee).WithMany(c=>c.LicenseeLabelGroup).HasForeignKey(r => r.LicenseeId);
+            // modelBuilder.Entity<LicenseeLabelGroup>().HasRequired(c => c.Licensee).WithMany(c=>c.LicenseeLabelGroup).HasForeignKey(r => r.LicenseeId);
             modelBuilder.Entity<LicenseeLabelGroup>().Ignore(c => c.LabelGroupLinksFiltered);
-            
-            
+
+
 
             // LicenseAttachments
             modelBuilder.Entity<LicenseAttachment>().ToTable("LicenseAttachment");
             modelBuilder.Entity<LicenseAttachment>().HasKey(c => c.licenseAttachmentId);
             modelBuilder.Entity<LicenseAttachment>().HasRequired(c => c.Contact).WithMany().HasForeignKey(c => c.CreatedBy);
+            modelBuilder.Entity<LicenseAttachment>().HasRequired(c => c.AttachmentType).WithMany().HasForeignKey(c => c.AttachmentTypeId);
+
 
             // LicenseNote
             modelBuilder.Entity<LicenseNote>().ToTable("LicenseNote");
@@ -435,9 +471,9 @@ namespace UMPG.USL.API.Data
             // Audit tables
 
             //Audit.License
-            modelBuilder.Entity<AuditLicense>().ToTable("License","Audit");
+            modelBuilder.Entity<AuditLicense>().ToTable("License", "Audit");
             modelBuilder.Entity<AuditLicense>().HasKey(c => c.LicenseId);
-            
+
 
 
             //LicenseProductConfiguration
@@ -509,7 +545,7 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<ReportType>().Property(a => a.ReportTypeName).HasColumnName("ReportType");
 
         }
-        
+
     }
 
 }

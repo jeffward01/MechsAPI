@@ -133,6 +133,8 @@
     <Compile Include="Licenses\LicenseProductSolrManager.cs" />
     <Compile Include="Licenses\LicenseUpdateInterceptor.cs" />
     <Compile Include="Licenses\List.cs" />
+    <Compile Include="LookUps\AttachmentTypeManager.cs" />
+    <Compile Include="LookUps\IAttachmentTypeManager.cs" />
     <Compile Include="LookUps\ILicenseTypeManager.cs" />
     <Compile Include="LookUps\IPaidQuarterManager.cs" />
     <Compile Include="LookUps\IScheduleManager.cs" />
@@ -174,6 +176,8 @@
     </Compile>
     <Compile Include="Reports\IReportQueueManager.cs" />
     <Compile Include="Reports\ReportQueueManager.cs" />
+    <Compile Include="Token\ITokenServices.cs" />
+    <Compile Include="Token\TokenServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\UMPG.USL.Common\UMPG.USL.Common.csproj">

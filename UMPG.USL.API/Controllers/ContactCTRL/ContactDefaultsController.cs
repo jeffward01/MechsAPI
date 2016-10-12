@@ -10,10 +10,12 @@ using UMPG.USL.API.Business.Contacts;
 using UMPG.USL.Models;
 using UMPG.USL.Models.ContactModel;
 using UMPG.USL.API;
+using UMPG.USL.API.ActionFilters;
 
 namespace UMPG.USL.API.Controllers.ContactCTRL
 {
     [RoutePrefix("api/ContactCTRL/ContactDefaults")]
+    [AuthorizationRequired]
     public class ContactDefaultController : ApiController
     {
 

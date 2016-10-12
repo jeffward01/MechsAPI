@@ -8,8 +8,10 @@ namespace UMPG.USL.API.Business.Contacts
     public interface IContactManager
     {
         List<Contact> GetAll();
-        
+
         Contact Add(Contact contact);
+
+        bool DeleteContactFromLabelGroup(DeleteContactFromLabelGroupRequest request);
 
         Contact Get(int id);
 
@@ -24,6 +26,7 @@ namespace UMPG.USL.API.Business.Contacts
         List<LicenseeLabelGroupLink> GetContactsForLicenseeLabel(int licenseeLabelGroupId);
 
         List<Contact> GetAssignees();
+
         bool EmailExists(string email, int licenseeId);
 
         ContactEmail GetContactEmail(int contactId);
@@ -35,7 +38,9 @@ namespace UMPG.USL.API.Business.Contacts
         Contact EditContact(Contact contact);
 
         LicenseeLabelGroup AddLabelGroup(LicenseeLabelGroup labelGroup);
+
         LicenseeLabelGroup EditLabelGroup(LicenseeLabelGroup labelGroup);
+
         LicenseeLabelGroup DeleteLabelGroup(LicenseeLabelGroup labelGroup);
 
         Contact AddContactAndLink(AddContactAndLinqRequest request);
@@ -45,6 +50,5 @@ namespace UMPG.USL.API.Business.Contacts
         bool DeleteContactandLink(DeleteContactRequest contact);
 
         bool DeleteLicenseeContactAndLink(DeleteContactRequest contact);
-
     }
 }

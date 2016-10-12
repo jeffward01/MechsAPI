@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using UMPG.USL.API.ActionFilters;
 using UMPG.USL.API.Business.LookUps;
 using UMPG.USL.Models.LookupModel;
 
 namespace UMPG.USL.API.Controllers.LookUpCTRL
 {
     [RoutePrefix("api/LookUpCTRL/LicenseTypes")]
+    [AuthorizationRequired]
     public class LicenseTypeController:ApiController
     {
         private readonly ILicenseTypeManager _licenseTypeManager;

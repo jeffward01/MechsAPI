@@ -55,6 +55,9 @@
     <Reference Include="Microsoft.AspNet.Identity.Owin">
       <HintPath>..\..\SolutionFiles\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\..\SolrProcessor\SolrProcessor\libs\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
@@ -175,7 +178,9 @@
     <Compile Include="LicenseData\SolrSynchronizationJobsRepository.cs" />
     <Compile Include="LicenseData\SolrIndexQueueRepository.cs" />
     <Compile Include="LookupData\AgreementStatutoryRateRepository.cs" />
+    <Compile Include="LookupData\AttachmentTypeRepository.cs" />
     <Compile Include="LookupData\IAgreementStatutoryRateRepository.cs" />
+    <Compile Include="LookupData\IAttachmentTypeRepository.cs" />
     <Compile Include="LookupData\ILicenseTypeRepository.cs" />
     <Compile Include="LookupData\INoteTypeRepository.cs" />
     <Compile Include="LicenseData\ILicenseRecordingMedleyRepository.cs" />
@@ -241,6 +246,8 @@
     <Compile Include="Recs\Configuration\SolrUpdateServerConfigurationRetriever.cs" />
     <Compile Include="Reports\IReportQueueRepository.cs" />
     <Compile Include="Reports\ReportQueueRepository.cs" />
+    <Compile Include="Token\ITokenRepository.cs" />
+    <Compile Include="Token\TokenRepository.cs" />
     <Compile Include="Utils\PredicateBuilder.cs" />
   </ItemGroup>
   <ItemGroup>

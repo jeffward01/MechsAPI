@@ -20,6 +20,9 @@ namespace UMPG.USL.API.Data.LicenseData
         List<int> GetLicenseIds(int productId);
 
         List<LicenseProduct> GetLicenseProducts(int licenseId);
+
+        List<LicenseProduct> GetLicenseProductsByRecsProductId(int productId);
+
         List<LicenseProduct> GetAllLicenseProducts(long productId);
         List<LicenseProductConfiguration> GetLicenseProductConfigurations(int licenseId);
 

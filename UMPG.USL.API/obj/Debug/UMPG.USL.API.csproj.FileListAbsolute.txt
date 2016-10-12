@@ -37,6 +37,7 @@ C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\bin\UMPG.USL.API.Data.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\bin\UMPG.USL.Common.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\bin\UMPG.USL.Models.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\bin\UMPG.USL.Security.dll
+C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\bin\BCrypt.Net.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\bin\UMPG.USL.Common.pdb
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\bin\UMPG.USL.Models.pdb
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\bin\UMPG.USL.Security.pdb
@@ -72,6 +73,8 @@ C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\bin\System.Web.Http.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\bin\System.Web.Http.Cors.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\bin\System.Web.Http.Owin.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\bin\System.Web.Http.WebHost.xml
+C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\bin\BCrypt.Net.pdb
+C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\bin\BCrypt.Net.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\obj\Debug\UMPG.USL.API.csprojResolveAssemblyReference.cache
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\obj\Debug\UMPG.USL.API.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\obj\Debug\UMPG.USL.API.pdb

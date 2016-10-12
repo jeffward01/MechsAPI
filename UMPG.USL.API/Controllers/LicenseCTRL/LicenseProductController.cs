@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using UMPG.USL.API.ActionFilters;
 using UMPG.USL.API.Business.Licenses;
+using UMPG.USL.API.Data.LicenseData;
 using UMPG.USL.Models.LicenseModel;
 using UMPG.USL.Models.LicenseTemplateModel;
 using UMPG.USL.Models.Recs;
@@ -11,13 +13,16 @@ using UMPG.USL.Models.StaticDropdownsData;
 
 namespace UMPG.USL.API.Controllers.LicenseCTRL
 {
-   [RoutePrefix("api/licenseProductCTRL/licenseproducts")]
-    public class LicenseProductController: ApiController
+    [RoutePrefix("api/licenseProductCTRL/licenseproducts")]
+    //[AuthorizationRequired]
+    public class LicenseProductController : ApiController
     {
-        private readonly ILicenseProductManager _licenseProductManager ;
-        public LicenseProductController(ILicenseProductManager licenseProductManager)
+        private readonly ILicenseProductManager _licenseProductManager;
+        private readonly ILicensePRWriterNoteRepository _licensePrWriterNoteRepository;
+        public LicenseProductController(ILicenseProductManager licenseProductManager, ILicensePRWriterNoteRepository licensePrWriterNoteRepository)
         {
             _licenseProductManager = licenseProductManager;
+            _licensePrWriterNoteRepository = licensePrWriterNoteRepository;
         }
 
         [Route("GetProducts/{licenseId}")]
@@ -34,6 +39,13 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseProductManager.GetProductsNew(licenseId);
         }
 
+        [Route("GetCatalogNumber/{productConfigId}")]
+        [HttpGet]
+        public string GetCatalogNumber(int productConfigId)
+        {
+            return _licenseProductManager.GetCatalogNumber(productConfigId);
+        }
+
         [Route("GetLicenseProductOverview/{recProductId}")]
         [HttpGet]
         public LicenseProductOverview GetLicenseProductOverview(int recProductId)
@@ -41,14 +53,38 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseProductManager.GetLicenseProductOverview(recProductId);
         }
 
-       [Route("GetLicenseProductOverview2/{productId}")] // 17775
-       [HttpGet]
-       public LicenseProductOverview2 GetLicenseProductOverview2(long productId)
-       {
+        [Route("GetLicenseProductOverview2/{productId}")] // 17775
+        [HttpGet]
+        public LicenseProductOverview2 GetLicenseProductOverview2(long productId)
+        {
             return _licenseProductManager.BuildLicenseProductOverview2(productId);
-
-
         }
+
+        [Route("GetLicenseProductOverview_tom/{productId}/{trackId}/{caecode}")] // 17775
+        [HttpGet]
+        public List<LicenseOverview> GetLicenseProductOverview_tom(int productId, int trackId, int caecode)
+        {
+            return _licenseProductManager.BuildLicenseProductOverview_tom(productId, trackId, caecode);
+        }
+
+        [Route("GetWriterRateOverviewSkinny/{productId}/{trackId}/{caecode}")] // 17775
+        [HttpGet]
+        public List<LicenseProductRecordingWriterRate> GetWriterRateOverviewSkinny(int productId, int trackId, int caecode)
+        {
+            return _licenseProductManager.GetWriterRateOverviewSkinny(productId, trackId, caecode);
+        }
+
+
+
+        [Route("BuildLicenseProductOverview_tom_Original/{productId}/{trackId}/{caecode}")] // 17775
+        [HttpGet]
+        public List<LicenseOverview> BuildLicenseProductOverview_tom_Original(int productId, int trackId, int caecode)
+        {
+            return _licenseProductManager.BuildLicenseProductOverview_tom_Original(productId, trackId, caecode);
+        }
+
+
+
 
         [Route("GetSelectedProduct/{licenseId}/{productId}")]
         [HttpGet]
@@ -63,19 +99,19 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
         {
             return _licenseProductManager.DeleteLicenseProduct(licenseId, productId);
         }
-        
-       /// <summary>
-       /// will be replaced by the upside down method
-       /// </summary>
-       /// <param name="licenseproductId"></param>
-       /// <returns></returns>
+
+        /// <summary>
+        /// will be replaced by the upside down method
+        /// </summary>
+        /// <param name="licenseproductId"></param>
+        /// <returns></returns>
         [Route("GetRecordings/{licenseproductId}")]
         [HttpGet]
         public List<LicenseProductRecording> GetRecordings(int licenseproductId)
         {
             return _licenseProductManager.GetLicenseProductRecordings(licenseproductId);
         }
-        
+
 
         //[Route("GetLicenseWriterList")]
         //[HttpPost]
@@ -140,7 +176,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
         {
             return _licenseProductManager.UpdateLicenseProducts(request);
         }
-        
+
         [Route("UpdateLicenseProductSchedule")]
         [HttpPost]
         public bool UpdateLicenseProductSchedule(List<LicenseProduct> request)
@@ -245,7 +281,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
         [HttpPost]
         public List<WorksRecording> GetLicenseProductRecordingsV2(int licenseproductId, [FromBody] string safeId)
         {
-            return _licenseProductManager.GetLicenseProductRecordingsV2(licenseproductId,safeId);
+            return _licenseProductManager.GetLicenseProductRecordingsV2(licenseproductId, safeId);
         }
         /// <summary>
         /// New method that has data upside down
@@ -300,6 +336,14 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
 
         }
 
+        [Route("GetWriterNotes/{licenseWriterId}")]
+        [HttpGet]
+        public List<LicenseProductRecordingWriterNote> GetWriterNotesForLicenseWriterId(int licenseWriterId)
+        {
+            return
+                _licensePrWriterNoteRepository.GetLicenseProductRecordingWriterNotesForLicenseWriterId(licenseWriterId);
+        }
+
         [Route("GetYearsForEditRates")]
         [HttpGet]
         public List<int> GetYearsForEditRates()
@@ -328,5 +372,5 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseProductManager.EditPaidQuarter(request);
         }
 
-   }
+    }
 }

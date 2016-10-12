@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using UMPG.USL.API.ActionFilters;
 using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.Models;
 using UMPG.USL.Models.LicenseModel;
@@ -9,6 +10,7 @@ using UMPG.USL.Models.Recs;
 namespace UMPG.USL.API.Controllers.LicenseCTRL
 {
     [RoutePrefix("api/licenseCTRL/licenseNote")]
+    [AuthorizationRequired]
     public class LicenseNoteController : ApiController
     {
         private readonly ILicenseNoteManager _licenseNoteManager ;

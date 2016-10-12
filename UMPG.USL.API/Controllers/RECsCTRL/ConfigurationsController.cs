@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using UMPG.USL.API.ActionFilters;
 using UMPG.USL.API.Business.Recs;
 using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.Models;
@@ -10,6 +11,7 @@ using UMPG.USL.Models.LicenseModel;
 namespace UMPG.USL.API.Controllers.RECsCTRL
 {
     [RoutePrefix("api/RECsCTRL/Configurations")]
+    [AuthorizationRequired]
     public class ConfigurationsController : ApiController
     {
         private readonly IConfigurationManager _configurationManager ;

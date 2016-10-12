@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using UMPG.USL.Models.LicenseModel;
 using UMPG.USL.Models.Recs;
+using System.Linq;
 
 namespace UMPG.USL.Common.Mappers
 {
@@ -22,8 +23,15 @@ namespace UMPG.USL.Common.Mappers
                 queryStringCriteria.Add("q", "*:*");
             }
 
-            // SEARCH TERM
 
+            //Check if search term is for a licenseNumber, if it is, return
+            if (isLicenseNumber(source.SearchTerm))
+            {
+                return ReturnQueryString(source.SearchTerm);
+            }
+
+
+            // SEARCH TERM
             var qfstring = "";
             var fqstring = "";
             if (!string.IsNullOrEmpty(source.SearchTerm))
@@ -73,6 +81,7 @@ namespace UMPG.USL.Common.Mappers
                 {
                     qfstring = qfstring + "licenseNumber";
                 }
+                qfstring += "-writerRate:*";
                 if (qfstring.Length > 0)
                 {
                     queryStringCriteria.Add("qf", qfstring);
@@ -310,10 +319,21 @@ namespace UMPG.USL.Common.Mappers
             {
                 source.WriterRateFrom = 0;
             }
+            //USL-1217 ::Searching w/ writerRate caused licenses w/ no rates not to be returned.
             if (source.WriterRateFrom.HasValue && source.WriterRateTo.HasValue)
-            { 
-                if (!string.IsNullOrEmpty(fqstring)) fqstring += " AND ";
-                fqstring += String.Format("  writerRate:[{0} TO {1}]", source.WriterRateFrom.Value, source.WriterRateTo.Value);
+            {
+                if (source.WriterRateFrom.Value == 0 && source.WriterRateTo.Value == 1000000)
+                {
+                    //USL-1217: if this is hit, slider is set to 'show all', return all writer rates.
+                }
+                 else 
+                {
+                    if (!string.IsNullOrEmpty(fqstring)) fqstring += " AND ";
+
+                    fqstring += String.Format("  writerRate:[{0} TO {1}]", source.WriterRateFrom.Value,
+                        source.WriterRateTo.Value);
+                }
+
             }
 
             if (source.FilterPriorityReport)
@@ -434,6 +454,28 @@ namespace UMPG.USL.Common.Mappers
                 items.Add(String.Concat(name, "=", queryStringCriteria[name]));//needs url encoding
             }
             return String.Join("&", items.ToArray());
+        }
+
+        private bool isLicenseNumber(string searchString)
+        {
+            if (searchString.Length >= 4 && searchString.Length <= 7)
+            {
+                return IsNumeric(searchString);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool IsNumeric(string str)
+        {
+            return str.All(c => "0123456789-".Contains(c));
+        }
+
+        private string ReturnQueryString(string licenseNumber)
+        {
+            return "q="+ licenseNumber + "&qf=licenseNumber trackTitle^30  trackTileExact^30  trackTitlePartial^30  productTitle^90  productTitleExact^90  productTitlePartial^90  licenseTitle^900  licenseTitleExact^900  licenseTitlePartial^900  artistName^270  artistNameExact^270 artistNamePartial^270  writer^10  writerExact^10  writerPartial^10  localClientCode pipsCode upc -writerRate:*&rows=10&start=0";
         }
     }
 }

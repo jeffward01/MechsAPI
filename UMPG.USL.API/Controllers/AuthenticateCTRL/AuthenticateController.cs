@@ -9,10 +9,11 @@ using UMPG.USL.Models;
 using UMPG.USL.Models.Security;
 using UMPG.USL.Security;
 using System.Linq;
-
+using UMPG.USL.Security.Hashing;
 using Castle.Core.Logging;
 using System.Web;
 using System.Security.Principal;
+using UMPG.USL.API.Business.Token;
 
 
 namespace UMPG.USL.API.Controllers.AuthenticateCTRL
@@ -25,12 +26,13 @@ namespace UMPG.USL.API.Controllers.AuthenticateCTRL
 
         private readonly IAuthenticator _authenticator;
         private readonly IContactContextResolver _contactContextResolver;
+        private readonly ITokenServices _tokenServices;
 
-
-        public AuthenticateController(IAuthenticator authenticator, IContactContextResolver contactContextResolver)
+        public AuthenticateController(IAuthenticator authenticator, IContactContextResolver contactContextResolver, ITokenServices tokenServices)
         {
             _authenticator = authenticator;
             _contactContextResolver = contactContextResolver;
+            _tokenServices = tokenServices;
         }
 
         [Route("Login")]
@@ -70,11 +72,12 @@ namespace UMPG.USL.API.Controllers.AuthenticateCTRL
             };
 
 
-
-            if (result.Success)
+            ContactContext contact = null;
+            if(result.Success) contact = _contactContextResolver.Resolve(result.Safe.Id);
+            if (contact!=null)
             {
                 //check for contact record with safeid
-                var contact = _contactContextResolver.Resolve(result.Safe.Id);
+              
                 //  temp use safe user name
                 contact.Contact.FullName = result.Safe.Name;
                 contact.Contact.SafeId = result.Safe.Id;
@@ -84,27 +87,27 @@ namespace UMPG.USL.API.Controllers.AuthenticateCTRL
                 if (!string.IsNullOrEmpty(userCredentials.Password))
                 {
 
-                    string passwordToMatch = ConfigurationManager.AppSettings[result.Safe.Id];
-                    if (passwordToMatch != userCredentials.Password)
+                    if (!HashUtility.ValidatePassword(userCredentials.Password, contact.Contact.Password))
                     {
                         response.Success = false;
                         response.ErrorList.Add("Login failed");
+                    }
+                    else
+                    {
+                        _tokenServices.DeleteByUserId(contact.Contact.ContactId);
+                        var token = _tokenServices.GenerateToken(contact.Contact.ContactId);
+                        response.GeneratedToken = token.AuthToken;
                     }
 
                 }
 
             }
-            /*
             else
             {
 
-                if (result.FieldErrors["accountId"].Contains("remote.invalidPassword.accountLocked"))
-                {
-
-                    //_messageEmailQueueManager.AddAccountLockedEmail(userCredentials.Username, siteLocationCode);
-                }
+                response.Success = false;
             }
-            */
+            
 
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
@@ -182,36 +185,36 @@ namespace UMPG.USL.API.Controllers.AuthenticateCTRL
                 //     .SelectMany(x => x)
                 //     .ToList()
             };
-
-            if (result.Success)
+            var contact = _contactContextResolver.Resolve(safeIdCredentials.SafeId);
+            if (result.Success && contact.Contact.Password == safeIdCredentials.Password)
             {
                 //  temp force contactid to 1
-                var contact = _contactContextResolver.Resolve(safeIdCredentials.SafeId);
+
                 //  temp use safe user name
                 contact.Contact.FullName = result.Safe.Name;
                 response.ContactContext = contact;
                 response.UserApps = result.Safe.UserApps;
+                var token = _tokenServices.GenerateToken(contact.Contact.ContactId);
+                response.GeneratedToken = token.AuthToken;
+
+            }
+            else
+            {
+                response.Success = false;
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
-        /*
+        [Route("GenerateHash/{passwordString}")]
         [HttpGet]
-        [ActionName("Annonymous")]
-        public HttpResponseMessage AuthenticateAnnonymous()
+        public HttpResponseMessage GenerateHash(string passwordString)
         {
-            var response = new AuthenticateResponse
-                {
-                    Success = true,
-                    FieldErrors = new Dictionary<string, List<string>>(),
-                    GlobalErrors = new List<string>(),
-                    ContactContext = _contactContextResolver.ResolveForAnnonymous()
-                };
-
-            return Request.CreateResponse(HttpStatusCode.OK, response);
+           var hashedPassword = HashUtility.HashPassword(passwordString);
+            return Request.CreateResponse(HttpStatusCode.OK, hashedPassword);
         }
-        */
+
+
     }
 
 }

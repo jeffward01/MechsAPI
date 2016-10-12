@@ -35,7 +35,7 @@ namespace UMPG.USL.API.Data.LicenseData
         {
             using (var context = new AuthContext())
             {
-                return context.LicenseProducts.Where(x => x.LicenseId == licenseId)
+                return context.LicenseProducts.Where(x => x.LicenseId == licenseId && x.Deleted == null)
                     .Select(x => x.ProductId)   //tomh changed from LicenseProductId for myview page
                     .ToList();
             }
@@ -45,9 +45,17 @@ namespace UMPG.USL.API.Data.LicenseData
         {
             using (var context = new AuthContext())
             {
-                return context.LicenseProducts.Where(x => x.ProductId == productId)
+                return context.LicenseProducts.Where(x => x.ProductId == productId && x.Deleted == null)
                     .Select(x => x.LicenseId)
                     .ToList();
+            }
+        }
+
+        public List<LicenseProduct> GetLicenseProductsByRecsProductId(int productId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.LicenseProducts.Where(x => x.ProductId == productId && x.Deleted == null).ToList();
             }
         }
 

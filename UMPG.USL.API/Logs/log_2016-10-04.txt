@@ -1,0 +1,313 @@
+2016-10-04 15:14:46.8270|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger|
+-------------------------------------------
+_____New Exception______
+System.Net.WebException: The remote server returned an error: (500) Internal Server Error.
+   at System.Net.HttpWebRequest.GetResponse()
+   at UMPG.USL.Common.Transport.HttpWebRequestExtensions.Send(HttpWebRequest request) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\HttpWebRequestExtensions.cs:line 120
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.PostSecure[T](String url, IDictionary`2 postData) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 58
+   at UMPG.USL.Security.Safe.SafeAuthenticator.AuthenticateSafeId(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\Safe\SafeAuthenticator.cs:line 57
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.ValidateSafeId(SafeIdCredentials safeIdCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 177
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+ 
+POST http://spa.service/api/AuthenticateCTRL/authenticate/ValidateSafeId
+-------------------------------------------
+
+2016-10-04 15:15:50.2430|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger|
+-------------------------------------------
+_____New Exception______
+System.Net.WebException: The remote server returned an error: (500) Internal Server Error.
+   at System.Net.HttpWebRequest.GetResponse()
+   at UMPG.USL.Common.Transport.HttpWebRequestExtensions.Send(HttpWebRequest request) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\HttpWebRequestExtensions.cs:line 120
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.PostSecure[T](String url, IDictionary`2 postData) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 58
+   at UMPG.USL.Security.Safe.SafeAuthenticator.AuthenticateSafeId(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\Safe\SafeAuthenticator.cs:line 57
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.ValidateSafeId(SafeIdCredentials safeIdCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 177
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+ 
+POST http://spa.service/api/AuthenticateCTRL/authenticate/ValidateSafeId
+-------------------------------------------
+
+2016-10-04 15:17:12.1920|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger|
+-------------------------------------------
+_____New Exception______
+System.Net.WebException: The remote server returned an error: (500) Internal Server Error.
+   at System.Net.HttpWebRequest.GetResponse()
+   at UMPG.USL.Common.Transport.HttpWebRequestExtensions.Send(HttpWebRequest request) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\HttpWebRequestExtensions.cs:line 120
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.PostSecure[T](String url, IDictionary`2 postData) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 58
+   at UMPG.USL.Security.Safe.SafeAuthenticator.AuthenticateInternal(String username) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\Safe\SafeAuthenticator.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 49
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+ 
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login
+-------------------------------------------
+
+2016-10-04 15:27:34.0140|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger|
+-------------------------------------------
+_____New Exception______
+System.Net.WebException: The remote server returned an error: (500) Internal Server Error.
+   at System.Net.HttpWebRequest.GetResponse()
+   at UMPG.USL.Common.Transport.HttpWebRequestExtensions.Send(HttpWebRequest request) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\HttpWebRequestExtensions.cs:line 120
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.PostSecure[T](String url, IDictionary`2 postData) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 58
+   at UMPG.USL.Security.Safe.SafeAuthenticator.AuthenticateInternal(String username) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\Safe\SafeAuthenticator.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 49
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+ 
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login
+-------------------------------------------
+
+2016-10-04 15:29:58.2920|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger|
+-------------------------------------------
+_____New Exception______
+System.Net.WebException: The remote server returned an error: (500) Internal Server Error.
+   at System.Net.HttpWebRequest.GetResponse()
+   at UMPG.USL.Common.Transport.HttpWebRequestExtensions.Send(HttpWebRequest request) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\HttpWebRequestExtensions.cs:line 120
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.PostSecure[T](String url, IDictionary`2 postData) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 58
+   at UMPG.USL.Security.Safe.SafeAuthenticator.AuthenticateInternal(String username) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\Safe\SafeAuthenticator.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 49
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+ 
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login
+-------------------------------------------
+
+2016-10-04 15:31:27.4440|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger|
+-------------------------------------------
+_____New Exception______
+System.Net.WebException: The remote server returned an error: (500) Internal Server Error.
+   at System.Net.HttpWebRequest.GetResponse()
+   at UMPG.USL.Common.Transport.HttpWebRequestExtensions.Send(HttpWebRequest request) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\HttpWebRequestExtensions.cs:line 120
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.PostSecure[T](String url, IDictionary`2 postData) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 58
+   at UMPG.USL.Security.Safe.SafeAuthenticator.AuthenticateInternal(String username) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\Safe\SafeAuthenticator.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 49
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+ 
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login
+-------------------------------------------
+
+2016-10-04 15:39:57.7620|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger|
+-------------------------------------------
+_____New Exception______
+System.Security.SecurityException: Client certificate for DML could not be loaded.
+   at UMPG.USL.Common.Transport.CertificateProvider.GetCertificate() in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\CertificateProvider.cs:line 25
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.PostSecure[T](String url, IDictionary`2 postData) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 58
+   at UMPG.USL.Security.Safe.SafeAuthenticator.AuthenticateInternal(String username) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\Safe\SafeAuthenticator.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 49
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+The Zone of the assembly that failed was:
+MyComputer
+ 
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login
+-------------------------------------------
+
+2016-10-04 15:40:03.6320|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger|
+-------------------------------------------
+_____New Exception______
+System.Security.SecurityException: Client certificate for DML could not be loaded.
+   at UMPG.USL.Common.Transport.CertificateProvider.GetCertificate() in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\CertificateProvider.cs:line 25
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.PostSecure[T](String url, IDictionary`2 postData) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 58
+   at UMPG.USL.Security.Safe.SafeAuthenticator.AuthenticateInternal(String username) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\Safe\SafeAuthenticator.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 49
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+The Zone of the assembly that failed was:
+MyComputer
+ 
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login
+-------------------------------------------
+
+2016-10-04 15:40:16.8080|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger|
+-------------------------------------------
+_____New Exception______
+System.Security.SecurityException: Client certificate for DML could not be loaded.
+   at UMPG.USL.Common.Transport.CertificateProvider.GetCertificate() in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\CertificateProvider.cs:line 25
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.PostSecure[T](String url, IDictionary`2 postData) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 58
+   at UMPG.USL.Security.Safe.SafeAuthenticator.AuthenticateSafeId(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\Safe\SafeAuthenticator.cs:line 57
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.ValidateSafeId(SafeIdCredentials safeIdCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 177
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+The Zone of the assembly that failed was:
+MyComputer
+ 
+POST http://spa.service/api/AuthenticateCTRL/authenticate/ValidateSafeId
+-------------------------------------------
+
+2016-10-04 15:40:22.0050|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger|
+-------------------------------------------
+_____New Exception______
+System.Security.SecurityException: Client certificate for DML could not be loaded.
+   at UMPG.USL.Common.Transport.CertificateProvider.GetCertificate() in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\CertificateProvider.cs:line 25
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.PostSecure[T](String url, IDictionary`2 postData) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 58
+   at UMPG.USL.Security.Safe.SafeAuthenticator.AuthenticateInternal(String username) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\Safe\SafeAuthenticator.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 49
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+The Zone of the assembly that failed was:
+MyComputer
+ 
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login
+-------------------------------------------
+
+2016-10-04 15:51:09.7490|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger|
+-------------------------------------------
+_____New Exception______
+System.Security.SecurityException: Client certificate for DML could not be loaded.
+   at UMPG.USL.Common.Transport.CertificateProvider.GetCertificate() in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\CertificateProvider.cs:line 25
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.PostSecure[T](String url, IDictionary`2 postData) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 58
+   at UMPG.USL.Security.Safe.SafeAuthenticator.AuthenticateInternal(String username) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\Safe\SafeAuthenticator.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 49
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+The Zone of the assembly that failed was:
+MyComputer
+ 
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login
+-------------------------------------------
+

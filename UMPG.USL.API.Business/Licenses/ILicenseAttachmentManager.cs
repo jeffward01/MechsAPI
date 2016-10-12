@@ -19,6 +19,7 @@ namespace UMPG.USL.API.Business.Licenses
 
         void RemoveLicenseAttachment(LicenseAttachment licenseAttachment);
         LicenseAttachment GetLicenseAttachement(int licenseAttachmentId);
+        bool UpdateLicenseAttachement(LicenseAttachment licenseAttachment);
 
 
     }

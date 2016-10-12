@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using UMPG.USL.API.ActionFilters;
 using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.Models;
 using UMPG.USL.Models.LicenseModel;
@@ -17,6 +18,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
     using UMPG.USL.Models.ContactModel;
 
     [RoutePrefix("api/licenseCTRL/licenseSolr")]
+    [AuthorizationRequired]
     public class LicenseSolrController : BaseController
     {
         private readonly ILicenseSolrManager _licenseSolrManager;

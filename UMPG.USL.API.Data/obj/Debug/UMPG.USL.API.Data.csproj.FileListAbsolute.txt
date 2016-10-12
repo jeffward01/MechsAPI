@@ -8,6 +8,7 @@ C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\bin\Debug\EntityFram
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\bin\Debug\Microsoft.AspNet.Identity.Core.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\bin\Debug\Microsoft.AspNet.Identity.Owin.dll
+C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\bin\Debug\NLog.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\bin\Debug\UMPG.USL.Common.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\bin\Debug\UMPG.USL.Models.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\bin\Debug\Newtonsoft.Json.dll
@@ -23,6 +24,7 @@ C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\bin\Debug\EntityFram
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\bin\Debug\Microsoft.AspNet.Identity.Owin.xml
+C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\bin\Debug\NLog.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\bin\Debug\Newtonsoft.Json.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\obj\Debug\UMPG.USL.API.Data.csprojResolveAssemblyReference.cache
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\obj\Debug\UMPG.USL.API.Data.dll

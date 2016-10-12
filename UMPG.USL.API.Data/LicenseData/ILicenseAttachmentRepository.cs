@@ -16,6 +16,8 @@ namespace UMPG.USL.API.Data.LicenseData
 
         List<LicenseAttachment> Search(string query);
 
+
         void Update(LicenseAttachment licenseAttachment);
+        bool UpdateLicenseAttachment(LicenseAttachment licenseAttachment);
     }
 }

@@ -32,6 +32,20 @@ namespace UMPG.USL.API.Data.LicenseData
             }
         }
 
+        public string GetCatalogNummber(int productConfigId)
+        {
+            using (var context = new AuthContext())
+            {
+                var result =  context.LicenseProductConfigurations.FirstOrDefault(x => x.product_configuration_id == productConfigId && x.CatalogNumber.Length > 2);
+                if (result != null)
+                {
+                    return result.CatalogNumber;
+                }
+                return null;
+
+            }
+        }
+
         public LicenseProductConfiguration Get(int licenseProductConfigurationId)
         {
             using (var context = new AuthContext())

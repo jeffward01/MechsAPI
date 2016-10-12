@@ -22,6 +22,7 @@ C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\UMPG.U
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\UMPG.USL.Common.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\UMPG.USL.Models.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\UMPG.USL.Security.dll
+C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\BCrypt.Net.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\UMPG.USL.Common.pdb
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\UMPG.USL.Models.pdb
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\UMPG.USL.Security.pdb
@@ -44,6 +45,8 @@ C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\Micros
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\Microsoft.Owin.Security.OAuth.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\Newtonsoft.Json.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\NLog.xml
+C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\BCrypt.Net.pdb
+C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\BCrypt.Net.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\obj\Debug\UMPG.USL.API.Business.csprojResolveAssemblyReference.cache
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\obj\Debug\UMPG.USL.API.Business.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\obj\Debug\UMPG.USL.API.Business.pdb

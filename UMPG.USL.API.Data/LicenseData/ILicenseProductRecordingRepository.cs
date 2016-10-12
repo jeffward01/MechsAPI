@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UMPG.USL.Models.LicenseModel;
-using UMPG.USL.Models.Recs;
 
 namespace UMPG.USL.API.Data.LicenseData
 {
@@ -20,6 +15,8 @@ namespace UMPG.USL.API.Data.LicenseData
 
         List<LicenseProductRecording> GetLicenseProductRecordingsFromList(List<int> LicenseproductIds);
 
+        bool IsAlreadyPresent(int trackId, int licneseProductId);
+
         LicenseProductRecording Add(LicenseProductRecording licenseProductRecording);
 
         void Update(LicenseProductRecording licenseProductRecording);
@@ -31,6 +28,5 @@ namespace UMPG.USL.API.Data.LicenseData
         List<LicenseProductRecording> GetLicenseProductRecordingsFromIds(List<int> licenseRecordingIds);
 
         LicenseProductRecording GetLicenseRecordingsByRecsTrackId(int trackId);
-
     }
 }

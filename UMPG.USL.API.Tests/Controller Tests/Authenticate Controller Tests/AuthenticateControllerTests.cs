@@ -15,6 +15,7 @@ using UMPG.USL.Models.Security;
 using UMPG.USL.API.Controllers.AuthenticateCTRL;
 using System.Net.Http;
 using System.Net;
+using UMPG.USL.API.Business.Token;
 
 namespace UMPG.USL.API.Tests.Controller_Tests
 {
@@ -27,7 +28,7 @@ namespace UMPG.USL.API.Tests.Controller_Tests
             //Arrange
             var mockAuthenticator = A.Fake<IAuthenticator>();
             var mockContactContextResolver = A.Fake<IContactContextResolver>();
-
+            var mockTokenService = A.Fake<ITokenServices>();
             AuthenticateResponse expected = new AuthenticateResponse { Success = true };
 
             //Build request
@@ -39,7 +40,7 @@ namespace UMPG.USL.API.Tests.Controller_Tests
             A.CallTo(() => mockAuthenticator.AuthenticateInternal(A<string>.Ignored)).WithAnyArguments().Returns(authResult);
 
             //Act
-            AuthenticateController authController = new AuthenticateController(mockAuthenticator, mockContactContextResolver);
+            AuthenticateController authController = new AuthenticateController(mockAuthenticator, mockContactContextResolver, mockTokenService);
             authController.Login(request);
             var returned = mockAuthenticator.AuthenticateInternal(A<string>.Ignored);
 
@@ -53,7 +54,7 @@ namespace UMPG.USL.API.Tests.Controller_Tests
             //Arrange
             var mockAuthenticator = A.Fake<IAuthenticator>();
             var mockContactContextResolver = A.Fake<IContactContextResolver>();
-
+            var mockTokenService = A.Fake<ITokenServices>();
             //Build expected
             AuthenticateResponse expected = new AuthenticateResponse { Success = true };
 
@@ -76,7 +77,7 @@ namespace UMPG.USL.API.Tests.Controller_Tests
             A.CallTo(() => mockAuthenticator.AuthenticateExternal(A<string>.Ignored, A<string>.Ignored)).WithAnyArguments().Returns(response);     
                      
             //Act
-            AuthenticateController authController = new AuthenticateController(mockAuthenticator, mockContactContextResolver);
+            AuthenticateController authController = new AuthenticateController(mockAuthenticator, mockContactContextResolver, mockTokenService);
             var returned = mockAuthenticator.AuthenticateInternal(A<string>.Ignored);
 
             //Assert
@@ -89,7 +90,7 @@ namespace UMPG.USL.API.Tests.Controller_Tests
             //Arrange
             var mockAuthenticator = A.Fake<IAuthenticator>();
             var mockContactContextResolver = A.Fake<IContactContextResolver>();
-
+            var mockTokenService = A.Fake<ITokenServices>();
             AuthenticateResponse expected = new AuthenticateResponse { Success = true };
 
             //Build request
@@ -101,7 +102,7 @@ namespace UMPG.USL.API.Tests.Controller_Tests
             A.CallTo(() => mockAuthenticator.AuthenticateSafeId(A<string>.Ignored)).WithAnyArguments().Returns(authResult);
 
             //Act
-            AuthenticateController authController = new AuthenticateController(mockAuthenticator, mockContactContextResolver);
+            AuthenticateController authController = new AuthenticateController(mockAuthenticator, mockContactContextResolver, mockTokenService);
             authController.ValidateSafeId(request);
             var returned = mockAuthenticator.AuthenticateSafeId(A<string>.Ignored);
 
