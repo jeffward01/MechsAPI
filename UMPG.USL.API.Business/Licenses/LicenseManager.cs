@@ -7,6 +7,7 @@ using UMPG.USL.API.Data.LicenseData;
 using UMPG.USL.API.Data.Recs;
 using UMPG.USL.Models;
 using UMPG.USL.Models.ContactModel;
+using UMPG.USL.Models.DataHarmonization;
 using UMPG.USL.Models.Enums;
 using UMPG.USL.Models.LicenseModel;
 using UMPG.USL.Models.Recs;
@@ -609,6 +610,12 @@ namespace UMPG.USL.API.Business.Licenses
 
                 }
                 _licenseRepository.UpdateLicense(localLicense);
+
+                var newLicenseSnapshot = new Snapshot_License();
+                newLicenseSnapshot = localLicense;
+
+                
+
 
                 result = true;
             }

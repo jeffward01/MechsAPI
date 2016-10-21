@@ -17,6 +17,7 @@ using UMPG.USL.Models.LicenseModel;
 using UMPG.USL.Models.ProductSearchModel;
 using UMPG.USL.Models.Recs;
 using UMPG.USL.API.Data.AuditData;
+using UMPG.USL.API.Data.DataHarmonization;
 using UMPG.USL.API.Data.Token;
 using UMPG.USL.Models.LicenseSearchModel;
 
@@ -102,7 +103,8 @@ namespace UMPG.USL.API.Data.Installer
 
             container.Register(Component.For<ISolrIndexQueueRepository>().ImplementedBy<SolrIndexQueueRepository>());
             container.Register(Component.For<IAttachmentTypeRepository>().ImplementedBy<AttachmentTypeRepository>());
-
+            container.Register(Component.For<ISnapshotLicenseProductRepository>().ImplementedBy<SnapshotLicenseProductRepository>());
+            container.Register(Component.For<ISnapshotLicenseRepository>().ImplementedBy<SnapshotLicenseRepository>());
 
             container.Register(
                 Component.For<IMapper<string, ProductRequest>>()

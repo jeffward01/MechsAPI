@@ -13,6 +13,7 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using NLog;
 using UMPG.USL.Models.Authorization;
+using UMPG.USL.Models.DataHarmonization;
 using Action = UMPG.USL.Models.Security.Action;
 
 
@@ -158,6 +159,11 @@ namespace UMPG.USL.API.Data
 
         public DbSet<Models.Authorization.TokenEntity> Tokens { get; set; }
 
+        public DbSet<Snapshot_License> Snapshot_Licenses { get; set; }
+        public DbSet<Snapshot_LicenseProduct> Snapshot_LicenseProducts { get; set; }
+
+        public DbSet<Snapshot_LicenseNote> Snapshot_LicenseNotes { get; set; }
+      
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -200,6 +206,21 @@ namespace UMPG.USL.API.Data
             // ContactEmails
             modelBuilder.Entity<ContactEmail>().ToTable("ContactEmail");
             modelBuilder.Entity<ContactEmail>().HasKey(c => c.ContactEmailId);
+
+            //Snapshot_License
+            modelBuilder.Entity<Snapshot_License>().ToTable("Snapshot_License");
+            modelBuilder.Entity<Snapshot_License>().HasKey(x => x.LicenseId);
+            modelBuilder.Entity<Snapshot_License>().HasMany(r => r.LicenseProducts).WithOptional().HasForeignKey(c => c.LicenseId);
+            modelBuilder.Entity<Snapshot_License>().HasMany(r => r.LicenseNoteList).WithOptional().HasForeignKey(c => c.licenseId);
+
+            //Snapshot_LicenseProduct
+            modelBuilder.Entity<Snapshot_LicenseProduct>().ToTable("Snapshot_LicenseProduct");
+            modelBuilder.Entity<Snapshot_LicenseProduct>().HasKey(x => x.ProductId);
+
+            //Snapshot_LicenseNotes
+            modelBuilder.Entity<Snapshot_LicenseNote>().ToTable("Snapshot_LicenseProduct");
+            modelBuilder.Entity<Snapshot_LicenseNote>().HasKey(x => x.licenseNoteId);
+
 
             // Licenses
             modelBuilder.Entity<License>().ToTable("License", "dbo");
