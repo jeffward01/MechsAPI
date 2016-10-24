@@ -15,7 +15,8 @@ namespace UMPG.USL.API.Data.DataHarmonization
         {
             using (var context = new AuthContext())
             {
-                context.Entry(licenseProductSnapshot).State = (EntityState)System.Data.EntityState.Added;
+
+                context.Snapshot_LicenseProducts.Add(licenseProductSnapshot);
                 context.SaveChanges();
                 return licenseProductSnapshot;
             }

@@ -9,6 +9,7 @@ using UMPG.USL.API.Business.LookUps;
 using UMPG.USL.API.Business.Lookups;
 using UMPG.USL.API.Business.Recs;
 using UMPG.USL.API.Business.Audits;
+using UMPG.USL.API.Business.DataHarmonization;
 using UMPG.USL.API.Business.Reports;
 using UMPG.USL.API.Business.Token;
 
@@ -21,7 +22,7 @@ namespace UMPG.USL.API.Business.Installer
         {
             container.Register(Component.For<IInterceptor>().ImplementedBy<LicenseSequenceIntercepror>().LifestyleSingleton());
             container.Register(Component.For<IInterceptor>().ImplementedBy<LicenseUpdateIntercepror>().LifestyleSingleton());
-
+            
             container.Register(Component.For<IAuthManager>().ImplementedBy<AuthManager>());
             container.Register(Component.For<ILicenseManager>().ImplementedBy<LicenseManager>().Interceptors<LicenseSequenceIntercepror,LicenseUpdateIntercepror>());
             container.Register(Component.For<ILicenseNoteManager>().ImplementedBy<LicenseNoteManager>());
@@ -55,6 +56,24 @@ namespace UMPG.USL.API.Business.Installer
             container.Register(Component.For<IReportQueueManager>().ImplementedBy<ReportQueueManager>());
             container.Register(Component.For<ITokenServices>().ImplementedBy<TokenServices>());
             container.Register(Component.For<IAttachmentTypeManager>().ImplementedBy<AttachmentTypeManager>());
+
+
+
+            //Data Harmonization Managers
+            container.Register(Component.For<ISnapshotArtistRecsManager>().ImplementedBy<SnapshotArtistRecsManager>());
+            container.Register(Component.For<ISnapshotConfigurationManager>().ImplementedBy<SnapshotConfigurationManager>());
+            container.Register(Component.For<ISnapshotContactManger>().ImplementedBy<SnapshotContactManger>());
+            container.Register(Component.For<ISnapshotLabelGroupManager>().ImplementedBy<SnapshotLabelGroupManager>());
+            container.Register(Component.For<ISnapshotLicenseProductManager>().ImplementedBy<SnapshotLicenseProductManager>());
+            container.Register(Component.For<ISnapshotLicenseProductConfigurationManager>().ImplementedBy<SnapshotLicenseProductConfigurationManager>());
+            container.Register(Component.For<ISnapshotProductHeaderManager>().ImplementedBy<SnapshotProductHeaderManager>());
+            container.Register(Component.For<ISnapshotRecsConfigurationManager>().ImplementedBy<SnapshotRecsConfigurationManager>());
+            container.Register(Component.For<ISnapshotRoleManager>().ImplementedBy<SnapshotRoleManager>());
+            container.Register(Component.For<ISnapshotWorksRecordingManager>().ImplementedBy<SnapshotWorksRecordingManager>());
+            container.Register(Component.For<ISnapshotLicenseManager>().ImplementedBy<SnapshotLicenseManager>());
+            container.Register(Component.For<IDataHarmonizationManager>().ImplementedBy<DataHarmonizationManager>());
+
         }
     }
 }
+

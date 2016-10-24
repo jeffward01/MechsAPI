@@ -103,33 +103,29 @@ namespace UMPG.USL.API.Data.Installer
 
             container.Register(Component.For<ISolrIndexQueueRepository>().ImplementedBy<SolrIndexQueueRepository>());
             container.Register(Component.For<IAttachmentTypeRepository>().ImplementedBy<AttachmentTypeRepository>());
+
+            //Dataharmonization
             container.Register(Component.For<ISnapshotLicenseProductRepository>().ImplementedBy<SnapshotLicenseProductRepository>());
             container.Register(Component.For<ISnapshotLicenseRepository>().ImplementedBy<SnapshotLicenseRepository>());
+            container.Register(Component.For<ISnapshotArtistRecsRepository>().ImplementedBy<SnapshotArtistRecsRepository>());
+            container.Register(Component.For<ISnapshotConfigurationRepository>().ImplementedBy<SnapshotConfigurationRepository>());
+            container.Register(Component.For<ISnapshotContactRepository>().ImplementedBy<SnapshotContactRepository>());
+            container.Register(Component.For<ISnapshotLabelRepository>().ImplementedBy<SnapshotLabelRepository>());
+            container.Register(Component.For<ISnapshotLabelGroupRepository>().ImplementedBy<SnapshotLabelGroupRepository>());
+            container.Register(Component.For<ISnapshotLicenseNoteRepository>().ImplementedBy<SnapshotLicenseNoteRepository>());
+            container.Register(Component.For<ISnapshotLicenseProductConfigurationRepository>().ImplementedBy<SnapshotLicenseProductConfigurationRepository>());
+            container.Register(Component.For<ISnapshotProductHeaderRepository>().ImplementedBy<SnapshotProductHeaderRepository>());
+            container.Register(Component.For<ISnapshotRecsConfiguration>().ImplementedBy<SnapshotRecsConfiguration>());
+            container.Register(Component.For<ISnapshotRoleRepository>().ImplementedBy<SnapshotRoleRepository>());
+            container.Register(Component.For<ISnapshotWorksRecordingRepository>().ImplementedBy<SnapshotWorksRecordingRepository>());
 
-            container.Register(
-                Component.For<IMapper<string, ProductRequest>>()
-                    .ImplementedBy<ProductSearchCriteriaMapper>()
-                    .LifestyleSingleton());
-            container.Register(
-               Component.For<IMapper<string, LicenseRequest>>()
-                   .ImplementedBy<LicenseSearchCriteriaMapper>()
-                   .LifestyleSingleton());
-            container.Register(
-               Component.For<IMapper<License, LicenseSOLR>>()
-                   .ImplementedBy<LicenseSOLRMapper>()
-                   .LifestyleSingleton());
-            container.Register(
-               Component.For<IMapper<Product, ProductSOLR>>()
-                   .ImplementedBy<ProductSOLRMapper>()
-                   .LifestyleSingleton());
-            container.Register(
-               Component.For<IMapper<Recording, WorksRecording>>()
-                   .ImplementedBy<TracksRecsMapper>()
-                   .LifestyleSingleton());
-            container.Register(
-               Component.For<IMapper<Writer, WorksWriter>>()
-                   .ImplementedBy<WritersRecsRMapper>()
-                   .LifestyleSingleton());
+
+            container.Register(Component.For<IMapper<string, ProductRequest>>().ImplementedBy<ProductSearchCriteriaMapper>().LifestyleSingleton());
+            container.Register(Component.For<IMapper<string, LicenseRequest>>().ImplementedBy<LicenseSearchCriteriaMapper>().LifestyleSingleton());
+            container.Register(Component.For<IMapper<License, LicenseSOLR>>().ImplementedBy<LicenseSOLRMapper>().LifestyleSingleton());
+            container.Register(Component.For<IMapper<Product, ProductSOLR>>().ImplementedBy<ProductSOLRMapper>().LifestyleSingleton());
+            container.Register(Component.For<IMapper<Recording, WorksRecording>>().ImplementedBy<TracksRecsMapper>().LifestyleSingleton());
+            container.Register(Component.For<IMapper<Writer, WorksWriter>>().ImplementedBy<WritersRecsRMapper>().LifestyleSingleton());
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UMPG.USL.API.Business.DataHarmonization;
 using UMPG.USL.API.Data.LicenseData;
 using UMPG.USL.API.Data.Recs;
 using UMPG.USL.Models;
@@ -33,6 +34,7 @@ namespace UMPG.USL.API.Business.Licenses
         private readonly ILicenseUploadPreviewLicenseRepository _licenseUploadPreviewLicenseRepository;
         private readonly IRecs _recs;
         private readonly IRecsDataProvider _recsProvider;
+        private readonly IDataHarmonizationManager _dataHarmonizationManager;
 
         public LicenseManager(
             ILicenseRepository licenseRepository,
@@ -46,9 +48,11 @@ namespace UMPG.USL.API.Business.Licenses
             ILicensePRWriterRateStatusRepository licensePRWriterRateStatusRepository,
             ILicenseUploadPreviewLicenseRepository licenseUploadPreviewLicenseRepository,
             IRecs recs,
-            IRecsDataProvider recsProvider
+            IRecsDataProvider recsProvider,
+            IDataHarmonizationManager dataHarmonizationManager
             )
         {
+            _dataHarmonizationManager = dataHarmonizationManager;
             _licenseRepository = licenseRepository;
             _licenseProductRepository = licenseProductRepository;
             _licenseNoteRepository = licenseNoteRepository;
@@ -610,10 +614,12 @@ namespace UMPG.USL.API.Business.Licenses
 
                 }
                 _licenseRepository.UpdateLicense(localLicense);
+             //   _dataHarmonizationManager.TakeLicenseSnapshot(localLicense);
 
-                var newLicenseSnapshot = new Snapshot_License();
-                newLicenseSnapshot = localLicense;
 
+               // var newLicenseSnapshot = new Snapshot_License();
+              //  newLicenseSnapshot = localLicense;
+              //Data Harmonization Code
                 
 
 

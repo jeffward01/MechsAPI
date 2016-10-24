@@ -1,0 +1,1462 @@
+2016-10-24 13:26:50.0921|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:26:50 PM 
+
+Castle.MicroKernel.Handlers.HandlerException: Can't create component 'UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager' as it has dependencies to be satisfied.
+
+'UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager' is waiting for the following dependencies:
+- Service 'UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager' which was not registered.
+
+   at Castle.MicroKernel.Handlers.DefaultHandler.AssertNotWaitingForDependency()
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.ResolveFromKernelByType(CreationContext context, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.CreateConstructorArguments(ConstructorCandidate constructor, CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.Instantiate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.InternalCreate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.AbstractComponentActivator.Create(CreationContext context, Burden burden)
+   at Castle.MicroKernel.Lifestyle.AbstractLifestyleManager.CreateInstance(CreationContext context, Boolean trackedExternally)
+   at Castle.MicroKernel.Lifestyle.SingletonLifestyleManager.Resolve(CreationContext context, IReleasePolicy releasePolicy)
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.ResolveFromKernelByType(CreationContext context, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.CreateConstructorArguments(ConstructorCandidate constructor, CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.Instantiate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.InternalCreate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.AbstractComponentActivator.Create(CreationContext context, Burden burden)
+   at Castle.MicroKernel.Lifestyle.AbstractLifestyleManager.CreateInstance(CreationContext context, Boolean trackedExternally)
+   at Castle.MicroKernel.Lifestyle.ScopedLifestyleManager.<>c__DisplayClass1.<Resolve>b__0(Action`1 afterCreated)
+   at Castle.MicroKernel.Lifestyle.Scoped.CallContextLifetimeScope.GetCachedInstance(ComponentModel model, ScopedInstanceActivationCallback createInstance)
+   at Castle.MicroKernel.Lifestyle.ScopedLifestyleManager.Resolve(CreationContext context, IReleasePolicy releasePolicy)
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.DefaultKernel.ResolveComponent(IHandler handler, Type service, IDictionary additionalArguments, IReleasePolicy policy)
+   at Castle.MicroKernel.DefaultKernel.Castle.MicroKernel.IKernelInternal.Resolve(Type service, IDictionary arguments, IReleasePolicy policy)
+   at UMPG.USL.API.Installers.WindsorDependencyScope.GetService(Type t) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Installers\WindsorDependencyScope.cs:line 29
+   at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.GetInstanceOrActivator(HttpRequestMessage request, Type controllerType, Func`1& activator)
+   at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseCTRL/licenses/GetLicenseDetails/24733, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseCTRL/licenses/GetLicenseDetails/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:26:52.0641|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:26:52 PM 
+
+Castle.MicroKernel.Handlers.HandlerException: Can't create component 'UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager' as it has dependencies to be satisfied.
+
+'UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager' is waiting for the following dependencies:
+- Service 'UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager' which was not registered.
+
+   at Castle.MicroKernel.Handlers.DefaultHandler.AssertNotWaitingForDependency()
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.ResolveFromKernelByType(CreationContext context, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.CreateConstructorArguments(ConstructorCandidate constructor, CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.Instantiate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.InternalCreate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.AbstractComponentActivator.Create(CreationContext context, Burden burden)
+   at Castle.MicroKernel.Lifestyle.AbstractLifestyleManager.CreateInstance(CreationContext context, Boolean trackedExternally)
+   at Castle.MicroKernel.Lifestyle.SingletonLifestyleManager.Resolve(CreationContext context, IReleasePolicy releasePolicy)
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.ResolveFromKernelByType(CreationContext context, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.CreateConstructorArguments(ConstructorCandidate constructor, CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.Instantiate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.InternalCreate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.AbstractComponentActivator.Create(CreationContext context, Burden burden)
+   at Castle.MicroKernel.Lifestyle.AbstractLifestyleManager.CreateInstance(CreationContext context, Boolean trackedExternally)
+   at Castle.MicroKernel.Lifestyle.ScopedLifestyleManager.<>c__DisplayClass1.<Resolve>b__0(Action`1 afterCreated)
+   at Castle.MicroKernel.Lifestyle.Scoped.CallContextLifetimeScope.GetCachedInstance(ComponentModel model, ScopedInstanceActivationCallback createInstance)
+   at Castle.MicroKernel.Lifestyle.ScopedLifestyleManager.Resolve(CreationContext context, IReleasePolicy releasePolicy)
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.DefaultKernel.ResolveComponent(IHandler handler, Type service, IDictionary additionalArguments, IReleasePolicy policy)
+   at Castle.MicroKernel.DefaultKernel.Castle.MicroKernel.IKernelInternal.Resolve(Type service, IDictionary arguments, IReleasePolicy policy)
+   at UMPG.USL.API.Installers.WindsorDependencyScope.GetService(Type t) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Installers\WindsorDependencyScope.cs:line 29
+   at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.GetInstanceOrActivator(HttpRequestMessage request, Type controllerType, Func`1& activator)
+   at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseCTRL/licenses/PagedSearch, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+
+ 
+Request Method:  
+POST http://spa.service/api/licenseCTRL/licenses/PagedSearch 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:26:52.0641|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:26:52 PM 
+
+Castle.MicroKernel.Handlers.HandlerException: Can't create component 'UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager' as it has dependencies to be satisfied.
+
+'UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager' is waiting for the following dependencies:
+- Service 'UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager' which was not registered.
+
+   at Castle.MicroKernel.Handlers.DefaultHandler.AssertNotWaitingForDependency()
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.ResolveFromKernelByType(CreationContext context, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.CreateConstructorArguments(ConstructorCandidate constructor, CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.Instantiate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.InternalCreate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.AbstractComponentActivator.Create(CreationContext context, Burden burden)
+   at Castle.MicroKernel.Lifestyle.AbstractLifestyleManager.CreateInstance(CreationContext context, Boolean trackedExternally)
+   at Castle.MicroKernel.Lifestyle.SingletonLifestyleManager.Resolve(CreationContext context, IReleasePolicy releasePolicy)
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.ResolveFromKernelByType(CreationContext context, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.CreateConstructorArguments(ConstructorCandidate constructor, CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.Instantiate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.InternalCreate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.AbstractComponentActivator.Create(CreationContext context, Burden burden)
+   at Castle.MicroKernel.Lifestyle.AbstractLifestyleManager.CreateInstance(CreationContext context, Boolean trackedExternally)
+   at Castle.MicroKernel.Lifestyle.ScopedLifestyleManager.<>c__DisplayClass1.<Resolve>b__0(Action`1 afterCreated)
+   at Castle.MicroKernel.Lifestyle.Scoped.CallContextLifetimeScope.GetCachedInstance(ComponentModel model, ScopedInstanceActivationCallback createInstance)
+   at Castle.MicroKernel.Lifestyle.ScopedLifestyleManager.Resolve(CreationContext context, IReleasePolicy releasePolicy)
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.DefaultKernel.ResolveComponent(IHandler handler, Type service, IDictionary additionalArguments, IReleasePolicy policy)
+   at Castle.MicroKernel.DefaultKernel.Castle.MicroKernel.IKernelInternal.Resolve(Type service, IDictionary arguments, IReleasePolicy policy)
+   at UMPG.USL.API.Installers.WindsorDependencyScope.GetService(Type t) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Installers\WindsorDependencyScope.cs:line 29
+   at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.GetInstanceOrActivator(HttpRequestMessage request, Type controllerType, Func`1& activator)
+   at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseCTRL/licenses/GetInboxLicenses/67, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseCTRL/licenses/GetInboxLicenses/67 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:26:52.2281|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:26:51 PM 
+
+System.InvalidOperationException: The navigation property 'ProductHeader' is not a declared property on type 'Snapshot_LicenseProduct'. Verify that it has not been explicitly excluded from the model and that it is a valid navigation property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.LicenseData.LicenseAttachmentRepository.GetAll() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\LicenseData\LicenseAttachmentRepository.cs:line 43
+   at UMPG.USL.API.Business.Licenses.LicenseAttachmentManager.GetAllAttachmentsByLicenseId(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseAttachmentManager.cs:line 45
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseAttachmentController.GetAllAttachmentsByLicenseId(Int32 licenseid) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseAttachmentController.cs:line 49
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseCTRL/licenseAttachments/GetAllAttachmentsByLicenseId/24733, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseCTRL/licenseAttachments/GetAllAttachmentsByLicenseId/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:26:52.2281|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:26:51 PM 
+
+System.InvalidOperationException: The navigation property 'ProductHeader' is not a declared property on type 'Snapshot_LicenseProduct'. Verify that it has not been explicitly excluded from the model and that it is a valid navigation property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.FirstOrDefault[TSource](IQueryable`1 source, Expression`1 predicate)
+   at UMPG.USL.API.Data.LicenseData.LicenseRepository.GetLite(Int32 id) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\LicenseData\LicenseRepository.cs:line 706
+   at UMPG.USL.API.Business.Licenses.LicenseProductManager.GetProductsNew(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductManager.cs:line 457
+   at Castle.Proxies.Invocations.ILicenseProductManager_GetProductsNew.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 25
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.GetProductsNew(Int32 licenseId)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.GetProductsNew(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 39
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/GetProductsNew/24733, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseProductCTRL/licenseproducts/GetProductsNew/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:26:52.4711|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:26:52 PM 
+
+System.InvalidOperationException: The navigation property 'ProductHeader' is not a declared property on type 'Snapshot_LicenseProduct'. Verify that it has not been explicitly excluded from the model and that it is a valid navigation property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.FirstOrDefault[TSource](IQueryable`1 source, Expression`1 predicate)
+   at UMPG.USL.API.Data.Token.TokenRepository.Find(String tokenId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\Token\TokenRepository.cs:line 38
+   at BusinessServices.TokenServices.ValidateToken(String tokenId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Token\TokenServices.cs:line 63
+   at UMPG.USL.API.ActionFilters.AuthorizationRequiredAttribute.OnActionExecuting(HttpActionContext filterContext) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\ActionFilters\AuthorizationRequiredAttribute.cs:line 27
+   at System.Web.Http.Filters.ActionFilterAttribute.OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Filters.ActionFilterAttribute.<ExecuteActionFilterAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/contactCTRL/ContactDefaults/Save, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/contactCTRL/ContactDefaults/Save 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:27:06.6431|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:27:06 PM 
+
+Castle.MicroKernel.Handlers.HandlerException: Can't create component 'UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager' as it has dependencies to be satisfied.
+
+'UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager' is waiting for the following dependencies:
+- Service 'UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager' which was not registered.
+
+   at Castle.MicroKernel.Handlers.DefaultHandler.AssertNotWaitingForDependency()
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.ResolveFromKernelByType(CreationContext context, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.CreateConstructorArguments(ConstructorCandidate constructor, CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.Instantiate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.InternalCreate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.AbstractComponentActivator.Create(CreationContext context, Burden burden)
+   at Castle.MicroKernel.Lifestyle.AbstractLifestyleManager.CreateInstance(CreationContext context, Boolean trackedExternally)
+   at Castle.MicroKernel.Lifestyle.SingletonLifestyleManager.Resolve(CreationContext context, IReleasePolicy releasePolicy)
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.ResolveFromKernelByType(CreationContext context, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.CreateConstructorArguments(ConstructorCandidate constructor, CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.Instantiate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.InternalCreate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.AbstractComponentActivator.Create(CreationContext context, Burden burden)
+   at Castle.MicroKernel.Lifestyle.AbstractLifestyleManager.CreateInstance(CreationContext context, Boolean trackedExternally)
+   at Castle.MicroKernel.Lifestyle.ScopedLifestyleManager.<>c__DisplayClass1.<Resolve>b__0(Action`1 afterCreated)
+   at Castle.MicroKernel.Lifestyle.Scoped.CallContextLifetimeScope.GetCachedInstance(ComponentModel model, ScopedInstanceActivationCallback createInstance)
+   at Castle.MicroKernel.Lifestyle.ScopedLifestyleManager.Resolve(CreationContext context, IReleasePolicy releasePolicy)
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.DefaultKernel.ResolveComponent(IHandler handler, Type service, IDictionary additionalArguments, IReleasePolicy policy)
+   at Castle.MicroKernel.DefaultKernel.Castle.MicroKernel.IKernelInternal.Resolve(Type service, IDictionary arguments, IReleasePolicy policy)
+   at UMPG.USL.API.Installers.WindsorDependencyScope.GetService(Type t) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Installers\WindsorDependencyScope.cs:line 29
+   at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.GetInstanceOrActivator(HttpRequestMessage request, Type controllerType, Func`1& activator)
+   at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseCTRL/licenses/GetInboxLicenses/67, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseCTRL/licenses/GetInboxLicenses/67 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:27:06.6431|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:27:06 PM 
+
+Castle.MicroKernel.Handlers.HandlerException: Can't create component 'UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager' as it has dependencies to be satisfied.
+
+'UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager' is waiting for the following dependencies:
+- Service 'UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager' which was not registered.
+
+   at Castle.MicroKernel.Handlers.DefaultHandler.AssertNotWaitingForDependency()
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.ResolveFromKernelByType(CreationContext context, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.CreateConstructorArguments(ConstructorCandidate constructor, CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.Instantiate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.InternalCreate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.AbstractComponentActivator.Create(CreationContext context, Burden burden)
+   at Castle.MicroKernel.Lifestyle.AbstractLifestyleManager.CreateInstance(CreationContext context, Boolean trackedExternally)
+   at Castle.MicroKernel.Lifestyle.SingletonLifestyleManager.Resolve(CreationContext context, IReleasePolicy releasePolicy)
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.ResolveFromKernelByType(CreationContext context, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.Resolvers.DefaultDependencyResolver.Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.CreateConstructorArguments(ConstructorCandidate constructor, CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.Instantiate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.DefaultComponentActivator.InternalCreate(CreationContext context)
+   at Castle.MicroKernel.ComponentActivator.AbstractComponentActivator.Create(CreationContext context, Burden burden)
+   at Castle.MicroKernel.Lifestyle.AbstractLifestyleManager.CreateInstance(CreationContext context, Boolean trackedExternally)
+   at Castle.MicroKernel.Lifestyle.ScopedLifestyleManager.<>c__DisplayClass1.<Resolve>b__0(Action`1 afterCreated)
+   at Castle.MicroKernel.Lifestyle.Scoped.CallContextLifetimeScope.GetCachedInstance(ComponentModel model, ScopedInstanceActivationCallback createInstance)
+   at Castle.MicroKernel.Lifestyle.ScopedLifestyleManager.Resolve(CreationContext context, IReleasePolicy releasePolicy)
+   at Castle.MicroKernel.Handlers.DefaultHandler.ResolveCore(CreationContext context, Boolean requiresDecommission, Boolean instanceRequired, Burden& burden)
+   at Castle.MicroKernel.Handlers.DefaultHandler.Resolve(CreationContext context, Boolean instanceRequired)
+   at Castle.MicroKernel.DefaultKernel.ResolveComponent(IHandler handler, Type service, IDictionary additionalArguments, IReleasePolicy policy)
+   at Castle.MicroKernel.DefaultKernel.Castle.MicroKernel.IKernelInternal.Resolve(Type service, IDictionary arguments, IReleasePolicy policy)
+   at UMPG.USL.API.Installers.WindsorDependencyScope.GetService(Type t) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Installers\WindsorDependencyScope.cs:line 29
+   at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.GetInstanceOrActivator(HttpRequestMessage request, Type controllerType, Func`1& activator)
+   at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseCTRL/licenses/PagedSearch, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+
+ 
+Request Method:  
+POST http://spa.service/api/licenseCTRL/licenses/PagedSearch 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:27:07.9311|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:27:07 PM 
+
+System.InvalidOperationException: The navigation property 'ProductHeader' is not a declared property on type 'Snapshot_LicenseProduct'. Verify that it has not been explicitly excluded from the model and that it is a valid navigation property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.ContactData.ContactRepository.Get(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\ContactData\ContactRepository.cs:line 42
+   at UMPG.USL.Security.ContactContextResolver.Resolve(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\ContactContextResolver.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.ValidateSafeId(SafeIdCredentials safeIdCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 188
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Cache-Control: max-age=0
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/AuthenticateCTRL/authenticate/ValidateSafeId, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/AuthenticateCTRL/authenticate/ValidateSafeId 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:27:16.4791|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:27:16 PM 
+
+System.InvalidOperationException: The navigation property 'ProductHeader' is not a declared property on type 'Snapshot_LicenseProduct'. Verify that it has not been explicitly excluded from the model and that it is a valid navigation property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.ContactData.ContactRepository.Get(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\ContactData\ContactRepository.cs:line 42
+   at UMPG.USL.Security.ContactContextResolver.Resolve(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\ContactContextResolver.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 76
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/AuthenticateCTRL/authenticate/Login, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:27:23.3111|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:27:23 PM 
+
+System.InvalidOperationException: The navigation property 'ProductHeader' is not a declared property on type 'Snapshot_LicenseProduct'. Verify that it has not been explicitly excluded from the model and that it is a valid navigation property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.ContactData.ContactRepository.Get(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\ContactData\ContactRepository.cs:line 42
+   at UMPG.USL.Security.ContactContextResolver.Resolve(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\ContactContextResolver.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 76
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/AuthenticateCTRL/authenticate/Login, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:27:29.4201|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:27:29 PM 
+
+System.InvalidOperationException: The navigation property 'ProductHeader' is not a declared property on type 'Snapshot_LicenseProduct'. Verify that it has not been explicitly excluded from the model and that it is a valid navigation property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.ContactData.ContactRepository.Get(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\ContactData\ContactRepository.cs:line 42
+   at UMPG.USL.Security.ContactContextResolver.Resolve(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\ContactContextResolver.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.ValidateSafeId(SafeIdCredentials safeIdCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 188
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/AuthenticateCTRL/authenticate/ValidateSafeId, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/AuthenticateCTRL/authenticate/ValidateSafeId 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:30:45.7801|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:30:45 PM 
+
+System.InvalidOperationException: The navigation property 'ProductHeader' is not a declared property on type 'Snapshot_LicenseProduct'. Verify that it has not been explicitly excluded from the model and that it is a valid navigation property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.ContactData.ContactRepository.Get(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\ContactData\ContactRepository.cs:line 42
+   at UMPG.USL.Security.ContactContextResolver.Resolve(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\ContactContextResolver.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 76
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/AuthenticateCTRL/authenticate/Login, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:31:06.8761|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:31:06 PM 
+
+System.InvalidOperationException: The navigation property 'Recordings' is not a declared property on type 'Snapshot_LicenseProduct'. Verify that it has not been explicitly excluded from the model and that it is a valid navigation property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.ContactData.ContactRepository.Get(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\ContactData\ContactRepository.cs:line 42
+   at UMPG.USL.Security.ContactContextResolver.Resolve(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\ContactContextResolver.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 76
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/AuthenticateCTRL/authenticate/Login, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:35:43.8251|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:35:43 PM 
+
+System.InvalidOperationException: The navigation property 'Recordings' is not a declared property on type 'Snapshot_LicenseProduct'. Verify that it has not been explicitly excluded from the model and that it is a valid navigation property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.ContactData.ContactRepository.Get(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\ContactData\ContactRepository.cs:line 42
+   at UMPG.USL.Security.ContactContextResolver.Resolve(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\ContactContextResolver.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 76
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/AuthenticateCTRL/authenticate/Login, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:36:07.3321|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:36:07 PM 
+
+System.Data.Entity.ModelConfiguration.ModelValidationException: One or more validation errors were detected during model generation:
+
+UMPG.USL.API.Data.Snapshot_WorksRecording: : EntityType 'Snapshot_WorksRecording' has no key defined. Define the key for this EntityType.
+UMPG.USL.API.Data.RecsCopyrights: : EntityType 'RecsCopyrights' has no key defined. Define the key for this EntityType.
+UMPG.USL.API.Data.Affiliation: : EntityType 'Affiliation' has no key defined. Define the key for this EntityType.
+UMPG.USL.API.Data.AffiliationBase: : EntityType 'AffiliationBase' has no key defined. Define the key for this EntityType.
+UMPG.USL.API.Data.WriterBase: : EntityType 'WriterBase' has no key defined. Define the key for this EntityType.
+UMPG.USL.API.Data.LocalClientCopyright: : EntityType 'LocalClientCopyright' has no key defined. Define the key for this EntityType.
+Snapshot_Label_RecordLabelGroups_Target: : Multiplicity is not valid in Role 'Snapshot_Label_RecordLabelGroups_Target' in relationship 'Snapshot_Label_RecordLabelGroups'. Because the Dependent Role refers to the key properties, the upper bound of the multiplicity of the Dependent Role must be '1'.
+Snapshot_WorksRecordings: EntityType: EntitySet 'Snapshot_WorksRecordings' is based on type 'Snapshot_WorksRecording' that has no keys defined.
+RecsCopyrights: EntityType: EntitySet 'RecsCopyrights' is based on type 'RecsCopyrights' that has no keys defined.
+Affiliations: EntityType: EntitySet 'Affiliations' is based on type 'Affiliation' that has no keys defined.
+AffiliationBases: EntityType: EntitySet 'AffiliationBases' is based on type 'AffiliationBase' that has no keys defined.
+WriterBases: EntityType: EntitySet 'WriterBases' is based on type 'WriterBase' that has no keys defined.
+LocalClientCopyrights: EntityType: EntitySet 'LocalClientCopyrights' is based on type 'LocalClientCopyright' that has no keys defined.
+
+   at System.Data.Entity.Core.Metadata.Edm.EdmModel.Validate()
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.ContactData.ContactRepository.Get(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\ContactData\ContactRepository.cs:line 42
+   at UMPG.USL.Security.ContactContextResolver.Resolve(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\ContactContextResolver.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 76
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/AuthenticateCTRL/authenticate/Login, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:40:24.7741|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:40:24 PM 
+
+System.Data.Entity.ModelConfiguration.ModelValidationException: One or more validation errors were detected during model generation:
+
+UMPG.USL.API.Data.Snapshot_WorksRecording: : EntityType 'Snapshot_WorksRecording' has no key defined. Define the key for this EntityType.
+UMPG.USL.API.Data.RecsCopyrights: : EntityType 'RecsCopyrights' has no key defined. Define the key for this EntityType.
+UMPG.USL.API.Data.Affiliation: : EntityType 'Affiliation' has no key defined. Define the key for this EntityType.
+UMPG.USL.API.Data.AffiliationBase: : EntityType 'AffiliationBase' has no key defined. Define the key for this EntityType.
+UMPG.USL.API.Data.WriterBase: : EntityType 'WriterBase' has no key defined. Define the key for this EntityType.
+UMPG.USL.API.Data.LocalClientCopyright: : EntityType 'LocalClientCopyright' has no key defined. Define the key for this EntityType.
+Snapshot_Label_RecordLabelGroups_Target: : Multiplicity is not valid in Role 'Snapshot_Label_RecordLabelGroups_Target' in relationship 'Snapshot_Label_RecordLabelGroups'. Because the Dependent Role refers to the key properties, the upper bound of the multiplicity of the Dependent Role must be '1'.
+Snapshot_WorksRecordings: EntityType: EntitySet 'Snapshot_WorksRecordings' is based on type 'Snapshot_WorksRecording' that has no keys defined.
+RecsCopyrights: EntityType: EntitySet 'RecsCopyrights' is based on type 'RecsCopyrights' that has no keys defined.
+Affiliations: EntityType: EntitySet 'Affiliations' is based on type 'Affiliation' that has no keys defined.
+AffiliationBases: EntityType: EntitySet 'AffiliationBases' is based on type 'AffiliationBase' that has no keys defined.
+WriterBases: EntityType: EntitySet 'WriterBases' is based on type 'WriterBase' that has no keys defined.
+LocalClientCopyrights: EntityType: EntitySet 'LocalClientCopyrights' is based on type 'LocalClientCopyright' that has no keys defined.
+
+   at System.Data.Entity.Core.Metadata.Edm.EdmModel.Validate()
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.ContactData.ContactRepository.Get(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\ContactData\ContactRepository.cs:line 42
+   at UMPG.USL.Security.ContactContextResolver.Resolve(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\ContactContextResolver.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 76
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/AuthenticateCTRL/authenticate/Login, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:50:02.7161|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:50:02 PM 
+
+System.Data.Entity.ModelConfiguration.ModelValidationException: One or more validation errors were detected during model generation:
+
+UMPG.USL.API.Data.Affiliation: : EntityType 'Affiliation' has no key defined. Define the key for this EntityType.
+UMPG.USL.API.Data.AffiliationBase: : EntityType 'AffiliationBase' has no key defined. Define the key for this EntityType.
+UMPG.USL.API.Data.WriterBase: : EntityType 'WriterBase' has no key defined. Define the key for this EntityType.
+UMPG.USL.API.Data.LocalClientCopyright: : EntityType 'LocalClientCopyright' has no key defined. Define the key for this EntityType.
+Snapshot_Label_RecordLabelGroups_Target: : Multiplicity is not valid in Role 'Snapshot_Label_RecordLabelGroups_Target' in relationship 'Snapshot_Label_RecordLabelGroups'. Because the Dependent Role refers to the key properties, the upper bound of the multiplicity of the Dependent Role must be '1'.
+Affiliations: EntityType: EntitySet 'Affiliations' is based on type 'Affiliation' that has no keys defined.
+AffiliationBases: EntityType: EntitySet 'AffiliationBases' is based on type 'AffiliationBase' that has no keys defined.
+WriterBases: EntityType: EntitySet 'WriterBases' is based on type 'WriterBase' that has no keys defined.
+LocalClientCopyrights: EntityType: EntitySet 'LocalClientCopyrights' is based on type 'LocalClientCopyright' that has no keys defined.
+
+   at System.Data.Entity.Core.Metadata.Edm.EdmModel.Validate()
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.ContactData.ContactRepository.Get(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\ContactData\ContactRepository.cs:line 42
+   at UMPG.USL.Security.ContactContextResolver.Resolve(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\ContactContextResolver.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 76
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/AuthenticateCTRL/authenticate/Login, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-24 13:54:15.4451|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, October 24, 2016 ||  At: 1:54:15 PM 
+
+System.InvalidOperationException: The entity types 'Snapshot_LicenseNote' and 'Snapshot_LicenseProduct' cannot share table 'Snapshot_LicenseProduct' because they are not in the same type hierarchy or do not have a valid one to one foreign key relationship with matching primary keys between them.
+   at System.Data.Entity.ModelConfiguration.Configuration.Mapping.EntityMappingConfiguration.UpdateColumnNamesForTableSharing(DbDatabaseMapping databaseMapping, EntityType entityType, EntityType toTable, MappingFragment fragment)
+   at System.Data.Entity.ModelConfiguration.Configuration.Mapping.EntityMappingConfiguration.FindOrCreateTargetTable(DbDatabaseMapping databaseMapping, MappingFragment fragment, EntityType entityType, EntityType fromTable, Boolean& isTableSharing)
+   at System.Data.Entity.ModelConfiguration.Configuration.Mapping.EntityMappingConfiguration.Configure(DbDatabaseMapping databaseMapping, ICollection`1 entitySets, DbProviderManifest providerManifest, EntityType entityType, EntityTypeMapping& entityTypeMapping, Boolean isMappingAnyInheritedProperty, Int32 configurationIndex, Int32 configurationCount, IDictionary`2 commonAnnotations)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureTablesAndConditions(EntityTypeMapping entityTypeMapping, DbDatabaseMapping databaseMapping, ICollection`1 entitySets, DbProviderManifest providerManifest)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntityTypes(DbDatabaseMapping databaseMapping, ICollection`1 entitySets, DbProviderManifest providerManifest)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.Configure(DbDatabaseMapping databaseMapping, DbProviderManifest providerManifest)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.ContactData.ContactRepository.Get(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\ContactData\ContactRepository.cs:line 42
+   at UMPG.USL.Security.ContactContextResolver.Resolve(String safeId) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Security\ContactContextResolver.cs:line 28
+   at UMPG.USL.API.Controllers.AuthenticateCTRL.AuthenticateController.Login(UserCredentials userCredentials) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\AuthenticateCTRL\AuthenticateController.cs:line 76
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Origin: http://spa.local
+Token: 7f5aef69-d3f0-452e-9e01-f9d17a05b195
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/AuthenticateCTRL/authenticate/Login, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/AuthenticateCTRL/authenticate/Login 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+

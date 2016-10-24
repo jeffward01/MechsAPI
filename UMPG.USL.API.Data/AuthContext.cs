@@ -1,21 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using NLog;
+using System;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using UMPG.USL.Models;
+using UMPG.USL.Models.AuditModel;
+using UMPG.USL.Models.Authorization;
 using UMPG.USL.Models.ContactModel;
+using UMPG.USL.Models.DataHarmonization;
+using UMPG.USL.Models.LicenseModel;
 using UMPG.USL.Models.LookupModel;
 using UMPG.USL.Models.Reports;
 using UMPG.USL.Models.Security;
-using UMPG.USL.Models.Recs;
-using UMPG.USL.Models.LicenseModel;
-using UMPG.USL.Models.AuditModel;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using NLog;
-using UMPG.USL.Models.Authorization;
-using UMPG.USL.Models.DataHarmonization;
 using Action = UMPG.USL.Models.Security.Action;
-
 
 namespace UMPG.USL.API.Data
 {
@@ -36,10 +33,8 @@ namespace UMPG.USL.API.Data
             catch (Exception e)
             {
                 Logger.Debug("_____CRTIICAL ERROR_____________");
-                Logger.Debug("An Error occured trying to connect to the dayabase " + e.ToString());
+                Logger.Debug("An Error occured trying to connect to the database " + e.ToString());
             }
-
-
         }
 
         public DbSet<Contact> Contacts { get; set; }
@@ -135,26 +130,29 @@ namespace UMPG.USL.API.Data
         public DbSet<SolrIndexQueueItem> SolrIndexQueues { get; set; }
         public DbSet<SolrSynchronizationJob> SolrSynchronizationJobs { get; set; }
 
-
         //Audit Tables
         public DbSet<AuditLicense> AuditLicenses { get; set; }
 
         public DbSet<AuditLicenseProductConfiguration> AuditLicenseProductConfigurations { get; set; }
         public DbSet<AuditLicenseAttachment> AuditLicenseAttachments { get; set; }
         public DbSet<AuditLicensee> AuditLicensees { get; set; }
+
         //public DbSet<AuditLicenseeLabelGroup> AuditLicenseeLabelGroups { get; set; }
         //public DbSet<AuditLicenseeLabelGroupLink> AuditLicenseeLabelGroupLink { get; set; }
         public DbSet<AuditLicenseNote> AuditLicenseNotes { get; set; }
+
         public DbSet<AuditLicenseProduct> AuditLicenseProducts { get; set; }
         public DbSet<AuditLicenseProductRecording> AuditLicenseProductRecordings { get; set; }
         public DbSet<AuditLicenseProductRecordingWriter> AuditLicenseProductRecordingWriters { get; set; }
         public DbSet<AuditLicenseProductRecordingWriterNote> AuditLicenseProductRecordingWriterNotes { get; set; }
         public DbSet<AuditLicenseProductRecordingWriterRate> AuditLicenseProductRecordingWriterRates { get; set; }
         public DbSet<AuditLicenseProductRecordingWriterRateStatus> AuditLicenseProductRecordingWriterRateStatuses { get; set; }
+
         //public DbSet<AuditLicenseRecordingMedley> AuditLicenseRecordingMedleys { get; set; }
         //public DbSet<AuditRecordingMedley> AuditRecordingMedleys { get; set; }
         //Reports
         public DbSet<ReportQueue> ReportQueues { get; set; }
+
         public DbSet<ReportType> ReportTypes { get; set; }
 
         public DbSet<Models.Authorization.TokenEntity> Tokens { get; set; }
@@ -163,7 +161,21 @@ namespace UMPG.USL.API.Data
         public DbSet<Snapshot_LicenseProduct> Snapshot_LicenseProducts { get; set; }
 
         public DbSet<Snapshot_LicenseNote> Snapshot_LicenseNotes { get; set; }
-      
+
+        public DbSet<Snapshot_LabelGroup> Snapshot_LabelGroups { get; set; }
+
+        public DbSet<Snapshot_Configuration> Snapshot_Configurations { get; set; }
+
+        public DbSet<Snapshot_Contact> Snapshot_Contacts { get; set; }
+        public DbSet<Snapshot_Label> Snapshot_Labels { get; set; }
+        public DbSet<Snapshot_LicenseProductConfiguration> Snapshot_LicenseProductConfigurations { get; set; }
+
+        public DbSet<Snapshot_ProductHeader> Snapshot_ProductHeaders { get; set; }
+        public DbSet<Snapshot_RecsConfiguration> Snapshot_RecsConfigurations { get; set; }
+        public DbSet<Snapshot_Role> Snapshot_Roles { get; set; }
+        public DbSet<Snapshot_WorksRecording> Snapshot_WorksRecordings { get; set; }
+        public DbSet<Snapshot_ArtistRecs> Snapshot_ArtistRecs { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -212,15 +224,86 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_License>().HasKey(x => x.LicenseId);
             modelBuilder.Entity<Snapshot_License>().HasMany(r => r.LicenseProducts).WithOptional().HasForeignKey(c => c.LicenseId);
             modelBuilder.Entity<Snapshot_License>().HasMany(r => r.LicenseNoteList).WithOptional().HasForeignKey(c => c.licenseId);
+            modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseType).WithMany().HasForeignKey(c => c.LicenseTypeId);
+            modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicensePriority).WithMany().HasForeignKey(c => c.PriorityId);
+            modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.Licensee).WithMany().HasForeignKey(c => c.LicenseeId);
+            modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseStatus).WithMany().HasForeignKey(c => c.LicenseStatusId);
+            modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseMethod).WithMany().HasForeignKey(c => c.LicenseMethodId);
+            modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.Contact).WithMany().HasForeignKey(c => c.AssignedToId);
+            modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.Contact2).WithMany().HasForeignKey(c => c.CreatedBy);
+            modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseeContact).WithMany().HasForeignKey(c => c.ContactId);
+            modelBuilder.Entity<Snapshot_License>().Ignore(c => c.ProductsNo);
+            modelBuilder.Entity<Snapshot_License>().Ignore(c => c.Label);
+            modelBuilder.Entity<Snapshot_License>().Ignore(c => c.ClaimException);
+            modelBuilder.Entity<Snapshot_License>().Ignore(c => c.StatusesRollup);
 
             //Snapshot_LicenseProduct
             modelBuilder.Entity<Snapshot_LicenseProduct>().ToTable("Snapshot_LicenseProduct");
-            modelBuilder.Entity<Snapshot_LicenseProduct>().HasKey(x => x.ProductId);
+            modelBuilder.Entity<Snapshot_LicenseProduct>().HasKey(x => x.LicenseProductId);
+            modelBuilder.Entity<Snapshot_LicenseProduct>().HasRequired(c => c.Schedule).WithMany().HasForeignKey(c => c.ScheduleId);
+            modelBuilder.Entity<Snapshot_LicenseProduct>().HasRequired(c => c.ProductHeader).WithMany().HasForeignKey(c => c.ProductHeaderId);
+
+            modelBuilder.Entity<Snapshot_LicenseProduct>().Ignore(c => c.LicensePRecordingsNo);
+            modelBuilder.Entity<Snapshot_LicenseProduct>().HasMany(_ => _.ProductConfigurations).WithOptional().HasForeignKey(x => x.LicenseProductId); //Not needed?
+            modelBuilder.Entity<Snapshot_LicenseProduct>().HasMany(_ => _.Recordings).WithOptional().HasForeignKey(x => x.ProductId);
+            modelBuilder.Entity<Snapshot_LicenseProduct>().Ignore(c => c.title);
+            modelBuilder.Entity<Snapshot_LicenseProduct>().Ignore(c => c.RelatedLicensesNo);
+            modelBuilder.Entity<Snapshot_LicenseProduct>().Ignore(c => c.LicenseClaimException);
 
             //Snapshot_LicenseNotes
-            modelBuilder.Entity<Snapshot_LicenseNote>().ToTable("Snapshot_LicenseProduct");
-            modelBuilder.Entity<Snapshot_LicenseNote>().HasKey(x => x.licenseNoteId);
+            modelBuilder.Entity<Snapshot_LicenseNote>().ToTable("Snapshot_LicenseNote");
+            modelBuilder.Entity<Snapshot_LicenseNote>().HasKey(x => x.LicenseNoteId);
+            modelBuilder.Entity<Snapshot_LicenseNote>().HasRequired(c => c.NoteType).WithMany().HasForeignKey(c => c.NoteTypeId);
+            modelBuilder.Entity<Snapshot_LicenseNote>().HasRequired(c => c.Contact).WithMany().HasForeignKey(c => c.CreatedBy);
 
+            //Snapshot_Role
+            modelBuilder.Entity<Snapshot_Role>().ToTable("Snapshot_Role");
+            modelBuilder.Entity<Snapshot_Role>().HasKey(x => x.RoleId);
+
+            //Snapshot_recsConfiguration
+            modelBuilder.Entity<Snapshot_RecsConfiguration>().ToTable("Snapshot_RecsConfiguration");
+            modelBuilder.Entity<Snapshot_RecsConfiguration>().HasKey(x => x.RecsConfigurationId);
+            modelBuilder.Entity<Snapshot_RecsConfiguration>().HasKey(x => x.RecsConfigurationId);
+            modelBuilder.Entity<Snapshot_RecsConfiguration>().HasRequired(c => c.Configuration).WithMany().HasForeignKey(c => c.ConfigurationId);
+            modelBuilder.Entity<Snapshot_RecsConfiguration>().HasRequired(c => c.LicenseProductConfiguration).WithMany().HasForeignKey(c => c.LicenseProductConfigurationId);
+
+            //Snapshot_ProductHeader
+            modelBuilder.Entity<Snapshot_ProductHeader>().ToTable("Snapshot_ProductHeader");
+            modelBuilder.Entity<Snapshot_ProductHeader>().HasKey(x => x.ProductHeaderId);
+            modelBuilder.Entity<Snapshot_ProductHeader>().HasRequired(c => c.Artist).WithMany().HasForeignKey(c => c.ArtistRecsId);
+            modelBuilder.Entity<Snapshot_ProductHeader>().HasRequired(c => c.Label).WithMany().HasForeignKey(c => c.LabelId);
+            modelBuilder.Entity<Snapshot_ProductHeader>().HasMany(x => x.Configurations).WithOptional().HasForeignKey(_ => _.ProductHeaderId);
+
+            //Shanpshot_LicenseProductConfiguration
+            modelBuilder.Entity<Snapshot_LicenseProductConfiguration>().ToTable("Snapshot_LicenseProductConfiguration");
+            modelBuilder.Entity<Snapshot_LicenseProductConfiguration>().HasKey(_ => _.LicenseProductConfigurationId);
+
+            //Snapshot_Label
+            modelBuilder.Entity<Snapshot_Label>().ToTable("Snapshot_Lable");
+            modelBuilder.Entity<Snapshot_Label>().HasKey(_ => _.LabelId);
+            modelBuilder.Entity<Snapshot_Label>().HasMany<Snapshot_LabelGroup>(_ => _.RecordLabelGroups).WithOptional().HasForeignKey(_ => _.LabelId);
+
+            //Snapshot_LabelGroup
+            modelBuilder.Entity<Snapshot_LabelGroup>().ToTable("Snapshot_LabelGroup");
+            modelBuilder.Entity<Snapshot_LabelGroup>().HasKey(_ => _.LabelGroupId);
+
+            //Snapshot_Contact
+            modelBuilder.Entity<Snapshot_Contact>().ToTable("Snapshot_Contact");
+            modelBuilder.Entity<Snapshot_Contact>().HasKey(_ => _.ContactId);
+
+            //Snapshot_Configuration
+            modelBuilder.Entity<Snapshot_Configuration>().ToTable("Snapshot_Configuration");
+            modelBuilder.Entity<Snapshot_Configuration>().HasKey(_ => _.ConfigId);
+
+            //Snapshot_ArtistRecs
+            modelBuilder.Entity<Snapshot_ArtistRecs>().ToTable("Snapshot_ArtistRecs");
+            modelBuilder.Entity<Snapshot_ArtistRecs>().HasKey(_ => _.ArtistRecsId);
+
+            modelBuilder.Entity<Snapshot_WorksRecording>().ToTable("Snapshot_WorksRecording");
+            modelBuilder.Entity<Snapshot_WorksRecording>().HasKey(_ => _.TrackId);
+
+
+            //_____End Data Harmonization
 
             // Licenses
             modelBuilder.Entity<License>().ToTable("License", "dbo");
@@ -238,7 +321,6 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<License>().Ignore(c => c.LicenseSpecialStatusList);
             modelBuilder.Entity<License>().Ignore(c => c.ClaimException);
             modelBuilder.Entity<License>().Ignore(c => c.StatusesRollup);
-
 
             //LicenseProduct
             modelBuilder.Entity<LicenseProduct>().ToTable("LicenseProduct");
@@ -267,7 +349,6 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<LicenseProductConfiguration>().Ignore(c => c.upc_code);
             // modelBuilder.Entity<LicenseProductConfiguration>().Ignore(c => c.product_configuration_id);
 
-
             //LicenseProductRecording
             modelBuilder.Entity<LicenseProductRecording>().ToTable("LicenseRecording");
             modelBuilder.Entity<LicenseProductRecording>().HasKey(c => c.LicenseRecordingId);
@@ -280,7 +361,6 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<LicenseProductRecording>().Ignore(c => c.WorkCode);
             modelBuilder.Entity<LicenseProductRecording>().Ignore(c => c.LicensePRWriters);
             modelBuilder.Entity<LicenseProductRecording>().Ignore(c => c.StatusRollup);
-
 
             // Role
             modelBuilder.Entity<Role>().ToTable("Role");
@@ -326,11 +406,9 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().Property(c => c.PerSongRate).HasPrecision(7, 6);
             modelBuilder.Entity<LicenseProductRecordingWriterRate>().Property(c => c.ProRataRate).HasPrecision(7, 6);
 
-
             //LicenseProductRecordingWriterRateNote
             //modelBuilder.Entity<LicenseProductRecordingWriterRateNote>().ToTable("LicenseWriterRateNote");
             //modelBuilder.Entity<LicenseProductRecordingWriterRateNote>().HasKey(c => c.LicenseWriterRateNoteId);
-
 
             //LicenseProductRecordingWriterRateStatus
             modelBuilder.Entity<LicenseProductRecordingWriterRateStatus>().ToTable("LicenseWriterRateStatus");
@@ -338,11 +416,10 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<LicenseProductRecordingWriterRateStatus>().Ignore(c => c.LU_SpecialStatuses);
             //modelBuilder.Entity<LicenseProductRecordingWriterRateStatus>().HasRequired(c => c.LU_SpecialStatuses).WithMany().HasForeignKey(c => c.SpecialStatusId);
 
-            // LU_LicenseTypes      
+            // LU_LicenseTypes
             modelBuilder.Entity<LU_LicenseType>().ToTable("LU_LicenseType");
             modelBuilder.Entity<LU_LicenseType>().HasKey(c => c.LicenseTypeId);
             modelBuilder.Entity<LU_LicenseType>().Property(a => a.LicenseType).HasColumnName("LicenseType");
-
 
             // LU_Priorities
             modelBuilder.Entity<LU_Priority>().ToTable("LU_Priority");
@@ -364,7 +441,6 @@ namespace UMPG.USL.API.Data
             //LU_AttachmentType
             modelBuilder.Entity<LU_AttachmentType>().ToTable("LU_AttachmentType");
             modelBuilder.Entity<LU_AttachmentType>().HasKey(c => c.AttachmentTypeId);
-
 
             // Licensee
             modelBuilder.Entity<Licensee>().ToTable("Licensee");
@@ -392,14 +468,11 @@ namespace UMPG.USL.API.Data
             // modelBuilder.Entity<LicenseeLabelGroup>().HasRequired(c => c.Licensee).WithMany(c=>c.LicenseeLabelGroup).HasForeignKey(r => r.LicenseeId);
             modelBuilder.Entity<LicenseeLabelGroup>().Ignore(c => c.LabelGroupLinksFiltered);
 
-
-
             // LicenseAttachments
             modelBuilder.Entity<LicenseAttachment>().ToTable("LicenseAttachment");
             modelBuilder.Entity<LicenseAttachment>().HasKey(c => c.licenseAttachmentId);
             modelBuilder.Entity<LicenseAttachment>().HasRequired(c => c.Contact).WithMany().HasForeignKey(c => c.CreatedBy);
             modelBuilder.Entity<LicenseAttachment>().HasRequired(c => c.AttachmentType).WithMany().HasForeignKey(c => c.AttachmentTypeId);
-
 
             // LicenseNote
             modelBuilder.Entity<LicenseNote>().ToTable("LicenseNote");
@@ -495,8 +568,6 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<AuditLicense>().ToTable("License", "Audit");
             modelBuilder.Entity<AuditLicense>().HasKey(c => c.LicenseId);
 
-
-
             //LicenseProductConfiguration
             modelBuilder.Entity<AuditLicenseProductConfiguration>().ToTable("LicenseProductConfiguration", "Audit");
             modelBuilder.Entity<AuditLicenseProductConfiguration>().HasKey(c => c.LicenseProductConfigurationId);
@@ -525,7 +596,6 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<AuditLicenseProduct>().ToTable("Audit.LicenseProduct", "Audit");
             modelBuilder.Entity<AuditLicenseProduct>().HasKey(c => c.LicenseProductId);
 
-
             //Audit.LicenseProductRecording
             modelBuilder.Entity<AuditLicenseProductRecording>().ToTable("Audit.LicenseRecording", "Audit");
             modelBuilder.Entity<AuditLicenseProductRecording>().HasKey(c => c.LicenseRecordingId);
@@ -541,7 +611,6 @@ namespace UMPG.USL.API.Data
             //Audit.LicenseProductRecordingWriterRate
             modelBuilder.Entity<AuditLicenseProductRecordingWriterRate>().ToTable("Audit.LicenseWriterRate", "Audit");
             modelBuilder.Entity<AuditLicenseProductRecordingWriterRate>().HasKey(c => c.LicenseWriterRateId);
-
 
             //Audit.LicenseProductRecordingWriterRateStatus
             modelBuilder.Entity<AuditLicenseProductRecordingWriterRateStatus>().ToTable("Audit.LicenseWriterRateStatus", "Audit");
@@ -564,9 +633,6 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<ReportType>().ToTable("ReportType");
             modelBuilder.Entity<ReportType>().HasKey(c => c.ReportTypeId);
             modelBuilder.Entity<ReportType>().Property(a => a.ReportTypeName).HasColumnName("ReportType");
-
         }
-
     }
-
 }
