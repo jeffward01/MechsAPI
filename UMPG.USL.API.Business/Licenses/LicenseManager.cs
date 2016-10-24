@@ -614,7 +614,7 @@ namespace UMPG.USL.API.Business.Licenses
 
                 }
                 _licenseRepository.UpdateLicense(localLicense);
-             //   _dataHarmonizationManager.TakeLicenseSnapshot(localLicense);
+                _dataHarmonizationManager.TakeLicenseSnapshot(localLicense);
 
 
                // var newLicenseSnapshot = new Snapshot_License();

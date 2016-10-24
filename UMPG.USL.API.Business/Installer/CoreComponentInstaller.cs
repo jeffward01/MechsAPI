@@ -73,6 +73,13 @@ namespace UMPG.USL.API.Business.Installer
             container.Register(Component.For<ISnapshotLicenseManager>().ImplementedBy<SnapshotLicenseManager>());
             container.Register(Component.For<IDataHarmonizationManager>().ImplementedBy<DataHarmonizationManager>());
 
+            //container.Register(
+            //    Component.For<IDataHarmonizationManager>()
+            //        .ImplementedBy<DataHarmonizationManager>()
+            //        .DependsOn(Dependency.OnComponent(
+            //            typeof(ISnapshotLicenseManager),
+            //            "SnapshotLicenseManager")));
+
         }
     }
 }
