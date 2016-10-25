@@ -31,7 +31,29 @@ namespace UMPG.USL.API.Data.DataHarmonization
         {
             using (var context = new AuthContext())
             {
-                return context.Snapshot_Licenses.FirstOrDefault(sl => sl.CloneLicenseId == id);
+                var response = context.Snapshot_Licenses
+                    .Include("LicenseType")
+                    .Include("LicensePriority")
+                    .Include("LicenseStatus")
+                   // .Include("Licensee.LicenseeLabelGroup")
+                    //.Include("Licensee")
+                    .Include("LicenseMethod")
+                    //.Include("Contact")
+                    //.Include("Contact2")
+                    //.Include("LicenseNoteList")
+                 //   .Include("LicenseProducts")
+                    //.Include("LicenseeContact")
+                    //.Include("LicenseeContact.Address")
+                    .FirstOrDefault(sl => sl.CloneLicenseId == id);
+
+                var licenseProduct = context.Snapshot_LicenseProducts
+
+                        .Include("ProductHeader")
+
+                    .Where(_ => _.LicenseId == response.CloneLicenseId).ToList();
+                response.LicenseProducts = licenseProduct;
+
+                return response;
             }
         }
     }

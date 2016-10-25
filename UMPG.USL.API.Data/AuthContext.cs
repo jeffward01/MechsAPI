@@ -222,7 +222,7 @@ namespace UMPG.USL.API.Data
             //Snapshot_License
             modelBuilder.Entity<Snapshot_License>().ToTable("Snapshot_License");
             modelBuilder.Entity<Snapshot_License>().HasKey(x => x.SnapshotLicenseId);
-            modelBuilder.Entity<Snapshot_License>().HasMany(r => r.LicenseProducts).WithOptional().HasForeignKey(c => c.LicenseId);
+            modelBuilder.Entity<Snapshot_License>().HasMany(r => r.LicenseProducts).WithOptional().HasForeignKey(_ => _.LicenseId);
             modelBuilder.Entity<Snapshot_License>().HasMany(r => r.LicenseNoteList).WithOptional().HasForeignKey(c => c.licenseId);
             modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseType).WithMany().HasForeignKey(c => c.LicenseTypeId);
             modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicensePriority).WithMany().HasForeignKey(c => c.PriorityId);
@@ -242,7 +242,6 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_LicenseProduct>().HasKey(x => x.SnapshotLicenseProductId);
             modelBuilder.Entity<Snapshot_LicenseProduct>().HasRequired(c => c.Schedule).WithMany().HasForeignKey(c => c.ScheduleId);
             modelBuilder.Entity<Snapshot_LicenseProduct>().HasRequired(c => c.ProductHeader).WithMany().HasForeignKey(c => c.ProductHeaderId);
-
             modelBuilder.Entity<Snapshot_LicenseProduct>().Ignore(c => c.LicensePRecordingsNo);
             modelBuilder.Entity<Snapshot_LicenseProduct>().HasMany(_ => _.ProductConfigurations).WithOptional().HasForeignKey(x => x.LicenseProductId); //Not needed?
             modelBuilder.Entity<Snapshot_LicenseProduct>().HasMany(_ => _.Recordings).WithOptional().HasForeignKey(x => x.ProductId);
