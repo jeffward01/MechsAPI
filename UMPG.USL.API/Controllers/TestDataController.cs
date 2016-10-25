@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Tracing;
+using UMPG.USL.API.Business.DataHarmonization;
 using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.Models;
 
@@ -18,10 +19,13 @@ namespace UMPG.USL.API.Controllers
     {
 
         private readonly ITraceWriter _tracer;
-        
-        public TestDataController()
+        private readonly IDataHarmonizationManager _dataHarmonizationManager;
+
+        public TestDataController(IDataHarmonizationManager dataHarmonizationManager)
         {
+            _dataHarmonizationManager = dataHarmonizationManager;
             _tracer = GlobalConfiguration.Configuration.Services.GetTraceWriter();
+
         }
         [Authorize]
         [Route("")]
@@ -52,6 +56,14 @@ namespace UMPG.USL.API.Controllers
            "Cannot find id to delete: " + 2); //This is an example of a custo loggin message
             throw new ApplicationException("Ooops!");
             //throw new ArgumentOutOfRangeException();
+        }
+
+        [HttpGet]
+        [Route("GetLicenseSnapshot/{licenseId}")]
+        public IHttpActionResult GetLicenseSnapshot(int licenseId)
+        {
+            var snapshotLicense = _dataHarmonizationManager.GetLicenseSnapshot(licenseId);
+            return Ok(snapshotLicense);
         }
     }
     #region Helpers

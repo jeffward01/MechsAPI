@@ -19,7 +19,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
         {
             using (var context = new AuthContext())
             {
-                return context.Snapshot_ArtistRecs.FirstOrDefault(sl => sl.ArtistRecsId == artistId);
+                return context.Snapshot_ArtistRecs.FirstOrDefault(sl => sl.SnapshotArtistRecsId == artistId);
             }
         }
     }

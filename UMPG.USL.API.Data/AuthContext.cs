@@ -221,7 +221,7 @@ namespace UMPG.USL.API.Data
 
             //Snapshot_License
             modelBuilder.Entity<Snapshot_License>().ToTable("Snapshot_License");
-            modelBuilder.Entity<Snapshot_License>().HasKey(x => x.LicenseId);
+            modelBuilder.Entity<Snapshot_License>().HasKey(x => x.SnapshotLicenseId);
             modelBuilder.Entity<Snapshot_License>().HasMany(r => r.LicenseProducts).WithOptional().HasForeignKey(c => c.LicenseId);
             modelBuilder.Entity<Snapshot_License>().HasMany(r => r.LicenseNoteList).WithOptional().HasForeignKey(c => c.licenseId);
             modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseType).WithMany().HasForeignKey(c => c.LicenseTypeId);
@@ -239,7 +239,7 @@ namespace UMPG.USL.API.Data
 
             //Snapshot_LicenseProduct
             modelBuilder.Entity<Snapshot_LicenseProduct>().ToTable("Snapshot_LicenseProduct");
-            modelBuilder.Entity<Snapshot_LicenseProduct>().HasKey(x => x.LicenseProductId);
+            modelBuilder.Entity<Snapshot_LicenseProduct>().HasKey(x => x.SnapshotLicenseProductId);
             modelBuilder.Entity<Snapshot_LicenseProduct>().HasRequired(c => c.Schedule).WithMany().HasForeignKey(c => c.ScheduleId);
             modelBuilder.Entity<Snapshot_LicenseProduct>().HasRequired(c => c.ProductHeader).WithMany().HasForeignKey(c => c.ProductHeaderId);
 
@@ -262,14 +262,13 @@ namespace UMPG.USL.API.Data
 
             //Snapshot_recsConfiguration
             modelBuilder.Entity<Snapshot_RecsConfiguration>().ToTable("Snapshot_RecsConfiguration");
-            modelBuilder.Entity<Snapshot_RecsConfiguration>().HasKey(x => x.RecsConfigurationId);
-            modelBuilder.Entity<Snapshot_RecsConfiguration>().HasKey(x => x.RecsConfigurationId);
+            modelBuilder.Entity<Snapshot_RecsConfiguration>().HasKey(x => x.SnapshotRecsConfigurationId);
             modelBuilder.Entity<Snapshot_RecsConfiguration>().HasRequired(c => c.Configuration).WithMany().HasForeignKey(c => c.ConfigurationId);
             modelBuilder.Entity<Snapshot_RecsConfiguration>().HasRequired(c => c.LicenseProductConfiguration).WithMany().HasForeignKey(c => c.LicenseProductConfigurationId);
 
             //Snapshot_ProductHeader
             modelBuilder.Entity<Snapshot_ProductHeader>().ToTable("Snapshot_ProductHeader");
-            modelBuilder.Entity<Snapshot_ProductHeader>().HasKey(x => x.ProductHeaderId);
+            modelBuilder.Entity<Snapshot_ProductHeader>().HasKey(x => x.SnapshotProductHeaderId);
             modelBuilder.Entity<Snapshot_ProductHeader>().HasRequired(c => c.Artist).WithMany().HasForeignKey(c => c.ArtistRecsId);
             modelBuilder.Entity<Snapshot_ProductHeader>().HasRequired(c => c.Label).WithMany().HasForeignKey(c => c.LabelId);
             modelBuilder.Entity<Snapshot_ProductHeader>().HasMany(x => x.Configurations).WithOptional().HasForeignKey(_ => _.ProductHeaderId);
@@ -279,13 +278,13 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_LicenseProductConfiguration>().HasKey(_ => _.LicenseProductConfigurationId);
 
             //Snapshot_Label
-            modelBuilder.Entity<Snapshot_Label>().ToTable("Snapshot_Lable");
-            modelBuilder.Entity<Snapshot_Label>().HasKey(_ => _.LabelId);
-            modelBuilder.Entity<Snapshot_Label>().HasMany<Snapshot_LabelGroup>(_ => _.RecordLabelGroups).WithOptional().HasForeignKey(_ => _.LabelId);
+            modelBuilder.Entity<Snapshot_Label>().ToTable("Snapshot_Label");
+            modelBuilder.Entity<Snapshot_Label>().HasKey(_ => _.SnapshotLabelId);
+            modelBuilder.Entity<Snapshot_Label>().HasMany<Snapshot_LabelGroup>(_ => _.RecordLabelGroups).WithOptional().HasForeignKey(_ => _.CloneLabelId);
 
             //Snapshot_LabelGroup
             modelBuilder.Entity<Snapshot_LabelGroup>().ToTable("Snapshot_LabelGroup");
-            modelBuilder.Entity<Snapshot_LabelGroup>().HasKey(_ => _.LabelGroupId);
+            modelBuilder.Entity<Snapshot_LabelGroup>().HasKey(_ => _.SnapshotLabelGroupId);
 
             //Snapshot_Contact
             modelBuilder.Entity<Snapshot_Contact>().ToTable("Snapshot_Contact");
@@ -293,15 +292,14 @@ namespace UMPG.USL.API.Data
 
             //Snapshot_Configuration
             modelBuilder.Entity<Snapshot_Configuration>().ToTable("Snapshot_Configuration");
-            modelBuilder.Entity<Snapshot_Configuration>().HasKey(_ => _.ConfigId);
+            modelBuilder.Entity<Snapshot_Configuration>().HasKey(_ => _.SnapshotConfigurationId);
 
             //Snapshot_ArtistRecs
             modelBuilder.Entity<Snapshot_ArtistRecs>().ToTable("Snapshot_ArtistRecs");
-            modelBuilder.Entity<Snapshot_ArtistRecs>().HasKey(_ => _.ArtistRecsId);
+            modelBuilder.Entity<Snapshot_ArtistRecs>().HasKey(_ => _.SnapshotArtistRecsId);
 
             modelBuilder.Entity<Snapshot_WorksRecording>().ToTable("Snapshot_WorksRecording");
             modelBuilder.Entity<Snapshot_WorksRecording>().HasKey(_ => _.TrackId);
-
 
             //_____End Data Harmonization
 

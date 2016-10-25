@@ -71,6 +71,7 @@ namespace UMPG.USL.API.Business.Installer
             container.Register(Component.For<ISnapshotRoleManager>().ImplementedBy<SnapshotRoleManager>());
             container.Register(Component.For<ISnapshotWorksRecordingManager>().ImplementedBy<SnapshotWorksRecordingManager>());
             container.Register(Component.For<ISnapshotLicenseManager>().ImplementedBy<SnapshotLicenseManager>());
+            container.Register(Component.For<ISnapshotLicenseNoteManager>().ImplementedBy<SnapshotLicenseNoteManager>());
             container.Register(Component.For<IDataHarmonizationManager>().ImplementedBy<DataHarmonizationManager>());
 
             //container.Register(

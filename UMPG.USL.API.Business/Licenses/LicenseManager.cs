@@ -1,27 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UMPG.USL.API.Business.DataHarmonization;
 using UMPG.USL.API.Data.LicenseData;
 using UMPG.USL.API.Data.Recs;
 using UMPG.USL.Models;
-using UMPG.USL.Models.ContactModel;
-using UMPG.USL.Models.DataHarmonization;
 using UMPG.USL.Models.Enums;
 using UMPG.USL.Models.LicenseModel;
-using UMPG.USL.Models.Recs;
-
 
 namespace UMPG.USL.API.Business.Licenses
 {
-
     using UMPG.USL.Models.LicenseGenerate;
 
     public class LicenseManager : ILicenseManager
     {
-
         private readonly ILicenseRepository _licenseRepository;
         private readonly ILicenseProductRepository _licenseProductRepository;
         private readonly ILicenseNoteRepository _licenseNoteRepository;
@@ -35,8 +27,10 @@ namespace UMPG.USL.API.Business.Licenses
         private readonly IRecs _recs;
         private readonly IRecsDataProvider _recsProvider;
         private readonly IDataHarmonizationManager _dataHarmonizationManager;
+        private readonly ILicenseProductManager _licenseProductManager;
 
         public LicenseManager(
+            ILicenseProductManager licenseProductManager,
             ILicenseRepository licenseRepository,
             ILicenseProductRepository licenseProductRepository,
             ILicenseNoteRepository licenseNoteRepository,
@@ -52,6 +46,7 @@ namespace UMPG.USL.API.Business.Licenses
             IDataHarmonizationManager dataHarmonizationManager
             )
         {
+            _licenseProductManager = licenseProductManager;
             _dataHarmonizationManager = dataHarmonizationManager;
             _licenseRepository = licenseRepository;
             _licenseProductRepository = licenseProductRepository;
@@ -71,8 +66,6 @@ namespace UMPG.USL.API.Business.Licenses
         {
             var license = _licenseRepository.Get(id);
 
-
-
             // Get LicenseProductIds
             var licenseProducts = _licenseProductRepository.GetLicenseProducts(license.LicenseId).OrderBy(x => x.ScheduleId);
 
@@ -80,7 +73,6 @@ namespace UMPG.USL.API.Business.Licenses
             //// moved this to get products
             //foreach (var licprodid in licenseProducts)
             //{
-
             //    var test2 = _recs.RetrieveTracks(licprodid.ProductId);
             //    foreach (var recording in test2)
             //    {
@@ -95,7 +87,6 @@ namespace UMPG.USL.API.Business.Licenses
             //};
 
             license.ProductsNo = licenseProducts.Count();
-
 
             var licenseProductIds = licenseProducts
                 .Select(x => x.LicenseProductId)
@@ -149,13 +140,10 @@ namespace UMPG.USL.API.Business.Licenses
                             ids.Add(licenseWriterRateWithHold.SpecialStatusId);
                         }
                     }
-
                 };
                 // now add the special status records to license model
                 license.LicenseSpecialStatusList = licenseWriterRateWithHolds;  //populates with filtered list
             }
-
-
 
             return license;
         }
@@ -215,7 +203,6 @@ namespace UMPG.USL.API.Business.Licenses
         public List<License> Search(string query)
         {
             return _licenseRepository.Search(query);
-
         }
 
         public PagedResponse<License> PagedSearch(LicenseRequest request)
@@ -227,12 +214,10 @@ namespace UMPG.USL.API.Business.Licenses
             //}
             return _solrSearchProvider.SearchLicenses(request);
             // return response;
-
         }
 
         public bool UpdateLicense(UpdateLicenseAssigneeRequest request)
         {
-
             foreach (var licenseId in request.LicenseIds)
             {
                 var license = _licenseRepository.Get(licenseId);
@@ -253,7 +238,6 @@ namespace UMPG.USL.API.Business.Licenses
 
                         license.AssignedToId = request.NewAssigneeId;
                     }
-
                 }
                 license.ModifiedBy = request.ModifiedBy;
                 _licenseRepository.UpdateLicense(license);
@@ -270,11 +254,9 @@ namespace UMPG.USL.API.Business.Licenses
                     };
                     _licenseNoteRepository.Add(licenseNote);
                 }
-
             }
             return true;
         }
-
 
         public int UploadGeneratedLicensePreview(GenerateLicensePreviewRequest data)
         {
@@ -340,7 +322,6 @@ namespace UMPG.USL.API.Business.Licenses
             {
                 localLicense.LicenseeLabelGroupId = license.LicenseeLabelGroup.LicenseeLabelGroupId;
             };
-
 
             _licenseRepository.UpdateLicense(localLicense);
             return localLicense;
@@ -413,18 +394,13 @@ namespace UMPG.USL.API.Business.Licenses
                                                         _licensePRWriterRepository.Update(writer);
                                                     }
                                                 }
-
                                             }
-
                                         }
                                     }
-
                                 }
                             }
-
                         }
                     }
-
                 }
                 // condition for Execute License
                 // 1- Update LicenseWriterRate (LicensedDate) with current date for writers with no licenseWriterRateStatus attached
@@ -475,13 +451,12 @@ namespace UMPG.USL.API.Business.Licenses
                             {
                                 rate.licenseDate = (license.SignedDate != null) ? license.SignedDate : DateTime.Now;
 
-                                //NOI type 
+                                //NOI type
                                 if (license.LicenseTypeId == 2 && !isAutomaticProcess)
                                 {
                                     rate.licenseDate = (license.EffectiveDate != null) ? license.EffectiveDate : DateTime.Now;
                                 }
                             }
-
                         }
                         //when license has a License Date, default value
 
@@ -534,14 +509,12 @@ namespace UMPG.USL.API.Business.Licenses
                                                             writer.LicensedDate = DateTime.Now;
                                                             writer.ModifiedBy = license.ModifiedBy;
                                                             writer.ModifiedDate = DateTime.Now;
-
                                                         }
                                                     }
                                                 }
 
                                                 if (writer.isLicensed == true)
                                                 {
-
                                                     if (writer.SplitOverride >= 0)
                                                     // has a split override
                                                     {
@@ -576,27 +549,18 @@ namespace UMPG.USL.API.Business.Licenses
                                                 }
                                                 else
                                                 {
-
                                                     writer.ExecutedSplit = null;
                                                     writer.ExecutedControlledWriter = null;
                                                     writer.WriterChangeDate = DateTime.Now;
                                                     writer.ModifiedDate = DateTime.Now;
                                                     writer.ModifiedBy = license.ModifiedBy;
                                                     _licensePRWriterRepository.Update(writer);
-
                                                 }
-
                                             }
-
-
-
-
                                         }
                                     }
-
                                 }
                             }
-
                         }
                     }
                     if (localLicense.EffectiveDate == null)  // don't overwrite if populated
@@ -611,34 +575,35 @@ namespace UMPG.USL.API.Business.Licenses
                     {
                         localLicense.ReceivedDate = DateTime.Now.AddHours(-8);
                     }
-
                 }
+
+                var localLicenseProducts = _licenseProductManager.GetProductsNew(localLicense.LicenseId);
+                //updates local license
                 _licenseRepository.UpdateLicense(localLicense);
+
+                //save licenseDetails
                 _dataHarmonizationManager.TakeLicenseSnapshot(localLicense);
 
+                //save licenseProductDetails
+                _dataHarmonizationManager.SaveLocalLicenseProductSnapshot(localLicenseProducts);
 
-               // var newLicenseSnapshot = new Snapshot_License();
-              //  newLicenseSnapshot = localLicense;
-              //Data Harmonization Code
-                
-
+                // var newLicenseSnapshot = new Snapshot_License();
+                //  newLicenseSnapshot = localLicense;
+                //Data Harmonization Code
 
                 result = true;
             }
             return result;
         }
 
-
         public bool EditStatusLicenseProcessor(int licenseId, DateTime signedDate)
         {
-
-            //executed 
+            //executed
             var license = _licenseRepository.Get(licenseId);
             license.LicenseStatusId = 5;
             _licenseRepository.UpdateLicense(license);
 
             EditStatus(license, true, signedDate);
-
 
             return true;
         }
@@ -653,7 +618,6 @@ namespace UMPG.USL.API.Business.Licenses
 
         public SendLicenseInfo GetSendLicenseInfo(int licenseId)
         {
-
             var sendLicenseInfo = _licenseRepository.GetSendLicenseInfo(licenseId);
             if (sendLicenseInfo != null)
             {
@@ -662,7 +626,6 @@ namespace UMPG.USL.API.Business.Licenses
             return sendLicenseInfo;
         }
 
-
         public bool UpdateSendLicenseInfo(SendLicenseInfo request)
         {
             try
@@ -670,12 +633,10 @@ namespace UMPG.USL.API.Business.Licenses
                 var updatedDate = DateTime.Now;
                 var updatedBy = 1;
 
-
                 if (request.LicenseSentId == 0)
                 {
                     request.CreatedDate = updatedDate;
                     request.CreatedBy = updatedBy;
-
 
                     List<SendLicenseContact> sendLicenseContactList = new List<SendLicenseContact>();
                     foreach (var contact in request.SendLicenseContactList)
@@ -706,7 +667,6 @@ namespace UMPG.USL.API.Business.Licenses
                 }
                 else
                 {
-
                     request.ModifiedDate = updatedDate;
                     request.ModifiedBy = updatedBy;
                     foreach (var contact in request.SendLicenseContactList)
@@ -727,7 +687,6 @@ namespace UMPG.USL.API.Business.Licenses
                             contact.CreatedBy = updatedBy;
                             contact.LicenseSentId = request.LicenseSentId; // contact.LicenseSentId;
                             var newcontact = _licenseRepository.AddSendLicenseContact(contact);
-
                         }
                     }
 
@@ -748,7 +707,6 @@ namespace UMPG.USL.API.Business.Licenses
 
             foreach (var status in statuses)
             {
-
                 if (lReturnlist.ContainsKey(status.LU_SpecialStatuses.SpecialStatus.ToLower()))
                 {
                     lReturnlist[status.LU_SpecialStatuses.SpecialStatus.ToLower()]++;
@@ -760,6 +718,5 @@ namespace UMPG.USL.API.Business.Licenses
             }
             return lReturnlist;
         }
-
     }
 }

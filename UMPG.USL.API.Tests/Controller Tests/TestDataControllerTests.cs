@@ -23,6 +23,7 @@ using System.Web;
 using System.Web.Http;
 using System.Net.Http;
 using System.Web.Http.Results;
+using UMPG.USL.API.Business.DataHarmonization;
 
 
 namespace UMPG.USL.API.Tests.Controller_Tests
@@ -39,7 +40,8 @@ namespace UMPG.USL.API.Tests.Controller_Tests
         public void Get_ReturnIHttpActionResult()
         {
             //Arrange
-            var controller = new TestDataController();
+            var mockDataHarmonManager = A.Fake<IDataHarmonizationManager>();
+            var controller = new TestDataController(mockDataHarmonManager);
             controller.Request = new HttpRequestMessage();
             controller.Configuration = new HttpConfiguration();
 
@@ -54,7 +56,8 @@ namespace UMPG.USL.API.Tests.Controller_Tests
         public void UpdateSong_ReturnIHttpActionResult()
         {
             //Arrange
-            var controller = new TestDataController();
+            var mockDataHarmonManager = A.Fake<IDataHarmonizationManager>();
+            var controller = new TestDataController(mockDataHarmonManager);
             var mockSongHelper = A.Fake<SongHelper>();
             controller.Request = new HttpRequestMessage();
             controller.Configuration = new HttpConfiguration();
