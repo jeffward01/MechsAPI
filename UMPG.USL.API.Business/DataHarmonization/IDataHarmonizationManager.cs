@@ -6,9 +6,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
 {
     public interface IDataHarmonizationManager
     {
-        bool TakeLicenseSnapshot(License licenseToBeSnapshotted);
-
-        bool SaveLocalLicenseProductSnapshot(List<LicenseProduct> localLicenseProducts);
+        bool TakeLicenseSnapshot(License licenseToBeSnapshotted, List<LicenseProduct> licenseProducts);
 
         Snapshot_License GetLicenseSnapshot(int licenseId);
 

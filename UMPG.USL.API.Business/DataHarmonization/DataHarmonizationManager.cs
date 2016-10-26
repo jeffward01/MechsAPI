@@ -32,7 +32,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return _snapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(licenseId);
         }
 
-        public bool TakeLicenseSnapshot(License licenseToBeSnapshotted)
+        public bool TakeLicenseSnapshot(License licenseToBeSnapshotted, List<LicenseProduct> licenseProducts )
         {
             var newLicense = new Snapshot_License();
             newLicense.CloneLicenseId = licenseToBeSnapshotted.LicenseId;
@@ -90,6 +90,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
             //Virtuals?
 
+
+
+
+
+
+
             //Snapshot here
             try
             {
@@ -100,10 +106,15 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 Logger.Debug(exception.ToString);
                 return false;
             }
+
+
+            //snapshot LicenseProducts
+            SaveLocalLicenseProductSnapshot(licenseProducts);
+
             return true;
         }
 
-        public bool SaveLocalLicenseProductSnapshot(List<LicenseProduct> localLicenseProducts)
+        private bool SaveLocalLicenseProductSnapshot(List<LicenseProduct> localLicenseProducts)
         {
             foreach (var lp in localLicenseProducts)
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NLog;
 using UMPG.USL.API.Business.DataHarmonization;
 using UMPG.USL.API.Data.LicenseData;
 using UMPG.USL.API.Data.Recs;
@@ -28,6 +29,8 @@ namespace UMPG.USL.API.Business.Licenses
         private readonly IRecsDataProvider _recsProvider;
         private readonly IDataHarmonizationManager _dataHarmonizationManager;
         private readonly ILicenseProductManager _licenseProductManager;
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
 
         public LicenseManager(
             ILicenseProductManager licenseProductManager,
@@ -577,7 +580,6 @@ namespace UMPG.USL.API.Business.Licenses
                     }
                 }
 
-                
                 //updates local license
                 _licenseRepository.UpdateLicense(localLicense);
 
@@ -585,20 +587,17 @@ namespace UMPG.USL.API.Business.Licenses
                 var exist = _dataHarmonizationManager.DoesSnapshotExist(localLicense.LicenseId);
                 if (!exist)
                 {
-                    //save licenseDetails
-                    _dataHarmonizationManager.TakeLicenseSnapshot(localLicense);
-
                     var localLicenseProducts = _licenseProductManager.GetProductsNew(localLicense.LicenseId);
-                    //save licenseProductDetails
-                    _dataHarmonizationManager.SaveLocalLicenseProductSnapshot(localLicenseProducts);
+                    //save licenseDetails
+                    _dataHarmonizationManager.TakeLicenseSnapshot(localLicense, localLicenseProducts);
                 }
                 else
                 {
                     //Delete existing
                     _dataHarmonizationManager.DeleteLicenseSnapshot(localLicense.LicenseId);
                     //make new snapshot
-
-
+                    
+                  Logger.Info("Delete Block hit");
                 }
                 // var newLicenseSnapshot = new Snapshot_License();
                 //  newLicenseSnapshot = localLicense;

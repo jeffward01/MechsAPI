@@ -346,8 +346,11 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_LicenseProductRecordingWriter>().HasMany(_ => _.WriterNotes).WithOptional().HasForeignKey(_ => _.SnapshotLicenseProductRecordingWriterId);
             modelBuilder.Entity<Snapshot_LicenseProductRecordingWriter>().HasMany(_ => _.RateList).WithOptional().HasForeignKey(_ => _.SnapshotLicenseProductRecordingWriterId);
 
-            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriterRate>().ToTable("Snapshot_LicenseProductRecordingWriterRate");
-            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriterRate>().HasKey(_ => _.SnapshotLicenseProductRecordingWriterRateId);
+          modelBuilder.Entity<Snapshot_LicenseProductRecordingWriterRate>().ToTable("Snapshot_LicenseProductRecordingWriterRate");  
+          modelBuilder.Entity<Snapshot_LicenseProductRecordingWriterRate>().HasKey(_ => _.SnapshotLicenseProductRecordingWriterRateId);
+
+            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriterRateStatus>().ToTable("Snapshot_LicenseProductRecordingWriterRateStatus");
+            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriterRateStatus>().HasKey(_ => _.SnapshotLicenseProductRecordingWriterRateStatusId);
 
 
 
