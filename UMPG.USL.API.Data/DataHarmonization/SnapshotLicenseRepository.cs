@@ -74,9 +74,9 @@ namespace UMPG.USL.API.Data.DataHarmonization
                     .Include("ProductConfigurations") //comes back null, i think in the test license case its supposed
                     .Include("Schedule")
                     //    .Include("Recordings") //Add to database
-                    //     .Include("Recordings.Writers")  Add to database
-                    //       .Include("Recordings.Track")  Add to database
-                    //          .Include("Recordings.LicenseRecording") Add to database??
+                    //    .Include("Recordings.Writers")  Add to database
+                    //    .Include("Recordings.Track")  Add to database
+                    //    .Include("Recordings.LicenseRecording") Add to database??
 
                     .Where(_ => _.LicenseId == response.CloneLicenseId).ToList();
 

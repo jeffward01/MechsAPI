@@ -1,4 +1,5 @@
-﻿using UMPG.USL.Models.DataHarmonization;
+﻿using System.Collections.Generic;
+using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Data.DataHarmonization
 {
@@ -6,5 +7,8 @@ namespace UMPG.USL.API.Data.DataHarmonization
     {
         Snapshot_LicenseNote SaveSnapshotLicenseNote(Snapshot_LicenseNote snapshotLicenseNote);
         Snapshot_LicenseNote GetSnapshotLicenseNoteByNoteId(int licenseNoteId);
+        bool DeleteLicenseNoteSnapshotByLicenseNoteId(int snapshotNoteId);
+        List<int> GetAllLicenseNoteIdsForLicenseId(int licenseId);
+        List<int> GetAllContactIdsRelatedToNote(int licneseId);
     }
 }

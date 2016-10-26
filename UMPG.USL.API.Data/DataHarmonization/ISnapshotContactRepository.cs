@@ -6,5 +6,6 @@ namespace UMPG.USL.API.Data.DataHarmonization
     {
         Snapshot_Contact SaveSnapshotContact(Snapshot_Contact contactSnapshot);
         Snapshot_Contact GetSanSnapshotContactByContactId(int contactId);
+        bool DeleteContactBySnapshotContactId(int snapshotContactId);
     }
 }

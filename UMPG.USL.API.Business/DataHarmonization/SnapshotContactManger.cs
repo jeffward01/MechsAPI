@@ -21,5 +21,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
         {
             return _snapshotContactRepository.GetSanSnapshotContactByContactId(snapshotContactId);
         }
+
+  
     }
 }
