@@ -577,16 +577,29 @@ namespace UMPG.USL.API.Business.Licenses
                     }
                 }
 
-                var localLicenseProducts = _licenseProductManager.GetProductsNew(localLicense.LicenseId);
+                
                 //updates local license
                 _licenseRepository.UpdateLicense(localLicense);
 
-                //save licenseDetails
-                _dataHarmonizationManager.TakeLicenseSnapshot(localLicense);
+                //check if snapshot exists, if it exists delete it, then make a new one
+                var exist = _dataHarmonizationManager.DoesSnapshotExist(localLicense.LicenseId);
+                if (!exist)
+                {
+                    //save licenseDetails
+                    _dataHarmonizationManager.TakeLicenseSnapshot(localLicense);
 
-                //save licenseProductDetails
-                _dataHarmonizationManager.SaveLocalLicenseProductSnapshot(localLicenseProducts);
+                    var localLicenseProducts = _licenseProductManager.GetProductsNew(localLicense.LicenseId);
+                    //save licenseProductDetails
+                    _dataHarmonizationManager.SaveLocalLicenseProductSnapshot(localLicenseProducts);
+                }
+                else
+                {
+                    //Delete existing
+                    _dataHarmonizationManager.DeleteLicenseSnapshot(localLicense.LicenseId);
+                    //make new snapshot
 
+
+                }
                 // var newLicenseSnapshot = new Snapshot_License();
                 //  newLicenseSnapshot = localLicense;
                 //Data Harmonization Code

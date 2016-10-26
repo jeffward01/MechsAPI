@@ -6,5 +6,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
     {
         Snapshot_License SaveSnapshotLicense(Snapshot_License licenseSnapshot);
         Snapshot_License GetLicenseSnapShotById(int id);
+        bool DoesLicenseSnapshotExist(int licenseId);
+        bool DeleteSnapshotLicense(int licenseId);
     }
 }

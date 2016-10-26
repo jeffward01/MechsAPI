@@ -21,6 +21,11 @@ namespace UMPG.USL.API.Business.DataHarmonization
             _snapshotLicenseManager = snapshotLicenseManager;
         }
 
+        public bool DoesSnapshotExist(int licenseId)
+        {
+            return _snapshotLicenseManager.DoesSnapshotExists(licenseId);
+        }
+
 
         public Snapshot_License GetLicenseSnapshot(int licenseId)
         {
@@ -106,6 +111,11 @@ namespace UMPG.USL.API.Business.DataHarmonization
             }
 
             return true;
+        }
+
+        public bool DeleteLicenseSnapshot(int licenseSnapshotId)
+        {
+            return _snapshotLicenseManager.DeleteLicenseSnapshot(licenseSnapshotId);
         }
 
         private Snapshot_LicenseProduct CastToLicenseProductSnapshot(LicenseProduct licenseProduct)

@@ -1,0 +1,1206 @@
+2016-10-26 09:24:16.3282|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 9:24:16 AM 
+
+System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'dbo.Snapshot_WorksRecording'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:26c2a519-04b9-4738-a882-cdc9859876f5
+Error Number:208,State:1,Class:16
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: 07cdf5f0-bca0-1a15-afe9-1182b1dd0b87
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:01:19.7132|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:01:19 AM 
+
+System.InvalidOperationException: The foreign key component 'CloneCaeNumber' is not a declared property on type 'Snapshot_WorksWriter'. Verify that it has not been explicitly excluded from the model and that it is a valid primitive property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.ForeignKeyConstraintConfiguration.Configure(AssociationType associationType, AssociationEndMember dependentEnd, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.NavigationPropertyConfiguration.ConfigureConstraint(AssociationType associationType, AssociationEndMember dependentEnd, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.NavigationPropertyConfiguration.ConfigureDependentBehavior(AssociationType associationType, EdmModel model, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.DataHarmonization.SnapshotLicenseRepository.GetLicenseSnapShotById(Int32 id) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\DataHarmonization\SnapshotLicenseRepository.cs:line 35
+   at UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(Int32 snapshotLicenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\SnapshotLicenseManager.cs:line 22
+   at UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\DataHarmonizationManager.cs:line 27
+   at UMPG.USL.API.Controllers.TestDataController.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\TestDataController.cs:line 65
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: c09c7629-b5fb-60b6-d715-29a2d6288bf6
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:01:51.8132|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:01:51 AM 
+
+System.InvalidOperationException: The foreign key component 'CloneCaeNumber' is not a declared property on type 'Snapshot_WorksWriter'. Verify that it has not been explicitly excluded from the model and that it is a valid primitive property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.ForeignKeyConstraintConfiguration.Configure(AssociationType associationType, AssociationEndMember dependentEnd, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.NavigationPropertyConfiguration.ConfigureConstraint(AssociationType associationType, AssociationEndMember dependentEnd, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.NavigationPropertyConfiguration.ConfigureDependentBehavior(AssociationType associationType, EdmModel model, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.DataHarmonization.SnapshotLicenseRepository.GetLicenseSnapShotById(Int32 id) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\DataHarmonization\SnapshotLicenseRepository.cs:line 35
+   at UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(Int32 snapshotLicenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\SnapshotLicenseManager.cs:line 22
+   at UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\DataHarmonizationManager.cs:line 27
+   at UMPG.USL.API.Controllers.TestDataController.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\TestDataController.cs:line 65
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: 6a907d09-fc7c-7ed7-7afe-235e10e61d42
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:02:22.2412|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:02:22 AM 
+
+System.InvalidOperationException: The foreign key component 'CloneCaeNumber' is not a declared property on type 'Snapshot_WorksWriter'. Verify that it has not been explicitly excluded from the model and that it is a valid primitive property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.ForeignKeyConstraintConfiguration.Configure(AssociationType associationType, AssociationEndMember dependentEnd, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.NavigationPropertyConfiguration.ConfigureConstraint(AssociationType associationType, AssociationEndMember dependentEnd, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.NavigationPropertyConfiguration.ConfigureDependentBehavior(AssociationType associationType, EdmModel model, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.DataHarmonization.SnapshotLicenseRepository.GetLicenseSnapShotById(Int32 id) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\DataHarmonization\SnapshotLicenseRepository.cs:line 35
+   at UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(Int32 snapshotLicenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\SnapshotLicenseManager.cs:line 22
+   at UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\DataHarmonizationManager.cs:line 27
+   at UMPG.USL.API.Controllers.TestDataController.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\TestDataController.cs:line 65
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: 8115b21c-93b9-c5a5-76d9-100f3fd8f8b7
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:03:06.6292|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:03:06 AM 
+
+System.InvalidOperationException: The foreign key component 'CloneCaeNumber' is not a declared property on type 'Snapshot_WorksWriter'. Verify that it has not been explicitly excluded from the model and that it is a valid primitive property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.ForeignKeyConstraintConfiguration.Configure(AssociationType associationType, AssociationEndMember dependentEnd, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.NavigationPropertyConfiguration.ConfigureConstraint(AssociationType associationType, AssociationEndMember dependentEnd, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.NavigationPropertyConfiguration.ConfigureDependentBehavior(AssociationType associationType, EdmModel model, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.DataHarmonization.SnapshotLicenseRepository.GetLicenseSnapShotById(Int32 id) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\DataHarmonization\SnapshotLicenseRepository.cs:line 35
+   at UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(Int32 snapshotLicenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\SnapshotLicenseManager.cs:line 22
+   at UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\DataHarmonizationManager.cs:line 27
+   at UMPG.USL.API.Controllers.TestDataController.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\TestDataController.cs:line 65
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: a842c322-d555-0522-3f28-677fc08ac95e
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:03:35.1772|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:03:35 AM 
+
+System.InvalidOperationException: The foreign key component 'CloneCaeNumber' is not a declared property on type 'Snapshot_WorksWriter'. Verify that it has not been explicitly excluded from the model and that it is a valid primitive property.
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.ForeignKeyConstraintConfiguration.Configure(AssociationType associationType, AssociationEndMember dependentEnd, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.NavigationPropertyConfiguration.ConfigureConstraint(AssociationType associationType, AssociationEndMember dependentEnd, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Properties.Navigation.NavigationPropertyConfiguration.ConfigureDependentBehavior(AssociationType associationType, EdmModel model, EntityTypeConfiguration entityTypeConfiguration)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.ConfigureAssociations(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.Types.EntityTypeConfiguration.Configure(EntityType entityType, EdmModel model)
+   at System.Data.Entity.ModelConfiguration.Configuration.ModelConfiguration.ConfigureEntities(EdmModel model)
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.DataHarmonization.SnapshotLicenseRepository.GetLicenseSnapShotById(Int32 id) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\DataHarmonization\SnapshotLicenseRepository.cs:line 35
+   at UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(Int32 snapshotLicenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\SnapshotLicenseManager.cs:line 22
+   at UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\DataHarmonizationManager.cs:line 27
+   at UMPG.USL.API.Controllers.TestDataController.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\TestDataController.cs:line 65
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: b1825c7e-3391-6f48-380c-4c930fafed38
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:05:11.3962|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:05:11 AM 
+
+System.Data.Entity.ModelConfiguration.ModelValidationException: One or more validation errors were detected during model generation:
+
+Snapshot_OriginalPublisher_Administrator_Target: : Multiplicity is not valid in Role 'Snapshot_OriginalPublisher_Administrator_Target' in relationship 'Snapshot_OriginalPublisher_Administrator'. Because the Dependent Role refers to the key properties, the upper bound of the multiplicity of the Dependent Role must be '1'.
+
+   at System.Data.Entity.Core.Metadata.Edm.EdmModel.Validate()
+   at System.Data.Entity.DbModelBuilder.Build(DbProviderManifest providerManifest, DbProviderInfo providerInfo)
+   at System.Data.Entity.DbModelBuilder.Build(DbConnection providerConnection)
+   at System.Data.Entity.Internal.LazyInternalContext.CreateModel(LazyInternalContext internalContext)
+   at System.Data.Entity.Internal.RetryLazy`2.GetValue(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Include(String path)
+   at System.Data.Entity.Infrastructure.DbQuery`1.Include(String path)
+   at UMPG.USL.API.Data.DataHarmonization.SnapshotLicenseRepository.GetLicenseSnapShotById(Int32 id) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\DataHarmonization\SnapshotLicenseRepository.cs:line 35
+   at UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(Int32 snapshotLicenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\SnapshotLicenseManager.cs:line 22
+   at UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\DataHarmonizationManager.cs:line 27
+   at UMPG.USL.API.Controllers.TestDataController.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\TestDataController.cs:line 65
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: 6070b3cc-7a34-f0a0-0599-c7da39806577
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:21:44.9952|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:21:44 AM 
+
+System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'dbo.Snapshot_WorksRecording'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:081389b4-10a3-4f54-8fa2-e5ee09504945
+Error Number:208,State:1,Class:16
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: 4e04fba7-58df-9ae9-0e05-acd14cc28312
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:28:11.5702|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:28:11 AM 
+
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'SnapshotConfigurationId'.
+Invalid column name 'SnapshotConfigurationId'.
+Invalid column name 'product_configuration_id'.
+Invalid column name 'UpcCode'.
+Invalid column name 'ConfigurationType'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:ac1393b5-5272-4586-ada5-f893b4e16051
+Error Number:207,State:1,Class:16
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: 2668d8d2-535c-f24a-d766-7519d21bb518
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:28:47.4352|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:28:47 AM 
+
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'SnapshotConfigurationId'.
+Invalid column name 'SnapshotConfigurationId'.
+Invalid column name 'product_configuration_id'.
+Invalid column name 'UpcCode'.
+Invalid column name 'ConfigurationType'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:9e9e99d5-5d65-465e-865a-d55f442a51d7
+Error Number:207,State:1,Class:16
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: ac33af53-af2a-0048-1378-dd275f429ca3
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:29:24.9732|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:29:24 AM 
+
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'SnapshotConfigurationId'.
+Invalid column name 'SnapshotConfigurationId'.
+Invalid column name 'product_configuration_id'.
+Invalid column name 'UpcCode'.
+Invalid column name 'ConfigurationType'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:d36574cf-a1f7-4c67-832d-b132c68fc6b1
+Error Number:207,State:1,Class:16
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: f4ee2eea-9670-9eed-642d-b54588695e5a
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:29:24.9732|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:29:24 AM 
+
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'SnapshotConfigurationId'.
+Invalid column name 'SnapshotConfigurationId'.
+Invalid column name 'product_configuration_id'.
+Invalid column name 'UpcCode'.
+Invalid column name 'ConfigurationType'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:5cd06332-c611-43da-aedf-ccc1b0d53f4e
+Error Number:207,State:1,Class:16
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: 9c155007-0f86-41f1-97c2-806d972645a6
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:30:44.0682|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:30:44 AM 
+
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'SnapshotConfigurationId'.
+Invalid column name 'SnapshotConfigurationId'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:a1130723-86c8-45ba-b56b-82232d5e6061
+Error Number:207,State:1,Class:16
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: e0a4e8f6-1690-cc67-9b6a-e1a41532a006
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:33:45.6932|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:33:45 AM 
+
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'SnapshotConfigurationId'.
+Invalid column name 'SnapshotConfigurationId'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:73112054-8344-4e45-a0c7-1b097907e45d
+Error Number:207,State:1,Class:16
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: 15102a94-83e8-a256-db38-fa60e0de4735
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:35:28.6502|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:35:28 AM 
+
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'product_configuration_id'.
+Invalid column name 'UpcCode'.
+Invalid column name 'ConfigurationType'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:7b9434c7-67de-4864-94a1-0f10b429a4dc
+Error Number:207,State:1,Class:16
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: 2108620f-2d49-14e6-b886-6ee04e21afdf
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:40:10.6462|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:40:10 AM 
+
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'product_configuration_id'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:7b9434c7-67de-4864-94a1-0f10b429a4dc
+Error Number:207,State:1,Class:16
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: 4bb39a91-9add-6747-2cbc-59caf765acf3
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:42:39.8492|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:42:39 AM 
+
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at System.Data.Entity.Core.Objects.ELinq.QueryParameterExpression.EvaluateParameter(Object[] arguments)
+   at System.Data.Entity.Core.Objects.ELinq.ELinqQueryState.GetExecutionPlan(Nullable`1 forMergeOption)
+   at System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__6()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__5()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   at System.Data.Entity.Core.Objects.ObjectQuery`1.<System.Collections.Generic.IEnumerable<T>.GetEnumerator>b__0()
+   at System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at UMPG.USL.API.Data.DataHarmonization.SnapshotLicenseRepository.GetLicenseSnapShotById(Int32 id) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\DataHarmonization\SnapshotLicenseRepository.cs:line 53
+   at UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(Int32 snapshotLicenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\SnapshotLicenseManager.cs:line 22
+   at UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\DataHarmonizationManager.cs:line 27
+   at UMPG.USL.API.Controllers.TestDataController.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\TestDataController.cs:line 65
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: b4b79cca-1883-fdda-c011-0609bbec9c95
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-10-26 11:43:48.3412|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, October 26, 2016 ||  At: 11:43:48 AM 
+
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at System.Data.Entity.Core.Objects.ELinq.QueryParameterExpression.EvaluateParameter(Object[] arguments)
+   at System.Data.Entity.Core.Objects.ELinq.ELinqQueryState.GetExecutionPlan(Nullable`1 forMergeOption)
+   at System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__6()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__5()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   at System.Data.Entity.Core.Objects.ObjectQuery`1.<System.Collections.Generic.IEnumerable<T>.GetEnumerator>b__0()
+   at System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at UMPG.USL.API.Data.DataHarmonization.SnapshotLicenseRepository.GetLicenseSnapShotById(Int32 id) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\DataHarmonization\SnapshotLicenseRepository.cs:line 53
+   at UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(Int32 snapshotLicenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\SnapshotLicenseManager.cs:line 22
+   at UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\DataHarmonizationManager.cs:line 27
+   at UMPG.USL.API.Controllers.TestDataController.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\TestDataController.cs:line 65
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Postman-Token: 479a8c78-c218-10d5-4fc3-6587d0e8c111
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
