@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Data.DataHarmonization
@@ -45,9 +46,20 @@ namespace UMPG.USL.API.Data.DataHarmonization
 
         public int GetRoleIdForCOntactId(int contactId)
         {
-            var using(var context =- new AuthContext)
+            using (var context = new AuthContext())
+            {
+                var cotact = context.Snapshot_Contacts.FirstOrDefault(_ => _.SnapshotContactId == contactId);
+                return cotact.RoleId.Value;
+            }
         }
-
+        public int GetCloneContactIdForContactId(int contactId)
+        {
+            using (var context = new AuthContext())
+            {
+                var cotact = context.Snapshot_Contacts.FirstOrDefault(_ => _.SnapshotContactId == contactId);
+                return cotact.CloneContactId;
+            }
+        }
 
     }
 }

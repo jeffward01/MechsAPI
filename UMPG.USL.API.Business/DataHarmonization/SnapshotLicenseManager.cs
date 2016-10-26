@@ -9,8 +9,16 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private readonly ISnapshotLicenseProductRepository _snapshotLicenseProductRepository;
         private readonly ISnapshotLicenseNoteRepository _snapshotLicenseNoteRepository;
         private readonly ISnapshotContactRepository _snapshotContactRepository;
-        public SnapshotLicenseManager(ISnapshotLicenseRepository snapshotLicenseRepository, ISnapshotLicenseProductRepository snapshotLicenseProductRepository, ISnapshotLicenseNoteRepository snapshotLicenseNoteRepository, ISnapshotContactRepository snapshotContactRepository)
+        private readonly ISnapshotRoleRepository _snapshotRoleRepository;
+        private readonly ISnapshotAddressRepository _snapshotAddressRepository;
+        private readonly ISnapshotPhoneRepository _snapshotPhoneRepository;
+        private readonly ISnapshotContactEmailRepository _snapshotContactEmailRepository;
+        public SnapshotLicenseManager(ISnapshotLicenseRepository snapshotLicenseRepository, ISnapshotLicenseProductRepository snapshotLicenseProductRepository, ISnapshotLicenseNoteRepository snapshotLicenseNoteRepository, ISnapshotContactRepository snapshotContactRepository, ISnapshotRoleRepository snapshotRoleRepository, ISnapshotAddressRepository snapshotAddressRepository, ISnapshotPhoneRepository snapshotPhoneRepository, ISnapshotContactEmailRepository snapshotContactEmailRepository)
         {
+            _snapshotContactEmailRepository = snapshotContactEmailRepository;
+            _snapshotPhoneRepository = snapshotPhoneRepository;
+            _snapshotAddressRepository = snapshotAddressRepository;
+            _snapshotRoleRepository = snapshotRoleRepository;
             _snapshotContactRepository = snapshotContactRepository;
             _snapshotLicenseNoteRepository = snapshotLicenseNoteRepository;
             _snapshotLicenseProductRepository = snapshotLicenseProductRepository;
@@ -42,6 +50,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
             { 
                 _snapshotLicenseProductRepository.DeleteLicenseProductSnapshot(id);
                 //Delete each child LicenseProducts
+
+
             }
 
             //DeleteNotelist
@@ -58,18 +68,44 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 _snapshotContactRepository.DeleteContactBySnapshotContactId(contactId);
 
                 //Get role Id for contact ID
-                var roleId = 
-
+                var roleId = _snapshotContactRepository.GetRoleIdForCOntactId(contactId);
                 //delete role 
-                //delet address
-                //delete phone 
-                //dete contact emailsdsgh
+                _snapshotRoleRepository.DeleteRoleSnapshotByRoleId(roleId);
+        
+                //Get cloneCOntactId to delete adress, phone, contact emails
+                var cloneContactId = _snapshotContactRepository.GetCloneContactIdForContactId(contactId);
+
+                //Delete all address for clone contact id
+                var addresses = _snapshotAddressRepository.GetAllAddressesForCloneContactId(cloneContactId);
+                foreach (var address in addresses)
+                {
+                    _snapshotAddressRepository.DeleteAddressBySnapshotAddressId(address.SnapshotAddressId);
+                }
+
+                //Delete all phone for clone contact id
+                var phones = _snapshotPhoneRepository.GetAllPhonesForCloneContactId(cloneContactId);
+                foreach (var phone in phones)
+                {
+                    _snapshotPhoneRepository.DeletePhoneBySnapshotPhoneId(phone.SnapshotPhoneId);
+                }
 
 
-            }s
+
+                //Delete all  contact emails for clone contact id
+                var contactEmails = _snapshotContactEmailRepository.GetAllContactEmailsForCloneContactId(cloneContactId);
+                foreach (var contactEmail in contactEmails)
+                {
+                    _snapshotContactEmailRepository.DeleteContactEmailBySnapshotContactEmailId(
+                        contactEmail.SnapshotContactEmailId);
+                }
 
 
-            
+
+            }
+
+            //delete rest of license entities
+
+
 
             return _snapshotLicenseRepository.DeleteSnapshotLicense(licenseId);
         }

@@ -1,4 +1,5 @@
-﻿using UMPG.USL.Models.DataHarmonization;
+﻿using System;
+using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Data.DataHarmonization
 {
@@ -20,6 +21,25 @@ namespace UMPG.USL.API.Data.DataHarmonization
             {
                 return context.Snapshot_Roles.Find(snapShotRoleId);
             }
+        }
+
+        public bool DeleteRoleSnapshotByRoleId(int snapshotRoleId)
+        {
+            using (var context = new AuthContext())
+            {
+                var role = context.Snapshot_Roles.Find(snapshotRoleId);
+                context.Snapshot_Roles.Attach(role);
+                context.Snapshot_Roles.Remove(role);
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

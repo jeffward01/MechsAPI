@@ -6,5 +6,6 @@ namespace UMPG.USL.API.Data.DataHarmonization
     {
         Snapshot_Role SaveSnapshotRole(Snapshot_Role snapshotRole);
         Snapshot_Role GetSnapshotRoleById(int snapShotRoleId);
+        bool DeleteRoleSnapshotByRoleId(int snapshotRoleId);
     }
 }

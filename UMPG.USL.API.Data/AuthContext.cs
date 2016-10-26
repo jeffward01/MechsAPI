@@ -178,6 +178,10 @@ namespace UMPG.USL.API.Data
         public DbSet<Snapshot_WorksRecording> Snapshot_WorksRecordings { get; set; }
         public DbSet<Snapshot_ArtistRecs> Snapshot_ArtistRecs { get; set; }
 
+        public DbSet<Snapshot_Address> Snapshot_Addresses { get; set; }
+        public DbSet<Snapshot_ContactEmail> Snapshot_ContactEmails{ get; set; }
+        public DbSet<Snapshot_Phone> Snapshot_Phones{ get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -260,7 +264,7 @@ namespace UMPG.USL.API.Data
 
             //Snapshot_Role
             modelBuilder.Entity<Snapshot_Role>().ToTable("Snapshot_Role");
-            modelBuilder.Entity<Snapshot_Role>().HasKey(x => x.RoleId);
+            modelBuilder.Entity<Snapshot_Role>().HasKey(x => x.SnapshotRoleId);
 
             //Snapshot_recsConfiguration
             modelBuilder.Entity<Snapshot_RecsConfiguration>().ToTable("Snapshot_RecsConfiguration");
