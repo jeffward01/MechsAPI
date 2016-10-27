@@ -19,7 +19,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
         public Snapshot_ProductHeader GetSnapshotProductHeaderByProductHeaderId(int snapshotProductHeader)
         {
-            return _snapshotProductHeaderRepository.GetSnapshotProductHeaderByProductHeaderId(snapshotProductHeader);
+            return _snapshotProductHeaderRepository.GetSnapshotProductHeaderBySnapshotProductHeaderId(snapshotProductHeader);
         }
     }
 }

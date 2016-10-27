@@ -161,6 +161,8 @@ namespace UMPG.USL.API.Data
 
         public DbSet<Snapshot_License> Snapshot_Licenses { get; set; }
         public DbSet<Snapshot_LicenseProduct> Snapshot_LicenseProducts { get; set; }
+        public DbSet<Snapshot_Licensee> Snapshot_Licensees { get; set; }
+
 
         public DbSet<Snapshot_LicenseNote> Snapshot_LicenseNotes { get; set; }
 
@@ -232,7 +234,7 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_License>().HasMany(r => r.LicenseNoteList).WithOptional().HasForeignKey(c => c.LicenseId);
             modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseType).WithMany().HasForeignKey(c => c.LicenseTypeId);
             modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicensePriority).WithMany().HasForeignKey(c => c.PriorityId);
-            modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.Licensee).WithMany().HasForeignKey(c => c.LicenseeId);
+         //   modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.Licensee).WithMany().HasForeignKey(c => c.LicenseeId);
             modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseStatus).WithMany().HasForeignKey(c => c.LicenseStatusId);
             modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseMethod).WithMany().HasForeignKey(c => c.LicenseMethodId);
             modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.Contact).WithMany().HasForeignKey(c => c.AssignedToId);
@@ -309,7 +311,9 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_ArtistRecs>().HasKey(_ => _.SnapshotArtistRecsId);
 
             modelBuilder.Entity<Snapshot_WorksRecording>().ToTable("Snapshot_WorksRecording");
-            modelBuilder.Entity<Snapshot_WorksRecording>().HasKey(_ => _.CloneTrackId);
+            modelBuilder.Entity<Snapshot_WorksRecording>().HasKey(_ => _.SnapshotWorksRecodingId);
+            modelBuilder.Entity<Snapshot_WorksRecording>().HasRequired(_ => _.Track).WithMany().HasForeignKey(_ => _.CloneTrackId);
+            modelBuilder.Entity<Snapshot_WorksRecording>().HasMany(_ => _.Writers).WithOptional().HasForeignKey(_ => _.CloneWorksTrackId);
 
             modelBuilder.Entity<Snapshot_WorksWriter>().ToTable("Snapshot_WorksWriter");
             modelBuilder.Entity<Snapshot_WorksWriter>().HasKey(_ => _.SnapshotWorksWriter);
@@ -374,6 +378,9 @@ namespace UMPG.USL.API.Data
 
             modelBuilder.Entity<Snapshot_Phone>().ToTable("Snapshot_Phone");
             modelBuilder.Entity<Snapshot_Phone>().HasKey(_ => _.SnapshotPhoneId);
+
+            modelBuilder.Entity<Snapshot_Licensee>().ToTable("Snapshot_Licensee");
+            modelBuilder.Entity<Snapshot_Licensee>().HasKey(_ => _.SnapshotLicenseeId);
 
             //_____End Data Harmonization
 

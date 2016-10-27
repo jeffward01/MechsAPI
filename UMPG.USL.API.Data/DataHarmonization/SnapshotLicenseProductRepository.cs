@@ -37,6 +37,25 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
+        public int? GetProductIdFromSnapshotLicenseProductId(int snapshotLicenseProductId)
+        {
+            using (var context = new AuthContext())
+            {
+                var licneseProduct = context.Snapshot_LicenseProducts.Find(snapshotLicenseProductId);
+                return licneseProduct.ProductId;
+            }
+        }
+
+
+        public int? GetLicenseProductIdFromSnapshotLicenseProductId(int snapshotLicenseProductId)
+        {
+            using (var context = new AuthContext())
+            {
+                var licneseProduct = context.Snapshot_LicenseProducts.Find(snapshotLicenseProductId);
+                return licneseProduct.CloneLicenseProductId;
+            }
+        }
+
         public bool DeleteLicenseProductSnapshot(int snapshotLicenseProductId)
         {
             using (var context = new AuthContext())

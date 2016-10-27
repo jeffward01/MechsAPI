@@ -21,5 +21,10 @@ namespace UMPG.USL.API.Business.DataHarmonization
         {
             return _snapshotLabelGroupRepository.GetSaSnapshotLabelGroupByLabelGroupId(labelGroupId);
         }
+
+        public bool DeleteAllLabelGroupsForProductHeaderSnapshotId(int productHeaderSnapshotId)
+        {
+            return _snapshotLabelGroupRepository.DeleteLabelGroupByLabelGroupSnapshotId(productHeaderSnapshotId);
+        }
     }
 }

@@ -26,13 +26,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return _snapshotLicenseManager.DoesSnapshotExists(licenseId);
         }
 
-
         public Snapshot_License GetLicenseSnapshot(int licenseId)
         {
             return _snapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(licenseId);
         }
 
-        public bool TakeLicenseSnapshot(License licenseToBeSnapshotted, List<LicenseProduct> licenseProducts )
+        public bool TakeLicenseSnapshot(License licenseToBeSnapshotted, List<LicenseProduct> licenseProducts)
         {
             var newLicense = new Snapshot_License();
             newLicense.CloneLicenseId = licenseToBeSnapshotted.LicenseId;
@@ -90,12 +89,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
             //Virtuals?
 
-
-
-
-
-
-
             //Snapshot here
             try
             {
@@ -106,7 +99,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 Logger.Debug(exception.ToString);
                 return false;
             }
-
 
             //snapshot LicenseProducts
             SaveLocalLicenseProductSnapshot(licenseProducts);
@@ -137,8 +129,251 @@ namespace UMPG.USL.API.Business.DataHarmonization
             snapshot.LicenseId = licenseProduct.LicenseId;
             snapshot.ProductHeaderId = (int)licenseProduct.ProductHeader.Id;
             snapshot.ProductHeader = CastToProductHeaderSnapshot(licenseProduct.ProductHeader);
+            snapshot.ScheduleId = licenseProduct.ScheduleId;
+            snapshot.ProductId = licenseProduct.ProductId;
+            snapshot.LicensePRecordingsNo = licenseProduct.LicensePRecordingsNo;
+            snapshot.LicenseClaimException = licenseProduct.LicenseClaimException;
+            snapshot.TotalLicenseConfigAmount = (int)licenseProduct.TotalLicenseConfigAmount;
+            snapshot.title = licenseProduct.title;
+            snapshot.PaidQuarter = licenseProduct.PaidQuarter;
+            snapshot.RelatedLicensesNo = licenseProduct.RelatedLicensesNo;
+            snapshot.Recordings = CastToSnapshotRecordings(licenseProduct.Recordings, licenseProduct.ProductId, licenseProduct.LicenseProductId);
+            return snapshot;
+        }
+
+        private List<Snapshot_WorksRecording> CastToSnapshotRecordings(List<WorksRecording> worksRecording,
+            int productId, int licenseProductId)
+        {
+            var snapshotList = new List<Snapshot_WorksRecording>();
+
+            foreach (var rec in worksRecording)
+            {
+                var snapshot = new Snapshot_WorksRecording();
+
+                snapshot.ProductId = productId;
+                snapshot.CloneTrackId = rec.TrackId;
+                snapshot.LicenseProductId = licenseProductId;
+                snapshot.CdIndex = rec.CdIndex;
+                snapshot.UmpgPercentageRollup = (int) rec.UmpgPercentageRollup;
+                snapshot.CdNumber = rec.CdNumber;
+                snapshot.LicensedRollup = (int)rec.LicensedRollup;
+               // snapshot.WorkTrackId = rec.TrackId
+                snapshot.Message = rec.Message;
+                snapshot.Writers = CastToSnapshotWorksWriter(rec.Writers, rec.TrackId);
+                snapshot.Track = CastToSnapshotWorksTrack(rec.Track, rec.TrackId);
+
+
+                snapshotList.Add(snapshot);
+            }
+
+
+            return snapshotList;
+
+
+        }
+
+        private Snapshot_WorksTrack CastToSnapshotWorksTrack(WorksTrack track, int trakId)
+        {
+            var snapshot = new Snapshot_WorksTrack();
+            snapshot.CloneWorksTrackId = trakId;
+            snapshot.Title = track.Title;
+            snapshot.ArtistRecsId = (int)track.Artists.id;
+            snapshot.WritersNo = track.WritersNo;
+            snapshot.ControledWritersNo = track.ControledWritersNo;
+            snapshot.Controlled = track.Controlled;
+            snapshot.Duration = track.Duration;
+            snapshot.Isrc = track.Isrc;
+            snapshot.Artist = CastToArtistRecsSnapshot(track.Artists);
+            snapshot.Copyrights = CastToSnapshotRecsCopyrights(track.Copyrights, trakId);
+            return snapshot;
+        }
+
+        private List<Snapshot_RecsCopyrights> CastToSnapshotRecsCopyrights(List<RecsCopyrights> recsCopyrights,
+            int workTrackId)
+        {
+            var snapshotList = new List<Snapshot_RecsCopyrights>();
+            foreach (var rec in recsCopyrights)
+            {
+                var snapshot = new Snapshot_RecsCopyrights();
+                snapshot.CloneWorksTrackId = workTrackId;
+                snapshot.WorkCode = rec.WorkCode;
+                snapshot.Title = rec.Title;
+                snapshot.PrincipalArtist = rec.PrincipalArtist;
+                snapshot.Writers = rec.Writers;
+                snapshot.WriteString = rec.WriteString;
+                snapshot.MechanicalCollectablePercentage = rec.MechanicalCollectablePercentage;
+                snapshot.MechanicalOwnershipPercentage = rec.MechanicalOwnershipPercentage;
+
+                snapshot.Composers = CastToSnapshotWorksWriter(rec.Composers, workTrackId);
+                snapshot.Samples = CastToSnapshotSamples(rec.Samples, workTrackId);
+                snapshot.LocalClients = CastToSnapshotLocalClientCopyrights(rec.LocalClients, workTrackId);
+                snapshot.AquisitionLocationCodes = CastToSnapshotAquisitionLocationCode(rec.AquisitionLocationCode,
+                    workTrackId);
+
+
+
+                snapshotList.Add(snapshot);
+
+            }
+
+
+            return snapshotList;
+        }
+
+        private List<Snapshot_WorksWriter> CastToSnapshotWorksWriter(List<WorksWriter> writers, int workTrackId)
+        {
+            var snapshotList = new List<Snapshot_WorksWriter>();
+
+
+            foreach (var writer in writers)
+            {
+                var snapshot = new Snapshot_WorksWriter();
+                //cast writer base!
+                snapshot.CloneWorksTrackId = workTrackId;
+                snapshot.Contribution = writer.Contribution;
+                snapshot.OriginalPublishers = CastOriginalPublishersToSnapshot(writer.OriginalPublishers,
+                    writer.CaeNumber);
+                snapshot.LicenseProductRecordingWriter =
+                    CastToLicensProductRecordingSnapshot(writer.LicenseProductRecordingWriter, writer.CaeNumber);
+                snapshot.ParentSongDuration = writer.ParentSongDuration;
+
+
+
+                snapshotList.Add(snapshot);
+                
+            }
+
+
+            return snapshotList;
+        }
+
+        private Snapshot_LicenseProductRecordingWriter CastToLicensProductRecordingSnapshot(
+            LicenseProductRecordingWriter lprw, int caeNumber)
+        {
+            var snapshot = new Snapshot_LicenseProductRecordingWriter();
+            //do this and child entities
+
 
             return snapshot;
+        }
+
+        private List<Snapshot_OriginalPublisher> CastOriginalPublishersToSnapshot(
+            List<OriginalPublisher> originalPublishers, int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_OriginalPublisher>();
+
+
+            foreach (var op in originalPublishers)
+            {
+                var snapshot = new Snapshot_OriginalPublisher();
+                snapshot.CloneWorksWriterCaeNumber = caeNumber;
+                snapshot.Administrator = CastToAdministrator(op.Administrator, caeNumber);
+
+                //cast writer base!
+
+
+
+                snapshotList.Add(snapshot);
+
+            }
+
+
+            return snapshotList;
+        }
+
+        private List<Snapshot_WriterBase> CastToAdministrator(List<WriterBase> admins, int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_WriterBase>();
+
+            
+            foreach (var admin in admins)
+            {
+                var snapshot = new Snapshot_WriterBase();
+
+                snapshot.CloneCaeNumber = admin.CaeNumber;
+                snapshot.IpCode = admin.IpCode;
+                snapshot.FullName = admin.FullName;
+                snapshot.CapacityCode = admin.CapacityCode;
+                snapshot.Capacity = admin.Capacity;
+                snapshot.MechanicalCollectablePercentage = admin.MechanicalCollectablePercentage;
+                snapshot.MechanicalOwnershipPercentage = admin.MechanicalOwnershipPercentage;
+                snapshot.Affiliation = admin.Affiliation;
+                //do known as (create a new class
+
+
+
+
+
+                snapshotList.Add(snapshot);
+
+            }
+
+
+            return snapshotList;
+
+        }
+
+        private List<Snapshot_RecsCopyrights> CastToSnapshotSamples(List<RecsCopyrights> samples, int workTrackId)
+        {
+            var snapshotList = new List<Snapshot_RecsCopyrights>();
+
+
+            foreach (var sample in samples)
+            {
+                var snapshot = new Snapshot_RecsCopyrights();
+
+
+
+
+
+                snapshotList.Add(snapshot);
+
+            }
+
+
+            return snapshotList;
+        }
+
+        private List<Snapshot_LocalClientCopyright> CastToSnapshotLocalClientCopyrights(List<LocalClientCopyright> localClientCopyrights, int workTrackId)
+        {
+            var snapshotList = new List<Snapshot_LocalClientCopyright>();
+
+
+            foreach (var localClientCopyright in localClientCopyrights)
+            {
+                var snapshot = new Snapshot_LocalClientCopyright();
+
+
+
+
+
+                snapshotList.Add(snapshot);
+
+            }
+
+
+            return snapshotList;
+        }
+
+        private List<Snapshot_AquisitionLocationCode> CastToSnapshotAquisitionLocationCode(List<string> aquisitionLocationCodes, int workTrackId)
+        {
+            var snapshotList = new List<Snapshot_AquisitionLocationCode>();
+
+
+            foreach (var code in aquisitionLocationCodes)
+            {
+                var snapshot = new Snapshot_AquisitionLocationCode();
+
+
+
+
+
+                snapshotList.Add(snapshot);
+
+            }
+
+
+            return snapshotList;
         }
 
         private Snapshot_ProductHeader CastToProductHeaderSnapshot(ProductHeader productHeader)
@@ -218,6 +453,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.LicenseProductConfigurationId =
                     config.LicenseProductConfiguration.LicenseProductConfigurationId;
                 //snapshot.LicenseProductConfiguration = config.LicenseProductConfiguration;  temp off
+                snapshotList.Add(snapshot);
             }
 
             return snapshotList;

@@ -1,4 +1,5 @@
-﻿using UMPG.USL.Models.DataHarmonization;
+﻿using System;
+using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Data.DataHarmonization
 {
@@ -14,11 +15,44 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
-        public Snapshot_ProductHeader GetSnapshotProductHeaderByProductHeaderId(int productHeaderId)
+        public Snapshot_ProductHeader GetSnapshotProductHeaderBySnapshotProductHeaderId(int snapshotProductHeaderId)
         {
             using (var context = new AuthContext())
             {
-                return context.Snapshot_ProductHeaders.Find(productHeaderId);
+                return context.Snapshot_ProductHeaders.Find(snapshotProductHeaderId);
+            }
+        }
+
+        public int GetSnapshotProductHeaderBySnapshotLicenseProductId(int snapshotLicenseProductId)
+        {
+            using (var context = new AuthContext())
+            {
+                var licenseProduct = context.Snapshot_LicenseProducts.Find(snapshotLicenseProductId);
+                return licenseProduct.SnapshotLicenseProductId;
+            }
+        }
+
+        public bool DeleteProductHeaderSnapshotBySnapshotId(int snapshotProductHeaderId)
+        {
+            using (var context = new AuthContext())
+            {
+                var productHeader =
+                    context.Snapshot_ProductHeaders.Find(snapshotProductHeaderId);
+                if (productHeader == null)
+                {
+                    return false;
+                }
+                context.Snapshot_ProductHeaders.Attach(productHeader);
+                context.Snapshot_ProductHeaders.Remove(productHeader);
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+                return true;
             }
         }
     }

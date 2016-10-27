@@ -1,4 +1,5 @@
-﻿using UMPG.USL.Models.DataHarmonization;
+﻿using System.Collections.Generic;
+using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Data.DataHarmonization
 {
@@ -6,5 +7,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
     {
         Snapshot_LabelGroup SaveSnapshotLabelGroup(Snapshot_LabelGroup snapshotLabelGroup);
         Snapshot_LabelGroup GetSaSnapshotLabelGroupByLabelGroupId(int labelGroupId);
+        List<Snapshot_LabelGroup> GetAllLabelGroupsForProductHeaderSnapshotId(int productHeaderSnapshotId);
+        bool DeleteLabelGroupByLabelGroupSnapshotId(int labelGroupSnapshotId);
     }
 }

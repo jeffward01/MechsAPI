@@ -10,7 +10,9 @@ namespace UMPG.USL.API.Data.DataHarmonization
         Snapshot_LicenseProduct GetLicenseProductSnapShotById(int id);
 
         bool DeleteLicenseProductSnapshot(int snapshotLicenseProductId);
+        int? GetProductIdFromSnapshotLicenseProductId(int snapshotLicenseProductId);
 
         List<int> GetLicenseProductIds(int licenseId);
+        int? GetLicenseProductIdFromSnapshotLicenseProductId(int snapshotLicenseProductId);
     }
 }

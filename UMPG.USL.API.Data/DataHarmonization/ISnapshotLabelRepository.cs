@@ -6,5 +6,6 @@ namespace UMPG.USL.API.Data.DataHarmonization
     {
         Snapshot_Label SaveSnapshotLabel(Snapshot_Label snapshotLabel);
         Snapshot_Label GetSnapshotLabelByLabelId(int labelId);
+        bool DeleteLabelSnapshotByProductHeaderSnapshotId(int snapshotLicenseProductId);
     }
 }

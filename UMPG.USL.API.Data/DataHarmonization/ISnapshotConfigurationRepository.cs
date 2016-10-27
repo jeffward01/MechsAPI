@@ -6,5 +6,6 @@ namespace UMPG.USL.API.Data.DataHarmonization
     {
         Snapshot_Configuration SaveSnapshotConfiguration(Snapshot_Configuration snapshotConfiguration);
         Snapshot_Configuration GetSnapshotConfigurationByConfigurationId(int configurationId);
+        bool DeleteConfigurationSnapshot(int snapshotLicenseProductId);
     }
 }

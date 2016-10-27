@@ -49,8 +49,8 @@ namespace UMPG.USL.API.Data.DataHarmonization
                     .Include("LicenseType")
                     .Include("LicensePriority")
                     .Include("LicenseStatus")
-                    .Include("Licensee")
-                    .Include("Licensee.LicenseeLabelGroup")
+                  //  .Include("Licensee")
+                    //.Include("Licensee.LicenseeLabelGroup")
                     .Include("LicenseMethod")
                     //.Include("Contact") // Contacts is throwing erorr.  not set to instance of an obj
                     //.Include("Contact2") // Contacts is throwing erorr.  not set to instance of an obj
@@ -71,8 +71,8 @@ namespace UMPG.USL.API.Data.DataHarmonization
                     .Include("ProductHeader.Configurations.Configuration") // Error here
                     .Include("ProductHeader.Configurations.LicenseProductConfiguration")
                     .Include("ProductHeader.Label.RecordLabelGroups")
-                    .Include("ProductConfigurations") //comes back null, i think in the test license case its supposed
-                    .Include("Schedule")
+                   // .Include("ProductConfigurations") //comes back null, i think in the test license case its supposed
+                  //  .Include("Schedule")
                     //    .Include("Recordings") //Add to database
                     //    .Include("Recordings.Writers")  Add to database
                     //    .Include("Recordings.Track")  Add to database
@@ -93,8 +93,8 @@ namespace UMPG.USL.API.Data.DataHarmonization
                     .Include("LicenseType")
                     .Include("LicensePriority")
                     .Include("LicenseStatus")
-                    .Include("Licensee")
-                    .Include("Licensee.LicenseeLabelGroup")
+                 //   .Include("Licensee")
+                  //  .Include("Licensee.LicenseeLabelGroup")
                     .Include("LicenseMethod")
                     //.Include("Contact") // Contacts is throwing erorr.  not set to instance of an obj
                     //.Include("Contact2") // Contacts is throwing erorr.  not set to instance of an obj

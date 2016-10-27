@@ -160,7 +160,7 @@
     <Compile Include="DataHarmonization\ISnapshotLicenseRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotPhoneRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotProductHeaderRepository.cs" />
-    <Compile Include="DataHarmonization\ISnapshotRecsConfiguration.cs" />
+    <Compile Include="DataHarmonization\ISnapshotRecsConfigurationRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotRoleRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotWorksRecordingRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotAddressRepository.cs" />
@@ -176,7 +176,7 @@
     <Compile Include="DataHarmonization\SnapshotLicenseRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotPhoneRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotProductHeaderRepository.cs" />
-    <Compile Include="DataHarmonization\SnapshotRecsConfiguration.cs" />
+    <Compile Include="DataHarmonization\SnapshotRecsConfigurationRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotRoleRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotWorksRecordingRepository.cs" />
     <Compile Include="LicenseData\GenerateLicenseQueueRepository.cs" />

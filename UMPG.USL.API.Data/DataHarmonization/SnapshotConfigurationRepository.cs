@@ -26,5 +26,25 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return context.Snapshot_Configurations.Find(configurationId);
             }
         }
+
+        public bool DeleteConfigurationSnapshot(int snapshotLicenseProductId)
+        {
+            using (var context = new AuthContext())
+            {
+                var licenseProduct =
+                    context.Snapshot_Configurations.First(_ => _.SnapshotConfigId == snapshotLicenseProductId);
+                context.Snapshot_Configurations.Attach(licenseProduct);
+                context.Snapshot_Configurations.Remove(licenseProduct);
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
     }
 }
