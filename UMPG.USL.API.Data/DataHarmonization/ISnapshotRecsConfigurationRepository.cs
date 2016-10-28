@@ -12,7 +12,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
         List<Snapshot_RecsConfiguration> GetAllRecsConfigurationsRecordingsForLicenseProductId(int? licenseProductId);
         bool DeleteWorkRecordingByRecordignSnapshotId(int recordingSnapshotIdea);
         bool DoesRecConfigurationrecordignsExistForProductHeaderSnapshotId(int productHeaderSnapshotId);
-
+        List<Snapshot_RecsConfiguration> GetAllRecsConfigurationsRecordingsForProductHeaderId(int productHeaderId);
         List<Snapshot_RecsConfiguration> GetAllRecsConfigurationsRecordingsForProductHeaderSnapshotId(
             int productHeaderSnapshotId);
     }

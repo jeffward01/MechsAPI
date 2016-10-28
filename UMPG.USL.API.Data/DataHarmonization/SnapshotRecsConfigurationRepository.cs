@@ -59,10 +59,29 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 var productHeader = context.Snapshot_ProductHeaders
 
                            .Include("Configurations")
+                           .Include("Configurations.Configuration")
+                           .Include("Configurations.LicenseProductConfiguration")
+                           
                     .FirstOrDefault(_ => _.SnapshotProductHeaderId == productHeaderSnapshotId);
                 return productHeader.Configurations;
             }
         }
+
+        public List<Snapshot_RecsConfiguration> GetAllRecsConfigurationsRecordingsForProductHeaderId(int productHeaderId)
+        {
+            using (var context = new AuthContext())
+            {
+                var recConfig = context.Snapshot_RecsConfigurations
+
+                           
+                           .Include("Configuration")
+                           .Include("LicenseProductConfiguration")
+
+                    .Where(_ => _.ProductHeaderId == productHeaderId).ToList();
+                return recConfig;
+            }
+        }
+
 
         public bool DeleteWorkRecordingByRecordignSnapshotId(int recordingSnapshotIdea)
         {

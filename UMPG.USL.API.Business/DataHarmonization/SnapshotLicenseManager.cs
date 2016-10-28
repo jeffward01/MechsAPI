@@ -52,7 +52,16 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
         public Snapshot_License GetSnapshotLicenseBySnapshotLicenseId(int snapshotLicenseId)
         {
-            return _snapshotLicenseRepository.GetLicenseSnapShotById(snapshotLicenseId);
+            var licenseInformation =  _snapshotLicenseRepository.GetLicenseSnapShotById(snapshotLicenseId);
+
+            foreach (var lp in licenseInformation.LicenseProducts)
+            {
+                var recConfig =
+                    _snapshotRecsConfiguration.GetAllRecsConfigurationsRecordingsForProductHeaderId(
+                        lp.ProductHeader.CloneProductHeaderId);
+                lp.ProductHeader.Configurations = recConfig;
+            }
+            return licenseInformation;
         }
 
         public bool DeleteLicenseSnapshot(int licenseId)
