@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NLog;
 using UMPG.USL.Models.DataHarmonization;
 using EntityState = System.Data.Entity.EntityState;
 
@@ -8,12 +9,21 @@ namespace UMPG.USL.API.Data.DataHarmonization
 {
     public class SnapshotLicenseProductRepository : ISnapshotLicenseProductRepository
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public Snapshot_LicenseProduct SaveSnapshotLicenseProduct(Snapshot_LicenseProduct licenseProductSnapshot)
         {
             using (var context = new AuthContext())
             {
                 context.Snapshot_LicenseProducts.Add(licenseProductSnapshot);
-                context.SaveChanges();
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Logger.Debug(e.ToString());
+                    throw new Exception(e.ToString());
+                }
                 return licenseProductSnapshot;
             }
         }

@@ -28,15 +28,15 @@ namespace UMPG.USL.API.Business.DataHarmonization
             var recsConfiguratons = snapshotLicenseProduct.ProductConfigurations;
 
 
-            foreach (var workRec in worksRecordings)
-            {
-                _snapshotWorksRecordingRepository.SaveSnapshotWorksRecording(workRec);
-            }
+            //foreach (var workRec in worksRecordings)
+            //{
+            //    _snapshotWorksRecordingRepository.SaveSnapshotWorksRecording(workRec);
+            //}
 
-            foreach (var recConfig in recsConfiguratons)
-            {
-                _snapshotRecsConfigurationRepository.SaveSnapshotRecsConfiguration(recConfig);
-            }
+            //foreach (var recConfig in recsConfiguratons)
+            //{
+            //    _snapshotRecsConfigurationRepository.SaveSnapshotRecsConfiguration(recConfig);
+            //}
 
             return _snapshotLicenseProductRepository.SaveSnapshotLicenseProduct(snapshotLicenseProduct);
         }

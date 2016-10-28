@@ -1,18 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NLog;
 using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Data.DataHarmonization
 {
     public class SnapshotWorksRecordingRepository : ISnapshotWorksRecordingRepository
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public Snapshot_WorksRecording SaveSnapshotWorksRecording(Snapshot_WorksRecording snapshotWorksRecording)
         {
             using (var context = new AuthContext())
             {
                 context.Snapshot_WorksRecordings.Add(snapshotWorksRecording);
-                context.SaveChanges();
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Logger.Debug(e.ToString());
+                    throw new Exception(e.ToString());
+                }
+          
                 return snapshotWorksRecording;
             }
         }
