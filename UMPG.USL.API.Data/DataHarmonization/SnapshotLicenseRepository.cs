@@ -65,18 +65,18 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 //LicenseProduct and Product header
                 var licenseProduct = context.Snapshot_LicenseProducts
                     .Include("ProductHeader")
-                    .Include("ProductHeader.Artist")
-                    .Include("ProductHeader.Label")
+                  .Include("ProductHeader.Artist")
+                  .Include("ProductHeader.Label")
                     .Include("ProductHeader.Configurations")
                     .Include("ProductHeader.Configurations.Configuration") // Error here
-                    .Include("ProductHeader.Configurations.LicenseProductConfiguration")
-                    .Include("ProductHeader.Label.RecordLabelGroups")
-                   // .Include("ProductConfigurations") //comes back null, i think in the test license case its supposed
-                  //  .Include("Schedule")
-                    //    .Include("Recordings") //Add to database
-                    //    .Include("Recordings.Writers")  Add to database
-                    //    .Include("Recordings.Track")  Add to database
-                    //    .Include("Recordings.LicenseRecording") Add to database??
+                  .Include("ProductHeader.Configurations.LicenseProductConfiguration")
+                  .Include("ProductHeader.Label.RecordLabelGroups")
+                   .Include("ProductConfigurations") //comes back null, i think in the test license case its supposed
+                    .Include("Schedule")
+                      .Include("Recordings") 
+                      .Include("Recordings.Writers")  //Add to database
+                     .Include("Recordings.Track")  //Add to database
+                    //    .Include("Recordings.LicenseRecording") //Add to database??
 
                     .Where(_ => _.LicenseId == response.CloneLicenseId).ToList();
 

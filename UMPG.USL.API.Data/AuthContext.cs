@@ -319,21 +319,27 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_WorksWriter>().ToTable("Snapshot_WorksWriter");
             modelBuilder.Entity<Snapshot_WorksWriter>().HasKey(_ => _.SnapshotWorksWriter);
             modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.OriginalPublishers).WithOptional().HasForeignKey(_ => _.CloneWorksWriterCaeNumber);
+            modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.CloneWriterCaeNumber);
+            modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.CloneWriterCaeCode);
+            //modelBuilder.Entity<Snapshot_WorksWriter>().Ignore(_ => _.AffiliationsString);   || temp off ***
             // modelBuilder.Entity<Snapshot_WorksWriter>().HasRequired(_ => _.LicenseProductRecordingWriter).WithMany().HasForeignKey(_ => _.CloneCaeNumber); //? is thios correct?   || temp off
 
             modelBuilder.Entity<Snapshot_OriginalPublisher>().ToTable("Snapshot_OriginalPublisher");
             modelBuilder.Entity<Snapshot_OriginalPublisher>().HasKey(_ => _.SnapshotOriginalPublisherId);
-           // modelBuilder.Entity<Snapshot_OriginalPublisher>().HasMany(_ => _.Administrator). WithOptional().HasForeignKey(_ => _.CloneCaeNumber);  temp off 
+        //    modelBuilder.Entity<Snapshot_OriginalPublisher>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.CloneWriterCaeNumber);  || TEMP OFF ***
+            modelBuilder.Entity<Snapshot_OriginalPublisher>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.CloneWriterCaeCode);
+            //modelBuilder.Entity<Snapshot_OriginalPublisher>().Ignore(_ => _.AffiliationsString); || temp off***
+         //   modelBuilder.Entity<Snapshot_OriginalPublisher>().HasMany(_ => _.Administrator). WithOptional().HasForeignKey(_ => _.CloneCaeNumber);  //temp off 
 
-           // modelBuilder.Entity<Snapshot_WriterBase>().ToTable("Snapshot_WriterBase");
-            modelBuilder.Entity<Snapshot_WriterBase>().HasKey(_ => _.SnapshotWriterBaseId);
-            modelBuilder.Entity<Snapshot_WriterBase>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.CloneWriterCaeNumber);
-            modelBuilder.Entity<Snapshot_WriterBase>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.CloneWriterCaeCode);
-            modelBuilder.Entity<Snapshot_WriterBase>().Ignore(_ => _.AffiliationsString);
+            //   modelBuilder.Entity<Snapshot_WriterBase>().ToTable("Snapshot_WriterBase");
+            // modelBuilder.Entity<Snapshot_WriterBase>().HasKey(_ => _.SnapshotWriterBaseId);
+            //modelBuilder.Entity<Snapshot_WriterBase>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.CloneWriterCaeNumber);
+            //modelBuilder.Entity<Snapshot_WriterBase>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.CloneWriterCaeCode);
+            //modelBuilder.Entity<Snapshot_WriterBase>().Ignore(_ => _.AffiliationsString);
 
             modelBuilder.Entity<Snapshot_Affiliation>().ToTable("Snapshot_Affiliation");
             modelBuilder.Entity<Snapshot_Affiliation>().HasKey(_ => _.SnapshotAffiliationId);
-            modelBuilder.Entity<Snapshot_Affiliation>().HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.CloneWriterCaeNumber);
+          //  modelBuilder.Entity<Snapshot_Affiliation>().HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.CloneWriterCaeNumber);
 
             modelBuilder.Entity<Snapshot_WorksTrack>().ToTable("Snapshot_WorksTrack");
             modelBuilder.Entity<Snapshot_WorksTrack>().HasKey(_ => _.SnapshotWorkTrackId);

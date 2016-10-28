@@ -263,8 +263,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 }
                 if (writer.LicenseProductRecordingWriter != null)
                 {
-                    snapshot.LicenseProductRecordingWriter =
-                        CastToLicensProductRecordingSnapshot(writer.LicenseProductRecordingWriter, writer.CaeNumber);
+                   // snapshot.LicenseProductRecordingWriter =  TURNED OFF *** 
+                   //     CastToLicensProductRecordingSnapshot(writer.LicenseProductRecordingWriter, writer.CaeNumber);
                 }
                 snapshot.ParentSongDuration = writer.ParentSongDuration;
                 snapshot.CloneCaeNumber = writer.CaeNumber;
@@ -408,7 +408,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             {
                 var snapshot = new Snapshot_OriginalPublisher();
                 snapshot.CloneWorksWriterCaeNumber = caeNumber;
-                snapshot.Administrator = CastToWriterBase(op.Administrator, caeNumber);
+               // snapshot.Administrator = CastToWriterBase(op.Administrator, caeNumber);
 
                 snapshot.CloneCaeNumber = op.CaeNumber;
                 snapshot.IpCode = op.IpCode;
@@ -417,7 +417,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.Capacity = op.Capacity;
                 snapshot.MechanicalCollectablePercentage = op.MechanicalCollectablePercentage;
                 snapshot.MechanicalOwnershipPercentage = op.MechanicalOwnershipPercentage;
-                snapshot.Affiliation = CastToAffiliationSnapshot(op.Affiliation, op.CaeNumber);
+             //   snapshot.Affiliation = CastToAffiliationSnapshot(op.Affiliation, op.CaeNumber);   TEMP OFF ***
                 if (op.KnownAs != null)
                 {
                     snapshot.KnownAs = CastToKnownAs(op.KnownAs, op.CaeNumber);
@@ -427,7 +427,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
             return snapshotList;
         }
-
+        /*
         private List<Snapshot_WriterBase> CastToWriterBase(List<WriterBase> admins, int caeNumber)
         {
             var snapshotList = new List<Snapshot_WriterBase>();
@@ -453,6 +453,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
             return snapshotList;
         }
+        */
 
         private List<Snapshot_KnownAs> CastToKnownAs(List<string> knownAs, int writerCaeCode)
         {
@@ -477,7 +478,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 var snapshot = new Snapshot_Affiliation();
                 snapshot.CloneWriterCaeNumber = caeNumber;
                 snapshot.IncomeGroup = affilation.IncomeGroup;
-                snapshot.Affiliations = CastToAffiliationBaseSnapshot(affilation.Affiliations, caeNumber);
+                //    snapshot.Affiliations = CastToAffiliationBaseSnapshot(affilation.Affiliations, caeNumber); || temp off ***
                 snapshotList.Add(snapshot);
             }
 
