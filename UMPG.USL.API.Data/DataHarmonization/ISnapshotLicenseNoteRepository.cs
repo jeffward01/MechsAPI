@@ -9,6 +9,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
         Snapshot_LicenseNote GetSnapshotLicenseNoteByNoteId(int licenseNoteId);
         bool DeleteLicenseNoteSnapshotByLicenseNoteId(int snapshotNoteId);
         List<int> GetAllLicenseNoteIdsForLicenseId(int licenseId);
+        List<Snapshot_LicenseNote> GetAllLicenseNoteForLicenseId(int licenseId);
         List<int> GetAllContactIdsRelatedToNote(int licneseId);
     }
 }

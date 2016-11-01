@@ -9,5 +9,9 @@ namespace UMPG.USL.API.Data.DataHarmonization
 
         Snapshot_LicenseProductConfiguration
             GetSnapshotLicenseProductConfigurationByLicenseProductConfigurationId(int licenseProductConfigurationId);
+
+        bool
+            DeleteLicenseProductConfigurationBySnapshot(
+                Snapshot_LicenseProductConfiguration licenseProductConfigurationId);
     }
 }

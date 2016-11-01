@@ -154,6 +154,7 @@
     <Compile Include="DataHarmonization\ISnapshotContactRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotLabelGroupRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotLabelRepository.cs" />
+    <Compile Include="DataHarmonization\ISnapshotLicenseeLabelGroupRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotLicenseNoteRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotLicenseProductConfigurationRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotLicenseProductRepository.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="DataHarmonization\SnapshotContactRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotLabelGroupRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotLabelRepository.cs" />
+    <Compile Include="DataHarmonization\SnapshotLicenseeLabelGroupRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotLicenseNoteRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotLicenseProductConfigurationRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotLicenseProductRepository.cs" />

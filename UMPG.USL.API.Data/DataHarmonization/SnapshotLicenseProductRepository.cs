@@ -47,6 +47,17 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
+        public List<Snapshot_LicenseProduct> GetAllLicenseProductsForLicenseId(int licenseId)
+        {
+
+            using (var context = new AuthContext())
+            {
+                return
+                    context.Snapshot_LicenseProducts.Where(_ => _.LicenseId == licenseId)
+                        .ToList();
+            }
+        }
+
         public int? GetProductIdFromSnapshotLicenseProductId(int snapshotLicenseProductId)
         {
             using (var context = new AuthContext())

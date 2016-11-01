@@ -13,6 +13,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
         int? GetProductIdFromSnapshotLicenseProductId(int snapshotLicenseProductId);
 
         List<int> GetLicenseProductIds(int licenseId);
+        List<Snapshot_LicenseProduct> GetAllLicenseProductsForLicenseId(int licenseId);
         int? GetLicenseProductIdFromSnapshotLicenseProductId(int snapshotLicenseProductId);
     }
 }

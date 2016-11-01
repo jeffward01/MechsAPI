@@ -45,6 +45,19 @@ namespace UMPG.USL.API.Data.DataHarmonization
             return true;
         }
 
+        public List<Snapshot_LicenseNote> GetAllLicenseNoteForLicenseId(int licenseId)
+        {
+            using (var context = new AuthContext())
+            {
+                return
+                    context.Snapshot_LicenseNotes.Where(_ => _.LicenseId == licenseId)
+                        .ToList();
+            }
+        }
+
+
+
+
         public List<int> GetAllLicenseNoteIdsForLicenseId(int licenseId)
         {
             using (var context = new AuthContext())
@@ -55,6 +68,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
                         .ToList();
             }
         }
+
 
         public List<int> GetAllContactIdsRelatedToNote(int licneseId)
         {

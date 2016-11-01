@@ -40,6 +40,14 @@ namespace UMPG.USL.API.Data.DataHarmonization
             return false;
         }
 
+        public Snapshot_License GetSnapshotLicenseByCloneLicenseId(int licenseId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_Licenses.FirstOrDefault(_ => _.CloneLicenseId == licenseId);
+            }
+        }
+
         public Snapshot_License GetLicenseSnapShotById(int id)
         {
             using (var context = new AuthContext())
@@ -49,7 +57,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
                     .Include("LicenseType")
                     .Include("LicensePriority")
                     .Include("LicenseStatus")
-                  //  .Include("Licensee")
+                    //  .Include("Licensee")
                     //.Include("Licensee.LicenseeLabelGroup")
                     .Include("LicenseMethod")
                     //.Include("Contact") // Contacts is throwing erorr.  not set to instance of an obj
@@ -67,13 +75,13 @@ namespace UMPG.USL.API.Data.DataHarmonization
                     .Include("ProductHeader")
                   .Include("ProductHeader.Artist")
                   .Include("ProductHeader.Label")
-//TEST            //  .Include("ProductHeader.Configurations")
+                  //TEST            //  .Include("ProductHeader.Configurations")
                   //  .Include("ProductHeader.Configurations.Configuration") // Error here
                   //.Include("ProductHeader.Configurations.LicenseProductConfiguration")
                   .Include("ProductHeader.Label.RecordLabelGroups")
                    .Include("ProductConfigurations") //comes back null, i think in the test license case its supposed
                     .Include("Schedule")
-                      .Include("Recordings") 
+                      .Include("Recordings")
                       .Include("Recordings.Writers")  //Add to database
                      .Include("Recordings.Track")  //Add to database
                      .Include("Recordings.Track.Copyrights")
@@ -82,12 +90,10 @@ namespace UMPG.USL.API.Data.DataHarmonization
                      .Include("Recordings.Track.Copyrights.LocalClients")
                      .Include("Recordings.Track.Copyrights.AquisitionLocationCodes")
                      .Include("Recordings.Track.Artist")
-                    //    .Include("Recordings.LicenseRecording") //Add to database??
+                        .Include("Recordings.LicenseRecording") //Add to database??
 
                     .Where(_ => _.LicenseId == response.CloneLicenseId).ToList();
 
-                
-        
                 response.LicenseProducts = licenseProduct;
                 return response;
             }
@@ -101,8 +107,8 @@ namespace UMPG.USL.API.Data.DataHarmonization
                     .Include("LicenseType")
                     .Include("LicensePriority")
                     .Include("LicenseStatus")
-                 //   .Include("Licensee")
-                  //  .Include("Licensee.LicenseeLabelGroup")
+                    //   .Include("Licensee")
+                    //  .Include("Licensee.LicenseeLabelGroup")
                     .Include("LicenseMethod")
                     //.Include("Contact") // Contacts is throwing erorr.  not set to instance of an obj
                     //.Include("Contact2") // Contacts is throwing erorr.  not set to instance of an obj

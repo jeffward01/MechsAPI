@@ -1,12 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
-using UMPG.USL.API.Filters;
 
 namespace UMPG.USLAPI
 {
@@ -26,7 +22,7 @@ namespace UMPG.USLAPI
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}",
                 defaults: new { action = RouteParameter.Optional }
-            );          
+            );
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -39,7 +35,7 @@ namespace UMPG.USLAPI
             //};
             //settings.Converters.Add(dateConverter);
 
-           // config.Filters.Add(new ExceptionFilter());  | Depreciated Old Unused Logging
+            // config.Filters.Add(new ExceptionFilter());  | Depreciated Old Unused Logging
         }
     }
 }

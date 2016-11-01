@@ -62,8 +62,13 @@ namespace UMPG.USL.API.Controllers
         [Route("GetLicenseSnapshot/{licenseId}")]
         public IHttpActionResult GetLicenseSnapshot(int licenseId)
         {
-            var snapshotLicense = _dataHarmonizationManager.GetLicenseSnapshot(licenseId);
-            return Ok(snapshotLicense);
+            var exists = _dataHarmonizationManager.DoesSnapshotExist(licenseId);
+            if (exists)
+            {
+                var snapshotLicense = _dataHarmonizationManager.GetLicenseSnapshot(licenseId);
+                return Ok(snapshotLicense);
+            }
+            return NotFound();
         }
     }
     #region Helpers

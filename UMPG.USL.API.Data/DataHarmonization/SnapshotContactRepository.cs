@@ -16,11 +16,11 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
-        public Snapshot_Contact GetSanSnapshotContactByContactId(int contactId)
+        public Snapshot_Contact GetSnapshotContactByContactId(int contactId)
         {
             using (var contect = new AuthContext())
             {
-                return contect.Snapshot_Contacts.Find(contactId);
+                return contect.Snapshot_Contacts.First(_ => _.CloneContactId == contactId);
             }
         }
 
@@ -52,7 +52,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return cotact.RoleId.Value;
             }
         }
-        public int GetCloneContactIdForContactId(int contactId)
+        public int GetContactBySnapshotContactId(int contactId)
         {
             using (var context = new AuthContext())
             {
@@ -60,6 +60,8 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return cotact.CloneContactId;
             }
         }
+
+       
 
     }
 }

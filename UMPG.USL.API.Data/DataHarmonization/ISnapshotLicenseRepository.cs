@@ -5,8 +5,13 @@ namespace UMPG.USL.API.Data.DataHarmonization
     public interface ISnapshotLicenseRepository
     {
         Snapshot_License SaveSnapshotLicense(Snapshot_License licenseSnapshot);
+
         Snapshot_License GetLicenseSnapShotById(int id);
+
+        Snapshot_License GetSnapshotLicenseByCloneLicenseId(int licenseId);
+
         bool DoesLicenseSnapshotExist(int licenseId);
+
         bool DeleteSnapshotLicense(int licenseId);
     }
 }
