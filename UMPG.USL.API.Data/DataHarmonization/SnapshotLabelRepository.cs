@@ -24,6 +24,27 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
+
+
+        public bool DeleteLabelSnapshotBySnapshotId(int labelSnapshotId)
+        {
+            using (var context = new AuthContext())
+            {
+                var snapshot = context.Snapshot_Labels.Find(labelSnapshotId);
+                context.Snapshot_Labels.Attach(snapshot);
+                context.Snapshot_Labels.Remove(snapshot);
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
         public bool DeleteLabelSnapshotByProductHeaderSnapshotId(int snapshotLicenseProductId)
         {
             using (var context = new AuthContext())

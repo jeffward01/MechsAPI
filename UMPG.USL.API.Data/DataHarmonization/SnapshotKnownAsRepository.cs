@@ -5,7 +5,7 @@ using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Data.DataHarmonization
 {
-    public class SnapshotKnownAsRepository
+    public class SnapshotKnownAsRepository : ISnapshotKnownAsRepository
     {
         public List<Snapshot_KnownAs> GetAllKnownAsForWriterCaeCode(int caeCode)
         {

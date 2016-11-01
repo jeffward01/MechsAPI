@@ -126,10 +126,10 @@ namespace UMPG.USL.API.Data.Installer
             container.Register(Component.For<ISnapshotWorksWriterRepository>().ImplementedBy<SnapshotWorksWriterRepository>());
             container.Register(Component.For<ISnapshotAffiliationRepository>().ImplementedBy<SnapshotAffiliationRepository>());
             container.Register(Component.For<ISnapshotKnownAsRepository>().ImplementedBy<SnapshotKnownAsRepository>());
+            container.Register(Component.For<ISnapshotOriginalPublisherRepository>().ImplementedBy<SnapshotOriginalPublisherRepository>());
+
             
-
-
-
+            
 
 
             container.Register(Component.For<IMapper<string, ProductRequest>>().ImplementedBy<ProductSearchCriteriaMapper>().LifestyleSingleton());

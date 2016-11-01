@@ -195,6 +195,8 @@ namespace UMPG.USL.API.Data
 
         public DbSet<Snapshot_Affiliation> Snapshot_Affiliations { get; set; }
 
+        public DbSet<Snapshot_OriginalPublisher> Snapshot_OriginalPublishers { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

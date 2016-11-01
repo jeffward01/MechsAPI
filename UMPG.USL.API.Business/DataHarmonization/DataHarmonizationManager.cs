@@ -121,7 +121,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
         public bool DeleteLicenseSnapshot(int licenseSnapshotId)
         {
-            return _snapshotLicenseManager.DeleteLicenseSnapshot(licenseSnapshotId);
+            return _snapshotLicenseManager.DeleteLicenseSnapshotAndAllChildren(licenseSnapshotId);
         }
 
         private Snapshot_LicenseProduct CastToLicenseProductSnapshot(LicenseProduct licenseProduct)

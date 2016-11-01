@@ -19,7 +19,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
         public Snapshot_Contact GetSnapshotContactByContactId(int snapshotContactId)
         {
-            return _snapshotContactRepository.GetSanSnapshotContactByContactId(snapshotContactId);
+            return _snapshotContactRepository.GetSnapshotContactByContactId(snapshotContactId);
         }
 
   

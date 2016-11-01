@@ -10,6 +10,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
         bool DoesSnapshotExists(int licenseId);
 
+        bool DeleteLicenseSnapshotAndAllChildren(int licenseId);
+
         bool DeleteLicenseSnapshot(int licenseId);
     }
 }

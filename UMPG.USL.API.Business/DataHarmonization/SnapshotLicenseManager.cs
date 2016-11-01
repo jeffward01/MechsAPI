@@ -27,9 +27,11 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private readonly ISnapshotWorksWriterRepository _snapshotWorksWriterRepository;
         private readonly ISnapshotAffiliationRepository _snapshotAffiliationRepository;
         private readonly ISnapshotKnownAsRepository _snapshotKnownAsRepository;
+        private readonly ISnapshotOriginalPublisherRepository _snapshotOriginalPublisherRepository;
 
 
         public SnapshotLicenseManager(ISnapshotLicenseRepository snapshotLicenseRepository,
+            ISnapshotOriginalPublisherRepository snapshotOriginalPublisherRepository,
             ISnapshotKnownAsRepository snapshotKnownAsRepository,
             ISnapshotAffiliationRepository snapshotAffiliationRepository,
             ISnapshotWorksWriterRepository snapshotWorksWriterRepository,
@@ -49,6 +51,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             ISnapshotLabelGroupRepository snapshotLabelGroupRepository,
             ISnapshotLicenseeLabelGroupRepository snalshotLabelGroupRepository)
         {
+            _snapshotOriginalPublisherRepository = snapshotOriginalPublisherRepository;
             _snapshotKnownAsRepository = snapshotKnownAsRepository;
             _snapshotAffiliationRepository = snapshotAffiliationRepository;
             _snapshotWorksWriterRepository = snapshotWorksWriterRepository;
@@ -194,6 +197,81 @@ namespace UMPG.USL.API.Business.DataHarmonization
             }
         }
 
+        public void DeleteProductHeaderAndChildren(Snapshot_LicenseProduct licenseProduct)
+        {
+            var productHeader =
+                _snapshotProductHeaderRepository.GetSnapshotProductHeaderBySnapshotProductHeaderId(
+                    licenseProduct.SnapshotLicenseProductId);
+
+            //Delete artist
+            var artist = _snapshotArtistRecsRepository.GetSnapshotArtistRecsByArtistId(productHeader.ArtistRecsId);
+            _snapshotArtistRecsRepository.DeleteRecsArtistByProductHeaderSnapshotId(artist.SnapshotArtistRecsId);
+
+            //Delete label and child (label group)
+            DeleteLabelAndAllChuldren(productHeader);
+
+            //Delete RecsConfigurations 'Configurations'
+            DeleteAllRecsConfigAndChildrenForProductHeader(productHeader);
+        }
+
+        private void DeleteLabelAndAllChuldren(Snapshot_ProductHeader productHeader)
+        {
+            var label = _snapshotLabelRepository.GetSnapshotLabelByLabelId(productHeader.LabelId);
+
+            //labelGroups
+            var labelGroups =
+                _snapshotLabelGroupRepository.GetAllLabelGroupsForProductHeaderSnapshotId(
+                    productHeader.SnapshotProductHeaderId);
+            if (labelGroups != null)
+            {
+                foreach (var labelGroup in labelGroups)
+                {
+                    _snapshotLabelGroupRepository.DeleteLabelGroupByLabelGroupSnapshotId(labelGroup.SnapshotLabelGroupId);
+                }
+            }
+
+            //Delete label
+            _snapshotLabelRepository.DeleteLabelSnapshotBySnapshotId(label.SnapshotLabelId);
+        }
+
+
+        private void DeleteAllRecsConfigAndChildrenForProductHeader(Snapshot_ProductHeader productHeader)
+        {
+            var recConfigs =
+                _snapshotRecsConfiguration.GetAllRecsConfigurationsRecordingsForProductHeaderId(
+                    productHeader.CloneProductHeaderId);
+            if (recConfigs != null)
+            {
+                foreach (var config in recConfigs)
+                {
+                    if (config.ConfigurationId != null)
+                    {
+                        var id = (int)config.ConfigurationId;
+                        //Delete Config
+                        var config2 =
+                            _snapshotConfigurationRepository.GetSnapshotConfigurationByConfigurationId(id);
+                        _snapshotConfigurationRepository.DeleteConfigurationSnapshot(config2.SnapshotConfigId);
+                    }
+
+                    //Delete LicenseProductConfig if exists
+                    if (config.LicenseProductConfigurationId != null)
+                    {
+                        var id = (int)config.LicenseProductConfigurationId;
+                        var licenseProductConfig =
+                            _licenseProductConfigurationRepository
+                                .GetSnapshotLicenseProductConfigurationByLicenseProductConfigurationId(
+                                    id);
+
+                        //Delete licenseProductConfiguration
+                        _licenseProductConfigurationRepository.DeleteLicenseProductConfigurationBySnapshot(licenseProductConfig);
+                    }
+
+                    //delete recConfig
+                    _snapshotRecsConfiguration.DeleteWorkRecordingByRecordignSnapshotId(
+                        config.SnapshotRecsConfigurationId);
+                }
+            }
+        }
         public void DeleteAllWorksRecordingAndChildren(Snapshot_LicenseProduct licenseProduct)
         {
             
@@ -236,9 +314,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
                 //Delete knownAs list if not null
                 var knownAsAll = _snapshotKnownAsRepository.GetAllKnownAsForWriterCaeCode(writer.CloneCaeNumber);
-                foreach (var knownAs in knownAsAll)
+                if (knownAsAll != null)
                 {
-                    _snapshotKnownAsRepository.DeleteKnownAsBySnapshotId(knownAs.SnapshotKnownAsId);
+                    foreach (var knownAs in knownAsAll)
+                    {
+                        _snapshotKnownAsRepository.DeleteKnownAsBySnapshotId(knownAs.SnapshotKnownAsId);
+                    }
                 }
                 //Delete Original Publiliser list and child if not null
                 DeleteOriginalPublisherSnapshotAndChildern(writer);
@@ -250,8 +331,23 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
         public void DeleteOriginalPublisherSnapshotAndChildern(Snapshot_WorksWriter writer)
         {
-            
-        }
+            var allOriginalPublishers =
+                _snapshotOriginalPublisherRepository.GetAllOriginalPublishersForCaeCode(writer.CloneCaeNumber);
+
+            foreach (var originalPublisher in allOriginalPublishers)
+            {
+                var knownAsList =
+                    _snapshotKnownAsRepository.GetAllKnownAsForWriterCaeCode(
+                        originalPublisher.CloneCaeNumber);
+                if (knownAsList != null)
+                {
+                    foreach (var knownAs in knownAsList)
+                    {
+                        _snapshotKnownAsRepository.DeleteKnownAsBySnapshotId(knownAs.SnapshotKnownAsId);
+                    }
+                }
+            }
+         }
 
         public void DeleteAllAffiliationsAndChildren(Snapshot_WorksWriter writer)
         { 
@@ -405,7 +501,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 _snapshotRoleRepository.DeleteRoleSnapshotByRoleId(roleId);
 
                 //Get cloneCOntactId to delete adress, phone, contact emails
-                var cloneContactId = _snapshotContactRepository.GetCloneContactIdForContactId(contactId);
+                var cloneContactId = _snapshotContactRepository.GetContactBySnapshotContactId(contactId);
 
                 //Delete all address for clone contact id
                 var addresses = _snapshotAddressRepository.GetAllAddressesForCloneContactId(cloneContactId);

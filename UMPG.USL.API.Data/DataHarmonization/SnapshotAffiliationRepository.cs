@@ -5,7 +5,7 @@ using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Data.DataHarmonization
 {
-    public class SnapshotAffiliationRepository
+    public class SnapshotAffiliationRepository : ISnapshotAffiliationRepository
     {
         public List<Snapshot_Affiliation> GetAllAFfiliationsForCAENumber(int cloneCaeNumber)
         {
