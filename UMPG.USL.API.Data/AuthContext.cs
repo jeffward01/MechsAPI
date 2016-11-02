@@ -196,6 +196,9 @@ namespace UMPG.USL.API.Data
         public DbSet<Snapshot_Affiliation> Snapshot_Affiliations { get; set; }
 
         public DbSet<Snapshot_OriginalPublisher> Snapshot_OriginalPublishers { get; set; }
+        public DbSet<Snapshot_RecsCopyright> Snapshot_RecsCopyrights { get; set; }
+        public DbSet<Snapshot_LocalClientCopyright> Snapshot_LocalClientCopyrights { get; set; }
+        public DbSet<Snapshot_AquisitionLocationCode> Snapshot_AquisitionLocationCodes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -332,7 +335,7 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_WorksWriter>().ToTable("Snapshot_WorksWriter");
             modelBuilder.Entity<Snapshot_WorksWriter>().HasKey(_ => _.SnapshotWorksWriter);
             modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.OriginalPublishers).WithOptional().HasForeignKey(_ => _.CloneWorksWriterCaeNumber);
-            modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.CloneWriterCaeNumber);
+            modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.WriterCaeNumber);
             modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.CloneWriterCaeCode);
             //modelBuilder.Entity<Snapshot_WorksWriter>().Ignore(_ => _.AffiliationsString);   || temp off ***
             // modelBuilder.Entity<Snapshot_WorksWriter>().HasRequired(_ => _.LicenseProductRecordingWriter).WithMany().HasForeignKey(_ => _.CloneCaeNumber); //? is thios correct?   || temp off

@@ -71,30 +71,30 @@ namespace UMPG.USL.API.Data.DataHarmonization
                     .FirstOrDefault(sl => sl.CloneLicenseId == id);
 
                 //LicenseProduct and Product header
-                var licenseProduct = context.Snapshot_LicenseProducts
-                    .Include("ProductHeader")
-                  .Include("ProductHeader.Artist")
-                  .Include("ProductHeader.Label")
-                  //TEST            //  .Include("ProductHeader.Configurations")
-                  //  .Include("ProductHeader.Configurations.Configuration") // Error here
-                  //.Include("ProductHeader.Configurations.LicenseProductConfiguration")
-                  .Include("ProductHeader.Label.RecordLabelGroups")
-                   .Include("ProductConfigurations") //comes back null, i think in the test license case its supposed
-                    .Include("Schedule")
-                      .Include("Recordings")
-                      .Include("Recordings.Writers")  //Add to database
-                     .Include("Recordings.Track")  //Add to database
-                     .Include("Recordings.Track.Copyrights")
-                     .Include("Recordings.Track.Copyrights.Composers")
-                     .Include("Recordings.Track.Copyrights.Samples")
-                     .Include("Recordings.Track.Copyrights.LocalClients")
-                     .Include("Recordings.Track.Copyrights.AquisitionLocationCodes")
-                     .Include("Recordings.Track.Artist")
-                        .Include("Recordings.LicenseRecording") //Add to database??
+            //    var licenseProduct = context.Snapshot_LicenseProducts
+           //        .Include("ProductHeader")
+           //      .Include("ProductHeader.Artist")
+           //      .Include("ProductHeader.Label")
+           //                  .Include("ProductHeader.Configurations") //TEST
+           //       .Include("ProductHeader.Configurations.Configuration") // Error here, not showing yet
+           //   .Include("ProductHeader.Configurations.LicenseProductConfiguration")
+           //  .Include("ProductHeader.Label.RecordLabelGroups")
+           //   .Include("ProductConfigurations") //comes back null, i think in the test license case its supposed
+           //       .Include("Schedule")
+           //         .Include("Recordings")
+           //        .Include("Recordings.Writers")  //Add to database
+           //       .Include("Recordings.Track")  //Add to database  || works
+           //       .Include("Recordings.Track.Copyrights")
+           //       .Include("Recordings.Track.Copyrights.Composers")
+           //       .Include("Recordings.Track.Copyrights.Samples")
+           //       .Include("Recordings.Track.Copyrights.LocalClients")
+           //       .Include("Recordings.Track.Copyrights.AquisitionLocationCodes")
+           //       .Include("Recordings.Track.Artist")
+                // .Include("Recordings.LicenseRecording") //Add to database??  BROKEN, its in database, but when its 'on' recordings are not returned
 
-                    .Where(_ => _.LicenseId == response.CloneLicenseId).ToList();
+          //          .Where(_ => _.LicenseId == response.CloneLicenseId).ToList();
 
-                response.LicenseProducts = licenseProduct;
+            //    response.LicenseProducts = licenseProduct;
                 return response;
             }
         }

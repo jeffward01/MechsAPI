@@ -1,4 +1,5 @@
-﻿using UMPG.USL.API.Data.DataHarmonization;
+﻿using NLog;
+using UMPG.USL.API.Data.DataHarmonization;
 using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Business.DataHarmonization
@@ -28,9 +29,16 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private readonly ISnapshotAffiliationRepository _snapshotAffiliationRepository;
         private readonly ISnapshotKnownAsRepository _snapshotKnownAsRepository;
         private readonly ISnapshotOriginalPublisherRepository _snapshotOriginalPublisherRepository;
-
+        private readonly ISnapshotRecsCopyrightRespository _snapshotRecsCopyrightRespository;
+        private readonly ISnapshotSampleRepository _snapshotSampleRepository;
+        private readonly ISnapshotLocalClientCopyrightRepository _snapshotLocalClientCopyrightRepository;
+        private readonly ISnapshotAquisitionLocationCodeRepository _aquisitionLocationCodeRepository;
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public SnapshotLicenseManager(ISnapshotLicenseRepository snapshotLicenseRepository,
+            ISnapshotAquisitionLocationCodeRepository aquisitionLocationCodeRepository,
+            ISnapshotRecsCopyrightRespository snapshotRecsCopyrightRespository,
+            ISnapshotSampleRepository snapshotSampleRepository,
             ISnapshotOriginalPublisherRepository snapshotOriginalPublisherRepository,
             ISnapshotKnownAsRepository snapshotKnownAsRepository,
             ISnapshotAffiliationRepository snapshotAffiliationRepository,
@@ -49,8 +57,13 @@ namespace UMPG.USL.API.Business.DataHarmonization
             ISnapshotConfigurationRepository snapshotConfigurationRepository,
             ISnapshotArtistRecsRepository snapshotArtistRecsRepository, ISnapshotLabelRepository snapshotLabelRepository,
             ISnapshotLabelGroupRepository snapshotLabelGroupRepository,
+            ISnapshotLocalClientCopyrightRepository snapshotLocalClientCopyrightRepository,
             ISnapshotLicenseeLabelGroupRepository snalshotLabelGroupRepository)
         {
+            _aquisitionLocationCodeRepository = aquisitionLocationCodeRepository;
+            _snapshotLocalClientCopyrightRepository = snapshotLocalClientCopyrightRepository;
+            _snapshotSampleRepository = snapshotSampleRepository;
+            _snapshotRecsCopyrightRespository = snapshotRecsCopyrightRespository;
             _snapshotOriginalPublisherRepository = snapshotOriginalPublisherRepository;
             _snapshotKnownAsRepository = snapshotKnownAsRepository;
             _snapshotAffiliationRepository = snapshotAffiliationRepository;
@@ -89,7 +102,195 @@ namespace UMPG.USL.API.Business.DataHarmonization
         public Snapshot_License GetSnapshotLicenseBySnapshotLicenseId(int snapshotLicenseId)
         {
             var licenseInformation = _snapshotLicenseRepository.GetLicenseSnapShotById(snapshotLicenseId);
+            var licenseProducts =
+                _snapshotLicenseProductRepository.GetAllLicenseProductsForLicenseId(licenseInformation.CloneLicenseId);
 
+            if (licenseProducts != null)
+            {
+                foreach (var lp in licenseProducts)
+                {
+                    //build product header
+                    if (lp.ProductHeaderId != null)
+                    {
+                        var id = (int)lp.ProductHeaderId;
+                        var productHeader =
+                            _snapshotProductHeaderRepository.GetProductHeaderByProductHeaderId(id);
+                        //Assign
+                        lp.ProductHeader = productHeader;
+
+                        var artist =
+                            _snapshotArtistRecsRepository.GetSnapshotArtistRecsByArtistId(productHeader.ArtistRecsId);
+
+                        var label = _snapshotLabelRepository.GetSnapshotLabelByLabelId(productHeader.LabelId);
+
+                        var labelGroups =
+                            _snapshotLabelGroupRepository.GetAllLabelGroupsForProductHeaderSnapshotId(
+                                productHeader.SnapshotProductHeaderId);
+                        label.RecordLabelGroups = labelGroups;
+
+                        var configs =
+                            _snapshotRecsConfiguration.GetAllRecsConfigurationsRecordingsForProductHeaderId(
+                                productHeader.CloneProductHeaderId);
+
+                        if (configs != null)
+                        {
+                            foreach (var config in configs)
+                            {
+                                var configuration =
+                                    _snapshotConfigurationRepository.GetSnapshotConfigurationByConfigurationId(
+                                        config.CloneRecsConfigurationId);
+                                if (config.LicenseProductConfigurationId != null)
+                                {
+                                    var lprid = (int)config.LicenseProductConfigurationId;
+                                    var licenseProductConfig =
+                                        _licenseProductConfigurationRepository
+                                            .GetSnapshotLicenseProductConfigurationByLicenseProductConfigurationId(lprid);
+                                    config.LicenseProductConfiguration = licenseProductConfig;
+                                }
+                                config.Configuration = configuration;
+                            }
+                        }
+
+                        lp.ProductHeader.Artist = artist;
+                        lp.ProductHeader.Label = label;
+                        lp.ProductHeader.Configurations = configs;
+                    }
+
+                    //build worksRecording list
+                    if (lp.ProductId != null)
+                    {
+                        var recordings =
+                            _snapshotWorksRecordingRepository.GetAllWorksRecordingsForProductId(lp.ProductId);
+
+                        foreach (var recording in recordings)
+                        {
+                            //build track and copy rights
+                            var track = _snapshotWorkTrackRepository.GetTrackForCloneTrackId(recording.TrackId);
+                            var copyrights =
+                                _snapshotRecsCopyrightRespository.GetAllRecsCopyrightsForCloneTrackId(
+                                    recording.CloneTrackId);
+
+                            //This area may be wrong, it uses the same primary key as parent entites.  watch.
+                            foreach (var copyright in copyrights)
+                            {
+                                //build samples
+                                var samples =
+                                    _snapshotSampleRepository.GetAllSamplesForRecsCopyrightByCloneTrackId(
+                                        copyright.CloneWorksTrackId);
+
+                                //build composers
+                                var composers =
+                                    _snapshotWorksWriterRepository.GetAllWritersForCloneTrackId(
+                                        copyright.CloneWorksTrackId);
+
+                                //local clients
+                                var localClients =
+                                    _snapshotLocalClientCopyrightRepository.GetAllLocalCopyrightsForTrackId(
+                                        copyright.CloneWorksTrackId);
+
+                                //aquiLocationCodes
+                                var aquisitionLocalCodes =
+                                    _aquisitionLocationCodeRepository.GetAllAquisitionLocationCodesForTrackId(
+                                        copyright.CloneWorksTrackId);
+
+                                //assign
+                                /*
+                                copyright.Samples = samples;
+                                copyright.Composers = composers;
+                                copyright.LocalClients = localClients;
+                                copyright.AquisitionLocationCodes = aquisitionLocalCodes;
+                                */  //Turned off as of now, I think its broken.  It uses the same primary keys as parents
+                            }
+
+                            //assign track chunk
+                            track.Copyrights = copyrights;
+
+                            var licenseProductRecording =
+                                _snapshotLicenseProductRecordingRepository.GetLicenseProductRecordingForCloneTrackId(
+                                    recording.TrackId);
+
+                            var worksWriterList =
+                                _snapshotWorksWriterRepository.GetAllWritersForCloneTrackId(recording.CloneTrackId);  //This is clone track, but clone track is an identity column for some reason... refactor needed to add trackId to recordign
+
+                            if (worksWriterList != null)
+                            {
+                                foreach (var writer in worksWriterList)
+                                {
+                                    var affiliationList =
+                                        _snapshotAffiliationRepository.GetAllAFfiliationsForCAENumber(
+                                            writer.CloneCaeNumber);
+
+                                    //AffiliationBase not impletemented
+
+                                    var originalPublisherList =
+                                        _snapshotOriginalPublisherRepository.GetAllOriginalPublishersForCaeCode(
+                                            writer.CloneCaeNumber);
+
+                                    foreach (var op in originalPublisherList)
+                                    {
+                                        var knownAs =
+                                            _snapshotKnownAsRepository.GetAllKnownAsForWriterCaeCode(op.CloneCaeNumber);
+                                        op.KnownAs = knownAs;
+                                    }
+
+                                    var writerKnownAsList =
+                                        _snapshotKnownAsRepository.GetAllKnownAsForWriterCaeCode(writer.CloneCaeNumber);
+
+                                    //Assign
+                                    writer.Affiliation = affiliationList;
+                                    writer.KnownAs = writerKnownAsList;
+                                    writer.OriginalPublishers = originalPublisherList;
+                                }
+                            }
+
+                            //Assign
+                            recording.Track = track;
+                            recording.Writers = worksWriterList;
+                            recording.LicenseRecording = licenseProductRecording;
+                        }
+                        lp.Recordings = recordings;
+                    }
+
+                    //build licenseRecordingCOnfigs
+                    if (lp.CloneLicenseProductId != null)
+                    {
+                        var configId = (int)lp.CloneLicenseProductId;
+
+                        var licenserecConfigs =
+                            _snapshotRecsConfiguration.GetAllRecsConfigurationsRecordingsForLicenseProductId(
+                                configId);
+                        if (licenserecConfigs != null)
+                        {
+                            foreach (var recConfig in licenserecConfigs)
+                            {
+                                if (recConfig.ConfigurationId != null)
+                                {
+                                    var recConfigId = (int)recConfig.ConfigurationId;
+
+                                    var configuration =
+                                        _snapshotConfigurationRepository.GetSnapshotConfigurationByConfigurationId(
+                                            recConfigId);
+                                    recConfig.Configuration = configuration;
+                                }
+
+                                if (recConfig.LicenseProductConfigurationId != null)
+                                {
+                                    var lprId = (int)recConfig.LicenseProductConfigurationId;
+
+                                    var lprConfig =
+                                        _licenseProductConfigurationRepository
+                                            .GetSnapshotLicenseProductConfigurationByLicenseProductConfigurationId(
+                                               lprId);
+                                    recConfig.LicenseProductConfiguration = lprConfig;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                licenseInformation.LicenseProducts = licenseProducts;
+            }
+            /*
             foreach (var lp in licenseInformation.LicenseProducts)
             {
                 var recConfig =
@@ -97,6 +298,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         lp.ProductHeader.CloneProductHeaderId);
                 lp.ProductHeader.Configurations = recConfig;
             }
+            */
             return licenseInformation;
         }
 
@@ -108,10 +310,10 @@ namespace UMPG.USL.API.Business.DataHarmonization
             var license = _snapshotLicenseRepository.GetSnapshotLicenseByCloneLicenseId(licenseId);
 
             //Delete all license Contacts
-            DeleteAllLicenseContactChildren(license);
+            //  DeleteAllLicenseContactChildren(license);  | temp off
 
             //Delet Licensee Label Group
-            DeleteLicenseeLabelGroup(license);
+            // DeleteLicenseeLabelGroup(license);  | temp off
 
             //Delete License Product List and children
             DeleteLicenseProductAndChildEntities(license);
@@ -123,7 +325,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return _snapshotLicenseRepository.DeleteSnapshotLicense(licenseId);
         }
 
-        public void DeleteLicenseeLabelGroup(Snapshot_License license)
+        private void DeleteLicenseeLabelGroup(Snapshot_License license)
         {
             //Delete LicenseLabel Group
             if (license.LicenseeLabelGroupId != null)
@@ -136,7 +338,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             }
         }
 
-        public void DeleteAllLicenseContactChildren(Snapshot_License license)
+        private void DeleteAllLicenseContactChildren(Snapshot_License license)
         {
             //Delete all child license Entities
 
@@ -159,7 +361,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             }
         }
 
-        public void DeleteLicenseNotesAndChildren(Snapshot_License license)
+        private void DeleteLicenseNotesAndChildren(Snapshot_License license)
         {
             var licenseNotes = _snapshotLicenseNoteRepository.GetAllLicenseNoteForLicenseId(license.CloneLicenseId);
             foreach (var note in licenseNotes)
@@ -173,7 +375,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             }
         }
 
-        public void DeleteLicenseProductAndChildEntities(Snapshot_License license)
+        private void DeleteLicenseProductAndChildEntities(Snapshot_License license)
         {
             //getAllLicenseProducts
             var licenseProducts =
@@ -187,31 +389,36 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 //Delete worksRecording and Children
                 DeleteAllWorksRecordingAndChildren(licenseProduct);
 
-
                 //Delete Product HEader and children
+                DeleteProductHeaderAndChildren(licenseProduct);
 
-
-
-                //Delete License Product 
+                //Delete License Product
                 _snapshotLicenseProductRepository.DeleteLicenseProductSnapshot(licenseProduct.SnapshotLicenseProductId);
             }
         }
 
-        public void DeleteProductHeaderAndChildren(Snapshot_LicenseProduct licenseProduct)
+        private void DeleteProductHeaderAndChildren(Snapshot_LicenseProduct licenseProduct)
         {
             var productHeader =
                 _snapshotProductHeaderRepository.GetSnapshotProductHeaderBySnapshotProductHeaderId(
                     licenseProduct.SnapshotLicenseProductId);
+            if (productHeader != null)
+            {
+                //Delete artist
+                var artist = _snapshotArtistRecsRepository.GetSnapshotArtistRecsByArtistId(productHeader.ArtistRecsId);
+                if (artist != null)
+                {
+                    _snapshotArtistRecsRepository.DeleteRecsArtistByProductHeaderSnapshotId(artist.SnapshotArtistRecsId);
+                }
+                //Delete label and child (label group)
+                DeleteLabelAndAllChuldren(productHeader);
 
-            //Delete artist
-            var artist = _snapshotArtistRecsRepository.GetSnapshotArtistRecsByArtistId(productHeader.ArtistRecsId);
-            _snapshotArtistRecsRepository.DeleteRecsArtistByProductHeaderSnapshotId(artist.SnapshotArtistRecsId);
+                //Delete RecsConfigurations 'Configurations'
+                DeleteAllRecsConfigAndChildrenForProductHeader(productHeader);
 
-            //Delete label and child (label group)
-            DeleteLabelAndAllChuldren(productHeader);
-
-            //Delete RecsConfigurations 'Configurations'
-            DeleteAllRecsConfigAndChildrenForProductHeader(productHeader);
+                _snapshotProductHeaderRepository.DeleteProductHeaderSnapshotBySnapshotId(
+                    productHeader.SnapshotProductHeaderId);
+            }
         }
 
         private void DeleteLabelAndAllChuldren(Snapshot_ProductHeader productHeader)
@@ -233,7 +440,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
             //Delete label
             _snapshotLabelRepository.DeleteLabelSnapshotBySnapshotId(label.SnapshotLabelId);
         }
-
 
         private void DeleteAllRecsConfigAndChildrenForProductHeader(Snapshot_ProductHeader productHeader)
         {
@@ -272,23 +478,27 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 }
             }
         }
-        public void DeleteAllWorksRecordingAndChildren(Snapshot_LicenseProduct licenseProduct)
+
+        private void DeleteAllWorksRecordingAndChildren(Snapshot_LicenseProduct licenseProduct)
         {
-            
-            var workRecordings = _snapshotWorksRecordingRepository.GetAllWorksRecordingsForProductId(licenseProduct.ProductId);
+            var workRecordings = _snapshotWorksRecordingRepository.GetAllWorksRecordingsForProductId(licenseProduct.CloneLicenseProductId);
             foreach (var recording in workRecordings)
             {
                 //delete works track
-                var track = _snapshotWorkTrackRepository.GetTrackForCloneTrackId(recording.CloneTrackId);
+                var track = _snapshotWorkTrackRepository.GetTrackForCloneTrackId(recording.TrackId);
                 _snapshotWorkTrackRepository.DeleteTrackBySnapshotTrackId(track.SnapshotWorkTrackId);
+
+                //delete copyrights
 
                 //detel licenseProdcut Recording if exists
                 var licenseRecording =
                     _snapshotLicenseProductRecordingRepository.GetLicenseProductRecordingForCloneTrackId(
-                        recording.CloneTrackId);
-                _snapshotLicenseProductRecordingRepository.DeletePhoneBySnapshotPhoneId(
-                    licenseRecording.SnapshotLicenseProductRecordingId);
-                
+                        recording.TrackId);
+                if (licenseRecording != null)
+                {
+                    _snapshotLicenseProductRecordingRepository.DeletePhoneBySnapshotPhoneId(
+                        licenseRecording.SnapshotLicenseProductRecordingId);
+                }
                 //Delete work writer list and children
                 DeleteWorksWritersAndChildren(recording);
 
@@ -296,18 +506,14 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 _snapshotWorksRecordingRepository.DeleteWorkRecordingByRecordignSnapshotId(
                     recording.SnapshotWorksRecodingId);
             }
-
-
         }
 
-        public void DeleteWorksWritersAndChildren(Snapshot_WorksRecording recording)
+        private void DeleteWorksWritersAndChildren(Snapshot_WorksRecording recording)
         {
-
             var writersForRecording = _snapshotWorksWriterRepository.GetAllWritersForCloneTrackId(recording.CloneTrackId);
 
             foreach (var writer in writersForRecording)
             {
-
                 //Delete all affiliation list and child if not null
                 //delete affil;iatio base list
                 DeleteAllAffiliationsAndChildren(writer);
@@ -323,13 +529,13 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 }
                 //Delete Original Publiliser list and child if not null
                 DeleteOriginalPublisherSnapshotAndChildern(writer);
-                
+
                 //delete writer
                 _snapshotWorksWriterRepository.DeleteWorksWriterSnapshotBySnapshotId(writer.SnapshotWorksWriter);
             }
         }
 
-        public void DeleteOriginalPublisherSnapshotAndChildern(Snapshot_WorksWriter writer)
+        private void DeleteOriginalPublisherSnapshotAndChildern(Snapshot_WorksWriter writer)
         {
             var allOriginalPublishers =
                 _snapshotOriginalPublisherRepository.GetAllOriginalPublishersForCaeCode(writer.CloneCaeNumber);
@@ -347,21 +553,21 @@ namespace UMPG.USL.API.Business.DataHarmonization
                     }
                 }
             }
-         }
+        }
 
-        public void DeleteAllAffiliationsAndChildren(Snapshot_WorksWriter writer)
-        { 
+        private void DeleteAllAffiliationsAndChildren(Snapshot_WorksWriter writer)
+        {
             var allAffiliations = _snapshotAffiliationRepository.GetAllAFfiliationsForCAENumber(writer.CloneCaeNumber);
             foreach (var affilation in allAffiliations)
             {
                 //get all base
-              //  var baseAffiliations = _Not impplememnted
+                //  var baseAffiliations = _Not impplememnted
                 //delete all base
                 _snapshotAffiliationRepository.DeleteAffilationByAffiliationSnapshotId(affilation.SnapshotAffiliationId);
             }
         }
 
-        public void DeleteSnapshotRecsRecordingandChildren(Snapshot_LicenseProduct licenseProduct)
+        private void DeleteSnapshotRecsRecordingandChildren(Snapshot_LicenseProduct licenseProduct)
         {
             var licenseConfigurations =
                 _snapshotRecsConfiguration.GetAllRecsConfigurationsRecordingsForLicenseProductId(licenseProduct.CloneLicenseProductId);
@@ -379,9 +585,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         _licenseProductConfigurationRepository
                             .GetSnapshotLicenseProductConfigurationByLicenseProductConfigurationId(
                                 id);
-
-                    //Delete licenseProductConfiguration
-                    _licenseProductConfigurationRepository.DeleteLicenseProductConfigurationBySnapshot(licenseProductConfig);
+                    if (licenseProductConfig != null)
+                    {
+                        //Delete licenseProductConfiguration
+                        _licenseProductConfigurationRepository.DeleteLicenseProductConfigurationBySnapshot(
+                            licenseProductConfig);
+                    }
                 }
 
                 //delete recConfig

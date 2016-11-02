@@ -1,42 +1,24 @@
-2016-10-31 09:44:12.5626|INFO|UMPG.USL.API.Business.Licenses.LicenseManager|Delete Block hit
-2016-10-31 09:44:17.9226|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
-2016-10-31 09:44:17.9226|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
-2016-10-31 09:44:17.9226|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
-2016-10-31 09:44:17.9296|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
-2016-10-31 09:44:17.9296|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
-2016-10-31 09:44:17.9296|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
-2016-10-31 09:44:17.9296|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :10/31/2016 9:44:17 AM
-2016-10-31 09:44:18.8946|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (24733) : elapsed :00:00:00.9560000
-2016-10-31 09:44:19.1466|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (64111) : elapsed :00:00:00.2470000
-2016-10-31 09:44:33.2326|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (22745) : elapsed :00:00:13.6080000
-2016-10-31 09:44:33.5756|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:15.6540000
-2016-10-31 09:44:33.5786|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
-2016-10-31 09:44:33.5786|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
-2016-10-31 09:44:33.5786|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
-2016-10-31 09:44:33.5786|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
-2016-10-31 09:44:33.5786|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
-2016-10-31 09:44:46.9796|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+2016-10-31 19:10:49.2096|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
 -------------------------------------------
 
 ______New Exception______
-Occurred On: Monday, October 31, 2016 ||  At: 9:44:46 AM 
+Occurred On: Monday, October 31, 2016 ||  At: 7:10:49 PM 
 
 System.NullReferenceException: Object reference not set to an instance of an object.
-   at System.Data.Entity.Core.Objects.ELinq.QueryParameterExpression.EvaluateParameter(Object[] arguments)
-   at System.Data.Entity.Core.Objects.ELinq.ELinqQueryState.GetExecutionPlan(Nullable`1 forMergeOption)
-   at System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__6()
-   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
-   at System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__5()
-   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
-   at System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
-   at System.Data.Entity.Core.Objects.ObjectQuery`1.<System.Collections.Generic.IEnumerable<T>.GetEnumerator>b__0()
-   at System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
-   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
-   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
-   at UMPG.USL.API.Data.DataHarmonization.SnapshotLicenseRepository.GetLicenseSnapShotById(Int32 id) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\DataHarmonization\SnapshotLicenseRepository.cs:line 66
-   at UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(Int32 snapshotLicenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\SnapshotLicenseManager.cs:line 55
-   at UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\DataHarmonizationManager.cs:line 31
-   at UMPG.USL.API.Controllers.TestDataController.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\TestDataController.cs:line 65
+   at UMPG.USL.API.Data.DataHarmonization.SnapshotLicenseProductConfigurationRepository.DeleteLicenseProductConfigurationBySnapshot(Snapshot_LicenseProductConfiguration licenseProductConfigurationId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\DataHarmonization\SnapshotLicenseProductConfigurationRepository.cs:line 33
+   at UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager.DeleteSnapshotRecsRecordingandChildren(Snapshot_LicenseProduct licenseProduct) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\SnapshotLicenseManager.cs:line 384
+   at UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager.DeleteLicenseProductAndChildEntities(Snapshot_License license) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\SnapshotLicenseManager.cs:line 185
+   at UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager.DeleteLicenseSnapshotAndAllChildren(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\SnapshotLicenseManager.cs:line 117
+   at UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager.DeleteLicenseSnapshot(Int32 licenseSnapshotId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\DataHarmonizationManager.cs:line 124
+   at UMPG.USL.API.Business.Licenses.LicenseManager.EditStatus(License license, Boolean isAutomaticProcess, Nullable`1 automaticSignedDate) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseManager.cs:line 597
+   at Castle.Proxies.Invocations.ILicenseManager_EditStatus.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 25
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseSequenceIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseSequenceIntercepror.cs:line 29
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseManagerProxy.EditStatus(License license, Boolean isAutomaticProcess, Nullable`1 automaticSignedDate)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseController.EditStatus(License request) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicensesController.cs:line 224
    at lambda_method(Closure , Object , Object[] )
    at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
    at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
@@ -44,6 +26,16 @@ System.NullReferenceException: Object reference not set to an instance of an obj
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
    at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Filters.ActionFilterAttribute.<CallOnActionExecutedAsync>d__5.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Web.Http.Filters.ActionFilterAttribute.<CallOnActionExecutedAsync>d__5.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Filters.ActionFilterAttribute.<ExecuteActionFilterAsyncCore>d__0.MoveNext()
 --- End of stack trace from previous location where exception was thrown ---
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
@@ -55,14 +47,15 @@ System.NullReferenceException: Object reference not set to an instance of an obj
 
  
 Headers:  
-Cache-Control: no-cache
 Connection: keep-alive
-Accept: */*
-Accept-Encoding: gzip, deflate, sdch
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
 Accept-Language: en-US, en; q=0.8
 Host: spa.service
+Referer: http://spa.local/
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
-Postman-Token: 0bb9b469-7894-751b-3f37-2b9c712c9105
+Origin: http://spa.local
+Token: 188fa3c8-798d-4aa9-89ea-fb496080814f
 
  
  
@@ -71,93 +64,36 @@ Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
 Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
 Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
 Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseCTRL/licenses/EditStatus, AccessControlRequestHeaders: {}
 Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
 Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
 Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
 Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
 Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
-Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
-Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
 
  
 Request Method:  
-GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+POST http://spa.service/api/licenseCTRL/licenses/EditStatus 
  
 ______End Exception______
 -------------------------------------------
  
  
 
-2016-10-31 10:16:12.1516|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
--------------------------------------------
-
-______New Exception______
-Occurred On: Monday, October 31, 2016 ||  At: 10:16:12 AM 
-
-System.NullReferenceException: Object reference not set to an instance of an object.
-   at System.Data.Entity.Core.Objects.ELinq.QueryParameterExpression.EvaluateParameter(Object[] arguments)
-   at System.Data.Entity.Core.Objects.ELinq.ELinqQueryState.GetExecutionPlan(Nullable`1 forMergeOption)
-   at System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__6()
-   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
-   at System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__5()
-   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
-   at System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
-   at System.Data.Entity.Core.Objects.ObjectQuery`1.<System.Collections.Generic.IEnumerable<T>.GetEnumerator>b__0()
-   at System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
-   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
-   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
-   at UMPG.USL.API.Data.DataHarmonization.SnapshotLicenseRepository.GetLicenseSnapShotById(Int32 id) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\DataHarmonization\SnapshotLicenseRepository.cs:line 66
-   at UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(Int32 snapshotLicenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\SnapshotLicenseManager.cs:line 55
-   at UMPG.USL.API.Business.DataHarmonization.DataHarmonizationManager.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\DataHarmonizationManager.cs:line 31
-   at UMPG.USL.API.Controllers.TestDataController.GetLicenseSnapshot(Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\TestDataController.cs:line 65
-   at lambda_method(Closure , Object , Object[] )
-   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
-   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
---- End of stack trace from previous location where exception was thrown ---
-   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
---- End of stack trace from previous location where exception was thrown ---
-   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
-
- 
-Headers:  
-Cache-Control: no-cache
-Connection: keep-alive
-Accept: */*
-Accept-Encoding: gzip, deflate, sdch
-Accept-Language: en-US, en; q=0.8
-Host: spa.service
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
-Postman-Token: a34973d5-e36a-81de-474b-02aae7eda52c
-
- 
- 
-Properties on request Object:  
-Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
-Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
-Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
-Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
-Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
-Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
-Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
-Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
-Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
-Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
-Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
-
- 
-Request Method:  
-GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
- 
-______End Exception______
--------------------------------------------
- 
- 
-
+2016-10-31 19:52:05.4206|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-31 19:52:05.4266|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-31 19:52:05.4266|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-31 19:52:05.4266|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-31 19:52:05.4266|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-31 19:52:05.4266|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2016-10-31 19:52:05.4456|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :10/31/2016 7:52:05 PM
+2016-10-31 19:52:07.6506|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (24733) : elapsed :00:00:00.3500000
+2016-10-31 19:52:08.0976|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (64111) : elapsed :00:00:00.4440000
+2016-10-31 19:52:21.7186|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (22745) : elapsed :00:00:13.3030000
+2016-10-31 19:52:22.0476|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:16.6280000
+2016-10-31 19:52:22.0476|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-31 19:52:22.0556|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-31 19:52:22.0556|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-31 19:52:22.0556|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-10-31 19:52:22.0556|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------

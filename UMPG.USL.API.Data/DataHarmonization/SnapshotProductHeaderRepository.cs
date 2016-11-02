@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Data.DataHarmonization
@@ -20,6 +21,14 @@ namespace UMPG.USL.API.Data.DataHarmonization
             using (var context = new AuthContext())
             {
                 return context.Snapshot_ProductHeaders.Find(snapshotProductHeaderId);
+            }
+        }
+
+        public Snapshot_ProductHeader GetProductHeaderByProductHeaderId(int productHeaderId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_ProductHeaders.FirstOrDefault(_ => _.CloneProductHeaderId == productHeaderId);
             }
         }
 

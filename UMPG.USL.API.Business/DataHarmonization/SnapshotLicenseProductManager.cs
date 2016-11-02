@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Amazon.Runtime.Internal;
+using NLog;
 using UMPG.USL.API.Data.DataHarmonization;
 using UMPG.USL.Models.DataHarmonization;
 
@@ -13,9 +15,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private readonly ISnapshotLicenseProductRepository _snapshotLicenseProductRepository;
         private readonly ISnapshotWorksRecordingRepository _snapshotWorksRecordingRepository;
         private readonly ISnapshotRecsConfigurationRepository _snapshotRecsConfigurationRepository;
+        private readonly ISnapshotProductHeaderRepository _snapshotProductHeaderRepository;
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public SnapshotLicenseProductManager(ISnapshotLicenseProductRepository snapshotLicenseProductRepository, ISnapshotWorksRecordingRepository snapshotWorksRecordingRepository, ISnapshotRecsConfigurationRepository snapshotRecsConfigurationRepository)
+        public SnapshotLicenseProductManager(ISnapshotLicenseProductRepository snapshotLicenseProductRepository, ISnapshotWorksRecordingRepository snapshotWorksRecordingRepository, ISnapshotRecsConfigurationRepository snapshotRecsConfigurationRepository, ISnapshotProductHeaderRepository snapshotProductHeaderRepository)
         {
+            _snapshotProductHeaderRepository = snapshotProductHeaderRepository;
             _snapshotRecsConfigurationRepository = snapshotRecsConfigurationRepository;
             _snapshotWorksRecordingRepository = snapshotWorksRecordingRepository;
             _snapshotLicenseProductRepository = snapshotLicenseProductRepository;
@@ -26,17 +31,44 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
             var worksRecordings = snapshotLicenseProduct.Recordings;
             var recsConfiguratons = snapshotLicenseProduct.ProductConfigurations;
+            var productHeader = snapshotLicenseProduct.ProductHeader;
+
+            snapshotLicenseProduct.ProductHeader = null;
+            snapshotLicenseProduct.Recordings = null;
+            snapshotLicenseProduct.ProductConfigurations = null;
+
+            if (productHeader != null)
+            {
+                Logger.Info("ArtistRecsId: " + productHeader.ArtistRecsId);
+                _snapshotProductHeaderRepository.SaveSnapshotProductHeader(productHeader);
+            }
 
 
-            //foreach (var workRec in worksRecordings)
-            //{
-            //    _snapshotWorksRecordingRepository.SaveSnapshotWorksRecording(workRec);
-            //}
+            //Save works recordings
+            if (worksRecordings != null)
+            {
+                foreach (var workRec in worksRecordings)
+                {
+                    if (workRec != null)
+                    {
+                        _snapshotWorksRecordingRepository.SaveSnapshotWorksRecording(workRec);
+                    }
+                }
+            }
 
-            //foreach (var recConfig in recsConfiguratons)
-            //{
-            //    _snapshotRecsConfigurationRepository.SaveSnapshotRecsConfiguration(recConfig);
-            //}
+            //save recs config
+           
+            if (recsConfiguratons != null)
+            {
+                Logger.Info("Number of Recs Config should be 2 === " + recsConfiguratons.Count);
+                foreach (var recConfig in recsConfiguratons)
+                {
+                    if (recConfig != null)
+                    {
+                        _snapshotRecsConfigurationRepository.SaveSnapshotRecsConfiguration(recConfig);
+                    }
+                }
+            }
 
             return _snapshotLicenseProductRepository.SaveSnapshotLicenseProduct(snapshotLicenseProduct);
         }

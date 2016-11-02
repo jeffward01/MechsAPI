@@ -13,6 +13,8 @@ namespace UMPG.USL.API.Data.DataHarmonization
         {
             using (var context = new AuthContext())
             {
+                Logger.Info("CLONE TRACK ID: " + snapshotWorksRecording.CloneTrackId);
+                Logger.Info("TRACK ID: " + snapshotWorksRecording.TrackId);
                 context.Snapshot_WorksRecordings.Add(snapshotWorksRecording);
                 try
                 {

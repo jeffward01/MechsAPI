@@ -1,6 +1,7 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Mapping;
 using UMPG.USL.Models.DataHarmonization;
 using UMPG.USL.Models.LicenseModel;
 using UMPG.USL.Models.Recs;
@@ -140,7 +141,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
             snapshot.title = licenseProduct.title;
             snapshot.PaidQuarter = licenseProduct.PaidQuarter;
             snapshot.RelatedLicensesNo = licenseProduct.RelatedLicensesNo;
-
+            if (licenseProduct.ProductConfigurations != null)
+            {
+                snapshot.ProductConfigurations = CastToRecsConfigurationsSnapshot(licenseProduct.ProductConfigurations,
+                    (int) snapshot.ProductHeaderId);
+            }
+            
             snapshot.CreatedDate = licenseProduct.CreatedDate;
             snapshot.CreatedBy = licenseProduct.CreatedBy;
             snapshot.ModifiedDate = licenseProduct.ModifiedDate;
@@ -154,6 +160,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return snapshot;
         }
 
+       
+
         private List<Snapshot_WorksRecording> CastToSnapshotRecordings(List<WorksRecording> worksRecording,
             int productId, int licenseProductId)
         {
@@ -165,7 +173,9 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
                 snapshot.ProductId = productId;
                 snapshot.CloneTrackId = rec.TrackId;
+                snapshot.TrackId = rec.TrackId;
                 snapshot.LicenseProductId = licenseProductId;
+                
                 snapshot.CdIndex = rec.CdIndex;
                 snapshot.UmpgPercentageRollup = (int)rec.UmpgPercentageRollup;
                 snapshot.CdNumber = rec.CdNumber;
@@ -221,8 +231,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.PrincipalArtist = rec.PrincipalArtist;
                 snapshot.Writers = rec.Writers;
                 snapshot.WriteString = rec.WriteString;
-                snapshot.MechanicalCollectablePercentage = rec.MechanicalCollectablePercentage;
-                snapshot.MechanicalOwnershipPercentage = rec.MechanicalOwnershipPercentage;
+                snapshot.MechanicalCollectablePercentage = (int) rec.MechanicalCollectablePercentage;
+                snapshot.MechanicalOwnershipPercentage = (int)rec.MechanicalOwnershipPercentage;
                 if (rec.Composers != null)
                 {
                     snapshot.Composers = CastToSnapshotWorksWriter(rec.Composers, workTrackId);
@@ -255,7 +265,10 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 var snapshot = new Snapshot_WorksWriter();
                 //cast writer base!
                 snapshot.CloneWorksTrackId = workTrackId;
-                snapshot.Contribution = writer.Contribution;
+                if (writer.Contribution != null)
+                {
+                    snapshot.Contribution = (int) writer.Contribution;
+                }
                 if (writer.OriginalPublishers != null)
                 {
                     snapshot.OriginalPublishers = CastOriginalPublishersToSnapshot(writer.OriginalPublishers,
@@ -272,8 +285,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.FullName = writer.FullName;
                 snapshot.CapacityCode = writer.CapacityCode;
                 snapshot.Capacity = writer.Capacity;
-                snapshot.MechanicalCollectablePercentage = writer.MechanicalCollectablePercentage;
-                snapshot.MechanicalOwnershipPercentage = writer.MechanicalOwnershipPercentage;
+                snapshot.MechanicalCollectablePercentage =  writer.MechanicalCollectablePercentage.ToString();
+                snapshot.MechanicalOwnershipPercentage = writer.MechanicalOwnershipPercentage.ToString();
                 snapshot.Affiliation = CastToAffiliationSnapshot(writer.Affiliation, writer.CaeNumber);
                 if (writer.KnownAs != null)
                 {
@@ -477,6 +490,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             {
                 var snapshot = new Snapshot_Affiliation();
                 snapshot.CloneWriterCaeNumber = caeNumber;
+                snapshot.WriterCaeNumber = caeNumber;
                 snapshot.IncomeGroup = affilation.IncomeGroup;
                 //    snapshot.Affiliations = CastToAffiliationBaseSnapshot(affilation.Affiliations, caeNumber); || temp off ***
                 snapshotList.Add(snapshot);
@@ -604,17 +618,23 @@ namespace UMPG.USL.API.Business.DataHarmonization
             foreach (var config in recsConfigurations)
             {
                 var snapshot = new Snapshot_RecsConfiguration();
-                snapshot.CloneRecsConfigurationId = (int)config.configuration_id;
-                snapshot.LicenseProductId = config.LicenseProductConfiguration.LicenseProductId;
-                snapshot.ConfigurationId = (int)config.Configuration.ConfigId;
+                snapshot.CloneRecsConfigurationId = (int) config.configuration_id;
+                if (config.LicenseProductConfiguration != null)
+                {
+                    snapshot.LicenseProductId = config.LicenseProductConfiguration.LicenseProductId;
+                }
+                snapshot.ConfigurationId = (int) config.Configuration.ConfigId;
                 snapshot.Configuration = CastToConfigurationSnapshot(config.Configuration);
                 snapshot.ProductHeaderId = productHeaderId;
                 snapshot.Name = config.name;
                 snapshot.UPC = config.UPC;
                 snapshot.ReleaseDate = config.ReleaseDate;
                 snapshot.DatabaseVersion = config.DatabaseVersion;
-                snapshot.LicenseProductConfigurationId =
-                    config.LicenseProductConfiguration.LicenseProductConfigurationId;
+                if (config.LicenseProductConfiguration != null)
+                {
+                    snapshot.LicenseProductConfigurationId =
+                        config.LicenseProductConfiguration.LicenseProductConfigurationId;
+                }
                 //snapshot.LicenseProductConfiguration = config.LicenseProductConfiguration;  temp off
                 snapshotList.Add(snapshot);
             }
