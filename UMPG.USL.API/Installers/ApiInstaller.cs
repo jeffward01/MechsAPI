@@ -17,6 +17,10 @@ namespace UMPG.USL.API.Installers
                 Classes.FromThisAssembly()
                     .Where(x => x.FullName.EndsWith("Controller"))
                     .Configure(c => c.LifestyleScoped()));
+
+            //container.AddFacility<LoggingFacility>(f => f.LogUsing(LoggerImplementation.NLog)
+            //                                             .WithConfig("NLog.config"));
+
             container.AddFacility<LoggingFacility>(f => f.LogUsing(LoggerImplementation.NLog)
                                                          .WithConfig("NLog.config"));
 

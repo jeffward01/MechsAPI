@@ -23,7 +23,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
         {
             using (var context = new AuthContext())
             {
-                return context.Snapshot_Configurations.Find(configurationId);
+                return context.Snapshot_Configurations.FirstOrDefault(_ => _.CloneConfigId == configurationId);
             }
         }
 

@@ -7,5 +7,6 @@ namespace UMPG.USL.API.Data.DataHarmonization
     {
         List<Snapshot_KnownAs> GetAllKnownAsForWriterCaeCode(int caeCode);
         bool DeleteKnownAsBySnapshotId(int snapshotId);
+        Snapshot_KnownAs SaveKnownAs(Snapshot_KnownAs knownAs);
     }
 }

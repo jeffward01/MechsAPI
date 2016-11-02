@@ -33,5 +33,16 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
             return true;
         }
+
+
+        public Snapshot_KnownAs SaveKnownAs(Snapshot_KnownAs knownAs)
+        {
+            using (var context = new AuthContext())
+            {
+                context.Snapshot_KnownAs.Add(knownAs);
+                context.SaveChanges();
+                return knownAs;
+            }
+        }
     }
 }

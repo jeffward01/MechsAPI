@@ -15,6 +15,17 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
+
+        public Snapshot_WorksTrack SaveWorksTrack(Snapshot_WorksTrack worksTrack)
+        {
+            using (var context = new AuthContext())
+            {
+                context.Snapshot_Tracks.Add(worksTrack);
+                context.SaveChanges();
+                return worksTrack;
+            }
+        }
+
         public bool DeleteTrackBySnapshotTrackId(int snapshotTrackId)
         {
             using (var context = new AuthContext())

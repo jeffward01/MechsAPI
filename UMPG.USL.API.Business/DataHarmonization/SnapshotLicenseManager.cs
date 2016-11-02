@@ -1,5 +1,6 @@
 ﻿using NLog;
 using UMPG.USL.API.Data.DataHarmonization;
+using UMPG.USL.API.Data.LicenseData;
 using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Business.DataHarmonization
@@ -15,14 +16,14 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private readonly ISnapshotPhoneRepository _snapshotPhoneRepository;
         private readonly ISnapshotContactEmailRepository _snapshotContactEmailRepository;
         private readonly ISnapshotWorksRecordingRepository _snapshotWorksRecordingRepository;
-        private readonly ISnapshotRecsConfigurationRepository _snapshotRecsConfiguration;
+        private readonly ISnapshotRecsConfigurationRepository _snapshotRecsConfigurationRepository;
         private readonly ISnapshotProductHeaderRepository _snapshotProductHeaderRepository;
         private readonly ISnapshotConfigurationRepository _snapshotConfigurationRepository;
         private readonly ISnapshotArtistRecsRepository _snapshotArtistRecsRepository;
         private readonly ISnapshotLabelRepository _snapshotLabelRepository;
         private readonly ISnapshotLabelGroupRepository _snapshotLabelGroupRepository;
         private readonly ISnapshotLicenseeLabelGroupRepository _licenseeLabelGroupRepository;
-        private readonly ISnapshotLicenseProductConfigurationRepository _licenseProductConfigurationRepository;
+        
         private readonly ISnapshotWorkTrackRepository _snapshotWorkTrackRepository;
         private readonly ISnapshotLicenseProductRecordingRepository _snapshotLicenseProductRecordingRepository;
         private readonly ISnapshotWorksWriterRepository _snapshotWorksWriterRepository;
@@ -33,9 +34,11 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private readonly ISnapshotSampleRepository _snapshotSampleRepository;
         private readonly ISnapshotLocalClientCopyrightRepository _snapshotLocalClientCopyrightRepository;
         private readonly ISnapshotAquisitionLocationCodeRepository _aquisitionLocationCodeRepository;
+        private readonly ILicenseProductConfigurationRepository _licenseProductConfigurationRepository;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public SnapshotLicenseManager(ISnapshotLicenseRepository snapshotLicenseRepository,
+            ILicenseProductConfigurationRepository licenseProductConfigurationRepository,
             ISnapshotAquisitionLocationCodeRepository aquisitionLocationCodeRepository,
             ISnapshotRecsCopyrightRespository snapshotRecsCopyrightRespository,
             ISnapshotSampleRepository snapshotSampleRepository,
@@ -45,14 +48,13 @@ namespace UMPG.USL.API.Business.DataHarmonization
             ISnapshotWorksWriterRepository snapshotWorksWriterRepository,
             ISnapshotLicenseProductRecordingRepository snapshotLicenseProductRecordingRepository,
             ISnapshotWorkTrackRepository snapshotWorkTrackRepository,
-            ISnapshotLicenseProductConfigurationRepository licenseProductConfigurationRepository,
             ISnapshotLicenseProductRepository snapshotLicenseProductRepository,
             ISnapshotLicenseNoteRepository snapshotLicenseNoteRepository,
             ISnapshotContactRepository snapshotContactRepository, ISnapshotRoleRepository snapshotRoleRepository,
             ISnapshotAddressRepository snapshotAddressRepository, ISnapshotPhoneRepository snapshotPhoneRepository,
             ISnapshotContactEmailRepository snapshotContactEmailRepository,
             ISnapshotWorksRecordingRepository snapshotWorksRecordingRepository,
-            ISnapshotRecsConfigurationRepository snapshotRecsConfiguration,
+            ISnapshotRecsConfigurationRepository snapshotRecsConfigurationRepository,
             ISnapshotProductHeaderRepository snapshotProductHeaderRepository,
             ISnapshotConfigurationRepository snapshotConfigurationRepository,
             ISnapshotArtistRecsRepository snapshotArtistRecsRepository, ISnapshotLabelRepository snapshotLabelRepository,
@@ -77,7 +79,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             _snapshotArtistRecsRepository = snapshotArtistRecsRepository;
             _snapshotConfigurationRepository = snapshotConfigurationRepository;
             _snapshotProductHeaderRepository = snapshotProductHeaderRepository;
-            _snapshotRecsConfiguration = snapshotRecsConfiguration;
+            _snapshotRecsConfigurationRepository = snapshotRecsConfigurationRepository;
             _snapshotWorksRecordingRepository = snapshotWorksRecordingRepository;
             _snapshotContactEmailRepository = snapshotContactEmailRepository;
             _snapshotPhoneRepository = snapshotPhoneRepository;
@@ -109,6 +111,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
             {
                 foreach (var lp in licenseProducts)
                 {
+                    
+
                     //build product header
                     if (lp.ProductHeaderId != null)
                     {
@@ -124,12 +128,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         var label = _snapshotLabelRepository.GetSnapshotLabelByLabelId(productHeader.LabelId);
 
                         var labelGroups =
-                            _snapshotLabelGroupRepository.GetAllLabelGroupsForProductHeaderSnapshotId(
-                                productHeader.SnapshotProductHeaderId);
+                            _snapshotLabelGroupRepository.GetAllALabelGroupsForLabelId(
+                                label.CloneLabelId);
                         label.RecordLabelGroups = labelGroups;
 
                         var configs =
-                            _snapshotRecsConfiguration.GetAllRecsConfigurationsRecordingsForProductHeaderId(
+                            _snapshotRecsConfigurationRepository.GetAllRecsConfigurationsRecordingsForProductHeaderId(
                                 productHeader.CloneProductHeaderId);
 
                         if (configs != null)
@@ -141,10 +145,11 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                         config.CloneRecsConfigurationId);
                                 if (config.LicenseProductConfigurationId != null)
                                 {
-                                    var lprid = (int)config.LicenseProductConfigurationId;
+                                    var lprid = (int)config.CloneRecsConfigurationId;
+                                    var licenseProductId = (int) config.LicenseProductId;
                                     var licenseProductConfig =
                                         _licenseProductConfigurationRepository
-                                            .GetSnapshotLicenseProductConfigurationByLicenseProductConfigurationId(lprid);
+                                            .GetLicenseProductConfiguration(licenseProductId, lprid);
                                     config.LicenseProductConfiguration = licenseProductConfig;
                                 }
                                 config.Configuration = configuration;
@@ -169,6 +174,10 @@ namespace UMPG.USL.API.Business.DataHarmonization
                             var copyrights =
                                 _snapshotRecsCopyrightRespository.GetAllRecsCopyrightsForCloneTrackId(
                                     recording.CloneTrackId);
+
+                            var artist =
+                                _snapshotArtistRecsRepository.GetSnapshotArtistRecsByArtistId(track.ArtistRecsId);
+                            track.Artist = artist;
 
                             //This area may be wrong, it uses the same primary key as parent entites.  watch.
                             foreach (var copyright in copyrights)
@@ -200,6 +209,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                 copyright.LocalClients = localClients;
                                 copyright.AquisitionLocationCodes = aquisitionLocalCodes;
                                 */  //Turned off as of now, I think its broken.  It uses the same primary keys as parents
+
                             }
 
                             //assign track chunk
@@ -210,7 +220,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                     recording.TrackId);
 
                             var worksWriterList =
-                                _snapshotWorksWriterRepository.GetAllWritersForCloneTrackId(recording.CloneTrackId);  //This is clone track, but clone track is an identity column for some reason... refactor needed to add trackId to recordign
+                                _snapshotWorksWriterRepository.GetAllWritersForCloneTrackId(recording.SnapshotWorksRecodingId);  //This is clone track, but clone track is an identity column for some reason... refactor needed to add trackId to recordign
 
                             if (worksWriterList != null)
                             {
@@ -257,7 +267,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         var configId = (int)lp.CloneLicenseProductId;
 
                         var licenserecConfigs =
-                            _snapshotRecsConfiguration.GetAllRecsConfigurationsRecordingsForLicenseProductId(
+                            _snapshotRecsConfigurationRepository.GetAllRecsConfigurationsRecordingsForLicenseProductId(
                                 configId);
                         if (licenserecConfigs != null)
                         {
@@ -273,14 +283,13 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                     recConfig.Configuration = configuration;
                                 }
 
-                                if (recConfig.LicenseProductConfigurationId != null)
+                                if (recConfig.LicenseProductConfigurationId != null && recConfig.LicenseProductId != null)
                                 {
                                     var lprId = (int)recConfig.LicenseProductConfigurationId;
-
+                                    var lpId = (int) recConfig.LicenseProductId;
                                     var lprConfig =
                                         _licenseProductConfigurationRepository
-                                            .GetSnapshotLicenseProductConfigurationByLicenseProductConfigurationId(
-                                               lprId);
+                                            .GetLicenseProductConfiguration(lpId, lprId);
                                     recConfig.LicenseProductConfiguration = lprConfig;
                                 }
                             }
@@ -294,7 +303,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             foreach (var lp in licenseInformation.LicenseProducts)
             {
                 var recConfig =
-                    _snapshotRecsConfiguration.GetAllRecsConfigurationsRecordingsForProductHeaderId(
+                    _snapshotRecsConfigurationRepository.GetAllRecsConfigurationsRecordingsForProductHeaderId(
                         lp.ProductHeader.CloneProductHeaderId);
                 lp.ProductHeader.Configurations = recConfig;
             }
@@ -444,7 +453,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private void DeleteAllRecsConfigAndChildrenForProductHeader(Snapshot_ProductHeader productHeader)
         {
             var recConfigs =
-                _snapshotRecsConfiguration.GetAllRecsConfigurationsRecordingsForProductHeaderId(
+                _snapshotRecsConfigurationRepository.GetAllRecsConfigurationsRecordingsForProductHeaderId(
                     productHeader.CloneProductHeaderId);
             if (recConfigs != null)
             {
@@ -463,6 +472,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
                     if (config.LicenseProductConfigurationId != null)
                     {
                         var id = (int)config.LicenseProductConfigurationId;
+
+                        /* Mechs data, do not delete
                         var licenseProductConfig =
                             _licenseProductConfigurationRepository
                                 .GetSnapshotLicenseProductConfigurationByLicenseProductConfigurationId(
@@ -470,10 +481,11 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
                         //Delete licenseProductConfiguration
                         _licenseProductConfigurationRepository.DeleteLicenseProductConfigurationBySnapshot(licenseProductConfig);
+                        */
                     }
 
                     //delete recConfig
-                    _snapshotRecsConfiguration.DeleteWorkRecordingByRecordignSnapshotId(
+                    _snapshotRecsConfigurationRepository.DeleteWorkRecordingByRecordignSnapshotId(
                         config.SnapshotRecsConfigurationId);
                 }
             }
@@ -570,7 +582,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private void DeleteSnapshotRecsRecordingandChildren(Snapshot_LicenseProduct licenseProduct)
         {
             var licenseConfigurations =
-                _snapshotRecsConfiguration.GetAllRecsConfigurationsRecordingsForLicenseProductId(licenseProduct.CloneLicenseProductId);
+                _snapshotRecsConfigurationRepository.GetAllRecsConfigurationsRecordingsForLicenseProductId(licenseProduct.CloneLicenseProductId);
 
             foreach (var licenseConfig in licenseConfigurations)
             {
@@ -580,6 +592,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 //Delete LicenseProductConfig if exists
                 if (licenseConfig.LicenseProductConfigurationId != null)
                 {
+                    /* Mechs data, do not erase
                     var id = (int)licenseConfig.LicenseProductConfigurationId;
                     var licenseProductConfig =
                         _licenseProductConfigurationRepository
@@ -591,10 +604,11 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         _licenseProductConfigurationRepository.DeleteLicenseProductConfigurationBySnapshot(
                             licenseProductConfig);
                     }
+                    */ 
                 }
 
                 //delete recConfig
-                _snapshotRecsConfiguration.DeleteWorkRecordingByRecordignSnapshotId(
+                _snapshotRecsConfigurationRepository.DeleteWorkRecordingByRecordignSnapshotId(
                     licenseConfig.SnapshotRecsConfigurationId);
             }
         }
@@ -628,7 +642,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 if (licenseProductId != null)
                 {
                     var recConfigurations =
-                        _snapshotRecsConfiguration.GetAllRecsConfigurationsRecordingsForLicenseProductId(
+                        _snapshotRecsConfigurationRepository.GetAllRecsConfigurationsRecordingsForLicenseProductId(
                             licenseProductId);
                     //Deelte all RecsConfigurations
                     foreach (var rec in recConfigurations)
@@ -636,7 +650,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         //delete config
                         _snapshotConfigurationRepository.DeleteConfigurationSnapshot(rec.Configuration.SnapshotConfigId);
 
-                        _snapshotRecsConfiguration.DeleteWorkRecordingByRecordignSnapshotId(
+                        _snapshotRecsConfigurationRepository.DeleteWorkRecordingByRecordignSnapshotId(
                             rec.SnapshotRecsConfigurationId);
                     }
                 }
@@ -651,12 +665,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 //delete productHeader childres
                 //delete all recConfigurations
                 var result =
-                    _snapshotRecsConfiguration.DoesRecConfigurationrecordignsExistForProductHeaderSnapshotId(
+                    _snapshotRecsConfigurationRepository.DoesRecConfigurationrecordignsExistForProductHeaderSnapshotId(
                         productHeaderPrimaryKey);
                 if (result)
                 {
                     var recConfiguationsOnProductHeader =
-                        _snapshotRecsConfiguration.GetAllRecsConfigurationsRecordingsForProductHeaderSnapshotId(
+                        _snapshotRecsConfigurationRepository.GetAllRecsConfigurationsRecordingsForProductHeaderSnapshotId(
                             productHeaderPrimaryKey);
                     foreach (var config in recConfiguationsOnProductHeader)
                     {
@@ -664,7 +678,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         _snapshotConfigurationRepository.DeleteConfigurationSnapshot(
                             config.Configuration.SnapshotConfigId);
 
-                        _snapshotRecsConfiguration.DeleteWorkRecordingByRecordignSnapshotId(
+                        _snapshotRecsConfigurationRepository.DeleteWorkRecordingByRecordignSnapshotId(
                             config.SnapshotRecsConfigurationId);
                     }
 

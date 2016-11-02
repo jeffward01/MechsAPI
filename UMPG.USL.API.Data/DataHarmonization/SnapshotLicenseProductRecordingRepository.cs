@@ -32,5 +32,16 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
             return true;
         }
+
+
+        public Snapshot_LicenseProductRecording SaveLicenseProductRecording(Snapshot_LicenseProductRecording licenseProductRecording)
+        {
+            using (var context = new AuthContext())
+            {
+                context.Snapshot_LicenseRecordings.Add(licenseProductRecording);
+                context.SaveChanges();
+                return licenseProductRecording;
+            }
+        }
     }
 }

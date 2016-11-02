@@ -14,6 +14,15 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return context.Snapshot_Affiliations.Where(_ => _.CloneWriterCaeNumber == cloneCaeNumber).ToList();
             }
         }
+        public Snapshot_Affiliation SaveSnapshotAffiliation(Snapshot_Affiliation snapshotAffiliation)
+        {
+            using (var context = new AuthContext())
+            {
+                context.Snapshot_Affiliations.Add(snapshotAffiliation);
+                context.SaveChanges();
+                return snapshotAffiliation;
+            }
+        }
 
         public bool DeleteAffilationByAffiliationSnapshotId(int affiliationSnapshotId)
         {

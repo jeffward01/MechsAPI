@@ -6,5 +6,6 @@ namespace UMPG.USL.API.Data.DataHarmonization
     {
         Snapshot_WorksTrack GetTrackForCloneTrackId(int cloneTrackId);
         bool DeleteTrackBySnapshotTrackId(int snapshotTrackId);
+        Snapshot_WorksTrack SaveWorksTrack(Snapshot_WorksTrack worksTrack);
     }
 }

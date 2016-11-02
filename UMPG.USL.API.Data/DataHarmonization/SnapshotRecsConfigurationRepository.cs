@@ -75,8 +75,8 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 var recConfig = context.Snapshot_RecsConfigurations
 
                            
-                           .Include("Configuration")
-                           .Include("LicenseProductConfiguration")
+                     //      .Include("Configuration")
+                      //     .Include("LicenseProductConfiguration")
 
                     .Where(_ => _.ProductHeaderId == productHeaderId).ToList();
                 return recConfig;

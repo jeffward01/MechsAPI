@@ -7,5 +7,6 @@ namespace UMPG.USL.API.Data.DataHarmonization
     {
         List<Snapshot_WorksWriter> GetAllWritersForCloneTrackId(int cloneTrackId);
         bool DeleteWorksWriterSnapshotBySnapshotId(int worksWriterSnapshotId);
+        Snapshot_WorksWriter SaveWorksWriter(Snapshot_WorksWriter worksWriter);
     }
 }

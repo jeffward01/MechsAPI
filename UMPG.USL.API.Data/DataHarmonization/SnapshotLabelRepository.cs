@@ -20,7 +20,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
         {
             using (var context = new AuthContext())
             {
-                return context.Snapshot_Labels.Find(labelId);
+                return context.Snapshot_Labels.FirstOrDefault(_ => _.CloneLabelId == labelId);
             }
         }
 

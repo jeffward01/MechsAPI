@@ -63,7 +63,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
                     //   .Include("ProductHeader.Configurations.LicenseProductConfiguration")
                     //  .Include("ProductHeader.Label.RecordLabelGroups")
                     //   .Include("ProductConfigurations") //comes back null, i think in the test license case its supposed
-                    //       .Include("Schedule")
+                         .Include("Schedule")
                     //         .Include("Recordings")
                     //        .Include("Recordings.Writers")  //Add to database
                     //       .Include("Recordings.Track")  //Add to database  || works

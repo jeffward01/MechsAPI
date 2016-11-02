@@ -38,6 +38,14 @@ namespace UMPG.USL.API.Data.DataHarmonization
 
         }
 
+        public List<Snapshot_LabelGroup> GetAllALabelGroupsForLabelId(int labelId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_LabelGroups.Where(_ => _.CloneLabelId == labelId).ToList();
+            }
+        }
+
         public bool DeleteLabelGroupByLabelGroupSnapshotId(int labelGroupSnapshotId)
         {
             using (var context = new AuthContext())
