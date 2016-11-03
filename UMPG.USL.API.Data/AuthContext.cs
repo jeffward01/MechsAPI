@@ -200,6 +200,13 @@ namespace UMPG.USL.API.Data
         public DbSet<Snapshot_LocalClientCopyright> Snapshot_LocalClientCopyrights { get; set; }
         public DbSet<Snapshot_AquisitionLocationCode> Snapshot_AquisitionLocationCodes { get; set; }
 
+        public DbSet<Snapshot_AdminAffiliation> Snapshot_AdminAffiliations { get; set; }
+        public DbSet<Snapshot_AdminAffiliationBase> Snapshot_AdminAffiliationBases { get; set; }
+        public DbSet<Snapshot_Administrator> Snapshot_Administrators { get; set; }
+
+        public DbSet<Snapshot_OriginalPublisherAffiliation> Snapshot_OriginalPublisherAffiliations { get; set; }
+        public DbSet<Snapshot_OriginalPubAffiliationBase> Snapshot_OriginalPublisherAffiliationBases { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

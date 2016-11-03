@@ -140,9 +140,14 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         {
                             foreach (var config in configs)
                             {
-                                var configuration =
-                                    _snapshotConfigurationRepository.GetSnapshotConfigurationByConfigurationId(
-                                        config.CloneRecsConfigurationId);
+                                if (config.ConfigurationId != null)
+                                {
+                                    var configId = (int) config.ConfigurationId;
+                                    var configuration =
+                                        _snapshotConfigurationRepository.GetSnapshotConfigurationByConfigurationId(
+                                            configId);
+                                    config.Configuration = configuration;
+                                }
                                 if (config.LicenseProductConfigurationId != null)
                                 {
                                     var lprid = (int)config.CloneRecsConfigurationId;
@@ -152,7 +157,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                             .GetLicenseProductConfiguration(licenseProductId, lprid);
                                     config.LicenseProductConfiguration = licenseProductConfig;
                                 }
-                                config.Configuration = configuration;
+                             
                             }
                         }
 

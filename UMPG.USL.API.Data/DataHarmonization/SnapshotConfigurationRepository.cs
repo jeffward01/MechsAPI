@@ -31,14 +31,14 @@ namespace UMPG.USL.API.Data.DataHarmonization
         {
             using (var context = new AuthContext())
             {
-                var licenseProduct =
+                var config =
                     context.Snapshot_Configurations.FirstOrDefault(_ => _.SnapshotConfigId == snapshotLicenseProductId);
-                if (licenseProduct == null)
+                if (config == null)
                 {
                     return false;
                 }
-                context.Snapshot_Configurations.Attach(licenseProduct);
-                context.Snapshot_Configurations.Remove(licenseProduct);
+                context.Snapshot_Configurations.Attach(config);
+                context.Snapshot_Configurations.Remove(config);
                 try
                 {
                     context.SaveChanges();
