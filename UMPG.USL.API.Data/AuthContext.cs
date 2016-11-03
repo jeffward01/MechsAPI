@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using NLog;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using UMPG.USL.Models;
@@ -206,6 +207,7 @@ namespace UMPG.USL.API.Data
 
         public DbSet<Snapshot_OriginalPublisherAffiliation> Snapshot_OriginalPublisherAffiliations { get; set; }
         public DbSet<Snapshot_OriginalPubAffiliationBase> Snapshot_OriginalPublisherAffiliationBases { get; set; }
+        public DbSet<Snapshot_AdminKnownAs> Snapshot_AdminKnownAs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -422,6 +424,24 @@ namespace UMPG.USL.API.Data
 
             modelBuilder.Entity<Snapshot_Licensee>().ToTable("Snapshot_Licensee");
             modelBuilder.Entity<Snapshot_Licensee>().HasKey(_ => _.SnapshotLicenseeId);
+
+            
+            modelBuilder.Entity<Snapshot_Administrator>().ToTable("Snapshot_Administrator");
+            modelBuilder.Entity<Snapshot_Administrator>().HasKey(_ => _.SnapshotAdministratorId);
+            modelBuilder.Entity<Snapshot_Administrator>().Ignore(_ => _.AffiliationsString);
+            modelBuilder.Entity<Snapshot_Administrator>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.SnapshotAdministratorId);
+            modelBuilder.Entity<Snapshot_Administrator>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.SnapshotAdministratorId);
+
+            modelBuilder.Entity<Snapshot_AdminAffiliationBase>().ToTable("Snapshot_AdminAffiliationBase");
+            modelBuilder.Entity<Snapshot_AdminAffiliationBase>().HasKey(_ => _.SnapshotAdminAffiliationBaseId);
+
+            modelBuilder.Entity<Snapshot_AdminAffiliation>().ToTable("Snapshot_AdminAffiliation");
+            modelBuilder.Entity<Snapshot_AdminAffiliation>().HasKey(_ => _.SnapshotAdminAffiliationId);
+            modelBuilder.Entity<Snapshot_AdminAffiliation>().HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.SnapshotAdminAffiliationId);
+
+            modelBuilder.Entity<Snapshot_AdminKnownAs>().ToTable("Snapshot_AdminKnownAs");
+            modelBuilder.Entity<Snapshot_AdminKnownAs>().HasKey(_ => _.SnapshotAdminKnownAsId);
+
 
             //_____End Data Harmonization
 

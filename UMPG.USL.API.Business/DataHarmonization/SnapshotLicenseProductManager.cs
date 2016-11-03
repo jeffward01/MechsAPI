@@ -34,8 +34,16 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private readonly ISnapshotSampleRepository _snapshotSampleRepository;
         private readonly ISnapshotLocalClientCopyrightRepository _snapshotLocalClientCopyrightRepository;
         private readonly ISnapshotAquisitionLocationCodeRepository _aquisitionLocationCodeRepository;
+        private readonly ISnapshotAdministratorRepository _snapshotAdministratorRepository;
+        private readonly ISnapshotAdminAffiliationRepository _snapshotAdminAffiliationRepository;
+        private readonly ISnapshotAdminAffiliationBaseRepository _adminAffiliationBaseRepository;
+        private readonly ISnapshotAdminKnownAsRepository _adminKnownAsRepository;
 
         public SnapshotLicenseProductManager(ISnapshotLicenseRepository snapshotLicenseRepository,
+            ISnapshotAdminKnownAsRepository snapshotAdminKnownAsRepository,
+            ISnapshotAdminAffiliationBaseRepository snapshotAdminAffiliationBaseRepository,
+            ISnapshotAdminAffiliationRepository snapshotAdminAffiliationRepository,
+            ISnapshotAdministratorRepository snapshotAdministratorRepository,
             ISnapshotAquisitionLocationCodeRepository aquisitionLocationCodeRepository,
             ISnapshotRecsCopyrightRespository snapshotRecsCopyrightRespository,
             ISnapshotSampleRepository snapshotSampleRepository,
@@ -60,6 +68,10 @@ namespace UMPG.USL.API.Business.DataHarmonization
             ISnapshotLocalClientCopyrightRepository snapshotLocalClientCopyrightRepository,
             ISnapshotLicenseeLabelGroupRepository snalshotLabelGroupRepository)
         {
+            _adminKnownAsRepository = snapshotAdminKnownAsRepository;
+            _adminAffiliationBaseRepository = snapshotAdminAffiliationBaseRepository;
+            _snapshotAdminAffiliationRepository = snapshotAdminAffiliationRepository;
+            _snapshotAdministratorRepository = snapshotAdministratorRepository;
             _aquisitionLocationCodeRepository = aquisitionLocationCodeRepository;
             _snapshotLocalClientCopyrightRepository = snapshotLocalClientCopyrightRepository;
             _snapshotSampleRepository = snapshotSampleRepository;
@@ -137,10 +149,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                             _snapshotConfigurationRepository.SaveSnapshotConfiguration(configuration);
                         }
 
-                        
-
-
-                        //save parent 
+                        //save parent
                         _snapshotRecsConfigurationRepository.SaveSnapshotRecsConfiguration(config);
                     }
                 }
@@ -180,7 +189,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         {
                             foreach (var writer in writerList)
                             {
-                                //save affiliation
+                                //save writer affiliation
                                 var affiliations = writer.Affiliation;
                                 writer.Affiliation = null;
 
@@ -194,7 +203,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                         //var affiliationBase .....  save...
                                     }
                                 }
-                                //save knownAs
+                                //save writer knownAs
                                 var knownAs = writer.KnownAs;
                                 writer.KnownAs = null;
                                 if (knownAs != null)
@@ -214,6 +223,75 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                     //save knownAs (not implemented)
                                     foreach (var oPub in originalPubs)
                                     {
+                                        var administrators = oPub.Administrator;
+                                        oPub.Administrator = null;
+
+                                        var opKnownAs = oPub.KnownAs;
+                                        oPub.KnownAs = null;
+
+                                        var snapshotOriginalPublisherId =
+                                            _snapshotOriginalPublisherRepository.SaveSnapshotOriginalPublisher(oPub);
+                                        if (administrators != null)
+                                        {
+                                            foreach (var admin in administrators)
+                                            {
+                                                var adminKnownAs = admin.KnownAs;
+                                                admin.KnownAs = null;
+
+                                                var adminAffiliations = admin.Affiliation;
+                                                admin.Affiliation = null;
+
+                                                //Assign foriegn Key
+                                                admin.SnapshotOriginalPublisherId =
+                                                    snapshotOriginalPublisherId.SnapshotOriginalPublisherId;
+
+                                                var snapshotAdmin =
+                                                    _snapshotAdministratorRepository.SaveSnapshotAdministrator(admin);
+                                                if (adminKnownAs != null)
+                                                {
+                                                    foreach (var knwn in adminKnownAs)
+                                                    {
+                                                        knwn.SnapshotAdministratorId =
+                                                            snapshotAdmin.SnapshotAdministratorId;
+                                                        _adminKnownAsRepository.SaveSnapshotAdminKnownAs(knwn);
+                                                    }
+                                                }
+
+                                                if (adminAffiliations != null)
+                                                {
+                                                    foreach (var adminAffiliation in adminAffiliations)
+                                                    {
+                                                        var adminAffiliationBases = adminAffiliation.Affiliations;
+                                                        adminAffiliation.Affiliations = null;
+
+                                                        //Assign Foriegn Key
+                                                        adminAffiliation.SnapshotAdministratorId =
+                                                            snapshotAdmin.SnapshotAdministratorId;
+
+                                                        //Save
+                                                        var snapshotAdminAffiliation =
+                                                            _snapshotAdminAffiliationRepository
+                                                                .SaveSnapshotAdminAffiliation
+                                                                (
+                                                                    adminAffiliation);
+                                                        if (adminAffiliationBases != null)
+                                                        {
+                                                            foreach (var adminAffiliationBase in adminAffiliationBases)
+                                                            {
+                                                                //Assign FK
+                                                                adminAffiliationBase.SnapshotAdminAffiliationId =
+                                                                    snapshotAdminAffiliation.SnapshotAdminAffiliationId;
+
+                                                                _adminAffiliationBaseRepository
+                                                                    .SaveSnapshotAdministrator(
+                                                                        adminAffiliationBase);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
                                         _snapshotOriginalPublisherRepository.SaveSnapshotOriginalPublisher(oPub);
                                     }
                                 }
@@ -243,8 +321,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         {
                             _snapshotConfigurationRepository.SaveSnapshotConfiguration(config);
                         }
-
-                        
 
                         _snapshotRecsConfigurationRepository.SaveSnapshotRecsConfiguration(recConfig);
                     }

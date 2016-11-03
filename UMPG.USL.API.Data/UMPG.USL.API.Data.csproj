@@ -148,6 +148,9 @@
     <Compile Include="ContactData\LicenseeAdminRequest.cs" />
     <Compile Include="ContactData\RoleRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotAddressRepository.cs" />
+    <Compile Include="DataHarmonization\ISnapshotAdminAffiliationBaseRepository.cs" />
+    <Compile Include="DataHarmonization\ISnapshotAdminAffiliationRepository.cs" />
+    <Compile Include="DataHarmonization\ISnapshotAdministratorRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotAffiliationRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotAquisitionLocationCodeRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotArtistRecsRepository.cs" />
@@ -164,6 +167,8 @@
     <Compile Include="DataHarmonization\ISnapshotLicenseProductRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotLicenseRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotLocalClientCopyrightRepository.cs" />
+    <Compile Include="DataHarmonization\ISnapshotOriginalPubAffiliationBaseRepository.cs" />
+    <Compile Include="DataHarmonization\ISnapshotOriginalPublisherAffiliationRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotOriginalPublisherRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotPhoneRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotProductHeaderRepository.cs" />
@@ -175,6 +180,8 @@
     <Compile Include="DataHarmonization\ISnapshotWorksWriterRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotWorkTrackRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotAddressRepository.cs" />
+    <Compile Include="DataHarmonization\SnapshotAdminAffiliationBaseRepository.cs" />
+    <Compile Include="DataHarmonization\SnapshotAdministratorRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotAffiliationRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotAquisitionLocationCodeRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotArtistRecsRepository.cs" />
@@ -191,6 +198,8 @@
     <Compile Include="DataHarmonization\SnapshotLicenseProductRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotLicenseRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotLocalClientCopyrightRepository.cs" />
+    <Compile Include="DataHarmonization\SnapshotOriginalPubAffiliationBaseRepository.cs" />
+    <Compile Include="DataHarmonization\SnapshotOriginalPublisherAffiliationRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotOriginalPublisherRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotPhoneRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotProductHeaderRepository.cs" />
@@ -201,6 +210,7 @@
     <Compile Include="DataHarmonization\SnapshotWorksRecordingRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotWorksWriterRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotWorkTrackRepository.cs" />
+    <Compile Include="DataHarmonization\SnapshotAdminAffiliationRepository.cs" />
     <Compile Include="LicenseData\GenerateLicenseQueueRepository.cs" />
     <Compile Include="LicenseData\IGenerateLicenseQueueRepository.cs" />
     <Compile Include="LicenseData\ILicenseAttachmentRepository.cs" />

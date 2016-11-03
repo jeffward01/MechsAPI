@@ -137,8 +137,10 @@ namespace UMPG.USL.API.Data.Installer
             container.Register(Component.For<ISnapshotAdminAffiliationBaseRepository>().ImplementedBy<SnapshotAdminAffiliationBaseRepository>());
             container.Register(Component.For<ISnapshotOriginalPubAffiliationBaseRepository>().ImplementedBy<SnapshotOriginalPubAffiliationBaseRepository>());
             container.Register(Component.For<ISnapshotOriginalPublisherAffiliationRepository>().ImplementedBy<SnapshotOriginalPublisherAffiliationRepository>());
-
+            container.Register(Component.For<ISnapshotAdminKnownAsRepository>().ImplementedBy<SnapshotAdminKnownAsRepository>());
             
+
+
 
             container.Register(Component.For<IMapper<string, ProductRequest>>().ImplementedBy<ProductSearchCriteriaMapper>().LifestyleSingleton());
             container.Register(Component.For<IMapper<string, LicenseRequest>>().ImplementedBy<LicenseSearchCriteriaMapper>().LifestyleSingleton());

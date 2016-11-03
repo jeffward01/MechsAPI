@@ -1,7 +1,6 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Mapping;
 using UMPG.USL.Models.DataHarmonization;
 using UMPG.USL.Models.LicenseModel;
 using UMPG.USL.Models.Recs;
@@ -15,7 +14,9 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private readonly ISnapshotLicenseProductManager _snapshotLicenseProductManager;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public DataHarmonizationManager(ISnapshotLicenseManager snapshotLicenseManager, ISnapshotLicenseNoteManager snapshotLicenseNoteManager, ISnapshotLicenseProductManager snapshotLicenseProductManager)
+        public DataHarmonizationManager(ISnapshotLicenseManager snapshotLicenseManager,
+            ISnapshotLicenseNoteManager snapshotLicenseNoteManager,
+            ISnapshotLicenseProductManager snapshotLicenseProductManager)
         {
             _snapshotLicenseProductManager = snapshotLicenseProductManager;
             _snapshotLicenseNoteManager = snapshotLicenseNoteManager;
@@ -144,9 +145,9 @@ namespace UMPG.USL.API.Business.DataHarmonization
             if (licenseProduct.ProductConfigurations != null)
             {
                 snapshot.ProductConfigurations = CastToRecsConfigurationsSnapshot(licenseProduct.ProductConfigurations,
-                    (int) snapshot.ProductHeaderId);
+                    (int)snapshot.ProductHeaderId);
             }
-            
+
             snapshot.CreatedDate = licenseProduct.CreatedDate;
             snapshot.CreatedBy = licenseProduct.CreatedBy;
             snapshot.ModifiedDate = licenseProduct.ModifiedDate;
@@ -159,8 +160,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
             }
             return snapshot;
         }
-
-       
 
         private List<Snapshot_WorksRecording> CastToSnapshotRecordings(List<WorksRecording> worksRecording,
             int productId, int licenseProductId)
@@ -175,7 +174,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.CloneTrackId = rec.TrackId;
                 snapshot.TrackId = rec.TrackId;
                 snapshot.LicenseProductId = licenseProductId;
-                
+
                 snapshot.CdIndex = rec.CdIndex;
                 snapshot.UmpgPercentageRollup = (int)rec.UmpgPercentageRollup;
                 snapshot.CdNumber = rec.CdNumber;
@@ -231,7 +230,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.PrincipalArtist = rec.PrincipalArtist;
                 snapshot.Writers = rec.Writers;
                 snapshot.WriteString = rec.WriteString;
-                snapshot.MechanicalCollectablePercentage = (int) rec.MechanicalCollectablePercentage;
+                snapshot.MechanicalCollectablePercentage = (int)rec.MechanicalCollectablePercentage;
                 snapshot.MechanicalOwnershipPercentage = (int)rec.MechanicalOwnershipPercentage;
                 if (rec.Composers != null)
                 {
@@ -267,7 +266,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.CloneWorksTrackId = workTrackId;
                 if (writer.Contribution != null)
                 {
-                    snapshot.Contribution = (int) writer.Contribution;
+                    snapshot.Contribution = (int)writer.Contribution;
                 }
                 if (writer.OriginalPublishers != null)
                 {
@@ -276,8 +275,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 }
                 if (writer.LicenseProductRecordingWriter != null)
                 {
-                   // snapshot.LicenseProductRecordingWriter =  TURNED OFF *** 
-                   //     CastToLicensProductRecordingSnapshot(writer.LicenseProductRecordingWriter, writer.CaeNumber);
+                    // snapshot.LicenseProductRecordingWriter =  TURNED OFF ***
+                    //     CastToLicensProductRecordingSnapshot(writer.LicenseProductRecordingWriter, writer.CaeNumber);
                 }
                 snapshot.ParentSongDuration = writer.ParentSongDuration;
                 snapshot.CloneCaeNumber = writer.CaeNumber;
@@ -285,7 +284,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.FullName = writer.FullName;
                 snapshot.CapacityCode = writer.CapacityCode;
                 snapshot.Capacity = writer.Capacity;
-                snapshot.MechanicalCollectablePercentage =  writer.MechanicalCollectablePercentage.ToString();
+                snapshot.MechanicalCollectablePercentage = writer.MechanicalCollectablePercentage.ToString();
                 snapshot.MechanicalOwnershipPercentage = writer.MechanicalOwnershipPercentage.ToString();
                 snapshot.Affiliation = CastToAffiliationSnapshot(writer.Affiliation, writer.CaeNumber);
                 if (writer.KnownAs != null)
@@ -421,8 +420,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             {
                 var snapshot = new Snapshot_OriginalPublisher();
                 snapshot.CloneWorksWriterCaeNumber = caeNumber;
-               // snapshot.Administrator = CastToWriterBase(op.Administrator, caeNumber);
-
+                snapshot.Administrator = CastToAdministrator(op.Administrator, caeNumber);
                 snapshot.CloneCaeNumber = op.CaeNumber;
                 snapshot.IpCode = op.IpCode;
                 snapshot.FullName = op.FullName;
@@ -430,7 +428,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.Capacity = op.Capacity;
                 snapshot.MechanicalCollectablePercentage = op.MechanicalCollectablePercentage;
                 snapshot.MechanicalOwnershipPercentage = op.MechanicalOwnershipPercentage;
-             //   snapshot.Affiliation = CastToAffiliationSnapshot(op.Affiliation, op.CaeNumber);   TEMP OFF ***
+                //   snapshot.Affiliation = CastToAffiliationSnapshot(op.Affiliation, op.CaeNumber);   TEMP OFF ***
                 if (op.KnownAs != null)
                 {
                     snapshot.KnownAs = CastToKnownAs(op.KnownAs, op.CaeNumber);
@@ -440,33 +438,87 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
             return snapshotList;
         }
-        /*
-        private List<Snapshot_WriterBase> CastToWriterBase(List<WriterBase> admins, int caeNumber)
+
+        private List<Snapshot_AdminKnownAs> CastToAdminKnownAs(List<string> knownAs, int writerCaeCode)
         {
-            var snapshotList = new List<Snapshot_WriterBase>();
+            var snapshotList = new List<Snapshot_AdminKnownAs>();
+
+            foreach (var known in knownAs)
+            {
+                var snapshot = new Snapshot_AdminKnownAs();
+                snapshot.KnownAs = known;
+                snapshot.SnapshotAdministratorId = 0;
+                snapshot.CloneWriterCaeCode = writerCaeCode;
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+        }
+
+        private List<Snapshot_Administrator> CastToAdministrator(List<WriterBase> admins, int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_Administrator>();
 
             foreach (var admin in admins)
             {
-                var snapshot = new Snapshot_WriterBase();
+                var snapshot = new Snapshot_Administrator();
 
                 snapshot.CloneCaeNumber = admin.CaeNumber;
                 snapshot.IpCode = admin.IpCode;
                 snapshot.FullName = admin.FullName;
                 snapshot.CapacityCode = admin.CapacityCode;
                 snapshot.Capacity = admin.Capacity;
-                snapshot.MechanicalCollectablePercentage = admin.MechanicalCollectablePercentage;
-                snapshot.MechanicalOwnershipPercentage = admin.MechanicalOwnershipPercentage;
-                snapshot.Affiliation = CastToAffiliationSnapshot(admin.Affiliation, admin.CaeNumber);
+                snapshot.Controlled = admin.Controlled;
+                snapshot.MechanicalCollectablePercentage = (int)admin.MechanicalCollectablePercentage;
+                snapshot.MechanicalOwnershipPercentage = (int)admin.MechanicalOwnershipPercentage;
+                snapshot.Affiliation = CastToAdminAffiliationSnapshot(admin.Affiliation, admin.CaeNumber);
                 if (admin.KnownAs != null)
                 {
-                    snapshot.KnownAs = CastToKnownAs(admin.KnownAs, admin.CaeNumber);
+                    snapshot.KnownAs = CastToAdminKnownAs(admin.KnownAs, admin.CaeNumber);
                 }
                 snapshotList.Add(snapshot);
             }
 
             return snapshotList;
         }
-        */
+
+
+
+        private List<Snapshot_AdminAffiliation> CastToAdminAffiliationSnapshot(List<Affiliation> affiliations, int caeNumber)
+
+        {
+            var snapshotList = new List<Snapshot_AdminAffiliation>();
+
+            foreach (var affilation in affiliations)
+            {
+                var snapshot = new Snapshot_AdminAffiliation();
+
+                snapshot.CloneWriterCaeNumber = caeNumber;
+                snapshot.SnapshotAdministratorId = 0;
+                snapshot.WriterCaeNumber = caeNumber;
+                snapshot.IncomeGroup = affilation.IncomeGroup;
+                snapshot.Affiliations = CastToAdminAffiliationBaseSnapshot(affilation.Affiliations, caeNumber);
+
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+        }
+
+        private List<Snapshot_AdminAffiliationBase> CastToAdminAffiliationBaseSnapshot(List<AffiliationBase> affiliationBases, int writerCaeCode)
+        {
+            var snapshotList = new List<Snapshot_AdminAffiliationBase>();
+
+            foreach (var ab in affiliationBases)
+            {
+                var snapshot = new Snapshot_AdminAffiliationBase();
+                snapshot.SnapshotAdminAffiliationId = 0;
+                snapshot.CloneWriterCaeNumber = writerCaeCode;
+                snapshot.SocietyAcronym = ab.SocietyAcronym;
+                snapshot.EndDate = ab.EndDate;
+                snapshot.StartDate = ab.StartDate;
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+        }
 
         private List<Snapshot_KnownAs> CastToKnownAs(List<string> knownAs, int writerCaeCode)
         {
@@ -618,12 +670,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
             foreach (var config in recsConfigurations)
             {
                 var snapshot = new Snapshot_RecsConfiguration();
-                snapshot.CloneRecsConfigurationId = (int) config.configuration_id;
+                snapshot.CloneRecsConfigurationId = (int)config.configuration_id;
                 if (config.LicenseProductConfiguration != null)
                 {
                     snapshot.LicenseProductId = config.LicenseProductConfiguration.LicenseProductId;
                 }
-                snapshot.ConfigurationId = (int) config.Configuration.ConfigId;
+                snapshot.ConfigurationId = (int)config.Configuration.ConfigId;
                 snapshot.Configuration = CastToConfigurationSnapshot(config.Configuration);
                 snapshot.ProductHeaderId = productHeaderId;
                 snapshot.Name = config.name;
