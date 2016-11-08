@@ -218,10 +218,11 @@ namespace UMPG.USL.API.Business.DataHarmonization
                             foreach (var copyright in copyrights)
                             {
                                 //build samples
+                                /*
                                 var samples =
                                     _snapshotSampleRepository.GetAllSamplesForRecsCopyrightByCloneTrackId(
                                         copyright.CloneWorksTrackId);
-                                ____
+                                */
                                 //build composers
                                 var composers =
                                     _snapshotWorksWriterRepository.GetAllWritersForCloneTrackId(

@@ -5,7 +5,8 @@ namespace UMPG.USL.API.Data.DataHarmonization
 {
     public interface ISnapshotSampleRepository
     {
-        List<Snapshot_RecsCopyright> GetAllSamplesForRecsCopyrightByCloneTrackId(int cloneTrackId);
-        bool DeleteSampleBySampleSnapshotId(int sampleSnapshotId);
+        Snapshot_Sample SaveSampleSnapshot(Snapshot_Sample sampleSnapshot);
+        List<Snapshot_Sample> GetAllSamplesForRecCopyrightId(int recsCopyrightId);
+        bool DeleteSampleSnapshot(Snapshot_Sample composerToDelete);
     }
 }

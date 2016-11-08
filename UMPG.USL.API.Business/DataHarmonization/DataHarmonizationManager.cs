@@ -1,6 +1,7 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
+using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.Models.DataHarmonization;
 using UMPG.USL.Models.LicenseModel;
 using UMPG.USL.Models.Recs;
@@ -238,7 +239,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.MechanicalOwnershipPercentage = (int)rec.MechanicalOwnershipPercentage;
                 if (rec.Composers != null)
                 {
-                    snapshot.Composers = CastToSnapshotWorksWriter(rec.Composers, workTrackId);
+                    snapshot.Composers = CastToSnapshotComposers(rec.Composers, workTrackId);
                 }
                 if (rec.Samples != null)
                 {
@@ -258,6 +259,323 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
             return snapshotList;
         }
+
+        private List<Snapshot_Composer> CastToSnapshotComposers(List<WorksWriter> composers, int workTrackId)
+        {
+            var snapshotList = new List<Snapshot_Composer>();
+
+            foreach (var writer in composers)
+            {
+                var snapshot = new Snapshot_Composer();
+                //cast writer base!
+                snapshot.CloneWorksTrackId = workTrackId;
+                if (writer.Contribution != null)
+                {
+                    snapshot.Contribution = (int)writer.Contribution;
+                }
+                if (writer.OriginalPublishers != null)
+                {
+                    snapshot.OriginalPublishers = CastToComposerOriginalPublishers(writer.OriginalPublishers,
+                        writer.CaeNumber);
+                }
+                snapshot.Affiliation = CastToComposerAffiliations(writer.Affiliation, writer.CaeNumber);
+                if (writer.KnownAs != null)
+                {
+                    snapshot.KnownAs = CastComposerKnownAs(writer.KnownAs, writer.CaeNumber);
+                }
+                if (writer.LicenseProductRecordingWriter != null)
+                {
+                    snapshot.LicenseRecordingId = writer.LicenseProductRecordingWriter.LicenseRecordingId;
+                }
+
+                snapshot.ParentSongDuration = writer.ParentSongDuration;
+                snapshot.CloneCaeNumber = writer.CaeNumber;
+                snapshot.IpCode = writer.IpCode;
+                snapshot.FullName = writer.FullName;
+                snapshot.CapacityCode = writer.CapacityCode;
+                snapshot.Capacity = writer.Capacity;
+                snapshot.MechanicalCollectablePercentage = writer.MechanicalCollectablePercentage.ToString();
+                snapshot.MechanicalOwnershipPercentage = writer.MechanicalOwnershipPercentage.ToString();
+          
+                snapshotList.Add(snapshot);
+
+
+
+            }
+            return snapshotList;
+        }
+
+        private List<Snapshot_ComposerAffiliation> CastToComposerAffiliations(List<Affiliation> affiliations,
+            int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_ComposerAffiliation>();
+            foreach (var affiliation in affiliations)
+            {
+                var snapshot = new Snapshot_ComposerAffiliation();
+                snapshot.IncomeGroup = affiliation.IncomeGroup;
+                snapshot.CloneWriterCaeNumber = caeNumber;
+                snapshot.WriterCaeNumber = caeNumber;
+                snapshot.Affiliations = castToComposerAffiliationsBases(affiliation.Affiliations, caeNumber);
+
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+        }
+
+        private List<Snapshot_ComposerAffiliationBase> castToComposerAffiliationsBases(List<AffiliationBase> affiliations,
+            int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_ComposerAffiliationBase>();
+            foreach (var affiliation in affiliations)
+            {
+                var snapshot = new Snapshot_ComposerAffiliationBase();
+                snapshot.EndDate = affiliation.EndDate;
+                snapshot.StartDate = affiliation.StartDate;
+                snapshot.SocietyAcronym = affiliation.SocietyAcronym;
+                snapshot.CloneWriterCaeNumber = caeNumber;
+                
+
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+        }
+        private List<Snapshot_ComposerKnownAs> CastComposerKnownAs(List<string> knownAsList, int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_ComposerKnownAs>();
+            foreach (var knownAs in knownAsList)
+            {
+                var snapshot = new Snapshot_ComposerKnownAs();
+                snapshot.KnownAs = knownAs;
+                snapshot.CloneWriterCaeCode = caeNumber;
+
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+        }
+
+        private List<Snapshot_ComposerOriginalPublisher> CastToComposerOriginalPublishers(
+            List<OriginalPublisher> originalPublishers, int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_ComposerOriginalPublisher>();
+            foreach (var originalPublisher in originalPublishers)
+            {
+                var snapshot = new Snapshot_ComposerOriginalPublisher();
+                snapshot.CloneCaeNumber = originalPublisher.CaeNumber;
+                snapshot.CloneWorksWriterCaeNumber = caeNumber;
+                snapshot.IpCode = originalPublisher.IpCode;
+                snapshot.FullName = originalPublisher.FullName;
+                snapshot.CapacityCode = originalPublisher.CapacityCode;
+                snapshot.MechanicalCollectablePercentage =  originalPublisher.MechanicalCollectablePercentage.ToString();
+                snapshot.MechanicalOwnershipPercentage = originalPublisher.MechanicalOwnershipPercentage.ToString();
+                snapshot.Controlled = originalPublisher.Controlled;
+                if (originalPublisher.Affiliation != null)
+                {
+                    snapshot.Affiliation = CastToComposerOriginalPublisherAffiliations(originalPublisher.Affiliation,
+                        caeNumber);
+                }
+                if (originalPublisher.KnownAs != null)
+                {
+                    snapshot.KnownAs = CastComposerOriginalPublisherKnownAs(originalPublisher.KnownAs, caeNumber);
+                }
+                if (originalPublisher.Administrator != null)
+                {
+                    snapshot.Administrator =
+                        CastSnapshotComposerOriginalPublisherAdministrators(originalPublisher.Administrator, caeNumber);
+                }
+
+
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+        }
+
+        private List<Snapshot_ComposerOriginalPublisherAdministrator>
+            CastSnapshotComposerOriginalPublisherAdministrators(List<WriterBase> administrators, int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_ComposerOriginalPublisherAdministrator>();
+            foreach (var admin in administrators)
+            {
+                var snapshot = new Snapshot_ComposerOriginalPublisherAdministrator();
+                snapshot.CloneCaeNumber = caeNumber;
+                snapshot.IpCode = admin.IpCode;
+                snapshot.FullName = admin.FullName;
+                snapshot.CapacityCode = admin.CapacityCode;
+                snapshot.Capacity = admin.Capacity;
+                snapshot.MechanicalOwnershipPercentage = (int) admin.MechanicalOwnershipPercentage;
+                snapshot.MechanicalCollectablePercentage = (int) admin.MechanicalCollectablePercentage;
+                snapshot.Controlled = admin.Controlled;
+                if (admin.Affiliation != null)
+                {
+                    snapshot.Affiliation = CastSnapshotComposerOriginalPublisherAdminAffiliations(admin.Affiliation,caeNumber);
+                }
+                if (admin.KnownAs != null)
+                {
+                    snapshot.KnownAs = CastSnapshotComposerOriginalPublisherAdminKnownAs(admin.KnownAs, caeNumber);
+                }
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+        }
+
+        private List<Snapshot_ComposerOriginalPublisherAdminAffiliation>
+            CastSnapshotComposerOriginalPublisherAdminAffiliations(List<Affiliation> affiliations, int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_ComposerOriginalPublisherAdminAffiliation>();
+            foreach (var affiliation in affiliations)
+            {
+                var snapshot = new Snapshot_ComposerOriginalPublisherAdminAffiliation();
+
+                snapshot.CloneWriterCaeNumber = caeNumber;
+                snapshot.WriterCaeNumber = caeNumber;
+                snapshot.IncomeGroup = affiliation.IncomeGroup;
+                snapshot.Affiliations = CastToComposerOriginalPublisherAdminAffiliationBase(affiliation.Affiliations,
+                    caeNumber);
+
+
+
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+
+        }
+
+        private List<Snapshot_ComposerOriginalPublisherAdminAffiliationBase>
+            CastToComposerOriginalPublisherAdminAffiliationBase(List<AffiliationBase> affiliationBases, int CaeNumber)
+        {
+            var snapshotList = new List<Snapshot_ComposerOriginalPublisherAdminAffiliationBase>();
+            foreach (var affiliationBase in affiliationBases)
+            {
+                var snapshot = new Snapshot_ComposerOriginalPublisherAdminAffiliationBase();
+                snapshot.CloneWriterCaeNumber = CaeNumber;
+                snapshot.EndDate = affiliationBase.EndDate;
+                snapshot.SocietyAcronym = affiliationBase.SocietyAcronym;
+                snapshot.StartDate = affiliationBase.StartDate;
+
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+        }
+
+        private List<Snapshot_ComposerOriginalPublisherAdminKnownAs> CastSnapshotComposerOriginalPublisherAdminKnownAs(
+            List<string> knowAsList, int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_ComposerOriginalPublisherAdminKnownAs>();
+            foreach (var knownAs in knowAsList)
+            {
+                var snapshot = new Snapshot_ComposerOriginalPublisherAdminKnownAs();
+                snapshot.KnownAs = knownAs;
+                snapshot.CloneWriterCaeCode = caeNumber;
+
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+        }
+
+        private List<Snapshot_ComposerOriginalPublisherKnownAs> CastComposerOriginalPublisherKnownAs(
+            List<string> knownAsList, int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_ComposerOriginalPublisherKnownAs>();
+
+            foreach (var knownAs in knownAsList)
+            {
+                var snapshot = new Snapshot_ComposerOriginalPublisherKnownAs();
+                snapshot.CloneWriterCaeCode = caeNumber;
+                snapshot.KnownAs = knownAs;
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+        }
+
+        private List<Snapshot_ComposerOriginalPublisherAffiliation> CastToComposerOriginalPublisherAffiliations(
+            List<Affiliation> affiliations, int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_ComposerOriginalPublisherAffiliation>();
+            foreach (var affiliation in affiliations)
+            {
+                var snapshot = new Snapshot_ComposerOriginalPublisherAffiliation();
+
+                snapshot.CloneWriterCaeNumber = caeNumber;
+                snapshot.WriterCaeNumber = caeNumber;
+                snapshot.IncomeGroup = affiliation.IncomeGroup;
+                snapshot.Affiliations = CastTiSnapshotComposerOriginalPublisherAffiliationBases(
+                    affiliation.Affiliations, caeNumber);
+
+
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+        }
+
+        private List<Snapshot_ComposerOriginalPublisherAffiliationBase>
+            CastTiSnapshotComposerOriginalPublisherAffiliationBases(List<AffiliationBase> affiliationBases,
+                int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_ComposerOriginalPublisherAffiliationBase>();
+            foreach (var affiliationBase in affiliationBases)
+            {
+                var snapshot = new Snapshot_ComposerOriginalPublisherAffiliationBase();
+                snapshot.CloneWriterCaeNumber = caeNumber;
+                snapshot.EndDate = affiliationBase.EndDate;
+                snapshot.StartDate = affiliationBase.StartDate;
+                snapshot.SocietyAcronym = affiliationBase.SocietyAcronym;
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+        }
+
+        private List<Snapshot_Sample> CastToSnapshotSamples(List<RecsCopyrights> samples, int workTrackId)
+        {
+            var snapshotList = new List<Snapshot_Sample>();
+            foreach (var sample in samples)
+            {
+                
+                var snapshot = new Snapshot_Sample();
+                snapshot.CloneWorksTrackId = workTrackId;
+                snapshot.WorkCode = sample.WorkCode;
+                snapshot.Title = sample.Title;
+                snapshot.PrincipalArtist = sample.PrincipalArtist;
+                snapshot.Writers = sample.Writers;
+                snapshot.WriteString = sample.WriteString;
+                snapshot.MechanicalCollectablePercentage = (int) sample.MechanicalCollectablePercentage;
+                snapshot.MechanicalOwnershipPercentage = (int) sample.MechanicalOwnershipPercentage;
+                snapshot.LocalClients = CastToLocalClientSnapshot(sample.LocalClients, workTrackId);
+                snapshot.AquisitionLocationCodes = CastToAquisitionLocationCodes(sample.AquisitionLocationCode,workTrackId);
+                    
+                snapshotList.Add(snapshot);
+            }
+            
+            return snapshotList;
+        }
+
+        private List<Snapshot_SampleAquisitionLocationCode> CastToAquisitionLocationCodes(List<string> locationCodes,
+            int worksTrackId)
+        {
+            var snapshotList = new List<Snapshot_SampleAquisitionLocationCode>();
+
+            foreach (var locationCode in locationCodes)
+            {
+                var snapshot = new Snapshot_SampleAquisitionLocationCode();
+                snapshot.CloneWorksTrackId = worksTrackId;
+                snapshot.AquisitionLocationCode = locationCode;
+            }
+            return snapshotList;
+        }
+
+        private List<Snapshot_SampleLocalClientCopyright> CastToLocalClientSnapshot(
+            List<LocalClientCopyright> localClientCopyrights, int workTrackId)
+        {
+            var snapshotList = new List<Snapshot_SampleLocalClientCopyright>();
+            foreach (var localClientCopyright in localClientCopyrights)
+            {
+                var snapshot = new Snapshot_SampleLocalClientCopyright();
+                snapshot.CloneWorksTrackId = workTrackId;
+                snapshot.ClientCode = localClientCopyright.ClientCode;
+                snapshot.ClientName = localClientCopyright.ClientName;
+                snapshotList.Add(snapshot);
+            }
+            return snapshotList;
+        }
+
 
         private List<Snapshot_WorksWriter> CastToSnapshotWorksWriter(List<WorksWriter> writers, int workTrackId)
         {
@@ -604,11 +922,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return snapshotList;
         }
 
-        private List<Snapshot_RecsCopyright> CastToSnapshotSamples(List<RecsCopyrights> samples, int workTrackId)
-        {
-            return CastToSnapshotRecsCopyrights(samples, workTrackId);
-        }
-
+ 
         private List<Snapshot_LocalClientCopyright> CastToSnapshotLocalClientCopyrights(List<LocalClientCopyright> localClientCopyrights, int workTrackId)
         {
             var snapshotList = new List<Snapshot_LocalClientCopyright>();

@@ -139,8 +139,23 @@ namespace UMPG.USL.API.Data.Installer
             container.Register(Component.For<ISnapshotOriginalPublisherAffiliationRepository>().ImplementedBy<SnapshotOriginalPublisherAffiliationRepository>());
             container.Register(Component.For<ISnapshotAdminKnownAsRepository>().ImplementedBy<SnapshotAdminKnownAsRepository>());
             container.Register(Component.For<ISnapshotAffiliationBaseRepository>().ImplementedBy<SnapshotAffiliationBaseRepository>());
-
+            container.Register(Component.For<ISnapshotComposerRepository>().ImplementedBy<SnapshotComposerRepository>());
+            container.Register(Component.For<ISnapshotComposerAffiliationRepository>().ImplementedBy<SnapshotComposerAffiliationRepository>());
+            container.Register(Component.For<ISnapshotComposerAffiliationBaseRepository>().ImplementedBy<SnapshotComposerAffiliationBaseRepository>());
+            container.Register(Component.For<ISnapshot_ComposerKnownAsRepository>().ImplementedBy<Snapshot_ComposerKnownAsRepository>());
+            container.Register(Component.For<ISnapshot_ComposerOriginalPublisherRepository>().ImplementedBy<Snapshot_ComposerOriginalPublisherRepository>());
+            container.Register(Component.For<ISnapshot_ComposerOriginalPublisherKnownAsRepository>().ImplementedBy<Snapshot_ComposerOriginalPublisherKnownAsRepository>());
+            container.Register(Component.For<ISnapshotSampleLocalClientCopyrightRepository>().ImplementedBy<SnapshotSampleLocalClientCopyrightRepository>());
+            container.Register(Component.For<ISnapshotSampleAquisitionLocationCodeRepository>().ImplementedBy<SnapshotSampleAquisitionLocationCodeRepository>());
+            container.Register(Component.For<ISnapshotSampleRepository>().ImplementedBy<SnapshotSampleRepository>());
+            container.Register(Component.For<ISnapshot_ComposerOriginalPublisherAffiliationRepository>().ImplementedBy<Snapshot_ComposerOriginalPublisherAffiliationRepository>());
+            container.Register(Component.For<ISnapshotComposerOriginalPublisherAffiliationBaseRepository>().ImplementedBy<SnapshotComposerOriginalPublisherAffiliationBaseRepository>());
+            container.Register(Component.For<ISnapshotComposerOriginalPublisherAdministratorRepository>().ImplementedBy<SnapshotComposerOriginalPublisherAdministratorRepository>());
+            container.Register(Component.For<ISnapshotComposerOriginalPublisherAdminAffiliationRepository>().ImplementedBy<SnapshotComposerOriginalPublisherAdminAffiliationRepository>());
+            container.Register(Component.For<ISnapshotComposerOriginalPublisherAdminAffiliationBaseRepository>().ImplementedBy<SnapshotComposerOriginalPublisherAdminAffiliationBaseRepository>());
+            container.Register(Component.For<ISnapshotComposerOriginalPublisherAdminKnownAsRepository>().ImplementedBy<SnapshotComposerOriginalPublisherAdminKnownAsRepository>());
             
+
 
             container.Register(Component.For<IMapper<string, ProductRequest>>().ImplementedBy<ProductSearchCriteriaMapper>().LifestyleSingleton());
             container.Register(Component.For<IMapper<string, LicenseRequest>>().ImplementedBy<LicenseSearchCriteriaMapper>().LifestyleSingleton());

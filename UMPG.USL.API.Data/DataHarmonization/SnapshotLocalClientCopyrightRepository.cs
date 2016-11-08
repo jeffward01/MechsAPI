@@ -33,5 +33,16 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
             return true;
         }
+
+        public Snapshot_LocalClientCopyright SaveLocalClientCopyright(Snapshot_LocalClientCopyright snapshotLabel)
+        {
+            using (var context = new AuthContext())
+            {
+                context.Snapshot_LocalClientCopyrights.Add(snapshotLabel);
+                context.SaveChanges();
+                return snapshotLabel;
+            }
+        }
+
     }
 }

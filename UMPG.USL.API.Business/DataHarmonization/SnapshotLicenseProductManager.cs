@@ -31,7 +31,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private readonly ISnapshotKnownAsRepository _snapshotKnownAsRepository;
         private readonly ISnapshotOriginalPublisherRepository _snapshotOriginalPublisherRepository;
         private readonly ISnapshotRecsCopyrightRespository _snapshotRecsCopyrightRespository;
-        private readonly ISnapshotSampleRepository _snapshotSampleRepository;
+
         private readonly ISnapshotLocalClientCopyrightRepository _snapshotLocalClientCopyrightRepository;
         private readonly ISnapshotAquisitionLocationCodeRepository _aquisitionLocationCodeRepository;
         private readonly ISnapshotAdministratorRepository _snapshotAdministratorRepository;
@@ -42,9 +42,41 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private readonly ISnapshotOriginalPublisherAffiliationRepository _originalPublisherAffiliationRepository;
         private readonly ISnapshotOriginalPubAffiliationBaseRepository _originalPubAffiliationBaseRepository;
 
+        private readonly ISnapshotComposerRepository _snapshotComposerRepository;
+        private readonly ISnapshotComposerAffiliationRepository _composerAffiliationRepository;
+        private readonly ISnapshotComposerAffiliationBaseRepository _composerAffiliationBaseRepository;
+        private readonly ISnapshot_ComposerKnownAsRepository _composerKnownAsRepository;
+        private readonly ISnapshotComposerOriginalPublisherAffiliationBaseRepository _composerOriginalPublisherAffiliationBaseRepository;
+        private readonly ISnapshot_ComposerOriginalPublisherAffiliationRepository _composerOriginalPublisherAffiliationRepository;
+        private readonly ISnapshot_ComposerOriginalPublisherRepository _composerOriginalPublisherRepository;
+        private readonly ISnapshot_ComposerOriginalPublisherKnownAsRepository _composerOriginalPublisherKnownAsRepository;
+        private readonly ISnapshotSampleRepository _snapshotSampleRepository;
+        private readonly ISnapshotSampleAquisitionLocationCodeRepository _snapshotSampleAquisitionLocationCodeRepository;
+        private readonly ISnapshotSampleLocalClientCopyrightRepository _snapshotSampleLocalClientCopyrightRepository;
+        private readonly ISnapshotComposerOriginalPublisherAdministratorRepository _composerOriginalPublisherAdministratorRepository;
+        private readonly ISnapshotComposerOriginalPublisherAdminAffiliationRepository _composerOriginalPublisherAdminAffiliation;
+        private readonly ISnapshotComposerOriginalPublisherAdminAffiliationBaseRepository _composerOriginalPublisherAdminAffiliationBaseRepository;
+        private readonly ISnapshotComposerOriginalPublisherAdminKnownAsRepository _composerOriginalPublisherAdminKnownAsRepository;
 
         public SnapshotLicenseProductManager(ISnapshotLicenseRepository snapshotLicenseRepository,
-            ISnapshotOriginalPubAffiliationBaseRepository snapshotOriginalPubAffiliationBaseRepository,
+
+            ISnapshotComposerOriginalPublisherAdminKnownAsRepository composerOriginalPublisherAdminKnownAsRepository,
+        ISnapshotComposerRepository snapshotComposerRepository,
+        ISnapshotComposerAffiliationRepository composerAffiliationRepository,
+        ISnapshotComposerAffiliationBaseRepository composerAffiliationBaseRepository,
+        ISnapshot_ComposerKnownAsRepository composerKnownAsRepository,
+        ISnapshotComposerOriginalPublisherAffiliationBaseRepository composerOriginalPublisherAffiliationBaseRepository,
+        ISnapshot_ComposerOriginalPublisherAffiliationRepository composerOriginalPublisherAffiliationRepository,
+        ISnapshot_ComposerOriginalPublisherRepository composerOriginalPublisherRepository,
+        ISnapshot_ComposerOriginalPublisherKnownAsRepository composerOriginalPublisherKnownAsRepository,
+        ISnapshotSampleRepository snapshotSampleRepository,
+        ISnapshotSampleAquisitionLocationCodeRepository snapshotSampleAquisitionLocationCodeRepository,
+        ISnapshotSampleLocalClientCopyrightRepository snapshotSampleLocalClientCopyrightRepository,
+        ISnapshotComposerOriginalPublisherAdministratorRepository composerOriginalPublisherAdministratorRepository,
+        ISnapshotComposerOriginalPublisherAdminAffiliationRepository composerOriginalPublisherAdminAffiliationRepository,
+        ISnapshotComposerOriginalPublisherAdminAffiliationBaseRepository composerOriginalPublisherAdminAffiliationBaseRepository,
+
+        ISnapshotOriginalPubAffiliationBaseRepository snapshotOriginalPubAffiliationBaseRepository,
             ISnapshotOriginalPublisherAffiliationRepository snapshotOriginalPublisherAffiliationRepository,
             ISnapshotAffiliationBaseRepository affiliationBaseRepository,
             ISnapshotAdminKnownAsRepository snapshotAdminKnownAsRepository,
@@ -53,7 +85,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
             ISnapshotAdministratorRepository snapshotAdministratorRepository,
             ISnapshotAquisitionLocationCodeRepository aquisitionLocationCodeRepository,
             ISnapshotRecsCopyrightRespository snapshotRecsCopyrightRespository,
-            ISnapshotSampleRepository snapshotSampleRepository,
             ISnapshotOriginalPublisherRepository snapshotOriginalPublisherRepository,
             ISnapshotKnownAsRepository snapshotKnownAsRepository,
             ISnapshotAffiliationRepository snapshotAffiliationRepository,
@@ -75,6 +106,22 @@ namespace UMPG.USL.API.Business.DataHarmonization
             ISnapshotLocalClientCopyrightRepository snapshotLocalClientCopyrightRepository,
             ISnapshotLicenseeLabelGroupRepository snalshotLabelGroupRepository)
         {
+            _composerOriginalPublisherAdminKnownAsRepository = composerOriginalPublisherAdminKnownAsRepository;
+            _composerOriginalPublisherAdminAffiliationBaseRepository = composerOriginalPublisherAdminAffiliationBaseRepository;
+            _composerOriginalPublisherAdminAffiliation = composerOriginalPublisherAdminAffiliationRepository;
+            _composerOriginalPublisherAdministratorRepository = composerOriginalPublisherAdministratorRepository;
+            _snapshotSampleRepository = snapshotSampleRepository;
+            _snapshotComposerRepository = snapshotComposerRepository;
+            _composerAffiliationRepository = composerAffiliationRepository;
+            _composerAffiliationBaseRepository = composerAffiliationBaseRepository;
+            _composerKnownAsRepository = composerKnownAsRepository;
+            _composerOriginalPublisherAffiliationBaseRepository = composerOriginalPublisherAffiliationBaseRepository;
+            _composerOriginalPublisherAffiliationRepository = composerOriginalPublisherAffiliationRepository;
+            _composerOriginalPublisherRepository = composerOriginalPublisherRepository;
+            _composerOriginalPublisherKnownAsRepository = composerOriginalPublisherKnownAsRepository;
+            _snapshotSampleAquisitionLocationCodeRepository = snapshotSampleAquisitionLocationCodeRepository;
+            _snapshotSampleLocalClientCopyrightRepository = snapshotSampleLocalClientCopyrightRepository;
+
             _affiliationBaseRepository = affiliationBaseRepository;
             _originalPubAffiliationBaseRepository = snapshotOriginalPubAffiliationBaseRepository;
             _originalPublisherAffiliationRepository = snapshotOriginalPublisherAffiliationRepository;
@@ -84,7 +131,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
             _snapshotAdministratorRepository = snapshotAdministratorRepository;
             _aquisitionLocationCodeRepository = aquisitionLocationCodeRepository;
             _snapshotLocalClientCopyrightRepository = snapshotLocalClientCopyrightRepository;
-            _snapshotSampleRepository = snapshotSampleRepository;
             _snapshotRecsCopyrightRespository = snapshotRecsCopyrightRespository;
             _snapshotOriginalPublisherRepository = snapshotOriginalPublisherRepository;
             _snapshotKnownAsRepository = snapshotKnownAsRepository;
@@ -134,7 +180,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 var label = productHeader.Label;
                 productHeader.Label = null;
 
-
                 var labelGroups = label.RecordLabelGroups;
                 label.RecordLabelGroups = null;
 
@@ -143,17 +188,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
                 _snapshotArtistRecsRepository.SaveSnapshotArtistRecs(artist);
 
-  
-
-
                 _snapshotLabelRepository.SaveSnapshotLabel(label);
 
                 foreach (var labelGroup in labelGroups)
                 {    //save labelGroup
                     _snapshotLabelGroupRepository.SaveSnapshotLabelGroup(labelGroup);
                 }
-
-      
 
                 if (recsConfig != null)
                 {
@@ -202,11 +242,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                             var artist = track.Artist;
                             track.Artist = null;
 
-                           
-
-
                             _snapshotWorkTrackRepository.SaveWorksTrack(track);
-
 
                             //save artist
                             _snapshotArtistRecsRepository.SaveSnapshotArtistRecs(artist);
@@ -226,27 +262,299 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                 var copyRightLocationCodes = copyRight.AquisitionLocationCodes;
                                 copyRight.AquisitionLocationCodes = null;
 
-                                _____
+                                //save copyright, get PK.
+                                var savedRecsCopyright = _snapshotRecsCopyrightRespository.SaveSnapshotWorksRecording(copyRight);
+
+                                if (copyRightLocationCodes != null)
+                                {
+                                    foreach (var copyRightLocationCode in copyRightLocationCodes)
+                                    {
+                                        copyRightLocationCode.SnapshotRecsCopyrightId =
+                                            savedRecsCopyright.SnapshotRecsCopyrightsId;
+
+                                        _aquisitionLocationCodeRepository.SaveAquisitionLocationCode(
+                                            copyRightLocationCode);
+                                    }
+                                }
+
+                                if (copyRightLocalClients != null)
+                                {
+                                    foreach (var copyRightLocalClient in copyRightLocalClients)
+                                    {
+                                        copyRightLocalClient.SnapshotRecsCopyrightId =
+                                   savedRecsCopyright.SnapshotRecsCopyrightsId;
+
+                                        _snapshotLocalClientCopyrightRepository.SaveLocalClientCopyright(
+                                            copyRightLocalClient);
+                                    }
+                                }
+
+                                if (copyRightSamples != null)
+                                {
+                                    foreach (var copyRightSample in copyRightSamples)
+                                    {
+                                        var localClientSamples = copyRightSample.LocalClients;
+                                        copyRightSample.LocalClients = null;
+
+                                        var localAquisitionLocaitonCodes = copyRightSample.AquisitionLocationCodes;
+                                        copyRightSample.AquisitionLocationCodes = null;
+
+                                        //assign fk
+                                        copyRightSample.SnapshotRecsCopyrightId =
+                                            savedRecsCopyright.SnapshotRecsCopyrightsId;
+
+                                        //save
+                                        var savedSample = _snapshotSampleRepository.SaveSampleSnapshot(copyRightSample);
+
+                                        if (localAquisitionLocaitonCodes != null)
+                                        {
+                                            foreach (var localAquisitionLocaitonCode in localAquisitionLocaitonCodes)
+                                            {
+                                                localAquisitionLocaitonCode.SnapshotSampleId =
+                                                    savedSample.SnapshotSampleId;
+
+                                                _snapshotSampleAquisitionLocationCodeRepository
+                                                    .SaveSampleAquisitionLocationCode(localAquisitionLocaitonCode);
+                                            }
+                                        }
+
+                                        if (localClientSamples != null)
+                                        {
+                                            foreach (var localClientSample in localClientSamples)
+                                            {
+                                                localClientSample.SnapshotSampleId = savedSample.SnapshotSampleId;
+
+                                                _snapshotSampleLocalClientCopyrightRepository
+                                                    .SaveSampleLocalClientCopyright(localClientSample);
+                                            }
+                                        }
+                                    }
+                                }
 
                                 //create new entities, save them.
+                                if (copyRightComposers != null)
+                                {
+                                    foreach (var copyRightComposer in copyRightComposers)
+                                    {
+                                        //done
+                                        var composerAffiliations = copyRightComposer.Affiliation;
+                                        copyRightComposer.Affiliation = null;
+
+                                        //done
+                                        var composerKnownAs = copyRightComposer.KnownAs;
+                                        copyRightComposer.KnownAs = null;
+
+                                        var composerOriginalPublishers = copyRightComposer.OriginalPublishers;
+                                        copyRightComposer.OriginalPublishers = null;
+
+                                        copyRightComposer.SnapshotRecsCopyrightId =
+                                            savedRecsCopyright.SnapshotRecsCopyrightsId;
+
+                                        //save composer, get pk
+                                        var savedComposer = _snapshotComposerRepository.SaveComposerSnapshot(copyRightComposer);
+
+                                        if (composerOriginalPublishers != null)
+                                        {
+                                            foreach (var composerOriginalPublisher in composerOriginalPublishers)
+                                            {
+                                                //done
+                                                var composerOriginalPublisherKnownAs = composerOriginalPublisher.KnownAs;
+                                                composerOriginalPublisher.KnownAs = null;
+
+                                                //done
+                                                var composerOriginalPublisherAffiliations =
+                                                    composerOriginalPublisher.Affiliation;
+                                                composerOriginalPublisher.Affiliation = null;
+
+                                                var composerOriginalPubliserAdmins =
+                                                    composerOriginalPublisher.Administrator;
+                                                composerOriginalPublisher.Administrator = null;
+
+                                                //assign fk
+                                                composerOriginalPublisher.SnapshotComposerId =
+                                                    savedComposer.SnapshotComposerId;
+
+                                                //save
+                                                var savedComposerOriginalPublisher = _composerOriginalPublisherRepository.SaveComposerOriginalPublisher(
+                                                    composerOriginalPublisher);
+
+                                                if (composerOriginalPublisherKnownAs != null)
+                                                {
+                                                    foreach (var known in composerOriginalPublisherKnownAs)
+                                                    {
+                                                        known.SnapshotComposerOriginalPublisherId =
+                                                            savedComposerOriginalPublisher
+                                                                .SnapshotComposerOriginalPublisherId;
+
+                                                        _composerOriginalPublisherKnownAsRepository
+                                                            .SaveComposerOriginalPublisherKnownAs(known);
+                                                    }
+                                                }
+
+                                                if (composerOriginalPublisherAffiliations != null)
+                                                {
+                                                    foreach (var composerOriginalPublisherAffiliation in composerOriginalPublisherAffiliations)
+                                                    {
+                                                        var composerOpAffiliationBases =
+                                                            composerOriginalPublisherAffiliation.Affiliations;
+                                                        composerOriginalPublisherAffiliation.Affiliations = null;
+
+                                                        composerOriginalPublisherAffiliation
+                                                                .SnapshotComposerOriginalPublisherId =
+                                                            savedComposerOriginalPublisher
+                                                                .SnapshotComposerOriginalPublisherId;
+
+                                                        var savedComposerOriginalPublisherAffiliation = _composerOriginalPublisherAffiliationRepository
+                                                            .SaveComposerOriginalPublisherAffiliation(
+                                                                composerOriginalPublisherAffiliation);
+
+                                                        if (composerOpAffiliationBases != null)
+                                                        {
+                                                            foreach (var composerOpAffiliationBase in composerOpAffiliationBases)
+                                                            {
+                                                                composerOpAffiliationBase
+                                                                        .SnapshotComposerOriginalPublisherAffiliationId =
+                                                                    savedComposerOriginalPublisherAffiliation
+                                                                        .SnapshotComposerOriginalPublisherAffiliationId;
+
+                                                                _composerOriginalPublisherAffiliationBaseRepository
+                                                                    .SaveComposerOriginalPublisherAffiliationBase(
+                                                                        composerOpAffiliationBase);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                if (composerOriginalPubliserAdmins != null)
+                                                {
+                                                    foreach (var composerOriginalPubliserAdmin in composerOriginalPubliserAdmins)
+                                                    {
+                                                        var composerOpAdminAffiliations =
+                                                            composerOriginalPubliserAdmin.Affiliation;
+                                                        composerOriginalPubliserAdmin.Affiliation = null;
+
+                                                        var composerOpadminKnownAs =
+                                                            composerOriginalPubliserAdmin.KnownAs;
+                                                        composerOriginalPubliserAdmin.KnownAs = null;
+
+                                                        //add fk
+                                                        composerOriginalPubliserAdmin
+                                                                .SnapshotComposerOriginalPublisherId =
+                                                            savedComposerOriginalPublisher
+                                                                .SnapshotComposerOriginalPublisherId;
+
+                                                        var savedComposerOPadmin = _composerOriginalPublisherAdministratorRepository
+                                                            .SaveComposerOriginalPublisherAdministrator(
+                                                                composerOriginalPubliserAdmin);
+
+                                                        if (composerOpAdminAffiliations != null)
+                                                        {
+                                                            foreach (var composerOpAdminAffiliation in composerOpAdminAffiliations)
+                                                            {
+                                                                var affiliationBases =
+                                                                    composerOpAdminAffiliation.Affiliations;
+                                                                composerOpAdminAffiliation.Affiliations = null;
+
+                                                                composerOpAdminAffiliation
+                                                                        .SnapshotComposerOriginalPublisherAdministratorId =
+                                                                    savedComposerOPadmin
+                                                                        .SnapshotComposerOriginalPublisherAdministratorId;
+
+                                                                var savedComposerOPAdminAffiliation = _composerOriginalPublisherAdminAffiliation
+                                                                    .SaveComposerOriginalPublisherAdminAffiliation(
+                                                                        composerOpAdminAffiliation);
+
+                                                                if (affiliationBases != null)
+                                                                {
+                                                                    foreach (var affiliationBase in affiliationBases)
+                                                                    {
+                                                                        //assign FK
+                                                                        affiliationBase
+                                                                                .SnapshotComposerOriginalPublisherAdminAffiliationId
+                                                                            =
+                                                                            savedComposerOPAdminAffiliation
+                                                                                .SnapshotComposerOriginalPublisherAdminAffiliationId;
+
+                                                                        //save
+                                                                        _composerOriginalPublisherAdminAffiliationBaseRepository
+                                                                            .SaveComposerOriginalPublisherAdminAffiliationBase
+                                                                            (affiliationBase);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
+                                                        if (composerOpadminKnownAs != null)
+                                                        {
+                                                            foreach (var known in composerOpadminKnownAs)
+                                                            {
+                                                                //assign fk
+                                                                known.SnapshotComposerOriginalPublisherAdministratorId =
+                                                                    savedComposerOPadmin
+                                                                        .SnapshotComposerOriginalPublisherAdministratorId;
+
+                                                                //save
+                                                                _composerOriginalPublisherAdminKnownAsRepository
+                                                                    .SaveSnapshotComposerOriginalPublisherAdminKnownAs(
+                                                                        known);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        if (composerKnownAs != null)
+                                        {
+                                            foreach (var knwon in composerKnownAs)
+                                            {
+                                                //assign fk
+                                                knwon.SnapshotComposerId = savedComposer.SnapshotComposerId;
+
+                                                //save known
+                                                _composerKnownAsRepository.SaveComposerKnownAs(knwon);
+                                            }
+                                        }
+
+                                        if (composerAffiliations != null)
+                                        {
+                                            foreach (var composerAffiliation in composerAffiliations)
+                                            {
+                                                var composerAffiliationBases = composerAffiliation.Affiliations;
+                                                composerAffiliation.Affiliations = null;
+
+                                                //assign fk to composerAffiliation
+                                                composerAffiliation.SnapshotComposerId =
+                                                    savedComposer.SnapshotComposerId;
+
+                                                //save composer affilliation and get PK
+                                                var savedComposedAffiliation =
+                                                    _composerAffiliationRepository.SaveComposerAffiliationSnapshot(
+                                                        composerAffiliation);
+
+                                                foreach (var composerAffiliationBase in composerAffiliationBases)
+                                                {
+                                                    //assign fk
+                                                    composerAffiliationBase.SnapshotComposerAffiliationId =
+                                                        savedComposedAffiliation.SnapshotComposerAffiliationId;
+                                                    //save
+                                                    _composerAffiliationBaseRepository
+                                                        .SaveComposerAffiliatioBasenSnapshot(composerAffiliationBase);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
 
                                 //save
                                 _snapshotRecsCopyrightRespository.SaveSnapshotWorksRecording(copyRight);
-
                             }
-
                         }
 
-          
-
-                
-
-                     
                         if (writerList != null)
                         {
                             foreach (var writer in writerList)
                             {
-
                                 var affiliations = writer.Affiliation;
                                 writer.Affiliation = null;
 
@@ -261,7 +569,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                 //save writer, get key
                                 var saveWorksWriter = _snapshotWorksWriterRepository.SaveWorksWriter(writer);
                                 //save writer affiliation
-                             
 
                                 if (affiliations != null)
                                 {
@@ -269,10 +576,9 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                     {
                                         var affiliationBases = affilation.Affiliations;
                                         affilation.Affiliations = null;
-                                      
 
                                         affilation.SnapshotWorksWriterId = saveWorksWriter.SnapshotWorksWriterId;
-                                      var savedAffiliation =  _snapshotAffiliationRepository.SaveSnapshotAffiliation(affilation);
+                                        var savedAffiliation = _snapshotAffiliationRepository.SaveSnapshotAffiliation(affilation);
 
                                         if (affiliationBases != null)
                                         {
@@ -284,11 +590,10 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                                 _affiliationBaseRepository.SaveSnapshotAffiliationBase(affiliationBase);
                                             }
                                         }
-
                                     }
                                 }
                                 //save writer knownAs
-                          
+
                                 if (knownAs != null)
                                 {
                                     foreach (var knwn in knownAs)
@@ -297,15 +602,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                     }
                                 }
 
-                          
-
                                 if (originalPubs != null)
                                 {
                                     //save original pub
                                     //save knownAs (not implemented)
                                     foreach (var oPub in originalPubs)
                                     {
-
                                         oPub.SnapshotWorksWriterId = saveWorksWriter.SnapshotWorksWriterId;
                                         var administrators = oPub.Administrator;
                                         oPub.Administrator = null;
@@ -359,9 +661,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                                 }
                                             }
                                         }
-
-
-                          
 
                                         if (administrators != null)
                                         {

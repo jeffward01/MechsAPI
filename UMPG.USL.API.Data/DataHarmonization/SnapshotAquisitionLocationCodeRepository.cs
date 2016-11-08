@@ -33,5 +33,15 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
             return true;
         }
+
+        public Snapshot_AquisitionLocationCode SaveAquisitionLocationCode(Snapshot_AquisitionLocationCode snapshotLabel)
+        {
+            using (var context = new AuthContext())
+            {
+                context.Snapshot_AquisitionLocationCodes.Add(snapshotLabel);
+                context.SaveChanges();
+                return snapshotLabel;
+            }
+        }
     }
 }

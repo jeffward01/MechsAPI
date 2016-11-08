@@ -7,21 +7,34 @@ namespace UMPG.USL.API.Data.DataHarmonization
 {
     public class SnapshotSampleRepository : ISnapshotSampleRepository
     {
-        public List<Snapshot_RecsCopyright> GetAllSamplesForRecsCopyrightByCloneTrackId(int cloneTrackId)
+        public Snapshot_Sample SaveSampleSnapshot(Snapshot_Sample sampleSnapshot)
         {
             using (var context = new AuthContext())
             {
-                return context.Snapshot_RecsCopyrights.Where(_ => _.CloneWorksTrackId == cloneTrackId).ToList();
+                context.Snapshot_Samples.Add(sampleSnapshot);
+                context.SaveChanges();
+                return sampleSnapshot;
             }
         }
 
-        public bool DeleteSampleBySampleSnapshotId(int sampleSnapshotId)
+        public List<Snapshot_Sample> GetAllSamplesForRecCopyrightId(int recsCopyrightId)
         {
             using (var context = new AuthContext())
             {
-                var sample = context.Snapshot_RecsCopyrights.Find(sampleSnapshotId);
-                context.Snapshot_RecsCopyrights.Attach(sample);
-                context.Snapshot_RecsCopyrights.Remove(sample);
+                return context.Snapshot_Samples.Where(sl => sl.SnapshotRecsCopyrightId == recsCopyrightId).ToList();
+            }
+        }
+
+        public bool DeleteSampleSnapshot(Snapshot_Sample composerToDelete)
+        {
+            using (var context = new AuthContext())
+            {
+                var composer =
+                    context.Snapshot_Samples
+                        .Find(composerToDelete.SnapshotSampleId);
+
+                context.Snapshot_Samples.Attach(composer);
+                context.Snapshot_Samples.Remove(composer);
                 try
                 {
                     context.SaveChanges();
@@ -30,8 +43,8 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 {
                     return false;
                 }
+                return true;
             }
-            return true;
         }
     }
 }

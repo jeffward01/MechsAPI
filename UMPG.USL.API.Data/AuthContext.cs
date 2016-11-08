@@ -210,6 +210,37 @@ namespace UMPG.USL.API.Data
         public DbSet<Snapshot_OriginalPubAffiliationBase> Snapshot_OriginalPublisherAffiliationBases { get; set; }
         public DbSet<Snapshot_AdminKnownAs> Snapshot_AdminKnownAs { get; set; }
 
+        //composer tables
+        public DbSet<Snapshot_Composer> Snapshot_Composers { get; set; }
+
+        public DbSet<Snapshot_ComposerAffiliation> Snapshot_ComposerAffiliations { get; set; }
+        public DbSet<Snapshot_ComposerAffiliationBase> Snapshot_ComposerAffiliationBases { get; set; }
+        public DbSet<Snapshot_ComposerKnownAs> Snapshot_ComposerKnownAs { get; set; }
+        public DbSet<Snapshot_SampleAquisitionLocationCode> Snapshot_SampleAquisitionLocationCodes { get; set; }
+        public DbSet<Snapshot_SampleLocalClientCopyright> Snapshot_SampleLocalClientCopyrights { get; set; }
+
+        public DbSet<Snapshot_Sample> Snapshot_Samples { get; set; }
+
+        public DbSet<Snapshot_ComposerOriginalPublisherKnownAs> Snapshot_ComposerOriginalPublisherKnownAs { get; set; }
+        public DbSet<Snapshot_ComposerOriginalPublisher> Snapshot_ComposerOriginalPublishers { get; set; }
+
+        public DbSet<Snapshot_ComposerOriginalPublisherAffiliation> Snapshot_COmposerOriginalPublisherAffiliations { get; set; }
+        public DbSet<Snapshot_ComposerOriginalPublisherAffiliationBase> Snapshot_ComposerOriginalPublisherAffiliationBases { get; set; }
+
+        public DbSet<Snapshot_ComposerOriginalPublisherAdministrator> Snapshot_ComposerOriginalPublisherAdministrator { get; set; }
+
+        public DbSet<Snapshot_ComposerOriginalPublisherAdminAffiliation> Snapshot_ComposerOriginalPublisherAdminAffiliations { get; set; }
+
+        public DbSet<Snapshot_ComposerOriginalPublisherAdminAffiliationBase> Snapshot_ComposerOriginalPublisherAdminAffiliationBases { get; set; }
+
+        public DbSet<Snapshot_ComposerOriginalPublisherAdminKnownAs> Snapshot_ComposerOriginalPublisherAdminKnownAs { get; set; }
+
+
+
+
+
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -363,6 +394,9 @@ namespace UMPG.USL.API.Data
                 .HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.SnapshotOriginalPublisherAffiliationId);
 
 
+            //modelBuilder.Entity<>()
+
+
 
             modelBuilder.Entity<Snapshot_OriginalPubAffiliationBase>().ToTable("Snapshot_OriginalPublisherAffiliationBase");
             modelBuilder.Entity<Snapshot_OriginalPubAffiliationBase>().HasKey(_ => _.SnapshotOriginalPubAffiliationBaseId);
@@ -387,11 +421,79 @@ namespace UMPG.USL.API.Data
 
             modelBuilder.Entity<Snapshot_RecsCopyright>().ToTable("Snapshot_RecsCopyright");
             modelBuilder.Entity<Snapshot_RecsCopyright>().HasKey(_ => _.SnapshotRecsCopyrightsId);
-            modelBuilder.Entity<Snapshot_RecsCopyright>().HasMany(_ => _.Composers).WithOptional().HasForeignKey(_ => _.CloneWorksTrackId);
-            modelBuilder.Entity<Snapshot_RecsCopyright>().HasMany(_ => _.Samples).WithOptional().HasForeignKey(_ => _.CloneWorksTrackId);
+            modelBuilder.Entity<Snapshot_RecsCopyright>().HasMany(_ => _.Composers).WithOptional().HasForeignKey(_ => _.SnapshotRecsCopyrightId);
+            modelBuilder.Entity<Snapshot_RecsCopyright>().HasMany(_ => _.Samples).WithOptional().HasForeignKey(_ => _.SnapshotRecsCopyrightId);
             modelBuilder.Entity<Snapshot_RecsCopyright>().HasMany(_ => _.LocalClients).WithOptional().HasForeignKey(_ => _.CloneWorksTrackId);
             modelBuilder.Entity<Snapshot_RecsCopyright>().HasMany(_ => _.AquisitionLocationCodes).WithOptional().HasForeignKey(_ => _.CloneWorksTrackId);
 
+            //new
+            modelBuilder.Entity<Snapshot_Composer>().ToTable("Snapshot_Composer");
+            modelBuilder.Entity<Snapshot_Composer>().HasKey(_ => _.SnapshotComposerId);
+            modelBuilder.Entity<Snapshot_Composer>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.SnapshotComposerId);
+            modelBuilder.Entity<Snapshot_Composer>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.SnapshotComposerId);
+            modelBuilder.Entity<Snapshot_Composer>().HasMany(_ => _.OriginalPublishers).WithOptional().HasForeignKey(_ => _.SnapshotComposerId);
+            modelBuilder.Entity<Snapshot_Composer>().HasRequired(_ => _.LicenseProductRecordingWriter).WithMany().HasForeignKey(_ => _.LicenseRecordingId);
+
+            modelBuilder.Entity<Snapshot_ComposerAffiliation>().ToTable("Snapshot_ComposerAffiliation");
+            modelBuilder.Entity<Snapshot_ComposerAffiliation>().HasKey(_ => _.SnapshotComposerAffiliationId);
+            modelBuilder.Entity<Snapshot_ComposerAffiliation>().HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.SnapshotComposerAffiliationId);
+
+            modelBuilder.Entity<Snapshot_ComposerAffiliationBase>().ToTable("Snapshot_ComposerAffiliationBase");
+            modelBuilder.Entity<Snapshot_ComposerAffiliationBase>().HasKey(_ => _.SnapshotComposerAffiliationId);
+
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAffiliationBase>().ToTable("Snapshot_ComposerOriginalPublisherAffiliationBase");
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAffiliationBase>().HasKey(_ => _.SnapshotComposerOriginalPubAffiliationBaseId);
+
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAffiliation>().ToTable("Snapshot_ComposerOriginalPublisherAffiliation");
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAffiliation>().HasKey(_ => _.SnapshotComposerOriginalPublisherAffiliationId);
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAffiliation>().HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.SnapshotComposerOriginalPublisherAffiliationId);
+
+
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdministrator>().ToTable("Snapshot_ComposerOriginalPublisherAdministrator");
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdministrator>().HasKey(_ => _.SnapshotComposerOriginalPublisherAdministratorId);
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdministrator>().Ignore(_ => _.AffiliationsString);
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdministrator>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.SnapshotComposerOriginalPublisherAdministratorId);
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdministrator>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.SnapshotComposerOriginalPublisherAdministratorId);
+
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminKnownAs>().ToTable("Snapshot_ComposerOriginalPublisherAdminKnownAs");
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminKnownAs>().HasKey(_ => _.SnapshotComposerOriginalPublisherAdministratorId);
+
+
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminAffiliation>().ToTable("Snapshot_ComposerOriginalPublisherAdminAffiliation");
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminAffiliation>().HasKey(_ => _.SnapshotComposerOriginalPublisherAdminAffiliationId);
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminAffiliation>().HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.SnapshotComposerOriginalPublisherAdminAffiliationId);
+
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminAffiliationBase>().ToTable("Snapshot_ComposerOriginalPublisherAdminAffiliationBase");
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminAffiliationBase>().HasKey(_ => _.SnapshotComposerOriginalPublisherAdminAffiliationBaseId);
+
+            modelBuilder.Entity<Snapshot_ComposerKnownAs>().ToTable("Snapshot_ComposerKnownAs");
+            modelBuilder.Entity<Snapshot_ComposerKnownAs>().HasKey(_ => _.SnapshotComposerKnownAsId);
+
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisher>().ToTable("Snapshot_ComposerOriginalPublisher");
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisher>().HasKey(_ => _.SnapshotComposerOriginalPublisherId);
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisher>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.SnapshotComposerOriginalPublisherId);
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisher>().HasMany(_ => _.Administrator).WithOptional().HasForeignKey(_ => _.SnapshotComposerOriginalPublisherId);
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisher>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.SnapshotComposerOriginalPublisherId);
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisher>().Ignore(_ => _.AffiliationsString);
+
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherKnownAs>().ToTable("Snapshot_ComposerOriginalPublisherKnownAs");
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherKnownAs>().HasKey(_ => _.SnapshotComposerOriginalPublisherKnownAsId);
+
+            modelBuilder.Entity<Snapshot_SampleLocalClientCopyright>().ToTable("Snapshot_SampleLocalClientCopyright");
+            modelBuilder.Entity<Snapshot_SampleLocalClientCopyright>().HasKey(_ => _.SnapshotSampleLocalClientCopyrightId);
+
+            modelBuilder.Entity<Snapshot_SampleAquisitionLocationCode>().ToTable("Snapshot_SampleAquisitionLocationCode");
+            modelBuilder.Entity<Snapshot_SampleAquisitionLocationCode>().HasKey(_ => _.SnapshotSampleAquisitionLocationCode);
+
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherKnownAs>().ToTable("Snapshot_ComposerOriginalPublisherKnownAs");
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherKnownAs>().HasKey(_ => _.SnapshotComposerOriginalPublisherKnownAsId);
+
+            modelBuilder.Entity<Snapshot_Sample>().ToTable("Snapshot_Sample");
+            modelBuilder.Entity<Snapshot_Sample>().HasKey(_ => _.SnapshotSampleId);
+            modelBuilder.Entity<Snapshot_Sample>().HasMany(_ => _.LocalClients).WithOptional().HasForeignKey(_ => _.SnapshotSampleId);
+            modelBuilder.Entity<Snapshot_Sample>().HasMany(_ => _.AquisitionLocationCodes).WithOptional().HasForeignKey(_ => _.SnapshotSampleId);
+
+            //^^new^^
             modelBuilder.Entity<Snapshot_LocalClientCopyright>().ToTable("Snapshot_LocalClientCopyright");
             modelBuilder.Entity<Snapshot_LocalClientCopyright>().HasKey(_ => _.SnapshotLocalClientCopyrightId);
 
