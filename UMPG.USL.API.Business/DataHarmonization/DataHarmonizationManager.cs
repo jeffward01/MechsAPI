@@ -179,6 +179,10 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.UmpgPercentageRollup = (int)rec.UmpgPercentageRollup;
                 snapshot.CdNumber = rec.CdNumber;
                 snapshot.LicensedRollup = (int)rec.LicensedRollup;
+                if (rec.LicenseRecording != null)
+                {
+                    snapshot.LicenseProductRecordingId = rec.LicenseRecording.LicenseRecordingId;
+                }
                 // snapshot.WorkTrackId = rec.TrackId
                 snapshot.Message = rec.Message;
                 if (rec.Writers != null)
@@ -426,9 +430,9 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.FullName = op.FullName;
                 snapshot.CapacityCode = op.CapacityCode;
                 snapshot.Capacity = op.Capacity;
-                snapshot.MechanicalCollectablePercentage = op.MechanicalCollectablePercentage;
-                snapshot.MechanicalOwnershipPercentage = op.MechanicalOwnershipPercentage;
-                //   snapshot.Affiliation = CastToAffiliationSnapshot(op.Affiliation, op.CaeNumber);   TEMP OFF ***
+                snapshot.MechanicalCollectablePercentage = op.MechanicalCollectablePercentage.ToString();
+                snapshot.MechanicalOwnershipPercentage = op.MechanicalOwnershipPercentage.ToString();
+                snapshot.Affiliation = CastToOriginalPublisherAffiliationSnapshot(op.Affiliation, op.CaeNumber);
                 if (op.KnownAs != null)
                 {
                     snapshot.KnownAs = CastToKnownAs(op.KnownAs, op.CaeNumber);
@@ -481,8 +485,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return snapshotList;
         }
 
-
-
         private List<Snapshot_AdminAffiliation> CastToAdminAffiliationSnapshot(List<Affiliation> affiliations, int caeNumber)
 
         {
@@ -534,6 +536,23 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return snapshotList;
         }
 
+        private List<Snapshot_OriginalPublisherAffiliation> CastToOriginalPublisherAffiliationSnapshot(List<Affiliation> affiliations, int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_OriginalPublisherAffiliation>();
+
+            foreach (var affilation in affiliations)
+            {
+                var snapshot = new Snapshot_OriginalPublisherAffiliation();
+                snapshot.CloneWriterCaeNumber = caeNumber;
+                snapshot.WriterCaeNumber = caeNumber;
+                snapshot.IncomeGroup = affilation.IncomeGroup;
+                snapshot.Affiliations = CastToOriginalPublisherAffiliationBaseSnapshot(affilation.Affiliations, caeNumber);
+                snapshotList.Add(snapshot);
+            }
+
+            return snapshotList;
+        }
+
         private List<Snapshot_Affiliation> CastToAffiliationSnapshot(List<Affiliation> affiliations, int caeNumber)
         {
             var snapshotList = new List<Snapshot_Affiliation>();
@@ -544,7 +563,24 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.CloneWriterCaeNumber = caeNumber;
                 snapshot.WriterCaeNumber = caeNumber;
                 snapshot.IncomeGroup = affilation.IncomeGroup;
-                //    snapshot.Affiliations = CastToAffiliationBaseSnapshot(affilation.Affiliations, caeNumber); || temp off ***
+                snapshot.Affiliations = CastToAffiliationBaseSnapshot(affilation.Affiliations, caeNumber);
+                snapshotList.Add(snapshot);
+            }
+
+            return snapshotList;
+        }
+
+        private List<Snapshot_OriginalPubAffiliationBase> CastToOriginalPublisherAffiliationBaseSnapshot(List<AffiliationBase> affiliationBases, int caeNumber)
+        {
+            var snapshotList = new List<Snapshot_OriginalPubAffiliationBase>();
+
+            foreach (var affilation in affiliationBases)
+            {
+                var snapshot = new Snapshot_OriginalPubAffiliationBase();
+                snapshot.CloneWriterCaeNumber = caeNumber;
+                snapshot.SocietyAcronym = affilation.SocietyAcronym;
+                snapshot.StartDate = affilation.StartDate;
+                snapshot.EndDate = affilation.EndDate;
                 snapshotList.Add(snapshot);
             }
 

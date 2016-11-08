@@ -6,7 +6,7 @@ using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Data.DataHarmonization
 {
-    public class SnapshotAdminKnownAsRepository
+    public class SnapshotAdminKnownAsRepository : ISnapshotAdminKnownAsRepository
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 

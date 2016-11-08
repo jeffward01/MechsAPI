@@ -15,6 +15,13 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
+        public List<Snapshot_OriginalPublisherAffiliation> GetAllOriginalPublisherAffiliationsByOriginalBuplisherId(int originalPublisherId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_OriginalPublisherAffiliations.Where(_ => _.SnapshotOriginalPublisherId == originalPublisherId).ToList();
+            }
+        }
         public bool DeleteOriginalPublisherSnapshotById(int snapshotPhoneId)
         {
             using (var context = new AuthContext())

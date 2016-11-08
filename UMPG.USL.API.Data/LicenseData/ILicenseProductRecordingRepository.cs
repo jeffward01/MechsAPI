@@ -14,6 +14,7 @@ namespace UMPG.USL.API.Data.LicenseData
         List<LicenseProductRecording> GetLicenseProductRecordingsBrief(int licenseproductId);
 
         List<LicenseProductRecording> GetLicenseProductRecordingsFromList(List<int> LicenseproductIds);
+        LicenseProductRecording GetLicenseProductRecordingByLicenseProductRecordingId(int licenseProductRecordingId);
 
         bool IsAlreadyPresent(int trackId, int licneseProductId);
 

@@ -8,5 +8,8 @@ namespace UMPG.USL.API.Data.DataHarmonization
         List<Snapshot_OriginalPublisherAffiliation> GetAllOriginalPublisherAffiliationsByCaeCode(int caeCode);
         bool DeleteOriginalPublisherSnapshotById(int snapshotPhoneId);
         Snapshot_OriginalPublisherAffiliation SaveSnapshotOriginalPublisherAffiliation(Snapshot_OriginalPublisherAffiliation snapshotAdminAffiliation);
+
+        List<Snapshot_OriginalPublisherAffiliation> GetAllOriginalPublisherAffiliationsByOriginalBuplisherId(
+            int originalPublisherId);
     }
 }

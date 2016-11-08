@@ -11,7 +11,16 @@ namespace UMPG.USL.API.Data.DataHarmonization
         {
             using (var context = new AuthContext())
             {
-                return context.Snapshot_OriginalPublishers.Where(_ => _.CloneCaeNumber == cloneContactId).ToList();
+                return context.Snapshot_OriginalPublishers.Where(_ => _.CloneWorksWriterCaeNumber == cloneContactId).ToList();
+            }
+        }
+
+
+        public List<Snapshot_OriginalPublisher> GetAllOriginalPublishersForSnapshotWriterId(int worksWriterSnapshotId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_OriginalPublishers.Where(_ => _.SnapshotWorksWriterId == worksWriterSnapshotId).ToList();
             }
         }
 

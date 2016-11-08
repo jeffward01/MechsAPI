@@ -38,8 +38,15 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private readonly ISnapshotAdminAffiliationRepository _snapshotAdminAffiliationRepository;
         private readonly ISnapshotAdminAffiliationBaseRepository _adminAffiliationBaseRepository;
         private readonly ISnapshotAdminKnownAsRepository _adminKnownAsRepository;
+        private readonly ISnapshotAffiliationBaseRepository _affiliationBaseRepository;
+        private readonly ISnapshotOriginalPublisherAffiliationRepository _originalPublisherAffiliationRepository;
+        private readonly ISnapshotOriginalPubAffiliationBaseRepository _originalPubAffiliationBaseRepository;
+
 
         public SnapshotLicenseProductManager(ISnapshotLicenseRepository snapshotLicenseRepository,
+            ISnapshotOriginalPubAffiliationBaseRepository snapshotOriginalPubAffiliationBaseRepository,
+            ISnapshotOriginalPublisherAffiliationRepository snapshotOriginalPublisherAffiliationRepository,
+            ISnapshotAffiliationBaseRepository affiliationBaseRepository,
             ISnapshotAdminKnownAsRepository snapshotAdminKnownAsRepository,
             ISnapshotAdminAffiliationBaseRepository snapshotAdminAffiliationBaseRepository,
             ISnapshotAdminAffiliationRepository snapshotAdminAffiliationRepository,
@@ -68,6 +75,9 @@ namespace UMPG.USL.API.Business.DataHarmonization
             ISnapshotLocalClientCopyrightRepository snapshotLocalClientCopyrightRepository,
             ISnapshotLicenseeLabelGroupRepository snalshotLabelGroupRepository)
         {
+            _affiliationBaseRepository = affiliationBaseRepository;
+            _originalPubAffiliationBaseRepository = snapshotOriginalPubAffiliationBaseRepository;
+            _originalPublisherAffiliationRepository = snapshotOriginalPublisherAffiliationRepository;
             _adminKnownAsRepository = snapshotAdminKnownAsRepository;
             _adminAffiliationBaseRepository = snapshotAdminAffiliationBaseRepository;
             _snapshotAdminAffiliationRepository = snapshotAdminAffiliationRepository;
@@ -119,14 +129,22 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 //save artist
                 var artist = productHeader.Artist;
                 productHeader.Artist = null;
-                _snapshotArtistRecsRepository.SaveSnapshotArtistRecs(artist);
 
                 //save label
                 var label = productHeader.Label;
                 productHeader.Label = null;
 
+
                 var labelGroups = label.RecordLabelGroups;
                 label.RecordLabelGroups = null;
+
+                var recsConfig = productHeader.Configurations;
+                productHeader.Configurations = null;
+
+                _snapshotArtistRecsRepository.SaveSnapshotArtistRecs(artist);
+
+  
+
 
                 _snapshotLabelRepository.SaveSnapshotLabel(label);
 
@@ -135,8 +153,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
                     _snapshotLabelGroupRepository.SaveSnapshotLabelGroup(labelGroup);
                 }
 
-                var recsConfig = productHeader.Configurations;
-                productHeader.Configurations = null;
+      
+
                 if (recsConfig != null)
                 {
                     foreach (var config in recsConfig)
@@ -168,44 +186,109 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         //save track
                         var track = workRec.Track;
                         workRec.Track = null;
-                        if (track != null)
-                        {
-                            _snapshotWorkTrackRepository.SaveWorksTrack(track);
-                        }
 
-                        //save lpr
-                        var lpr = workRec.LicenseRecording;
+                        //set lpr to null (lpr is mechs item)
                         workRec.LicenseRecording = null;
-                        if (lpr != null)
-                        {
-                            _snapshotLicenseProductRecordingRepository.SaveLicenseProductRecording(lpr);
-                        }
-
                         //save writer list
                         var writerList = workRec.Writers;
                         workRec.Writers = null;
 
+                        if (track != null)
+                        {
+                            //Get all track children and set to null
+                            var copyRights = track.Copyrights;
+                            track.Copyrights = null;
+
+                            var artist = track.Artist;
+                            track.Artist = null;
+
+                           
+
+
+                            _snapshotWorkTrackRepository.SaveWorksTrack(track);
+
+
+                            //save artist
+                            _snapshotArtistRecsRepository.SaveSnapshotArtistRecs(artist);
+
+                            foreach (var copyRight in copyRights)
+                            {
+                                //get, and set children to null
+                                var copyRightComposers = copyRight.Composers;
+                                copyRight.Composers = null;
+
+                                var copyRightSamples = copyRight.Samples;
+                                copyRight.Samples = null;
+
+                                var copyRightLocalClients = copyRight.LocalClients;
+                                copyRight.LocalClients = null;
+
+                                var copyRightLocationCodes = copyRight.AquisitionLocationCodes;
+                                copyRight.AquisitionLocationCodes = null;
+
+                                _____
+
+                                //create new entities, save them.
+
+                                //save
+                                _snapshotRecsCopyrightRespository.SaveSnapshotWorksRecording(copyRight);
+
+                            }
+
+                        }
+
+          
+
+                
+
+                     
                         if (writerList != null)
                         {
                             foreach (var writer in writerList)
                             {
-                                //save writer affiliation
+
                                 var affiliations = writer.Affiliation;
                                 writer.Affiliation = null;
+
+                                var knownAs = writer.KnownAs;
+                                writer.KnownAs = null;
+
+                                var originalPubs = writer.OriginalPublishers;
+                                writer.OriginalPublishers = null;
+
+                                //Set Foriegn Key
+                                writer.CloneWorksTrackId = track.CloneWorksTrackId;
+                                //save writer, get key
+                                var saveWorksWriter = _snapshotWorksWriterRepository.SaveWorksWriter(writer);
+                                //save writer affiliation
+                             
 
                                 if (affiliations != null)
                                 {
                                     foreach (var affilation in affiliations)
                                     {
-                                        _snapshotAffiliationRepository.SaveSnapshotAffiliation(affilation);
+                                        var affiliationBases = affilation.Affiliations;
+                                        affilation.Affiliations = null;
+                                      
 
-                                        //save affiliaton Base (not implemented)
-                                        //var affiliationBase .....  save...
+                                        affilation.SnapshotWorksWriterId = saveWorksWriter.SnapshotWorksWriterId;
+                                      var savedAffiliation =  _snapshotAffiliationRepository.SaveSnapshotAffiliation(affilation);
+
+                                        if (affiliationBases != null)
+                                        {
+                                            foreach (var affiliationBase in affiliationBases)
+                                            {
+                                                affiliationBase.SnapshotAffiliationId =
+                                                    savedAffiliation.SnapshotAffiliationId;
+
+                                                _affiliationBaseRepository.SaveSnapshotAffiliationBase(affiliationBase);
+                                            }
+                                        }
+
                                     }
                                 }
                                 //save writer knownAs
-                                var knownAs = writer.KnownAs;
-                                writer.KnownAs = null;
+                          
                                 if (knownAs != null)
                                 {
                                     foreach (var knwn in knownAs)
@@ -214,8 +297,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                     }
                                 }
 
-                                var originalPubs = writer.OriginalPublishers;
-                                writer.OriginalPublishers = null;
+                          
 
                                 if (originalPubs != null)
                                 {
@@ -223,14 +305,64 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                     //save knownAs (not implemented)
                                     foreach (var oPub in originalPubs)
                                     {
+
+                                        oPub.SnapshotWorksWriterId = saveWorksWriter.SnapshotWorksWriterId;
                                         var administrators = oPub.Administrator;
                                         oPub.Administrator = null;
 
                                         var opKnownAs = oPub.KnownAs;
                                         oPub.KnownAs = null;
 
-                                        var snapshotOriginalPublisherId =
-                                            _snapshotOriginalPublisherRepository.SaveSnapshotOriginalPublisher(oPub);
+                                        var opAffiliations = oPub.Affiliation;
+                                        oPub.Affiliation = null;
+
+                                        var savedSnapshotOriginalPublisher =
+                              _snapshotOriginalPublisherRepository.SaveSnapshotOriginalPublisher(oPub);
+
+                                        if (opKnownAs != null)
+                                        {
+                                            foreach (var knwn in opKnownAs)
+                                            {
+                                                _snapshotKnownAsRepository.SaveKnownAs(knwn);
+                                            }
+                                        }
+
+                                        if (opAffiliations != null)
+                                        {
+                                            foreach (var opAffiliation in opAffiliations)
+                                            {
+                                                var affiliationBases = opAffiliation.Affiliations;
+                                                opAffiliation.Affiliations = null;
+
+                                                //assign fk
+                                                opAffiliation.SnapshotOriginalPublisherId =
+                                                   savedSnapshotOriginalPublisher.SnapshotOriginalPublisherId;
+
+                                                //save
+                                                var savedOriginalPubAffiliation =
+                                                    _originalPublisherAffiliationRepository
+                                                        .SaveSnapshotOriginalPublisherAffiliation(opAffiliation);
+
+                                                if (affiliationBases != null)
+                                                {
+                                                    foreach (var affiliationBase in affiliationBases)
+                                                    {
+                                                        //Assign foriegn key
+                                                        affiliationBase.SnapshotOriginalPublisherAffiliationId =
+                                                            savedOriginalPubAffiliation
+                                                                .SnapshotOriginalPublisherAffiliationId;
+
+                                                        //save
+                                                        _originalPubAffiliationBaseRepository
+                                                            .SaveSnapshotAdminAffiliation(affiliationBase);
+                                                    }
+                                                }
+                                            }
+                                        }
+
+
+                          
+
                                         if (administrators != null)
                                         {
                                             foreach (var admin in administrators)
@@ -243,7 +375,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
                                                 //Assign foriegn Key
                                                 admin.SnapshotOriginalPublisherId =
-                                                    snapshotOriginalPublisherId.SnapshotOriginalPublisherId;
+                                                    savedSnapshotOriginalPublisher.SnapshotOriginalPublisherId;
 
                                                 var snapshotAdmin =
                                                     _snapshotAdministratorRepository.SaveSnapshotAdministrator(admin);
@@ -291,8 +423,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                                 }
                                             }
                                         }
-
-                                        _snapshotOriginalPublisherRepository.SaveSnapshotOriginalPublisher(oPub);
                                     }
                                 }
                             }

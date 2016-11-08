@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using System.Diagnostics;
+using NLog;
 using UMPG.USL.API.Data.DataHarmonization;
 using UMPG.USL.API.Data.LicenseData;
 using UMPG.USL.Models.DataHarmonization;
@@ -23,7 +24,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private readonly ISnapshotLabelRepository _snapshotLabelRepository;
         private readonly ISnapshotLabelGroupRepository _snapshotLabelGroupRepository;
         private readonly ISnapshotLicenseeLabelGroupRepository _licenseeLabelGroupRepository;
-        
+        private readonly ILicenseProductRecordingRepository _licenseProductRecordingRepository;
         private readonly ISnapshotWorkTrackRepository _snapshotWorkTrackRepository;
         private readonly ISnapshotLicenseProductRecordingRepository _snapshotLicenseProductRecordingRepository;
         private readonly ISnapshotWorksWriterRepository _snapshotWorksWriterRepository;
@@ -35,9 +36,24 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private readonly ISnapshotLocalClientCopyrightRepository _snapshotLocalClientCopyrightRepository;
         private readonly ISnapshotAquisitionLocationCodeRepository _aquisitionLocationCodeRepository;
         private readonly ILicenseProductConfigurationRepository _licenseProductConfigurationRepository;
+        private readonly ISnapshotAdministratorRepository _snapshotAdministratorRepository;
+        private readonly ISnapshotAdminKnownAsRepository _adminKnownAsRepository;
+        private readonly ISnapshotAdminAffiliationRepository _adminAffiliationRepository;
+        private readonly ISnapshotAdminAffiliationBaseRepository _adminAffiliationBaseRepository;
+        private readonly ISnapshotOriginalPublisherAffiliationRepository _originalPublisherAffiliationRepository;
+        private readonly ISnapshotOriginalPubAffiliationBaseRepository _originalPubAffiliationBaseRepository;
+        private readonly ISnapshotAffiliationBaseRepository _affiliationBaseRepository;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public SnapshotLicenseManager(ISnapshotLicenseRepository snapshotLicenseRepository,
+            ILicenseProductRecordingRepository licenseProductRecordingRepository,
+            ISnapshotOriginalPubAffiliationBaseRepository snapshotOriginalPubAffiliationBaseRepository,
+            ISnapshotAffiliationBaseRepository affiliationBaseRepository,
+            ISnapshotOriginalPublisherAffiliationRepository snapshotOriginalPublisherAffiliationRepository,
+            ISnapshotAdminAffiliationBaseRepository snapshotAdminAffiliationBaseRepository,
+            ISnapshotAdminAffiliationRepository snapshotAdminAffiliationRepository,
+            ISnapshotAdminKnownAsRepository snapshotAdminKnownAsRepository,
+            ISnapshotAdministratorRepository snapshotAdministratorRepository,
             ILicenseProductConfigurationRepository licenseProductConfigurationRepository,
             ISnapshotAquisitionLocationCodeRepository aquisitionLocationCodeRepository,
             ISnapshotRecsCopyrightRespository snapshotRecsCopyrightRespository,
@@ -62,6 +78,13 @@ namespace UMPG.USL.API.Business.DataHarmonization
             ISnapshotLocalClientCopyrightRepository snapshotLocalClientCopyrightRepository,
             ISnapshotLicenseeLabelGroupRepository snalshotLabelGroupRepository)
         {
+            _licenseProductRecordingRepository = licenseProductRecordingRepository;
+            _affiliationBaseRepository = affiliationBaseRepository;
+            _originalPublisherAffiliationRepository = snapshotOriginalPublisherAffiliationRepository;
+            _originalPubAffiliationBaseRepository = snapshotOriginalPubAffiliationBaseRepository;
+            _adminAffiliationBaseRepository = snapshotAdminAffiliationBaseRepository;
+            _adminAffiliationRepository = snapshotAdminAffiliationRepository;
+            _snapshotAdministratorRepository = snapshotAdministratorRepository;
             _aquisitionLocationCodeRepository = aquisitionLocationCodeRepository;
             _snapshotLocalClientCopyrightRepository = snapshotLocalClientCopyrightRepository;
             _snapshotSampleRepository = snapshotSampleRepository;
@@ -89,6 +112,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             _snapshotLicenseNoteRepository = snapshotLicenseNoteRepository;
             _snapshotLicenseProductRepository = snapshotLicenseProductRepository;
             _snapshotLicenseRepository = snapshotLicenseRepository;
+            _adminKnownAsRepository = snapshotAdminKnownAsRepository;
         }
 
         public bool DoesSnapshotExists(int licenseId)
@@ -184,6 +208,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                 _snapshotArtistRecsRepository.GetSnapshotArtistRecsByArtistId(track.ArtistRecsId);
                             track.Artist = artist;
 
+                            
+                            var licenseProductRecording =
+                        _licenseProductRecordingRepository.GetLicenseProductRecordingByLicenseProductRecordingId(
+                            recording.LicenseProductRecordingId);
+                            
+
                             //This area may be wrong, it uses the same primary key as parent entites.  watch.
                             foreach (var copyright in copyrights)
                             {
@@ -191,7 +221,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                 var samples =
                                     _snapshotSampleRepository.GetAllSamplesForRecsCopyrightByCloneTrackId(
                                         copyright.CloneWorksTrackId);
-
+                                ____
                                 //build composers
                                 var composers =
                                     _snapshotWorksWriterRepository.GetAllWritersForCloneTrackId(
@@ -220,32 +250,101 @@ namespace UMPG.USL.API.Business.DataHarmonization
                             //assign track chunk
                             track.Copyrights = copyrights;
 
-                            var licenseProductRecording =
-                                _snapshotLicenseProductRecordingRepository.GetLicenseProductRecordingForCloneTrackId(
-                                    recording.TrackId);
+                         
 
                             var worksWriterList =
-                                _snapshotWorksWriterRepository.GetAllWritersForCloneTrackId(recording.SnapshotWorksRecodingId);  //This is clone track, but clone track is an identity column for some reason... refactor needed to add trackId to recordign
+                                _snapshotWorksWriterRepository.GetAllWritersForCloneTrackId(recording.CloneTrackId);  //This is clone track, but clone track is an identity column for some reason... refactor needed to add trackId to recordign
 
                             if (worksWriterList != null)
                             {
                                 foreach (var writer in worksWriterList)
                                 {
                                     var affiliationList =
-                                        _snapshotAffiliationRepository.GetAllAFfiliationsForCAENumber(
-                                            writer.CloneCaeNumber);
+                                        _snapshotAffiliationRepository.GetAllAffiliationsForWriterSnapshotId(
+                                            writer.SnapshotWorksWriterId);
 
-                                    //AffiliationBase not impletemented
+                         
+
+                                    if (affiliationList != null)
+                                    {
+                                        foreach (var affiliation in affiliationList)
+                                        {
+                                            var affiliationBase =
+                                                _affiliationBaseRepository.GetAllAffiliationBasesForAffilationId(
+                                                    affiliation.SnapshotAffiliationId);
+                                            affiliation.Affiliations = affiliationBase;
+                                        }
+                                    }
+
+                               
+                             
 
                                     var originalPublisherList =
-                                        _snapshotOriginalPublisherRepository.GetAllOriginalPublishersForCaeCode(
-                                            writer.CloneCaeNumber);
+                                        _snapshotOriginalPublisherRepository.GetAllOriginalPublishersForSnapshotWriterId(
+                                            writer.SnapshotWorksWriterId);
 
                                     foreach (var op in originalPublisherList)
                                     {
                                         var knownAs =
                                             _snapshotKnownAsRepository.GetAllKnownAsForWriterCaeCode(op.CloneCaeNumber);
                                         op.KnownAs = knownAs;
+
+                                        
+
+                                        var opAdmins =
+                                            _snapshotAdministratorRepository.GetAllAdministratorsForOriginalPublisherId(
+                                                op.SnapshotOriginalPublisherId);
+
+                                        var opAffiliations =
+                                            _originalPublisherAffiliationRepository
+                                                .GetAllOriginalPublisherAffiliationsByOriginalBuplisherId(
+                                                    op.SnapshotOriginalPublisherId);
+
+                                        if (opAffiliations != null)
+                                        {
+                                            foreach (var opAffiliation in opAffiliations)
+                                            {
+                                                var opAffiliationBases =
+                                                    _originalPubAffiliationBaseRepository
+                                                        .GetAllOriginalPubAffiliationBasesByAffilationId(
+                                                            opAffiliation.SnapshotOriginalPublisherAffiliationId);
+                                                opAffiliation.Affiliations = opAffiliationBases;
+                                            }
+                                            op.Affiliation = opAffiliations;
+                                        }
+
+                                        //build admin children
+                                        foreach (var admin in opAdmins)
+                                        {
+                                            var adminKnownAs =
+                                                _adminKnownAsRepository.GetAllAdminKnownAsForAdminSnapshotId(
+                                                    admin.SnapshotAdministratorId);
+
+                                            admin.KnownAs = adminKnownAs;
+
+                                            var adminAffiliation =
+                                                _adminAffiliationRepository.GetAllAdminAffiliationsForSnapshotAdminId(
+                                                    admin.SnapshotAdministratorId);
+                                            if (adminAffiliation != null)
+                                            {
+                                                foreach (var adminAfilation in adminAffiliation)
+                                                {
+                                                    var adminBase =
+                                                        _adminAffiliationBaseRepository
+                                                            .GetAllAdminAffiliationBaseForSnapshotAdminId(
+                                                                adminAfilation.SnapshotAdminAffiliationId);
+
+                                                    adminAfilation.Affiliations = adminBase;
+                                                }
+                                            }
+
+                                            admin.Affiliation = adminAffiliation;
+
+
+                                        }
+                                        op.Administrator = opAdmins;
+
+                                       
                                     }
 
                                     var writerKnownAsList =
@@ -257,6 +356,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                     writer.OriginalPublishers = originalPublisherList;
                                 }
                             }
+
+
 
                             //Assign
                             recording.Track = track;
@@ -548,7 +649,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 DeleteOriginalPublisherSnapshotAndChildern(writer);
 
                 //delete writer
-                _snapshotWorksWriterRepository.DeleteWorksWriterSnapshotBySnapshotId(writer.SnapshotWorksWriter);
+                _snapshotWorksWriterRepository.DeleteWorksWriterSnapshotBySnapshotId(writer.SnapshotWorksWriterId);
             }
         }
 

@@ -151,6 +151,8 @@
     <Compile Include="DataHarmonization\ISnapshotAdminAffiliationBaseRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotAdminAffiliationRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotAdministratorRepository.cs" />
+    <Compile Include="DataHarmonization\ISnapshotAdminKnownAsRepository.cs" />
+    <Compile Include="DataHarmonization\ISnapshotAffiliationBaseRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotAffiliationRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotAquisitionLocationCodeRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotArtistRecsRepository.cs" />
@@ -182,6 +184,8 @@
     <Compile Include="DataHarmonization\SnapshotAddressRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotAdminAffiliationBaseRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotAdministratorRepository.cs" />
+    <Compile Include="DataHarmonization\SnapshotAdminKnownAsRepository.cs" />
+    <Compile Include="DataHarmonization\SnapshotAffiliationBaseRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotAffiliationRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotAquisitionLocationCodeRepository.cs" />
     <Compile Include="DataHarmonization\SnapshotArtistRecsRepository.cs" />

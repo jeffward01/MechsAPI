@@ -1,3 +1,4 @@
+C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\obj\Debug\UMPG.USL.API.Business.csprojResolveAssemblyReference.cache
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\UMPG.USL.API.Business.dll.config
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\UMPG.USL.API.Business.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\UMPG.USL.API.Business.pdb
@@ -47,6 +48,5 @@ C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\Newton
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\NLog.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\BCrypt.Net.pdb
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\bin\Debug\BCrypt.Net.xml
-C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\obj\Debug\UMPG.USL.API.Business.csprojResolveAssemblyReference.cache
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\obj\Debug\UMPG.USL.API.Business.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\obj\Debug\UMPG.USL.API.Business.pdb

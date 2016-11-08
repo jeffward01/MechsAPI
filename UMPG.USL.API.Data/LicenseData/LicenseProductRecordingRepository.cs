@@ -59,6 +59,14 @@ namespace UMPG.USL.API.Data.LicenseData
             }
         }
 
+        public LicenseProductRecording GetLicenseProductRecordingByLicenseProductRecordingId(int licenseProductRecordingId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.LicenseProductRecordings.FirstOrDefault(x => x.LicenseRecordingId == licenseProductRecordingId);
+            }
+        }
+
         public List<LicenseProductRecording> GetLicenseProductRecordingsBrief(int LicenseproductId)
         {
             using (var context = new AuthContext())

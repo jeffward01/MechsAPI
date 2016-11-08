@@ -14,6 +14,14 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return context.Snapshot_Affiliations.Where(_ => _.CloneWriterCaeNumber == cloneCaeNumber).ToList();
             }
         }
+
+        public List<Snapshot_Affiliation> GetAllAffiliationsForWriterSnapshotId(int worksWriterSnapshotId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_Affiliations.Where(_ => _.SnapshotWorksWriterId == worksWriterSnapshotId).ToList();
+            }
+        }
         public Snapshot_Affiliation SaveSnapshotAffiliation(Snapshot_Affiliation snapshotAffiliation)
         {
             using (var context = new AuthContext())

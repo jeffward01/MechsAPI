@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Data.DataHarmonization
@@ -12,6 +14,14 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 context.Snapshot_Administrators.Add(administratorSnapshot);
                 context.SaveChanges();
                 return administratorSnapshot;
+            }
+        }
+
+        public List<Snapshot_Administrator> GetAllAdministratorsForOriginalPublisherId(int id)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_Administrators.Where(_ => _.SnapshotOriginalPublisherId == id).ToList();
             }
         }
 

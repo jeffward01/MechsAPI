@@ -27,6 +27,16 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
+
+
+        public List<Snapshot_AdminAffiliationBase> GetAllAdminAffiliationBaseForSnapshotAdminId(int adminSnapshotId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_AdminAffiliationBases.Where(_ => _.SnapshotAdminAffiliationId == adminSnapshotId).ToList();
+            }
+        }
+ 
         public bool DeleteConfigurationSnapshot(int adminSnapshotId)
         {
             using (var context = new AuthContext())

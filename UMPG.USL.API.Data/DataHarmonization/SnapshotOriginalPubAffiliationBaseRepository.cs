@@ -14,7 +14,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return context.Snapshot_OriginalPublisherAffiliationBases.Where(_ => _.SnapshotOriginalPublisherAffiliationId == opAffiliationId).ToList();
             }
         }
-
+    
         public bool DeletePhoneBySnapshotPhoneId(int snapshotPhoneId)
         {
             using (var context = new AuthContext())

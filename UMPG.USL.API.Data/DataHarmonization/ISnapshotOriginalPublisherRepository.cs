@@ -9,6 +9,8 @@ namespace UMPG.USL.API.Data.DataHarmonization
 
         Snapshot_OriginalPublisher SaveSnapshotOriginalPublisher(Snapshot_OriginalPublisher originalPublisher);
 
+        List<Snapshot_OriginalPublisher> GetAllOriginalPublishersForSnapshotWriterId(int worksWriterSnapshotId);
+
         bool DeleteOriginalPublisherSnapshotBySnapshotId(int snapshotId);
     }
 }

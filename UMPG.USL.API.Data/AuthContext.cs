@@ -195,6 +195,7 @@ namespace UMPG.USL.API.Data
         public DbSet<Snapshot_WorksWriter> Snapshot_WorksWriters { get; set; }
 
         public DbSet<Snapshot_Affiliation> Snapshot_Affiliations { get; set; }
+        public DbSet<Snapshot_AffiliationBase> Snapshot_AffiliationBases { get; set; }
 
         public DbSet<Snapshot_OriginalPublisher> Snapshot_OriginalPublishers { get; set; }
         public DbSet<Snapshot_RecsCopyright> Snapshot_RecsCopyrights { get; set; }
@@ -342,8 +343,8 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_WorksRecording>().HasRequired(_ => _.LicenseRecording).WithMany().HasForeignKey(_ => _.CloneTrackId);
 
             modelBuilder.Entity<Snapshot_WorksWriter>().ToTable("Snapshot_WorksWriter");
-            modelBuilder.Entity<Snapshot_WorksWriter>().HasKey(_ => _.SnapshotWorksWriter);
-            modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.OriginalPublishers).WithOptional().HasForeignKey(_ => _.CloneWorksWriterCaeNumber);
+            modelBuilder.Entity<Snapshot_WorksWriter>().HasKey(_ => _.SnapshotWorksWriterId);
+            modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.OriginalPublishers).WithOptional().HasForeignKey(_ => _.SnapshotWorksWriterId);
             modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.WriterCaeNumber);
             modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.CloneWriterCaeCode);
             //modelBuilder.Entity<Snapshot_WorksWriter>().Ignore(_ => _.AffiliationsString);   || temp off ***
@@ -351,8 +352,21 @@ namespace UMPG.USL.API.Data
 
             modelBuilder.Entity<Snapshot_OriginalPublisher>().ToTable("Snapshot_OriginalPublisher");
             modelBuilder.Entity<Snapshot_OriginalPublisher>().HasKey(_ => _.SnapshotOriginalPublisherId);
-            //    modelBuilder.Entity<Snapshot_OriginalPublisher>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.CloneWriterCaeNumber);  || TEMP OFF ***
+                modelBuilder.Entity<Snapshot_OriginalPublisher>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.SnapshotOriginalPublisherId);
             modelBuilder.Entity<Snapshot_OriginalPublisher>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.CloneWriterCaeCode);
+
+            modelBuilder.Entity<Snapshot_OriginalPublisherAffiliation>()
+                .ToTable("Snapshot_OriginalPublisherAffiliation");
+            modelBuilder.Entity<Snapshot_OriginalPublisherAffiliation>()
+                .HasKey(_ => _.SnapshotOriginalPublisherAffiliationId);
+            modelBuilder.Entity<Snapshot_OriginalPublisherAffiliation>()
+                .HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.SnapshotOriginalPublisherAffiliationId);
+
+
+
+            modelBuilder.Entity<Snapshot_OriginalPubAffiliationBase>().ToTable("Snapshot_OriginalPublisherAffiliationBase");
+            modelBuilder.Entity<Snapshot_OriginalPubAffiliationBase>().HasKey(_ => _.SnapshotOriginalPubAffiliationBaseId);
+
             //modelBuilder.Entity<Snapshot_OriginalPublisher>().Ignore(_ => _.AffiliationsString); || temp off***
             //   modelBuilder.Entity<Snapshot_OriginalPublisher>().HasMany(_ => _.Administrator). WithOptional().HasForeignKey(_ => _.CloneCaeNumber);  //temp off
 
@@ -441,6 +455,18 @@ namespace UMPG.USL.API.Data
 
             modelBuilder.Entity<Snapshot_AdminKnownAs>().ToTable("Snapshot_AdminKnownAs");
             modelBuilder.Entity<Snapshot_AdminKnownAs>().HasKey(_ => _.SnapshotAdminKnownAsId);
+
+            modelBuilder.Entity<Snapshot_Affiliation>().ToTable("Snapshot_Affiliation");
+            modelBuilder.Entity<Snapshot_Affiliation>().HasKey(_ => _.SnapshotAffiliationId);
+            modelBuilder.Entity<Snapshot_Affiliation>()
+                .HasMany(_ => _.Affiliations)
+                .WithOptional()
+                .HasForeignKey(_ => _.SnapshotAffiliationId);
+
+            modelBuilder.Entity<Snapshot_AffiliationBase>().ToTable("Snapshot_AffiliationBase");
+            modelBuilder.Entity<Snapshot_AffiliationBase>().HasKey(_ => _.SnapshotAffiliationBaseId);
+
+
 
 
             //_____End Data Harmonization
