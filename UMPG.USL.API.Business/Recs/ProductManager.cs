@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using UMPG.USL.API.Business.DataHarmonization;
 using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.API.Data.LicenseData;
 using UMPG.USL.API.Data.Recs;
@@ -20,12 +21,15 @@ namespace UMPG.USL.API.Business.Recs
         private readonly ILicenseProductRecordingRepository _licenseProductRecordingRepository;
         private readonly ILicenseProductRepository _licenseProductRepository;
         private readonly ILicenseProductManager _licenseProductManager;
+        private readonly ISnapshotLicenseManager _snapshotLicenseManager;
 
         public ProductManager(ISearchProvider recSearchProvider, IRecsDataProvider recsProvider,
             ILicenseProductRecordingRepository licenseProductRecordingRepository,
-            ILicenseProductRepository licenseProductRepository, ILicenseProductManager licenseProductManager
+            ILicenseProductRepository licenseProductRepository, ILicenseProductManager licenseProductManager,
+             ISnapshotLicenseManager snapshotLicenseManager
         ) //, IRecordingWorkLinkRepository recordingWorkLinkRepository
         {
+            _snapshotLicenseManager = snapshotLicenseManager;
             _licenseProductManager = licenseProductManager;
             _recsSearchProvider = recSearchProvider;
             _recsProvider = recsProvider;
@@ -503,8 +507,12 @@ namespace UMPG.USL.API.Business.Recs
         }
 
         //this compares the MechsLicenseData with the RecsLicenseProductData.  If there are inconsistencies, log them, then return them.
-        public List<RecsProductChanges> FindOutOfSyncRecItems(List<LicenseProduct> mechsLicenseProducts)
+        public List<RecsProductChanges> FindOutOfSyncRecItems(List<LicenseProduct> mechsLicenseProducts, int licenseId)
         {
+            //MechsLicenseProducts === From Recs, displayted on licenseDetails and ProductDetail page
+
+            //snapshot product === our snapshot
+            var snapshotLicense = _snapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(licenseId);
             var mechsProductIds = mechsLicenseProducts.Select(x => x.ProductId).ToList();
             var recsLicenseProducts = new List<RecsLicenseProduct>();
 

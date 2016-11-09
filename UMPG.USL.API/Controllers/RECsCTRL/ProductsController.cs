@@ -92,11 +92,11 @@ namespace UMPG.USL.API.Controllers.RECsCTRL
         //}
 
 
-        [Route("FindOutOfSyncRecItems")]
+        [Route("FindOutOfSyncRecItems/{licenseId}")]
         [HttpPost]
-        public List<RecsProductChanges> FindOutOfSyncRecItems(List<LicenseProduct> products)
+        public List<RecsProductChanges> FindOutOfSyncRecItems(List<LicenseProduct> products, int licenseId)
         {
-            return _productManager.FindOutOfSyncRecItems(products);
+            return _productManager.FindOutOfSyncRecItems(products, licenseId);
         }
 
         /*

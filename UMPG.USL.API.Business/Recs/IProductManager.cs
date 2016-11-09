@@ -27,7 +27,7 @@ namespace UMPG.USL.API.Business.Recs
         List<GetProductLink> GetProductLinks(int productId);
         UpdateProductLinkResult DeleteProductLink(ProductLink productLink);
         bool UpdateProductPriority(UpdatePriorityRequest request);
-        List<RecsProductChanges> FindOutOfSyncRecItems(List<LicenseProduct> licenseId);
+        List<RecsProductChanges> FindOutOfSyncRecItems(List<LicenseProduct> licenseProducts, int licenseId);
 
     }
 }

@@ -1,10 +1,13 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
 using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.Models.DataHarmonization;
 using UMPG.USL.Models.LicenseModel;
 using UMPG.USL.Models.Recs;
+using License = UMPG.USL.Models.LicenseModel.License;
 
 namespace UMPG.USL.API.Business.DataHarmonization
 {
@@ -95,6 +98,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             //Snapshot here
             try
             {
+                
                 _snapshotLicenseManager.SaveSnapshotLicense(newLicense);
                 //snapshot LicenseProducts
                 SaveLocalLicenseProductSnapshot(licenseProducts);

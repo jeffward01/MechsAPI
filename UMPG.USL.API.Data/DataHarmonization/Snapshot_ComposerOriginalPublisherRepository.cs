@@ -17,7 +17,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
-        public List<Snapshot_ComposerOriginalPublisher> GetAllComposerOriginalPublishersForComposerOd(int composerSnapshotId)
+        public List<Snapshot_ComposerOriginalPublisher> GetAllComposerOriginalPublishersForComposerId(int composerSnapshotId)
         {
             using (var context = new AuthContext())
             {

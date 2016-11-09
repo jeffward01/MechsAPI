@@ -45,7 +45,13 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return context.Snapshot_WorksRecordings.Where(_ => _.ProductId == productId).ToList();
             }
         }
-
+        public List<Snapshot_WorksRecording> GetAllWorksRecordingsForLicenseProductId(int? productId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_WorksRecordings.Where(_ => _.LicenseProductId == productId).ToList();
+            }
+        }
         public bool DeleteWorkRecordingByRecordignSnapshotId(int recordingSnapshotIdea)
         {
             using (var context = new AuthContext())

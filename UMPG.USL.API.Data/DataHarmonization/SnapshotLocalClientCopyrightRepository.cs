@@ -15,6 +15,16 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
+        public List<Snapshot_LocalClientCopyright> GetAllLocalCopyrightsForRecsCopyrightSnapshotId(int recsCopyrightSnapshotId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_LocalClientCopyrights.Where(_ => _.SnapshotRecsCopyrightId == recsCopyrightSnapshotId).ToList();
+            }
+        }
+
+
+
         public bool DeleteLocalClientCopyrightBySnapshotId(int localClientCopyrightSnapshotId)
         {
             using (var context = new AuthContext())

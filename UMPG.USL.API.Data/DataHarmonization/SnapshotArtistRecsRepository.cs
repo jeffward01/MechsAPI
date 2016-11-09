@@ -20,7 +20,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
         {
             using (var context = new AuthContext())
             {
-                return context.Snapshot_ArtistRecs.FirstOrDefault(sl => sl.SnapshotArtistRecsId == artistId);
+                return context.Snapshot_ArtistRecs.FirstOrDefault(sl => sl.CloneArtistRecsId == artistId);
             }
         }
 
@@ -46,5 +46,28 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return true;
             }
         }
+
+        public bool DeleteRecsArtisByArtistSnapshotId(int artstSnapshotId)
+        {
+            using (var context = new AuthContext())
+            {
+                var productHeader =
+                    context.Snapshot_ArtistRecs.Find(artstSnapshotId);
+
+                context.Snapshot_ArtistRecs.Attach(productHeader);
+                context.Snapshot_ArtistRecs.Remove(productHeader);
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+
     }
 }

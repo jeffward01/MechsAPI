@@ -14,6 +14,13 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return context.Snapshot_AquisitionLocationCodes.Where(_ => _.CloneWorksTrackId == trackId).ToList();
             }
         }
+        public List<Snapshot_AquisitionLocationCode> GetAllAquisitionLocationCodesForRecsCopyrightId(int recsCopyrightId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_AquisitionLocationCodes.Where(_ => _.SnapshotRecsCopyrightId == recsCopyrightId).ToList();
+            }
+        }
 
         public bool DeleteAquisitionLocationCodeBySnashotId(int aquisitonLocationCodeSnapshotId)
         {

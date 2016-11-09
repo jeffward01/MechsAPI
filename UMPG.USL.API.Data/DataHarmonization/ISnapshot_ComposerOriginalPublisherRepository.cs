@@ -6,7 +6,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
     public interface ISnapshot_ComposerOriginalPublisherRepository
     {
         Snapshot_ComposerOriginalPublisher SaveComposerOriginalPublisher(Snapshot_ComposerOriginalPublisher composerSnapshot);
-        List<Snapshot_ComposerOriginalPublisher> GetAllComposerOriginalPublishersForComposerOd(int composerSnapshotId);
+        List<Snapshot_ComposerOriginalPublisher> GetAllComposerOriginalPublishersForComposerId(int composerSnapshotId);
         bool DeleteComposerOriginalPublisher(Snapshot_ComposerOriginalPublisher composerToDelete);
     }
 }

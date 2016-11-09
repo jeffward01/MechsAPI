@@ -42,6 +42,10 @@ namespace UMPG.USL.API.Data.DataHarmonization
             using (var context = new AuthContext())
             {
                 var recording = context.Snapshot_RecsCopyrights.Find(recCopyrightSnapshotId);
+                if (recording == null)
+                {
+                    return false;
+                }
                 context.Snapshot_RecsCopyrights.Attach(recording);
                 context.Snapshot_RecsCopyrights.Remove(recording);
                 try

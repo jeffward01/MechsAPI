@@ -417,26 +417,26 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_WorksTrack>().ToTable("Snapshot_WorksTrack");
             modelBuilder.Entity<Snapshot_WorksTrack>().HasKey(_ => _.SnapshotWorkTrackId);
             modelBuilder.Entity<Snapshot_WorksTrack>().HasRequired(_ => _.Artist).WithMany().HasForeignKey(_ => _.ArtistRecsId);
-            modelBuilder.Entity<Snapshot_WorksTrack>().HasMany(_ => _.Copyrights).WithOptional().HasForeignKey(_ => _.CloneWorksTrackId);
+            modelBuilder.Entity<Snapshot_WorksTrack>().HasMany(_ => _.Copyrights).WithOptional().HasForeignKey(_ => _.SnapshotWorkTrackId);
 
             modelBuilder.Entity<Snapshot_RecsCopyright>().ToTable("Snapshot_RecsCopyright");
             modelBuilder.Entity<Snapshot_RecsCopyright>().HasKey(_ => _.SnapshotRecsCopyrightsId);
-            modelBuilder.Entity<Snapshot_RecsCopyright>().HasMany(_ => _.Composers).WithOptional().HasForeignKey(_ => _.SnapshotRecsCopyrightId);
-            modelBuilder.Entity<Snapshot_RecsCopyright>().HasMany(_ => _.Samples).WithOptional().HasForeignKey(_ => _.SnapshotRecsCopyrightId);
-            modelBuilder.Entity<Snapshot_RecsCopyright>().HasMany(_ => _.LocalClients).WithOptional().HasForeignKey(_ => _.CloneWorksTrackId);
-            modelBuilder.Entity<Snapshot_RecsCopyright>().HasMany(_ => _.AquisitionLocationCodes).WithOptional().HasForeignKey(_ => _.CloneWorksTrackId);
+            modelBuilder.Entity<Snapshot_RecsCopyright>().HasMany(_ => _.Composers).WithOptional().HasForeignKey(_ => _.SnapshotRecsCopyrightId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Snapshot_RecsCopyright>().HasMany(_ => _.Samples).WithOptional().HasForeignKey(_ => _.SnapshotRecsCopyrightId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Snapshot_RecsCopyright>().HasMany(_ => _.LocalClients).WithOptional().HasForeignKey(_ => _.CloneWorksTrackId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Snapshot_RecsCopyright>().HasMany(_ => _.AquisitionLocationCodes).WithOptional().HasForeignKey(_ => _.CloneWorksTrackId).WillCascadeOnDelete(true);
 
             //new
             modelBuilder.Entity<Snapshot_Composer>().ToTable("Snapshot_Composer");
             modelBuilder.Entity<Snapshot_Composer>().HasKey(_ => _.SnapshotComposerId);
-            modelBuilder.Entity<Snapshot_Composer>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.SnapshotComposerId);
-            modelBuilder.Entity<Snapshot_Composer>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.SnapshotComposerId);
-            modelBuilder.Entity<Snapshot_Composer>().HasMany(_ => _.OriginalPublishers).WithOptional().HasForeignKey(_ => _.SnapshotComposerId);
-            modelBuilder.Entity<Snapshot_Composer>().HasRequired(_ => _.LicenseProductRecordingWriter).WithMany().HasForeignKey(_ => _.LicenseRecordingId);
+            modelBuilder.Entity<Snapshot_Composer>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.SnapshotComposerId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Snapshot_Composer>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.SnapshotComposerId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Snapshot_Composer>().HasMany(_ => _.OriginalPublishers).WithOptional().HasForeignKey(_ => _.SnapshotComposerId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Snapshot_Composer>().HasRequired(_ => _.LicenseProductRecordingWriter).WithMany().HasForeignKey(_ => _.LicenseRecordingId).WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Snapshot_ComposerAffiliation>().ToTable("Snapshot_ComposerAffiliation");
             modelBuilder.Entity<Snapshot_ComposerAffiliation>().HasKey(_ => _.SnapshotComposerAffiliationId);
-            modelBuilder.Entity<Snapshot_ComposerAffiliation>().HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.SnapshotComposerAffiliationId);
+            modelBuilder.Entity<Snapshot_ComposerAffiliation>().HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.SnapshotComposerAffiliationId).WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Snapshot_ComposerAffiliationBase>().ToTable("Snapshot_ComposerAffiliationBase");
             modelBuilder.Entity<Snapshot_ComposerAffiliationBase>().HasKey(_ => _.SnapshotComposerAffiliationBaseId);

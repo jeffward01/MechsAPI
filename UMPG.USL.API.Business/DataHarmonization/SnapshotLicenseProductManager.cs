@@ -242,7 +242,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                             var artist = track.Artist;
                             track.Artist = null;
 
-                            _snapshotWorkTrackRepository.SaveWorksTrack(track);
+                            var savedTrack = _snapshotWorkTrackRepository.SaveWorksTrack(track);
 
                             //save artist
                             _snapshotArtistRecsRepository.SaveSnapshotArtistRecs(artist);
@@ -261,6 +261,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
                                 var copyRightLocationCodes = copyRight.AquisitionLocationCodes;
                                 copyRight.AquisitionLocationCodes = null;
+
+                                copyRight.SnapshotWorkTrackId = savedTrack.SnapshotWorkTrackId;
 
                                 //save copyright, get PK.
                                 var savedRecsCopyright = _snapshotRecsCopyrightRespository.SaveSnapshotWorksRecording(copyRight);
@@ -399,6 +401,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                                             composerOriginalPublisherAffiliation.Affiliations;
                                                         composerOriginalPublisherAffiliation.Affiliations = null;
 
+                                                        
+
                                                         composerOriginalPublisherAffiliation
                                                                 .SnapshotComposerOriginalPublisherId =
                                                             savedComposerOriginalPublisher
@@ -454,6 +458,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                                                 var affiliationBases =
                                                                     composerOpAdminAffiliation.Affiliations;
                                                                 composerOpAdminAffiliation.Affiliations = null;
+
+                                                                
 
                                                                 composerOpAdminAffiliation
                                                                         .SnapshotComposerOriginalPublisherAdministratorId =
@@ -545,9 +551,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                         }
                                     }
                                 }
-
-                                //save
-                                _snapshotRecsCopyrightRespository.SaveSnapshotWorksRecording(copyRight);
                             }
                         }
 
