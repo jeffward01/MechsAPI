@@ -439,7 +439,7 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_ComposerAffiliation>().HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.SnapshotComposerAffiliationId);
 
             modelBuilder.Entity<Snapshot_ComposerAffiliationBase>().ToTable("Snapshot_ComposerAffiliationBase");
-            modelBuilder.Entity<Snapshot_ComposerAffiliationBase>().HasKey(_ => _.SnapshotComposerAffiliationId);
+            modelBuilder.Entity<Snapshot_ComposerAffiliationBase>().HasKey(_ => _.SnapshotComposerAffiliationBaseId);
 
             modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAffiliationBase>().ToTable("Snapshot_ComposerOriginalPublisherAffiliationBase");
             modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAffiliationBase>().HasKey(_ => _.SnapshotComposerOriginalPubAffiliationBaseId);
@@ -456,7 +456,7 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdministrator>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.SnapshotComposerOriginalPublisherAdministratorId);
 
             modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminKnownAs>().ToTable("Snapshot_ComposerOriginalPublisherAdminKnownAs");
-            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminKnownAs>().HasKey(_ => _.SnapshotComposerOriginalPublisherAdministratorId);
+            modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminKnownAs>().HasKey(_ => _.SnapshotComposerOriginalPublisherAdminKnownAsId);
 
 
             modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminAffiliation>().ToTable("Snapshot_ComposerOriginalPublisherAdminAffiliation");

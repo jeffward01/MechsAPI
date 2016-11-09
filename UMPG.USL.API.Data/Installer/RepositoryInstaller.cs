@@ -147,7 +147,6 @@ namespace UMPG.USL.API.Data.Installer
             container.Register(Component.For<ISnapshot_ComposerOriginalPublisherKnownAsRepository>().ImplementedBy<Snapshot_ComposerOriginalPublisherKnownAsRepository>());
             container.Register(Component.For<ISnapshotSampleLocalClientCopyrightRepository>().ImplementedBy<SnapshotSampleLocalClientCopyrightRepository>());
             container.Register(Component.For<ISnapshotSampleAquisitionLocationCodeRepository>().ImplementedBy<SnapshotSampleAquisitionLocationCodeRepository>());
-            container.Register(Component.For<ISnapshotSampleRepository>().ImplementedBy<SnapshotSampleRepository>());
             container.Register(Component.For<ISnapshot_ComposerOriginalPublisherAffiliationRepository>().ImplementedBy<Snapshot_ComposerOriginalPublisherAffiliationRepository>());
             container.Register(Component.For<ISnapshotComposerOriginalPublisherAffiliationBaseRepository>().ImplementedBy<SnapshotComposerOriginalPublisherAffiliationBaseRepository>());
             container.Register(Component.For<ISnapshotComposerOriginalPublisherAdministratorRepository>().ImplementedBy<SnapshotComposerOriginalPublisherAdministratorRepository>());
