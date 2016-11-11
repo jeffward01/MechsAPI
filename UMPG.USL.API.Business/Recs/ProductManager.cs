@@ -22,13 +22,15 @@ namespace UMPG.USL.API.Business.Recs
         private readonly ILicenseProductRepository _licenseProductRepository;
         private readonly ILicenseProductManager _licenseProductManager;
         private readonly ISnapshotLicenseManager _snapshotLicenseManager;
-
+        private readonly IRecCongruencyCheckService _recsProductChangeLogService;
         public ProductManager(ISearchProvider recSearchProvider, IRecsDataProvider recsProvider,
+             IRecCongruencyCheckService recsProductChangeLogService,
             ILicenseProductRecordingRepository licenseProductRecordingRepository,
             ILicenseProductRepository licenseProductRepository, ILicenseProductManager licenseProductManager,
              ISnapshotLicenseManager snapshotLicenseManager
         ) //, IRecordingWorkLinkRepository recordingWorkLinkRepository
         {
+            _recsProductChangeLogService = recsProductChangeLogService;
             _snapshotLicenseManager = snapshotLicenseManager;
             _licenseProductManager = licenseProductManager;
             _recsSearchProvider = recSearchProvider;
@@ -510,9 +512,14 @@ namespace UMPG.USL.API.Business.Recs
         public List<RecsProductChanges> FindOutOfSyncRecItems(List<LicenseProduct> mechsLicenseProducts, int licenseId)
         {
             //MechsLicenseProducts === From Recs, displayted on licenseDetails and ProductDetail page
-
+            var exists = _snapshotLicenseManager.DoesSnapshotExists(licenseId);
+            if (!exists)
+            {
+                return new List<RecsProductChanges>();
+            }
             //snapshot product === our snapshot
             var snapshotLicense = _snapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(licenseId);
+            /*
             var mechsProductIds = mechsLicenseProducts.Select(x => x.ProductId).ToList();
             var recsLicenseProducts = new List<RecsLicenseProduct>();
 
@@ -522,11 +529,35 @@ namespace UMPG.USL.API.Business.Recs
                 var result = BuildRecsLicenseProduct(productId);
                 recsLicenseProducts.Add(result);
             }
-
+            */
             //do logic on recdsLicenseProducts againse mehcs
-            var recsDifferences = RecsCongruencyCheck(mechsLicenseProducts, recsLicenseProducts);
+            // old recsCongruenceyCheckmethod: var recsDifferences = RecsCongruencyCheck(mechsLicenseProducts, snapshotLicense.LicenseProducts);
+            var recsDifferences = CheckSnapshotAgainstRecs(mechsLicenseProducts, snapshotLicense.LicenseProducts);
             return recsDifferences;
         }
+
+
+
+        public List<RecsProductChanges> CheckSnapshotAgainstRecs(List<LicenseProduct> mechsLicenseProducts,
+            List<Snapshot_LicenseProduct> licenseProductSnapshots)
+        {
+            //Start code_____________
+            var listOfChanges = new List<RecsProductChanges>();
+
+            //check for product changes
+            listOfChanges.AddRange(_recsProductChangeLogService.CheckForLicenseProductChanges(mechsLicenseProducts, licenseProductSnapshots));
+
+
+
+            
+
+
+
+            return listOfChanges;
+        }
+
+
+       
 
         public List<RecsProductChanges> RecsCongruencyCheck(List<LicenseProduct> mechsLicenseProducts,
             List<RecsLicenseProduct> recsProducts)

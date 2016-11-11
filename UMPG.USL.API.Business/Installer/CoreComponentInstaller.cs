@@ -3,16 +3,15 @@ using Castle.DynamicProxy;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using UMPG.USL.API.Business.Contacts;
-using UMPG.USL.API.Business.Licenses;
-using UMPG.USL.API.Business.LookUps;
-using UMPG.USL.API.Business.Lookups;
-using UMPG.USL.API.Business.Recs;
 using UMPG.USL.API.Business.Audits;
+using UMPG.USL.API.Business.Contacts;
 using UMPG.USL.API.Business.DataHarmonization;
+using UMPG.USL.API.Business.Licenses;
+using UMPG.USL.API.Business.Lookups;
+using UMPG.USL.API.Business.LookUps;
+using UMPG.USL.API.Business.Recs;
 using UMPG.USL.API.Business.Reports;
 using UMPG.USL.API.Business.Token;
-
 
 namespace UMPG.USL.API.Business.Installer
 {
@@ -22,9 +21,9 @@ namespace UMPG.USL.API.Business.Installer
         {
             container.Register(Component.For<IInterceptor>().ImplementedBy<LicenseSequenceIntercepror>().LifestyleSingleton());
             container.Register(Component.For<IInterceptor>().ImplementedBy<LicenseUpdateIntercepror>().LifestyleSingleton());
-            
+
             container.Register(Component.For<IAuthManager>().ImplementedBy<AuthManager>());
-            container.Register(Component.For<ILicenseManager>().ImplementedBy<LicenseManager>().Interceptors<LicenseSequenceIntercepror,LicenseUpdateIntercepror>());
+            container.Register(Component.For<ILicenseManager>().ImplementedBy<LicenseManager>().Interceptors<LicenseSequenceIntercepror, LicenseUpdateIntercepror>());
             container.Register(Component.For<ILicenseNoteManager>().ImplementedBy<LicenseNoteManager>());
             container.Register(Component.For<ILicenseProductWriterNoteManager>().ImplementedBy<LicenseProductWriterNoteManager>());
             container.Register(Component.For<ILicenseeManager>().ImplementedBy<LicenseeManager>());
@@ -56,8 +55,6 @@ namespace UMPG.USL.API.Business.Installer
             container.Register(Component.For<IReportQueueManager>().ImplementedBy<ReportQueueManager>());
             container.Register(Component.For<ITokenServices>().ImplementedBy<TokenServices>());
             container.Register(Component.For<IAttachmentTypeManager>().ImplementedBy<AttachmentTypeManager>());
-            
-            
 
             //Data Harmonization Managers
             container.Register(Component.For<ISnapshotArtistRecsManager>().ImplementedBy<SnapshotArtistRecsManager>());
@@ -74,9 +71,8 @@ namespace UMPG.USL.API.Business.Installer
             container.Register(Component.For<ISnapshotLicenseNoteManager>().ImplementedBy<SnapshotLicenseNoteManager>());
             container.Register(Component.For<IDataHarmonizationManager>().ImplementedBy<DataHarmonizationManager>());
             container.Register(Component.For<ISnapshotLicenseeLabelGroupManager>().ImplementedBy<SnapshotLicenseeLabelGroupManager>());
-
-
+            container.Register(Component.For<IRecsProductChangeLogService>().ImplementedBy<RecsProductChangeLogService>());
+            container.Register(Component.For<IRecCongruencyCheckService>().ImplementedBy<RecCongruencyCheckService>());
         }
     }
 }
-

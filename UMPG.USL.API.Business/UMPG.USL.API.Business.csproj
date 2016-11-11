@@ -107,6 +107,8 @@
     <Compile Include="Contacts\IContactGenerateLicenseQueueManager.cs" />
     <Compile Include="DataHarmonization\DataHarmonizationManager.cs" />
     <Compile Include="DataHarmonization\IDataHarmonizationManager.cs" />
+    <Compile Include="DataHarmonization\IRecCongruencyCheckService.cs" />
+    <Compile Include="DataHarmonization\IRecsProductChangeLogService.cs" />
     <Compile Include="DataHarmonization\ISnapshotAddressManager.cs" />
     <Compile Include="DataHarmonization\ISnapshotArtistRecsManager.cs" />
     <Compile Include="DataHarmonization\ISnapshotConfigurationManager.cs" />
@@ -122,6 +124,8 @@
     <Compile Include="DataHarmonization\ISnapshotRecsConfigurationManager.cs" />
     <Compile Include="DataHarmonization\ISnapshotRoleManager.cs" />
     <Compile Include="DataHarmonization\ISnapshotWorksRecordingManager.cs" />
+    <Compile Include="DataHarmonization\RecCongruencyCheckService.cs" />
+    <Compile Include="DataHarmonization\RecsProductChangeLogService.cs" />
     <Compile Include="DataHarmonization\SnapshotAddressManager.cs" />
     <Compile Include="DataHarmonization\SnapshotArtistRecsManager.cs" />
     <Compile Include="DataHarmonization\SnapshotConfigurationManager.cs" />
