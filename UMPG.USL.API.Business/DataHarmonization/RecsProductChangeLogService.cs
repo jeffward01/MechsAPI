@@ -33,6 +33,60 @@ namespace UMPG.USL.API.Business.DataHarmonization
             }
             return listOfChanges;
         }
+        public List<RecsProductChanges> AffiliationBaseAddedToRecs(List<AffiliationBase> licenseProducts, List<string> productIdsAdded)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            foreach (var licenseProduct in licenseProducts)
+            {
+                if (IsInListString(licenseProduct.SocietyAcronym, productIdsAdded))
+                {
+                    var newProductChange = new RecsProductChanges();
+                    newProductChange.PropertyLocation = "Affiliation Base";
+                    newProductChange.PropertyChanged = "Affiliation Base " + licenseProduct.SocietyAcronym + " has been added to Recs";
+
+                    newProductChange.ChangedValue = licenseProduct.SocietyAcronym;
+
+
+                    newProductChange.ChangeMessage = "Affiliation Base " + licenseProduct.SocietyAcronym + " has been added to Recs";
+                    listOfChanges.Add(newProductChange);
+                }
+            }
+            return listOfChanges;
+        }
+        public List<RecsProductChanges> AffiliationBaseRemovedFromRecs(List<Snapshot_OriginalPubAffiliationBase> licenseProducts, List<string> productIdsAdded)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            foreach (var licenseProduct in licenseProducts)
+            {
+                if (IsInListString(licenseProduct.SocietyAcronym, productIdsAdded))
+                {
+                    var newProductChange = new RecsProductChanges();
+                    newProductChange.PropertyLocation = "Product";
+                    newProductChange.PropertyChanged = "Product " + licenseProduct.SocietyAcronym + " has been removed from Recs";
+                    newProductChange.ChangedValue = licenseProduct.SocietyAcronym;
+                    newProductChange.ChangeMessage = "Product " + licenseProduct.SocietyAcronym + " has been removed from Recs";
+                    listOfChanges.Add(newProductChange);
+                }
+            }
+            return listOfChanges;
+        }
+        public List<RecsProductChanges> AffiliationBaseRemovedFromRecs(List<Snapshot_ComposerOriginalPublisherAffiliationBase> licenseProducts, List<string> productIdsAdded)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            foreach (var licenseProduct in licenseProducts)
+            {
+                if (IsInListString(licenseProduct.SocietyAcronym, productIdsAdded))
+                {
+                    var newProductChange = new RecsProductChanges();
+                    newProductChange.PropertyLocation = "Product";
+                    newProductChange.PropertyChanged = "Product " + licenseProduct.SocietyAcronym + " has been removed from Recs";
+                    newProductChange.ChangedValue = licenseProduct.SocietyAcronym;
+                    newProductChange.ChangeMessage = "Product " + licenseProduct.SocietyAcronym + " has been removed from Recs";
+                    listOfChanges.Add(newProductChange);
+                }
+            }
+            return listOfChanges;
+        }
 
         public List<RecsProductChanges> ProductRemovedFromRecs(List<Snapshot_LicenseProduct> licenseProducts, List<int> productIdsAdded)
         {
@@ -152,22 +206,49 @@ namespace UMPG.USL.API.Business.DataHarmonization
         }
 
 
+        public List<RecsProductChanges> OriginalPublisherAffiliationRemovedFromRecs(List<Snapshot_ComposerOriginalPublisherAffiliation> licenseRecordings, List<string> originalPublisherIpCodes)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+
+            foreach (var licenseRecording in licenseRecordings)
+            {
+                if (IsInListString(licenseRecording.IncomeGroup, originalPublisherIpCodes))
+                {
+                    var newRecordingChange = new RecsProductChanges();
+                    newRecordingChange.PropertyLocation = "Original Publisher Affiliation";
+                    newRecordingChange.PropertyChanged = "Original Publisher Affiliation removed from Recs " + licenseRecording.IncomeGroup + " has been removed from  Recs";
+
+                    newRecordingChange.ChangedValue = licenseRecording.IncomeGroup + " Removed";
+
+                    newRecordingChange.ChangeMessage = "Original Publisher Affiliation" + licenseRecording.IncomeGroup + " has been removed from Recs";
+                    listOfChanges.Add(newRecordingChange);
+                }
+            }
+            return listOfChanges;
+        }
+
+
         public List<RecsProductChanges> OriginalPublishersAddedToRecs(List<OriginalPublisher> licenseRecordings, List<string> originalPublisherIpCodes)
         {
             var listOfChanges = new List<RecsProductChanges>();
             var intList = originalPublisherIpCodes.Select(_ => Convert.ToInt32(_)).ToList();
-            foreach (var licenseRecording in licenseRecordings)
+            if (intList.Count > 0)
             {
-                if (IsInList(Convert.ToInt32(licenseRecording.IpCode), intList))
+                foreach (var licenseRecording in licenseRecordings)
                 {
-                    var newRecordingChange = new RecsProductChanges();
-                    newRecordingChange.PropertyLocation = "Original Publisher";
-                    newRecordingChange.PropertyChanged = "Original Publisher added to Recs " + licenseRecording.IpCode + " has been added to  Recs";
+                    if (IsInList(Convert.ToInt32(licenseRecording.IpCode), intList))
+                    {
+                        var newRecordingChange = new RecsProductChanges();
+                        newRecordingChange.PropertyLocation = "Original Publisher";
+                        newRecordingChange.PropertyChanged = "Original Publisher added to Recs " +
+                                                             licenseRecording.IpCode + " has been added to  Recs";
 
-                    newRecordingChange.ChangedValue = licenseRecording.FullName + " Added";
+                        newRecordingChange.ChangedValue = licenseRecording.FullName + " Added";
 
-                    newRecordingChange.ChangeMessage = "Original Publisher " + licenseRecording.CaeNumber + " has been added to  Recs";
-                    listOfChanges.Add(newRecordingChange);
+                        newRecordingChange.ChangeMessage = "Original Publisher " + licenseRecording.CaeNumber +
+                                                           " has been added to  Recs";
+                        listOfChanges.Add(newRecordingChange);
+                    }
                 }
             }
             return listOfChanges;
@@ -177,18 +258,49 @@ namespace UMPG.USL.API.Business.DataHarmonization
         {
             var listOfChanges = new List<RecsProductChanges>();
             var intList = originalPublisherIpCodes.Select(_ => Convert.ToInt32(_)).ToList();
-            foreach (var licenseRecording in licenseRecordings)
+            if (intList.Count > 0)
             {
-                if (IsInList(Convert.ToInt32(licenseRecording.IpCode), intList))
+                foreach (var licenseRecording in licenseRecordings)
                 {
-                    var newRecordingChange = new RecsProductChanges();
-                    newRecordingChange.PropertyLocation = "Original Publisher";
-                    newRecordingChange.PropertyChanged = "Original Publisher removed from Recs " + licenseRecording.IpCode + " has been removed from Recs";
+                    if (IsInList(Convert.ToInt32(licenseRecording.IpCode), intList))
+                    {
+                        var newRecordingChange = new RecsProductChanges();
+                        newRecordingChange.PropertyLocation = "Original Publisher";
+                        newRecordingChange.PropertyChanged = "Original Publisher removed from Recs " +
+                                                             licenseRecording.IpCode + " has been removed from Recs";
 
-                    newRecordingChange.ChangedValue = licenseRecording.FullName + " Added";
+                        newRecordingChange.ChangedValue = licenseRecording.FullName + " Added";
 
-                    newRecordingChange.ChangeMessage = "Original Publisher " + licenseRecording.IpCode + " has been removed from Recs";
-                    listOfChanges.Add(newRecordingChange);
+                        newRecordingChange.ChangeMessage = "Original Publisher " + licenseRecording.IpCode +
+                                                           " has been removed from Recs";
+                        listOfChanges.Add(newRecordingChange);
+                    }
+                }
+            }
+            return listOfChanges;
+        }
+
+        public List<RecsProductChanges> OriginalPublishersRemovedFromRecs(List<Snapshot_ComposerOriginalPublisher> licenseRecordings, List<string> originalPublisherIpCodes)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            var intList = originalPublisherIpCodes.Select(_ => Convert.ToInt32(_)).ToList();
+            if (intList.Count > 0)
+            {
+                foreach (var licenseRecording in licenseRecordings)
+                {
+                    if (IsInList(Convert.ToInt32(licenseRecording.IpCode), intList))
+                    {
+                        var newRecordingChange = new RecsProductChanges();
+                        newRecordingChange.PropertyLocation = "Original Publisher";
+                        newRecordingChange.PropertyChanged = "Original Publisher removed from Recs " +
+                                                             licenseRecording.IpCode + " has been removed from Recs";
+
+                        newRecordingChange.ChangedValue = licenseRecording.FullName + " Added";
+
+                        newRecordingChange.ChangeMessage = "Original Publisher " + licenseRecording.IpCode +
+                                                           " has been removed from Recs";
+                        listOfChanges.Add(newRecordingChange);
+                    }
                 }
             }
             return listOfChanges;
@@ -258,7 +370,214 @@ namespace UMPG.USL.API.Business.DataHarmonization
             }
             return listOfChanges;
         }
+        public List<RecsProductChanges> ComposerRemovedFromRecs(List<Snapshot_Composer> licenseRecordings, List<string> originalPublisherIpCodes)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            var intList = originalPublisherIpCodes.Select(_ => Convert.ToInt32(_)).ToList();
+            if (intList.Count > 0)
+            {
+                foreach (var licenseRecording in licenseRecordings)
+                {
+                    if (IsInList(Convert.ToInt32(licenseRecording.IpCode), intList))
+                    {
+                        var newRecordingChange = new RecsProductChanges();
+                        newRecordingChange.PropertyLocation = "Composer";
+                        newRecordingChange.PropertyChanged = "Composer added to Recs " + licenseRecording.IpCode +
+                                                             " has been added to Recs";
 
+                        newRecordingChange.ChangedValue = licenseRecording.IpCode + " removed";
+
+                        newRecordingChange.ChangeMessage = "Composer " + licenseRecording.IpCode +
+                                                           " has been added to Recs";
+                        listOfChanges.Add(newRecordingChange);
+                    }
+                }
+            }
+            return listOfChanges;
+        }
+
+        public List<RecsProductChanges> ComposersAddedToRecs(List<WorksWriter> licenseRecordings, List<string> originalPublisherIpCodes)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            var intList = originalPublisherIpCodes.Select(_ => Convert.ToInt32(_)).ToList();
+            if (intList.Count > 0)
+            {
+                foreach (var licenseRecording in licenseRecordings)
+                {
+                    if (IsInList(Convert.ToInt32(licenseRecording.IpCode), intList))
+                    {
+                        var newRecordingChange = new RecsProductChanges();
+                        newRecordingChange.PropertyLocation = "Composer";
+                        newRecordingChange.PropertyChanged = "Composer Added to Recs " + licenseRecording.IpCode +
+                                                             " has been Added to Recs";
+
+                        newRecordingChange.ChangedValue = licenseRecording.IpCode + " added";
+
+                        newRecordingChange.ChangeMessage = "Composer " + licenseRecording.IpCode +
+                                                           " has been Added to Recs";
+                        listOfChanges.Add(newRecordingChange);
+                    }
+                }
+            }
+            return listOfChanges;
+        }
+
+        public List<RecsProductChanges> LocationCodeAddedToRecs(List<string> licenseRecordings, List<string> originalPublisherIpCodes)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            var intList = originalPublisherIpCodes.Select(_ => Convert.ToInt32(_)).ToList();
+            if (intList.Count > 0)
+            {
+                foreach (var licenseRecording in licenseRecordings)
+                {
+                    if (IsInList(Convert.ToInt32(licenseRecording), intList))
+                    {
+                        var newRecordingChange = new RecsProductChanges();
+                        newRecordingChange.PropertyLocation = "Location Code";
+                        newRecordingChange.PropertyChanged = "Location Code Added to Recs " + licenseRecording +
+                                                             " has been Added to Recs";
+
+                        newRecordingChange.ChangedValue = licenseRecording + " added";
+
+                        newRecordingChange.ChangeMessage = "Location Code " + licenseRecording +
+                                                           " has been Added to Recs";
+                        listOfChanges.Add(newRecordingChange);
+                    }
+                }
+            }
+            return listOfChanges;
+        }
+        public List<RecsProductChanges> LocationCodeRemovedFromRecs(List<Snapshot_AquisitionLocationCode> licenseRecordings, List<string> originalPublisherIpCodes)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            var intList = originalPublisherIpCodes.Select(_ => Convert.ToInt32(_)).ToList();
+            if (intList.Count > 0)
+            {
+                foreach (var licenseRecording in licenseRecordings)
+                {
+                    if (IsInList(Convert.ToInt32(licenseRecording.AquisitionLocationCode), intList))
+                    {
+                        var newRecordingChange = new RecsProductChanges();
+                        newRecordingChange.PropertyLocation = "Location Code";
+                        newRecordingChange.PropertyChanged = "Location Code removed from Recs " +
+                                                             licenseRecording.AquisitionLocationCode +
+                                                             " has been removed from Recs";
+
+                        newRecordingChange.ChangedValue = licenseRecording.AquisitionLocationCode + " removed";
+
+                        newRecordingChange.ChangeMessage = "Location Code " + licenseRecording.AquisitionLocationCode +
+                                                           " has been removed from Recs";
+                        listOfChanges.Add(newRecordingChange);
+                    }
+                }
+            }
+            return listOfChanges;
+        }
+
+        public List<RecsProductChanges> LocalClientAddedToRecs(List<LocalClientCopyright> licenseRecordings, List<string> originalPublisherIpCodes)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            var intList = originalPublisherIpCodes.Select(_ => Convert.ToInt32(_)).ToList();
+            if (intList.Count > 0)
+            {
+                foreach (var licenseRecording in licenseRecordings)
+                {
+                    if (IsInList(Convert.ToInt32(licenseRecording.ClientCode), intList))
+                    {
+                        var newRecordingChange = new RecsProductChanges();
+                        newRecordingChange.PropertyLocation = "LocalClient";
+                        newRecordingChange.PropertyChanged = "LocalClient Added to Recs " + licenseRecording.ClientCode +
+                                                             " has been Added to Recs";
+
+                        newRecordingChange.ChangedValue = licenseRecording.ClientCode + " added";
+
+                        newRecordingChange.ChangeMessage = "LocalClient " + licenseRecording.ClientCode +
+                                                           " has been Added to Recs";
+                        listOfChanges.Add(newRecordingChange);
+                    }
+                }
+            }
+            return listOfChanges;
+        }
+
+        public List<RecsProductChanges> LocalClientRemovedFromRecs(List<Snapshot_LocalClientCopyright> licenseRecordings, List<string> originalPublisherIpCodes)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            var intList = originalPublisherIpCodes.Select(_ => Convert.ToInt32(_)).ToList();
+            if (intList.Count > 0)
+            {
+                foreach (var licenseRecording in licenseRecordings)
+                {
+                    if (IsInList(Convert.ToInt32(licenseRecording.ClientCode), intList))
+                    {
+                        var newRecordingChange = new RecsProductChanges();
+                        newRecordingChange.PropertyLocation = "LocalClient";
+                        newRecordingChange.PropertyChanged = "LocalClient Removed From Recs " +
+                                                             licenseRecording.ClientCode + " has been Removed From Recs";
+
+                        newRecordingChange.ChangedValue = licenseRecording.ClientCode + " removed";
+
+                        newRecordingChange.ChangeMessage = "LocalClient " + licenseRecording.ClientCode +
+                                                           " has been Removed From Recs";
+                        listOfChanges.Add(newRecordingChange);
+                    }
+                }
+            }
+            return listOfChanges;
+        }
+
+
+
+        public List<RecsProductChanges> CopyrightsAddedToRecs(List<RecsCopyrights> licenseRecordings, List<string> originalPublisherIpCodes)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            var intList = originalPublisherIpCodes.Select(_ => Convert.ToInt32(_)).ToList();
+            if (intList.Count > 0)
+            {
+                foreach (var licenseRecording in licenseRecordings)
+                {
+                    if (IsInList(Convert.ToInt32(licenseRecording.WorkCode), intList))
+                    {
+                        var newRecordingChange = new RecsProductChanges();
+                        newRecordingChange.PropertyLocation = "Copyright";
+                        newRecordingChange.PropertyChanged = "Copyright added to Recs " + licenseRecording.WorkCode +
+                                                             " has been added to Recs";
+
+                        newRecordingChange.ChangedValue = licenseRecording.WorkCode + " added";
+
+                        newRecordingChange.ChangeMessage = "Copyright " + licenseRecording.WorkCode +
+                                                           " has been added to Recs";
+                        listOfChanges.Add(newRecordingChange);
+                    }
+                }
+            }
+            return listOfChanges;
+        }
+        public List<RecsProductChanges> CopyrightsRemovedFromRecs(List<Snapshot_RecsCopyright> licenseRecordings, List<string> originalPublisherIpCodes)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            var intList = originalPublisherIpCodes.Select(_ => Convert.ToInt32(_)).ToList();
+            if (intList.Count > 0)
+            {
+                foreach (var licenseRecording in licenseRecordings)
+                {
+                    if (IsInList(Convert.ToInt32(licenseRecording.WorkCode), intList))
+                    {
+                        var newRecordingChange = new RecsProductChanges();
+                        newRecordingChange.PropertyLocation = "Copyright";
+                        newRecordingChange.PropertyChanged = "Copyright removed from Recs " + licenseRecording.WorkCode +
+                                                             " has been removed from Recs";
+
+                        newRecordingChange.ChangedValue = licenseRecording.WorkCode + " removed";
+
+                        newRecordingChange.ChangeMessage = "Copyright " + licenseRecording.WorkCode +
+                                                           " has been removed from Recs";
+                        listOfChanges.Add(newRecordingChange);
+                    }
+                }
+            }
+            return listOfChanges;
+        }
         public List<RecsProductChanges> ConfigurationRemovedFromRecs(List<Snapshot_RecsConfiguration> recsConfigurations, List<int> RecordingIdsAdded)
         {
             var listOfChanges = new List<RecsProductChanges>();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.Models.DataHarmonization;
 using UMPG.USL.Models.LicenseModel;
 using UMPG.USL.Models.Recs;
@@ -25,8 +26,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
             //check for product changes
             //Log productsAdded and removed
             listOfChanges.AddRange(CheckForAddedRemovedLicenseProducts(recsLicenseProducts, licenseProductsSnapshots));
-
-
 
             //Log Added Removed Tracks
 
@@ -57,8 +56,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             licenseProductsSnapshots = CleanProductsnapshots(licenseProductsSnapshots, productsRemovedFromRecs);
 
             //--------Product Header Area---------
-            listOfChanges.AddRange(FindProductHeaderDifferences(recsLicenseProducts,licenseProductsSnapshots));
-
+            listOfChanges.AddRange(FindProductHeaderDifferences(recsLicenseProducts, licenseProductsSnapshots));
 
             //------Recording Area------
             //Find which recordings Have been added and removed
@@ -86,27 +84,22 @@ namespace UMPG.USL.API.Business.DataHarmonization
             //find track differences
             listOfChanges.AddRange(FindTrackDifferences(recsTracks, snapshotTracks));
 
-
-
             //---------Writer Area------------
             var recsWriters = GetRecsWriters(recsRecordings);
             var snapshotWriters = GetSnapshotWriters(snapshotRecordings);
-                
+
             //find writer differences
             listOfChanges.AddRange(FindWriterDifferences(recsWriters, snapshotWriters));
             return listOfChanges;
         }
 
-
         private List<RecsProductChanges> FindWriterDifferences(List<WorksWriter> recsWriters,
             List<Snapshot_WorksWriter> snapshotWriters)
         {
             var listOfChanges = new List<RecsProductChanges>();
-            
+
             if (recsWriters.Count != snapshotWriters.Count)
             {
-
-
                 //Get Writer Ids
                 var snapshotWriterCaeCodes = snapshotWriters.Select(_ => _.CloneCaeNumber).ToList();
                 var recsWriterCaeCodes = recsWriters.Select(_ => _.CaeNumber).ToList();
@@ -123,14 +116,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 //Remove added/removed writers from list
                 recsWriters = CleanRecsWriters(recsWriters, writerCaeCodesAddedToRecs);
                 snapshotWriters = CleanSnapshotWriters(snapshotWriters, writerCaeCodesRemovedFromRecs);
-                
             }
 
             for (var i = 0; i < recsWriters.Count; i++)
             {
                 var recsWriter = recsWriters[i];
                 var snapshotWriter = snapshotWriters[i];
-
 
                 //check name
                 if (recsWriter.FullName != snapshotWriter.FullName)
@@ -177,16 +168,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
                     listOfChanges.Add(LogRecsProductChanges("Writer AffiliationsString  was Changed on " + snapshotWriter.FullName, "Writer AffiliationsString Changed", "AffiliationsString ", snapshotWriter.AffiliationsString, recsWriter.AffiliationsString));
                 }
 
-
                 //------------------
                 //check nested Original Publishers
                 listOfChanges.AddRange(FindOrigainlPublisherDifferences(recsWriter.OriginalPublishers, snapshotWriter.OriginalPublishers));
 
-
                 //check nested affilations
             }
-
-
 
             return listOfChanges;
         }
@@ -198,8 +185,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
             if (recsOriginalPublishers.Count != snapshotOriginalPublishers.Count)
             {
-
-
                 //Get Writer Ids
                 var snapshotOriginalPublisherIpCodes = snapshotOriginalPublishers.Select(_ => _.IpCode).ToList();
                 var recsOriginalPublisherIpCodes = recsOriginalPublishers.Select(_ => _.IpCode).ToList();
@@ -216,13 +201,10 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 //Remove added/removed writers from list
                 recsOriginalPublishers = CleanRecsOriginalPublishers(recsOriginalPublishers, originalPublisherAddedIpCodes);
                 snapshotOriginalPublishers = CleanSnapshotsOriginalPublishers(snapshotOriginalPublishers, originalPublisherRemovedIpCodes);
-
             }
 
             for (var i = 0; i < recsOriginalPublishers.Count; i++)
             {
-
-
                 var recOriginalPublisher = recsOriginalPublishers[i];
                 var snapshotOriginalPublisher = snapshotOriginalPublishers[i];
 
@@ -248,26 +230,84 @@ namespace UMPG.USL.API.Business.DataHarmonization
                     listOfChanges.Add(LogRecsProductChanges("Original Publisher Controlled Status was Changed " + recOriginalPublisher.Controlled.ToString(), "Original Publisher", "Original Publisher Controlled Status ", snapshotOriginalPublisher.Controlled.ToString(), recOriginalPublisher.Controlled.ToString()));
                 }
 
-
-
-
                 //---------------------
 
                 //check nested admins
-
+                //Not Implemented
                 //check nested nested affilations
                 //check nested nested nested affilationbases
 
                 //check nested affiliations
                 listOfChanges.AddRange(FindAffiliationDifferences(snapshotOriginalPublisher.Affiliation, recOriginalPublisher.Affiliation));
-                
-
-
             }
 
             return listOfChanges;
         }
+        private List<RecsProductChanges> FindOrigainlPublisherDifferences(
+           List<OriginalPublisher> recsOriginalPublishers, List<Snapshot_ComposerOriginalPublisher> snapshotOriginalPublishers)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
 
+            if (recsOriginalPublishers.Count != snapshotOriginalPublishers.Count)
+            {
+                //Get Writer Ids
+                var snapshotOriginalPublisherIpCodes = snapshotOriginalPublishers.Select(_ => _.IpCode).ToList();
+                var recsOriginalPublisherIpCodes = recsOriginalPublishers.Select(_ => _.IpCode).ToList();
+
+                //find which writers were added and removed
+                var originalPublisherRemovedIpCodes = recsOriginalPublisherIpCodes.Except(snapshotOriginalPublisherIpCodes).ToList();
+                var originalPublisherAddedIpCodes = snapshotOriginalPublisherIpCodes.Except(recsOriginalPublisherIpCodes).ToList();
+
+                //log added or removed writers
+                listOfChanges.AddRange(_productChangeLogService.OriginalPublishersAddedToRecs(recsOriginalPublishers, originalPublisherAddedIpCodes));
+                listOfChanges.AddRange(_productChangeLogService.OriginalPublishersRemovedFromRecs(snapshotOriginalPublishers, originalPublisherRemovedIpCodes));
+
+                //Clean added or removed writer
+                //Remove added/removed writers from list
+                recsOriginalPublishers = CleanRecsOriginalPublishers(recsOriginalPublishers, originalPublisherAddedIpCodes);
+                snapshotOriginalPublishers = CleanSnapshotsComposerOriginalPublishers(snapshotOriginalPublishers, originalPublisherRemovedIpCodes);
+            }
+
+            for (var i = 0; i < recsOriginalPublishers.Count; i++)
+            {
+                var recOriginalPublisher = recsOriginalPublishers[i];
+                var snapshotOriginalPublisher = snapshotOriginalPublishers[i];
+
+                //check name
+                if (recOriginalPublisher.FullName != snapshotOriginalPublisher.FullName)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Original Publisher Name was Changed " + recOriginalPublisher.FullName, "Original Publisher", "Original Publisher Name", snapshotOriginalPublisher.FullName, recOriginalPublisher.FullName));
+                }
+
+                //check CapacityCode
+                if (recOriginalPublisher.CapacityCode != snapshotOriginalPublisher.CapacityCode)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Original Publisher CapacityCode was Changed " + recOriginalPublisher.CapacityCode, "Original Publisher", "Original Publisher CapacityCode", snapshotOriginalPublisher.CapacityCode, recOriginalPublisher.CapacityCode));
+                }
+                //check capacity
+                if (recOriginalPublisher.Capacity != snapshotOriginalPublisher.Capacity)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Original Publisher Capacity was Changed " + recOriginalPublisher.Capacity, "Original Publisher", "Original Publisher Capacity", snapshotOriginalPublisher.Capacity, recOriginalPublisher.Capacity));
+                }
+                //check controlled
+                if (recOriginalPublisher.Controlled != snapshotOriginalPublisher.Controlled)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Original Publisher Controlled Status was Changed " + recOriginalPublisher.Controlled.ToString(), "Original Publisher", "Original Publisher Controlled Status ", snapshotOriginalPublisher.Controlled.ToString(), recOriginalPublisher.Controlled.ToString()));
+                }
+
+                //---------------------
+
+                //check nested admins
+                //Not Implemented
+                //check nested nested affilations
+                //check nested nested nested affilationbases
+
+                //check nested affiliations
+                listOfChanges.AddRange(FindAffiliationDifferences(snapshotOriginalPublisher.Affiliation, recOriginalPublisher.Affiliation));
+            }
+
+            return listOfChanges;
+        }
         private List<RecsProductChanges> FindAffiliationDifferences(List<Snapshot_OriginalPublisherAffiliation> snapshotAffiliations,
             List<Affiliation> recsAffiliations)
         {
@@ -275,7 +315,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
             if (recsAffiliations.Count != snapshotAffiliations.Count)
             {
-
                 //Get Writer Ids
                 var snapshotOPAffilationIncomeGroup = snapshotAffiliations.Select(_ => _.IncomeGroup).ToList();
                 var recsOPAffilationIncomeGroup = recsAffiliations.Select(_ => _.IncomeGroup).ToList();
@@ -294,19 +333,54 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshotAffiliations = CleanRecsOriginalPublishersAffiliations(snapshotAffiliations, originalPublisherRemovedIncomeGroups);
             }
 
-            
             //check nested affilationBase
             for (var i = 0; i < recsAffiliations.Count; i++)
             {
                 var recAffilation = recsAffiliations[i];
                 var snapshotAffilation = snapshotAffiliations[i];
 
+                //check affilation base
+                listOfChanges.AddRange(FindAffiliationBaseChanges(recAffilation.Affiliations, snapshotAffilation.Affiliations));
+            }
+
+            return listOfChanges;
+        }
+
+        private List<RecsProductChanges> FindAffiliationDifferences(List<Snapshot_ComposerOriginalPublisherAffiliation> snapshotAffiliations,
+          List<Affiliation> recsAffiliations)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+
+            if (recsAffiliations.Count != snapshotAffiliations.Count)
+            {
+                //Get Writer Ids
+                var snapshotOPAffilationIncomeGroup = snapshotAffiliations.Select(_ => _.IncomeGroup).ToList();
+                var recsOPAffilationIncomeGroup = recsAffiliations.Select(_ => _.IncomeGroup).ToList();
+
+                //find which writers were added and removed
+                var originalPublisherRemovedIncomeGroups = recsOPAffilationIncomeGroup.Except(snapshotOPAffilationIncomeGroup).ToList();
+                var originalPublisherAddedIncomeGroups = snapshotOPAffilationIncomeGroup.Except(recsOPAffilationIncomeGroup).ToList();
+
+                //log added or removed writers
+                listOfChanges.AddRange(_productChangeLogService.OriginalPublisherAffiliationAddedToRecs(recsAffiliations, originalPublisherAddedIncomeGroups));
+                listOfChanges.AddRange(_productChangeLogService.OriginalPublisherAffiliationRemovedFromRecs(snapshotAffiliations, originalPublisherRemovedIncomeGroups));
+
+                //Clean added or removed writer
+                //Remove added/removed writers from list
+                recsAffiliations = CleanRecsOriginalPublishersAffiliations(recsAffiliations, originalPublisherAddedIncomeGroups);
+                snapshotAffiliations = CleanRecsOriginalPublishersAffiliations(snapshotAffiliations, originalPublisherRemovedIncomeGroups);
+            }
+
+            //check nested affilationBase
+            for (var i = 0; i < recsAffiliations.Count; i++)
+            {
+                var recAffilation = recsAffiliations[i];
+                var snapshotAffilation = snapshotAffiliations[i];
 
                 //check affilation base
                 listOfChanges.AddRange(FindAffiliationBaseChanges(recAffilation.Affiliations, snapshotAffilation.Affiliations));
-
             }
-            
+
             return listOfChanges;
         }
 
@@ -315,28 +389,107 @@ namespace UMPG.USL.API.Business.DataHarmonization
             List<Snapshot_OriginalPubAffiliationBase> snapshotOriginalPubAffiliationBases)
         {
             var listOfChanges = new List<RecsProductChanges>();
+            if (snapshotOriginalPubAffiliationBases.Count != recsOriginalPubAffiliationBases.Count)
+            {
+                //Get Writer Ids
+                var snapshotOPAffilationSociertAcronym =
+                    snapshotOriginalPubAffiliationBases.Select(_ => _.SocietyAcronym).ToList();
+                var recsOPAffilationSocietyAcronym =
+                    recsOriginalPubAffiliationBases.Select(_ => _.SocietyAcronym).ToList();
 
+                //find which writers were added and removed
+                var originalPublisherRemovedSocietyAcronym =
+                    recsOPAffilationSocietyAcronym.Except(snapshotOPAffilationSociertAcronym).ToList();
+                var originalPublisherAddedSocietyAcronym =
+                    snapshotOPAffilationSociertAcronym.Except(recsOPAffilationSocietyAcronym).ToList();
 
-            //Get Writer Ids
-            var snapshotOPAffilationIncomeGroup = snapshotAffiliations.Select(_ => _.IncomeGroup).ToList();
-            var recsOPAffilationIncomeGroup = recsAffiliations.Select(_ => _.IncomeGroup).ToList();
+                //log added or removed writers
+                listOfChanges.AddRange(
+                    _productChangeLogService.AffiliationBaseAddedToRecs(recsOriginalPubAffiliationBases,
+                        originalPublisherAddedSocietyAcronym));
+                listOfChanges.AddRange(
+                    _productChangeLogService.AffiliationBaseRemovedFromRecs(snapshotOriginalPubAffiliationBases,
+                        originalPublisherRemovedSocietyAcronym));
 
-            //find which writers were added and removed
-            var originalPublisherRemovedIncomeGroups = recsOPAffilationIncomeGroup.Except(snapshotOPAffilationIncomeGroup).ToList();
-            var originalPublisherAddedIncomeGroups = snapshotOPAffilationIncomeGroup.Except(recsOPAffilationIncomeGroup).ToList();
+                //Clean added or removed writer
+                //Remove added/removed writers from list
+                recsOriginalPubAffiliationBases = CleanRecsAffiliationsBases(recsOriginalPubAffiliationBases,
+                    originalPublisherAddedSocietyAcronym);
+                snapshotOriginalPubAffiliationBases = CleanSnapshotAffiliationsBases(snapshotOriginalPubAffiliationBases,
+                    originalPublisherRemovedSocietyAcronym);
+            }
 
-            //log added or removed writers
-            listOfChanges.AddRange(_productChangeLogService.OriginalPublisherAffiliationAddedToRecs(recsAffiliations, originalPublisherAddedIncomeGroups));
-            listOfChanges.AddRange(_productChangeLogService.OriginalPublisherAffiliationRemovedFromRecs(snapshotAffiliations, originalPublisherRemovedIncomeGroups));
+            for (var i = 0; i < snapshotOriginalPubAffiliationBases.Count; i++)
+            {
+                var snapshotOpAffBase = snapshotOriginalPubAffiliationBases[i];
+                var recsOriginalPubBase = recsOriginalPubAffiliationBases[i];
 
-            //Clean added or removed writer
-            //Remove added/removed writers from list
-            recsAffiliations = CleanRecsOriginalPublishersAffiliations(recsAffiliations, originalPublisherAddedIncomeGroups);
-            snapshotAffiliations = CleanRecsOriginalPublishersAffiliations(snapshotAffiliations, originalPublisherRemovedIncomeGroups);
+                if (snapshotOpAffBase.StartDate != recsOriginalPubBase.StartDate)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Original Publisher Controlled Affiliation Base Start Date was Changed ", "Original Publisher Affiliaton Base", "Original Publisher Affiliaton Base - Start Date ", snapshotOpAffBase.StartDate.ToString(), recsOriginalPubBase.StartDate.ToString()));
+                }
+
+                if (snapshotOpAffBase.EndDate != recsOriginalPubBase.EndDate)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Original Publisher Controlled Affiliation Base End Date was Changed ", "Original Publisher Affiliaton Base", "Original Publisher Affiliaton Base - End Date ", snapshotOpAffBase.EndDate.ToString(), recsOriginalPubBase.EndDate.ToString()));
+                }
+            }
 
             return listOfChanges;
         }
+        private List<RecsProductChanges> FindComposerAffiliationBaseChanges(
+          List<AffiliationBase> recsOriginalPubAffiliationBases,
+          List<Snapshot_ComposerOriginalPublisherAffiliationBase> snapshotOriginalPubAffiliationBases)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            if (snapshotOriginalPubAffiliationBases.Count != recsOriginalPubAffiliationBases.Count)
+            {
+                //Get Writer Ids
+                var snapshotOPAffilationSociertAcronym =
+                    snapshotOriginalPubAffiliationBases.Select(_ => _.SocietyAcronym).ToList();
+                var recsOPAffilationSocietyAcronym =
+                    recsOriginalPubAffiliationBases.Select(_ => _.SocietyAcronym).ToList();
 
+                //find which writers were added and removed
+                var originalPublisherRemovedSocietyAcronym =
+                    recsOPAffilationSocietyAcronym.Except(snapshotOPAffilationSociertAcronym).ToList();
+                var originalPublisherAddedSocietyAcronym =
+                    snapshotOPAffilationSociertAcronym.Except(recsOPAffilationSocietyAcronym).ToList();
+
+                //log added or removed writers
+                listOfChanges.AddRange(
+                    _productChangeLogService.AffiliationBaseAddedToRecs(recsOriginalPubAffiliationBases,
+                        originalPublisherAddedSocietyAcronym));
+                listOfChanges.AddRange(
+                    _productChangeLogService.AffiliationBaseRemovedFromRecs(snapshotOriginalPubAffiliationBases,
+                        originalPublisherRemovedSocietyAcronym));
+
+                //Clean added or removed writer
+                //Remove added/removed writers from list
+                recsOriginalPubAffiliationBases = CleanRecsAffiliationsBases(recsOriginalPubAffiliationBases,
+                    originalPublisherAddedSocietyAcronym);
+                snapshotOriginalPubAffiliationBases = CleanRecsComposerAffiliationsBases(snapshotOriginalPubAffiliationBases,
+                    originalPublisherRemovedSocietyAcronym);
+            }
+
+            for (var i = 0; i < snapshotOriginalPubAffiliationBases.Count; i++)
+            {
+                var snapshotOpAffBase = snapshotOriginalPubAffiliationBases[i];
+                var recsOriginalPubBase = recsOriginalPubAffiliationBases[i];
+
+                if (snapshotOpAffBase.StartDate != recsOriginalPubBase.StartDate)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Original Publisher Controlled Affiliation Base Start Date was Changed ", "Original Publisher Affiliaton Base", "Original Publisher Affiliaton Base - Start Date ", snapshotOpAffBase.StartDate.ToString(), recsOriginalPubBase.StartDate.ToString()));
+                }
+
+                if (snapshotOpAffBase.EndDate != recsOriginalPubBase.EndDate)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Original Publisher Controlled Affiliation Base End Date was Changed ", "Original Publisher Affiliaton Base", "Original Publisher Affiliaton Base - End Date ", snapshotOpAffBase.EndDate.ToString(), recsOriginalPubBase.EndDate.ToString()));
+                }
+            }
+
+            return listOfChanges;
+        }
         private List<RecsProductChanges> FindProductHeaderDifferences(List<LicenseProduct> licenseProducts,
             List<Snapshot_LicenseProduct> snapshotLicenseProducts)
         {
@@ -349,12 +502,10 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 var snapshotProductHeader = mechsProductHeaders[i];
                 var recProductHeader = recsProductHeaders[i];
 
-
                 //check for title difference
                 if (snapshotProductHeader.Title != recProductHeader.Title)
                 {
                     listOfChanges.Add(LogRecsProductChanges("Product Header Title was Changed", "Product Header Title", "Product Header Title", snapshotProductHeader.Title, recProductHeader.Title));
-
                 }
 
                 //check album art URL
@@ -370,7 +521,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         listOfChanges.Add(FindArtistDifferences(recProductHeader.Artist, snapshotProductHeader.Artist));
                     }
                 }
-
 
                 //Check nested RecordLabel
                 if (snapshotProductHeader.Label != null && recProductHeader.Label != null)
@@ -391,8 +541,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                     }
                 }
 
-
-            
                 //Check nested Configuratuions
                 if (snapshotProductHeader.Configurations != null && recProductHeader.Configurations != null)
                 {
@@ -402,7 +550,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
                     var configurationIdsRemovedFromRecs = recsRecordingIds.Except(snapshotRecordingIds).ToList();
                     var configurationIdsAddedToRecs = snapshotRecordingIds.Except(recsRecordingIds).ToList();
-                    
+
                     listOfChanges.AddRange(_productChangeLogService.ConfigurationAddedToRecs(recProductHeader.Configurations, configurationIdsAddedToRecs));
                     listOfChanges.AddRange(_productChangeLogService.ConfigurationRemovedFromRecs(snapshotProductHeader.Configurations, configurationIdsRemovedFromRecs));
 
@@ -419,7 +567,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         //check UPC
                         if (recsConfiguration.UPC != snapshotConfiguration.UPC)
                         {
-                            listOfChanges.Add(LogRecsProductChanges("UPC Code was changed on configuration.", "UPC Code has been changed","UPC Code", snapshotConfiguration.UPC, recsConfiguration.UPC));
+                            listOfChanges.Add(LogRecsProductChanges("UPC Code was changed on configuration.", "UPC Code has been changed", "UPC Code", snapshotConfiguration.UPC, recsConfiguration.UPC));
                         }
 
                         //check nested Configuration type
@@ -428,11 +576,11 @@ namespace UMPG.USL.API.Business.DataHarmonization
                             if ((recsConfiguration.Configuration.name != snapshotConfiguration.Configuration.Name) ||
                                 (recsConfiguration.Configuration.type != snapshotConfiguration.Configuration.Type))
                             {
-                                listOfChanges.Add(LogRecsProductChanges("Configuration Details have changed on configuration. UPC Code:" + recsConfiguration.UPC, "Configuration Details have been changed", "Configuration Details", snapshotConfiguration.Configuration.Name + " " +snapshotConfiguration.Configuration.Type, recsConfiguration.Configuration.name + " " + recsConfiguration.Configuration.type));
+                                listOfChanges.Add(LogRecsProductChanges("Configuration Details have changed on configuration. UPC Code:" + recsConfiguration.UPC, "Configuration Details have been changed", "Configuration Details", snapshotConfiguration.Configuration.Name + " " + snapshotConfiguration.Configuration.Type, recsConfiguration.Configuration.name + " " + recsConfiguration.Configuration.type));
                             }
                         }
                     }
-                }                
+                }
             }
             return listOfChanges;
         }
@@ -470,15 +618,207 @@ namespace UMPG.USL.API.Business.DataHarmonization
                     listOfChanges.Add(LogRecsProductChanges("Track Isrc has been changed to " + recsTrack.Isrc, "Track Isrc Changed", "Track Isrc", snapshotTrack.Isrc, recsTrack.Isrc));
                 }
 
-                 //Dive into Copyrights and check for changes
-                 //TODO
-
-
+                //Dive into Copyrights and check for changes
+                listOfChanges.AddRange(FindCopyRightDifferences(recsTrack.Copyrights, snapshotTrack.Copyrights));
             }
 
             return listOfChanges;
         }
 
+
+        private List<RecsProductChanges> FindCopyRightDifferences(List<RecsCopyrights> recsCopyrights,
+            List<Snapshot_RecsCopyright> snapshotRecsCopyrights)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            if (recsCopyrights.Count != snapshotRecsCopyrights.Count)
+            {
+                //Check for added or removed copyrights
+                var snapshotCopyrightsWorkCodes = recsCopyrights.Select(_ => _.WorkCode).ToList();
+                var recCopyrightsWorkCodes = snapshotRecsCopyrights.Select(_ => _.WorkCode).ToList();
+
+                var copyrightWorkcodesRemovedFromRecs =
+                    recCopyrightsWorkCodes.Except(snapshotCopyrightsWorkCodes).ToList();
+                var copyrightWorkcodesAddedToRecs = snapshotCopyrightsWorkCodes.Except(recCopyrightsWorkCodes).ToList();
+
+                listOfChanges.AddRange(_productChangeLogService.CopyrightsAddedToRecs(recsCopyrights,
+                    copyrightWorkcodesAddedToRecs));
+                listOfChanges.AddRange(_productChangeLogService.CopyrightsRemovedFromRecs(snapshotRecsCopyrights,
+                    copyrightWorkcodesRemovedFromRecs));
+
+                //Clean (remove added or removed copyrights)
+                recsCopyrights = CleanCopyrights(recsCopyrights, copyrightWorkcodesAddedToRecs);
+                snapshotRecsCopyrights = CleanSnapshotsCopyrights(snapshotRecsCopyrights,
+                    copyrightWorkcodesRemovedFromRecs);
+            }
+
+            for (var i = 0; i < recsCopyrights.Count; i++)
+            {
+                var recsCopyright = recsCopyrights[i];
+                var snapshotCopyright = snapshotRecsCopyrights[i];
+
+                //check title
+                if (recsCopyright.Title != snapshotCopyright.Title)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Copyright Title has been changed to " + recsCopyright.Title, "Copyright Title Changed", "Copyright Title", snapshotCopyright.Title, recsCopyright.Title));
+                }
+                //check principle artists
+                if (recsCopyright.PrincipalArtist != snapshotCopyright.PrincipalArtist)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Copyright PrincipalArtist has been changed to " + recsCopyright.PrincipalArtist, "Copyright PrincipalArtist Changed", "Copyright PrincipalArtist", snapshotCopyright.PrincipalArtist, recsCopyright.PrincipalArtist));
+                }
+                //check writers
+                if (recsCopyright.Writers != snapshotCopyright.Writers)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Copyright Writers has been changed to " + recsCopyright.Writers, "Copyright Writers Changed", "Copyright Writers", snapshotCopyright.Writers, recsCopyright.Writers));
+                }
+
+                //check writer string
+                if (recsCopyright.WriteString != snapshotCopyright.WriteString)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Copyright WriteString has been changed to " + recsCopyright.WriteString, "Copyright WriteString Changed", "Copyright WriteString", snapshotCopyright.WriteString, recsCopyright.WriteString));
+                }
+                //chek sampled works (TODO:not implemented)
+                
+
+                //-------------
+                //check local Clients
+                listOfChanges.AddRange(CheckForLocalClientChanges(recsCopyright.LocalClients, snapshotCopyright.LocalClients));
+                //check deal owning locations
+                listOfChanges.AddRange(CheckForDealOwningLocaitonChanges(recsCopyright.AquisitionLocationCode, snapshotCopyright.AquisitionLocationCodes));
+                //cechk composers
+                listOfChanges.AddRange(CheckForComposerChanges(recsCopyright.Composers, snapshotCopyright.Composers));
+
+
+            }
+
+
+
+
+        return listOfChanges;
+        }
+
+        private List<RecsProductChanges> CheckForComposerChanges(List<WorksWriter> recsComposersList,
+            List<Snapshot_Composer> snapshotComposers)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            if (recsComposersList.Count != snapshotComposers.Count)
+            {
+                //Check for added or removed copyrights
+                var snapshotCopyrightsWorkCodes = recsComposersList.Select(_ => _.IpCode).ToList();
+                var recCopyrightsWorkCodes = snapshotComposers.Select(_ => _.IpCode).ToList();
+
+                var copyrightWorkcodesRemovedFromRecs =
+                    recCopyrightsWorkCodes.Except(snapshotCopyrightsWorkCodes).ToList();
+                var copyrightWorkcodesAddedToRecs = snapshotCopyrightsWorkCodes.Except(recCopyrightsWorkCodes).ToList();
+
+                listOfChanges.AddRange(_productChangeLogService.ComposersAddedToRecs(recsComposersList,
+                    copyrightWorkcodesAddedToRecs));
+                listOfChanges.AddRange(_productChangeLogService.ComposerRemovedFromRecs(snapshotComposers,
+                    copyrightWorkcodesRemovedFromRecs));
+
+                //Clean (remove added or removed copyrights)
+                recsComposersList = CleanComposers(recsComposersList, copyrightWorkcodesAddedToRecs);
+                snapshotComposers = CleanComposers(snapshotComposers,
+                    copyrightWorkcodesRemovedFromRecs);
+            }
+
+            for (int i = 0; i < recsComposersList.Count; i++)
+            {
+
+                var recComposer = recsComposersList[i];
+                var snapshotComposer = snapshotComposers[i];
+                //check name
+                if (recComposer.FullName != snapshotComposer.FullName)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Composer Name was Changed " + recComposer.FullName, "Composer", "Composer Name", snapshotComposer.FullName, recComposer.FullName));
+                }
+
+                //check CapacityCode
+                if (recComposer.CapacityCode != snapshotComposer.CapacityCode)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Composer CapacityCode was Changed " + recComposer.CapacityCode, "Composer", "Composer CapacityCode", snapshotComposer.CapacityCode, recComposer.CapacityCode));
+                }
+                //check capacity
+                if (recComposer.Capacity != snapshotComposer.Capacity)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Composer Capacity was Changed " + recComposer.Capacity, "Composer", "Composer Capacity", snapshotComposer.Capacity, recComposer.Capacity));
+                }
+                //check controlled
+                if (recComposer.Controlled != snapshotComposer.Controlled)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Composer Controlled Status was Changed " + recComposer.Controlled.ToString(), "Composer", "Composer Controlled Status ", snapshotComposer.Controlled.ToString(), recComposer.Controlled.ToString()));
+                }
+
+
+                //check original publisers
+                listOfChanges.AddRange(FindOrigainlPublisherDifferences(recComposer.OriginalPublishers, snapshotComposer.OriginalPublishers));
+                //check affilaitons
+            }
+
+
+            return listOfChanges;
+        }
+
+        private List<RecsProductChanges> CheckForLocalClientChanges(List<LocalClientCopyright> recsLocalClients,
+            List<Snapshot_LocalClientCopyright> snapshotLocalClients)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+
+            //Check for added or removed copyrights
+            var snapshotCopyrightsWorkCodes = recsLocalClients.Select(_ => _.ClientCode).ToList();
+            var recCopyrightsWorkCodes = snapshotLocalClients.Select(_ => _.ClientCode).ToList();
+
+            var copyrightWorkcodesRemovedFromRecs =
+                recCopyrightsWorkCodes.Except(snapshotCopyrightsWorkCodes).ToList();
+            var copyrightWorkcodesAddedToRecs = snapshotCopyrightsWorkCodes.Except(recCopyrightsWorkCodes).ToList();
+
+            listOfChanges.AddRange(_productChangeLogService.LocalClientAddedToRecs(recsLocalClients,
+                copyrightWorkcodesAddedToRecs));
+            listOfChanges.AddRange(_productChangeLogService.LocalClientRemovedFromRecs(snapshotLocalClients,
+                copyrightWorkcodesRemovedFromRecs));
+
+            //Clean (remove added or removed copyrights)
+            recsLocalClients = CleanLocalClient(recsLocalClients, copyrightWorkcodesAddedToRecs);
+            snapshotLocalClients = CleanLocalClient(snapshotLocalClients,
+                copyrightWorkcodesRemovedFromRecs);
+
+
+            for (int i = 0; i < recsLocalClients.Count; i++)
+            {
+                var recLocalClient = recsLocalClients[i];
+                var snapshotLocalClient = snapshotLocalClients[i];
+
+
+                if (recLocalClient.ClientName != snapshotLocalClient.ClientName)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Local ClientName Local ClientName Status was Changed " + recLocalClient.ClientName.ToString(), "Local ClientName", "Local ClientName Controlled Status ", snapshotLocalClient.ClientName.ToString(), recLocalClient.ClientName.ToString()));
+                }
+            }
+
+            return listOfChanges;
+        }
+
+
+        private List<RecsProductChanges> CheckForDealOwningLocaitonChanges(List<string> recsLocationCodes,
+            List<Snapshot_AquisitionLocationCode> snapshotAquisitionLocationCodes)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+
+            //Check for added or removed copyrights
+            var recsLocaitonCodes = recsLocationCodes.Select(_ => _).ToList();
+            var snapshotLocationCodes = snapshotAquisitionLocationCodes.Select(_ => _.AquisitionLocationCode).ToList();
+
+            var copyrightWorkcodesRemovedFromRecs =
+                recsLocaitonCodes.Except(snapshotLocationCodes).ToList();
+            var copyrightWorkcodesAddedToRecs = snapshotLocationCodes.Except(recsLocaitonCodes).ToList();
+
+            listOfChanges.AddRange(_productChangeLogService.LocationCodeAddedToRecs(recsLocationCodes,
+                copyrightWorkcodesAddedToRecs));
+            listOfChanges.AddRange(_productChangeLogService.LocationCodeRemovedFromRecs(snapshotAquisitionLocationCodes,
+                copyrightWorkcodesRemovedFromRecs));
+
+            return listOfChanges;
+        }
         private RecsProductChanges LogRecsProductChanges(string changeMessage, string propertyLocation,
             string propertyChanged, string originalValue, string newValue)
         {
@@ -490,7 +830,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
             newChange.PropertyChanged = propertyChanged;
             return newChange;
         }
-
 
         private RecsProductChanges FindArtistDifferences(ArtistRecs recsArtist, Snapshot_ArtistRecs snapshotArtist)
         {
@@ -578,7 +917,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return listOfTracks;
         }
 
-
         private List<WorksWriter> GetRecsWriters(List<WorksRecording> recsRecordings)
         {
             var listOfTracks = new List<WorksWriter>();
@@ -601,7 +939,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             foreach (var recsRecording in recsRecordings)
             {
                 if (recsRecording.Writers != null)
-                { 
+                {
                     foreach (var writer in recsRecording.Writers)
                     {
                         listOfTracks.Add(writer);
@@ -610,6 +948,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             }
             return listOfTracks;
         }
+
         private List<Snapshot_WorksTrack> GetSnapshotTracks(List<Snapshot_WorksRecording> recsRecordings)
         {
             var listOfTracks = new List<Snapshot_WorksTrack>();
@@ -677,116 +1016,357 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return list;
         }
 
-        private List<Affiliation> CleanRecsOriginalPublishersAffiliations(List<Affiliation> list, List<string> ids)
+  private List<RecsProductChanges> FindAffiliationBaseChanges(
+            List<AffiliationBase> recsOriginalPubAffiliationBases,
+            List<Snapshot_ComposerOriginalPublisherAffiliationBase> snapshotOriginalPubAffiliationBases)
         {
-            
-            for (int i = list.Count - 1; i >= 0; i--)
+            var listOfChanges = new List<RecsProductChanges>();
+            if (snapshotOriginalPubAffiliationBases.Count != recsOriginalPubAffiliationBases.Count)
             {
-                if (ids.Contains(list[i].IncomeGroup))
+                //Get Writer Ids
+                var snapshotOPAffilationSociertAcronym =
+                    snapshotOriginalPubAffiliationBases.Select(_ => _.SocietyAcronym).ToList();
+                var recsOPAffilationSocietyAcronym =
+                    recsOriginalPubAffiliationBases.Select(_ => _.SocietyAcronym).ToList();
+
+                //find which writers were added and removed
+                var originalPublisherRemovedSocietyAcronym =
+                    recsOPAffilationSocietyAcronym.Except(snapshotOPAffilationSociertAcronym).ToList();
+                var originalPublisherAddedSocietyAcronym =
+                    snapshotOPAffilationSociertAcronym.Except(recsOPAffilationSocietyAcronym).ToList();
+
+                //log added or removed writers
+                listOfChanges.AddRange(
+                    _productChangeLogService.AffiliationBaseAddedToRecs(recsOriginalPubAffiliationBases,
+                        originalPublisherAddedSocietyAcronym));
+                listOfChanges.AddRange(
+                    _productChangeLogService.AffiliationBaseRemovedFromRecs(snapshotOriginalPubAffiliationBases,
+                        originalPublisherRemovedSocietyAcronym));
+
+                //Clean added or removed writer
+                //Remove added/removed writers from list
+                recsOriginalPubAffiliationBases = CleanRecsAffiliationsBases(recsOriginalPubAffiliationBases,
+                    originalPublisherAddedSocietyAcronym);
+                snapshotOriginalPubAffiliationBases = CleanRecsComposerAffiliationsBases(snapshotOriginalPubAffiliationBases,
+                    originalPublisherRemovedSocietyAcronym);
+            }
+
+            for (var i = 0; i < snapshotOriginalPubAffiliationBases.Count; i++)
+            {
+                var snapshotOpAffBase = snapshotOriginalPubAffiliationBases[i];
+                var recsOriginalPubBase = recsOriginalPubAffiliationBases[i];
+
+                if (snapshotOpAffBase.StartDate != recsOriginalPubBase.StartDate)
                 {
-                    list.Remove(list[i]);
+                    listOfChanges.Add(LogRecsProductChanges("Original Publisher Controlled Affiliation Base Start Date was Changed ", "Original Publisher Affiliaton Base", "Original Publisher Affiliaton Base - Start Date ", snapshotOpAffBase.StartDate.ToString(), recsOriginalPubBase.StartDate.ToString()));
+                }
+
+                if (snapshotOpAffBase.EndDate != recsOriginalPubBase.EndDate)
+                {
+                    listOfChanges.Add(LogRecsProductChanges("Original Publisher Controlled Affiliation Base End Date was Changed ", "Original Publisher Affiliaton Base", "Original Publisher Affiliaton Base - End Date ", snapshotOpAffBase.EndDate.ToString(), recsOriginalPubBase.EndDate.ToString()));
                 }
             }
 
+            return listOfChanges;
+        }
+
+        private List<AffiliationBase> CleanRecsAffiliationsBases(List<AffiliationBase> list, List<string> ids)
+        {
+            if (ids.Count > 0)
+            {
+                for (int i = list.Count - 1; i >= 0; i--)
+                {
+                    if (ids.Contains(list[i].SocietyAcronym))
+                    {
+                        list.Remove(list[i]);
+                    }
+                }
+            }
+            return list;
+        }
+
+        private List<Snapshot_OriginalPubAffiliationBase> CleanSnapshotAffiliationsBases(List<Snapshot_OriginalPubAffiliationBase> list, List<string> ids)
+        {
+            if (ids.Count > 0)
+            {
+                for (int i = list.Count - 1; i >= 0; i--)
+                {
+                    if (ids.Contains(list[i].SocietyAcronym))
+                    {
+                        list.Remove(list[i]);
+                    }
+                }
+            }
+            return list;
+        }
+
+        private List<Snapshot_ComposerOriginalPublisherAffiliationBase> CleanRecsComposerAffiliationsBases(List<Snapshot_ComposerOriginalPublisherAffiliationBase> list, List<string> ids)
+        {
+            if (ids.Count > 0)
+            {
+                for (int i = list.Count - 1; i >= 0; i--)
+                {
+                    if (ids.Contains(list[i].SocietyAcronym))
+                    {
+                        list.Remove(list[i]);
+                    }
+                }
+            }
+            return list;
+        }
+
+        private List<Affiliation> CleanRecsOriginalPublishersAffiliations(List<Affiliation> list, List<string> ids)
+        {
+            if (ids.Count > 0)
+            {
+                for (int i = list.Count - 1; i >= 0; i--)
+                {
+                    if (ids.Contains(list[i].IncomeGroup))
+                    {
+                        list.Remove(list[i]);
+                    }
+                }
+            }
             return list;
         }
 
         private List<Snapshot_OriginalPublisherAffiliation> CleanRecsOriginalPublishersAffiliations(List<Snapshot_OriginalPublisherAffiliation> list, List<string> ids)
         {
-
-            for (int i = list.Count - 1; i >= 0; i--)
+            if (ids.Count > 0)
             {
-                if (ids.Contains(list[i].IncomeGroup))
+                for (int i = list.Count - 1; i >= 0; i--)
                 {
-                    list.Remove(list[i]);
+                    if (ids.Contains(list[i].IncomeGroup))
+                    {
+                        list.Remove(list[i]);
+                    }
                 }
             }
+            return list;
+        }
 
+
+        private List<Snapshot_ComposerOriginalPublisherAffiliation> CleanRecsOriginalPublishersAffiliations(List<Snapshot_ComposerOriginalPublisherAffiliation> list, List<string> ids)
+        {
+            if (ids.Count > 0)
+            {
+                for (int i = list.Count - 1; i >= 0; i--)
+                {
+                    if (ids.Contains(list[i].IncomeGroup))
+                    {
+                        list.Remove(list[i]);
+                    }
+                }
+            }
             return list;
         }
 
         private List<OriginalPublisher> CleanRecsOriginalPublishers(List<OriginalPublisher> list, List<string> ids)
         {
-
             var listOfIds = ids.Select(_ => Convert.ToInt32(_)).ToList();
-            for (int i = list.Count - 1; i >= 0; i--)
+            if (ids.Count > 0)
             {
-                if (listOfIds.Contains(Convert.ToInt32(list[i].IpCode)))
+                for (int i = list.Count - 1; i >= 0; i--)
                 {
-                    list.Remove(list[i]);
+                    if (listOfIds.Contains(Convert.ToInt32(list[i].IpCode)))
+                    {
+                        list.Remove(list[i]);
+                    }
                 }
             }
-
             return list;
         }
 
-        private List<Snapshot_OriginalPublisher> CleanSnapshotsOriginalPublishers(List<Snapshot_OriginalPublisher> list, List<string> ids)
+        private List<Snapshot_RecsCopyright> CleanSnapshotsCopyrights(List<Snapshot_RecsCopyright> list, List<string> ids)
         {
-
             var listOfIds = ids.Select(_ => Convert.ToInt32(_)).ToList();
-            for (int i = list.Count - 1; i >= 0; i--)
+            if (ids.Count > 0)
             {
-                if (listOfIds.Contains(Convert.ToInt32(list[i].IpCode)))
+                for (int i = list.Count - 1; i >= 0; i--)
                 {
-                    list.Remove(list[i]);
+                    if (listOfIds.Contains(Convert.ToInt32(list[i].WorkCode)))
+                    {
+                        list.Remove(list[i]);
+                    }
                 }
             }
+            return list;
+        }
 
+        private List<RecsCopyrights> CleanCopyrights(List<RecsCopyrights> list, List<string> ids)
+        {
+            var listOfIds = ids.Select(_ => Convert.ToInt32(_)).ToList();
+            if (ids.Count > 0)
+            {
+                if (ids.Count > 0)
+                {
+                    for (int i = list.Count - 1; i >= 0; i--)
+                    {
+                        if (listOfIds.Contains(Convert.ToInt32(list[i].WorkCode)))
+                        {
+                            list.Remove(list[i]);
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        private List<LocalClientCopyright> CleanLocalClient(List<LocalClientCopyright> list, List<string> ids)
+        {
+            var listOfIds = ids.Select(_ => Convert.ToInt32(_)).ToList();
+            if (ids.Count > 0)
+            {
+                for (int i = list.Count - 1; i >= 0; i--)
+                {
+                    if (listOfIds.Contains(Convert.ToInt32(list[i])))
+                    {
+                        list.Remove(list[i]);
+                    }
+                }
+            }
+            return list;
+        }
+
+
+        private List<Snapshot_LocalClientCopyright> CleanLocalClient(List<Snapshot_LocalClientCopyright> list, List<string> ids)
+        {
+            var listOfIds = ids.Select(_ => Convert.ToInt32(_)).ToList();
+            if (ids.Count > 0)
+            {
+                for (int i = list.Count - 1; i >= 0; i--)
+                {
+                    if (listOfIds.Contains(Convert.ToInt32(list[i])))
+                    {
+                        list.Remove(list[i]);
+                    }
+                }
+            }
+            return list;
+        }
+
+        private List<WorksWriter> CleanComposers(List<WorksWriter> list, List<string> ids)
+        {
+            var listOfIds = ids.Select(_ => Convert.ToInt32(_)).ToList();
+            if (ids.Count > 0)
+            {
+                for (int i = list.Count - 1; i >= 0; i--)
+                {
+                    if (listOfIds.Contains(Convert.ToInt32(list[i].IpCode)))
+                    {
+                        list.Remove(list[i]);
+                    }
+                }
+            }
+            return list;
+        }
+        private List<Snapshot_Composer> CleanComposers(List<Snapshot_Composer> list, List<string> ids)
+        {
+            var listOfIds = ids.Select(_ => Convert.ToInt32(_)).ToList();
+            if (ids.Count > 0)
+            {
+                for (int i = list.Count - 1; i >= 0; i--)
+                {
+                    if (listOfIds.Contains(Convert.ToInt32(list[i].IpCode)))
+                    {
+                        list.Remove(list[i]);
+                    }
+                }
+            }
+            return list;
+        }
+
+
+        private List<Snapshot_OriginalPublisher> CleanSnapshotsOriginalPublishers(List<Snapshot_OriginalPublisher> list, List<string> ids)
+        {
+            var listOfIds = ids.Select(_ => Convert.ToInt32(_)).ToList();
+            if (ids.Count > 0)
+            {
+                for (int i = list.Count - 1; i >= 0; i--)
+                {
+                    if (listOfIds.Contains(Convert.ToInt32(list[i].IpCode)))
+                    {
+                        list.Remove(list[i]);
+                    }
+                }
+            }
+            return list;
+        }
+        private List<Snapshot_ComposerOriginalPublisher> CleanSnapshotsComposerOriginalPublishers(List<Snapshot_ComposerOriginalPublisher> list, List<string> ids)
+        {
+            var listOfIds = ids.Select(_ => Convert.ToInt32(_)).ToList();
+            if (ids.Count > 0)
+            {
+                for (int i = list.Count - 1; i >= 0; i--)
+                {
+                    if (listOfIds.Contains(Convert.ToInt32(list[i].IpCode)))
+                    {
+                        list.Remove(list[i]);
+                    }
+                }
+            }
             return list;
         }
 
         private List<WorksWriter> CleanRecsWriters(List<WorksWriter> list, List<int> ids)
         {
-            for (int i = list.Count - 1; i >= 0; i--)
+            if (ids.Count > 0)
             {
-                if (ids.Contains((int)list[i].CaeNumber))
+                for (int i = list.Count - 1; i >= 0; i--)
                 {
-                    list.Remove(list[i]);
+                    if (ids.Contains((int) list[i].CaeNumber))
+                    {
+                        list.Remove(list[i]);
+                    }
                 }
             }
-
             return list;
         }
 
         private List<WorksRecording> CleanWorksRecordings(List<WorksRecording> list, List<int> ids)
         {
-            for (int i = list.Count - 1; i >= 0; i--)
+            if (ids.Count > 0)
             {
-                if (ids.Contains((int)list[i].TrackId))
+                for (int i = list.Count - 1; i >= 0; i--)
                 {
-                    list.Remove(list[i]);
+                    if (ids.Contains((int) list[i].TrackId))
+                    {
+                        list.Remove(list[i]);
+                    }
                 }
             }
-
             return list;
         }
 
         private List<RecsConfiguration> CleanRecsConfigurations(List<RecsConfiguration> list, List<int> ids)
         {
-            for (int i = list.Count - 1; i >= 0; i--)
+            if (ids.Count > 0)
             {
-                if (ids.Contains((int)list[i].configuration_id))
+                for (int i = list.Count - 1; i >= 0; i--)
                 {
-                    list.Remove(list[i]);
+                    if (ids.Contains((int) list[i].configuration_id))
+                    {
+                        list.Remove(list[i]);
+                    }
                 }
             }
-
             return list;
         }
 
         private List<Snapshot_RecsConfiguration> CleanSnapshotRecsConfigurations(List<Snapshot_RecsConfiguration> list, List<int> ids)
         {
-            for (int i = list.Count - 1; i >= 0; i--)
+            if (ids.Count > 0)
             {
-                if (ids.Contains((int)list[i].CloneRecsConfigurationId))
+                for (int i = list.Count - 1; i >= 0; i--)
                 {
-                    list.Remove(list[i]);
+                    if (ids.Contains((int) list[i].CloneRecsConfigurationId))
+                    {
+                        list.Remove(list[i]);
+                    }
                 }
             }
-
             return list;
         }
-
 
         private List<Snapshot_WorksRecording> GetAllSnapshotWorksRecordings(
             List<Snapshot_LicenseProduct> licenseProductSnapshots)
