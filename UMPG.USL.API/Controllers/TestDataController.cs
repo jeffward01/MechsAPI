@@ -65,8 +65,8 @@ namespace UMPG.USL.API.Controllers
             var exists = _dataHarmonizationManager.DoesSnapshotExist(licenseId);
             if (exists)
             {
-                var snapshotLicense = _dataHarmonizationManager.GetLicenseSnapshot(licenseId);
-                return Ok(snapshotLicense);
+                return Ok(_dataHarmonizationManager.GetLicenseSnapshot(licenseId));
+                
             }
             return NotFound();
         }

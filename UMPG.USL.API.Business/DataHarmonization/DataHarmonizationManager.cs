@@ -14,16 +14,15 @@ namespace UMPG.USL.API.Business.DataHarmonization
     public class DataHarmonizationManager : IDataHarmonizationManager
     {
         private readonly ISnapshotLicenseManager _snapshotLicenseManager;
-        private readonly ISnapshotLicenseNoteManager _snapshotLicenseNoteManager;
+        
         private readonly ISnapshotLicenseProductManager _snapshotLicenseProductManager;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public DataHarmonizationManager(ISnapshotLicenseManager snapshotLicenseManager,
-            ISnapshotLicenseNoteManager snapshotLicenseNoteManager,
+            
             ISnapshotLicenseProductManager snapshotLicenseProductManager)
         {
             _snapshotLicenseProductManager = snapshotLicenseProductManager;
-            _snapshotLicenseNoteManager = snapshotLicenseNoteManager;
             _snapshotLicenseManager = snapshotLicenseManager;
         }
 
@@ -622,7 +621,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
             return snapshotList;
         }
-
+        /*
         private Snapshot_LicenseProductRecordingWriter CastToLicensProductRecordingSnapshot(
             LicenseProductRecordingWriter lprw, int caeNumber)
         {
@@ -658,7 +657,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
             }
             return snapshot;
         }
-
+        */
+        /*
         private List<Snapshot_LicenseProductRecordingWriterNote> CastToWriterNoteSnapshot(
             List<LicenseProductRecordingWriterNote> writerNotes, int caeCode)
         {
@@ -676,6 +676,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
             }
             return snapshotList;
         }
+        */
+        /*
 
         private List<Snapshot_LicenseProductRecordingWriterRate> CastToLicenseProductRecordingWriterRateSnapshot(
             List<LicenseProductRecordingWriterRate> rateList, int caeCode)
@@ -718,24 +720,24 @@ namespace UMPG.USL.API.Business.DataHarmonization
             }
             return snapshotList;
         }
+        */
+        //private List<Snapshot_LicenseProductRecordingWriterRateStatus> CastToLicenseProductRecordingWriterStatus(
+        //    List<LicenseProductRecordingWriterRateStatus> lprwStatuses, int licenseWriterRateId)
+        //{
+        //    var snapshotList = new List<Snapshot_LicenseProductRecordingWriterRateStatus>();
 
-        private List<Snapshot_LicenseProductRecordingWriterRateStatus> CastToLicenseProductRecordingWriterStatus(
-            List<LicenseProductRecordingWriterRateStatus> lprwStatuses, int licenseWriterRateId)
-        {
-            var snapshotList = new List<Snapshot_LicenseProductRecordingWriterRateStatus>();
+        //    foreach (var status in lprwStatuses)
+        //    {
+        //        var snapshot = new Snapshot_LicenseProductRecordingWriterRateStatus();
 
-            foreach (var status in lprwStatuses)
-            {
-                var snapshot = new Snapshot_LicenseProductRecordingWriterRateStatus();
+        //        snapshot.LicenseWriterRateStatusId = status.LicenseWriterRateStatusId;
+        //        snapshot.LicenseWriterRateId = status.LicenseWriterRateId;
+        //        snapshot.SpecialStatusId = status.SpecialStatusId;
+        //        snapshotList.Add(snapshot);
+        //    }
 
-                snapshot.LicenseWriterRateStatusId = status.LicenseWriterRateStatusId;
-                snapshot.LicenseWriterRateId = status.LicenseWriterRateId;
-                snapshot.SpecialStatusId = status.SpecialStatusId;
-                snapshotList.Add(snapshot);
-            }
-
-            return snapshotList;
-        }
+        //    return snapshotList;
+        //}
 
         private List<Snapshot_OriginalPublisher> CastOriginalPublishersToSnapshot(
             List<OriginalPublisher> originalPublishers, int caeNumber)

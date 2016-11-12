@@ -57,17 +57,10 @@ namespace UMPG.USL.API.Data.DataHarmonization
                     .Include("LicenseType")
                     .Include("LicensePriority")
                     .Include("LicenseStatus")
-                    //  .Include("Licensee")
-                    //.Include("Licensee.LicenseeLabelGroup")
                     .Include("LicenseMethod")
-                    //.Include("Contact") // Contacts is throwing erorr.  not set to instance of an obj
-                    //.Include("Contact2") // Contacts is throwing erorr.  not set to instance of an obj
-                    .Include("LicenseNoteList")
                     .Include("LicenseProducts")
-                    //.Include("LicenseeContact")
-                    //.Include("LicenseeContact.Address")
                     .Include("LicenseMethod")
-                    .Include("LicenseNoteList")
+                    
                     .FirstOrDefault(sl => sl.CloneLicenseId == id);
 
                 //LicenseProduct and Product header
@@ -107,18 +100,8 @@ namespace UMPG.USL.API.Data.DataHarmonization
                     .Include("LicenseType")
                     .Include("LicensePriority")
                     .Include("LicenseStatus")
-                    //   .Include("Licensee")
-                    //  .Include("Licensee.LicenseeLabelGroup")
-                    .Include("LicenseMethod")
-                    //.Include("Contact") // Contacts is throwing erorr.  not set to instance of an obj
-                    //.Include("Contact2") // Contacts is throwing erorr.  not set to instance of an obj
-                    .Include("LicenseNoteList")
                     .Include("LicenseProducts")
-                    //.Include("LicenseeContact")
-                    //.Include("LicenseeContact.Address")
                     .Include("LicenseMethod")
-                    .Include("LicenseNoteList")
-
                     .FirstOrDefault(sl => sl.CloneLicenseId == licenseId);
 
                 context.Snapshot_Licenses.Attach(licenseToBeDeleted);

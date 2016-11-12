@@ -9,12 +9,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly ISnapshotLicenseRepository _snapshotLicenseRepository;
         private readonly ISnapshotLicenseProductRepository _snapshotLicenseProductRepository;
-        private readonly ISnapshotLicenseNoteRepository _snapshotLicenseNoteRepository;
-        private readonly ISnapshotContactRepository _snapshotContactRepository;
-        private readonly ISnapshotRoleRepository _snapshotRoleRepository;
-        private readonly ISnapshotAddressRepository _snapshotAddressRepository;
-        private readonly ISnapshotPhoneRepository _snapshotPhoneRepository;
-        private readonly ISnapshotContactEmailRepository _snapshotContactEmailRepository;
         private readonly ISnapshotWorksRecordingRepository _snapshotWorksRecordingRepository;
         private readonly ISnapshotRecsConfigurationRepository _snapshotRecsConfigurationRepository;
         private readonly ISnapshotProductHeaderRepository _snapshotProductHeaderRepository;
@@ -22,10 +16,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private readonly ISnapshotArtistRecsRepository _snapshotArtistRecsRepository;
         private readonly ISnapshotLabelRepository _snapshotLabelRepository;
         private readonly ISnapshotLabelGroupRepository _snapshotLabelGroupRepository;
-        private readonly ISnapshotLicenseeLabelGroupRepository _licenseeLabelGroupRepository;
-        private readonly ISnapshotLicenseProductConfigurationRepository _licenseProductConfigurationRepository;
+
         private readonly ISnapshotWorkTrackRepository _snapshotWorkTrackRepository;
-        private readonly ISnapshotLicenseProductRecordingRepository _snapshotLicenseProductRecordingRepository;
         private readonly ISnapshotWorksWriterRepository _snapshotWorksWriterRepository;
         private readonly ISnapshotAffiliationRepository _snapshotAffiliationRepository;
         private readonly ISnapshotKnownAsRepository _snapshotKnownAsRepository;
@@ -89,22 +81,17 @@ namespace UMPG.USL.API.Business.DataHarmonization
             ISnapshotKnownAsRepository snapshotKnownAsRepository,
             ISnapshotAffiliationRepository snapshotAffiliationRepository,
             ISnapshotWorksWriterRepository snapshotWorksWriterRepository,
-            ISnapshotLicenseProductRecordingRepository snapshotLicenseProductRecordingRepository,
             ISnapshotWorkTrackRepository snapshotWorkTrackRepository,
-            ISnapshotLicenseProductConfigurationRepository licenseProductConfigurationRepository,
             ISnapshotLicenseProductRepository snapshotLicenseProductRepository,
-            ISnapshotLicenseNoteRepository snapshotLicenseNoteRepository,
-            ISnapshotContactRepository snapshotContactRepository, ISnapshotRoleRepository snapshotRoleRepository,
-            ISnapshotAddressRepository snapshotAddressRepository, ISnapshotPhoneRepository snapshotPhoneRepository,
-            ISnapshotContactEmailRepository snapshotContactEmailRepository,
+         
             ISnapshotWorksRecordingRepository snapshotWorksRecordingRepository,
             ISnapshotRecsConfigurationRepository snapshotRecsConfigurationRepository,
             ISnapshotProductHeaderRepository snapshotProductHeaderRepository,
             ISnapshotConfigurationRepository snapshotConfigurationRepository,
             ISnapshotArtistRecsRepository snapshotArtistRecsRepository, ISnapshotLabelRepository snapshotLabelRepository,
             ISnapshotLabelGroupRepository snapshotLabelGroupRepository,
-            ISnapshotLocalClientCopyrightRepository snapshotLocalClientCopyrightRepository,
-            ISnapshotLicenseeLabelGroupRepository snalshotLabelGroupRepository)
+            ISnapshotLocalClientCopyrightRepository snapshotLocalClientCopyrightRepository
+    )
         {
             _composerOriginalPublisherAdminKnownAsRepository = composerOriginalPublisherAdminKnownAsRepository;
             _composerOriginalPublisherAdminAffiliationBaseRepository = composerOriginalPublisherAdminAffiliationBaseRepository;
@@ -136,10 +123,9 @@ namespace UMPG.USL.API.Business.DataHarmonization
             _snapshotKnownAsRepository = snapshotKnownAsRepository;
             _snapshotAffiliationRepository = snapshotAffiliationRepository;
             _snapshotWorksWriterRepository = snapshotWorksWriterRepository;
-            _snapshotLicenseProductRecordingRepository = snapshotLicenseProductRecordingRepository;
+            
             _snapshotWorkTrackRepository = snapshotWorkTrackRepository;
-            _licenseProductConfigurationRepository = licenseProductConfigurationRepository;
-            _licenseeLabelGroupRepository = snalshotLabelGroupRepository;
+
             _snapshotLabelGroupRepository = snapshotLabelGroupRepository;
             _snapshotLabelRepository = snapshotLabelRepository;
             _snapshotArtistRecsRepository = snapshotArtistRecsRepository;
@@ -147,12 +133,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
             _snapshotProductHeaderRepository = snapshotProductHeaderRepository;
             _snapshotRecsConfigurationRepository = snapshotRecsConfigurationRepository;
             _snapshotWorksRecordingRepository = snapshotWorksRecordingRepository;
-            _snapshotContactEmailRepository = snapshotContactEmailRepository;
-            _snapshotPhoneRepository = snapshotPhoneRepository;
-            _snapshotAddressRepository = snapshotAddressRepository;
-            _snapshotRoleRepository = snapshotRoleRepository;
-            _snapshotContactRepository = snapshotContactRepository;
-            _snapshotLicenseNoteRepository = snapshotLicenseNoteRepository;
             _snapshotLicenseProductRepository = snapshotLicenseProductRepository;
             _snapshotLicenseRepository = snapshotLicenseRepository;
         }

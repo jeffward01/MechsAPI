@@ -162,35 +162,30 @@ namespace UMPG.USL.API.Data
 
         public DbSet<Snapshot_License> Snapshot_Licenses { get; set; }
         public DbSet<Snapshot_LicenseProduct> Snapshot_LicenseProducts { get; set; }
-        public DbSet<Snapshot_Licensee> Snapshot_Licensees { get; set; }
-
-        public DbSet<Snapshot_LicenseNote> Snapshot_LicenseNotes { get; set; }
+        
 
         public DbSet<Snapshot_LabelGroup> Snapshot_LabelGroups { get; set; }
 
         public DbSet<Snapshot_Configuration> Snapshot_Configurations { get; set; }
 
-        public DbSet<Snapshot_Contact> Snapshot_Contacts { get; set; }
+        
         public DbSet<Snapshot_Label> Snapshot_Labels { get; set; }
-        public DbSet<Snapshot_LicenseProductConfiguration> Snapshot_LicenseProductConfigurations { get; set; }
+        
 
         public DbSet<Snapshot_ProductHeader> Snapshot_ProductHeaders { get; set; }
         public DbSet<Snapshot_RecsConfiguration> Snapshot_RecsConfigurations { get; set; }
-        public DbSet<Snapshot_Role> Snapshot_Roles { get; set; }
+        
         public DbSet<Snapshot_WorksRecording> Snapshot_WorksRecordings { get; set; }
         public DbSet<Snapshot_ArtistRecs> Snapshot_ArtistRecs { get; set; }
 
-        public DbSet<Snapshot_Address> Snapshot_Addresses { get; set; }
-        public DbSet<Snapshot_ContactEmail> Snapshot_ContactEmails { get; set; }
-        public DbSet<Snapshot_Phone> Snapshot_Phones { get; set; }
-
+        
         public DbSet<Snapshot_KnownAs> Snapshot_KnownAs { get; set; }
 
-        public DbSet<Snapshot_LicenseeLabelGroup> Snapshot_LicenseeLabelGroups { get; set; }
+        
 
         public DbSet<Snapshot_WorksTrack> Snapshot_Tracks { get; set; }
 
-        public DbSet<Snapshot_LicenseProductRecording> Snapshot_LicenseRecordings { get; set; }
+        
 
         public DbSet<Snapshot_WorksWriter> Snapshot_WorksWriters { get; set; }
 
@@ -288,16 +283,13 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_License>().ToTable("Snapshot_License");
             modelBuilder.Entity<Snapshot_License>().HasKey(x => x.SnapshotLicenseId);
             modelBuilder.Entity<Snapshot_License>().HasMany(r => r.LicenseProducts).WithOptional().HasForeignKey(_ => _.LicenseId);
-            modelBuilder.Entity<Snapshot_License>().HasMany(r => r.LicenseNoteList).WithOptional().HasForeignKey(c => c.LicenseId);
+
             modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseType).WithMany().HasForeignKey(c => c.LicenseTypeId);
             modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicensePriority).WithMany().HasForeignKey(c => c.PriorityId);
             //   modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.Licensee).WithMany().HasForeignKey(c => c.LicenseeId);
             modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseStatus).WithMany().HasForeignKey(c => c.LicenseStatusId);
             modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseMethod).WithMany().HasForeignKey(c => c.LicenseMethodId);
-            modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.Contact).WithMany().HasForeignKey(c => c.AssignedToId);
-            modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.Contact2).WithMany().HasForeignKey(c => c.CreatedBy);
-            modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseeContact).WithMany().HasForeignKey(c => c.ContactId);
-            modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseeLabelGroup).WithMany().HasForeignKey(c => c.LicenseeId);
+
             modelBuilder.Entity<Snapshot_License>().Ignore(c => c.ProductsNo);
             modelBuilder.Entity<Snapshot_License>().Ignore(c => c.Label);
             modelBuilder.Entity<Snapshot_License>().Ignore(c => c.ClaimException);
@@ -315,16 +307,7 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_LicenseProduct>().Ignore(c => c.RelatedLicensesNo);
             modelBuilder.Entity<Snapshot_LicenseProduct>().Ignore(c => c.LicenseClaimException);
 
-            //Snapshot_LicenseNotes
-            modelBuilder.Entity<Snapshot_LicenseNote>().ToTable("Snapshot_LicenseNote");
-            modelBuilder.Entity<Snapshot_LicenseNote>().HasKey(x => x.SnapshotLicenseNoteId);
-            modelBuilder.Entity<Snapshot_LicenseNote>().HasRequired(c => c.NoteType).WithMany().HasForeignKey(c => c.NoteTypeId);
-            modelBuilder.Entity<Snapshot_LicenseNote>().HasRequired(c => c.Contact).WithMany().HasForeignKey(c => c.CreatedBy);
-
-            //Snapshot_Role
-            modelBuilder.Entity<Snapshot_Role>().ToTable("Snapshot_Role");
-            modelBuilder.Entity<Snapshot_Role>().HasKey(x => x.SnapshotRoleId);
-
+            
             //Snapshot_recsConfiguration
             modelBuilder.Entity<Snapshot_RecsConfiguration>().ToTable("Snapshot_RecsConfiguration");
             modelBuilder.Entity<Snapshot_RecsConfiguration>().HasKey(x => x.SnapshotRecsConfigurationId);
@@ -338,9 +321,6 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_ProductHeader>().HasRequired(c => c.Label).WithMany().HasForeignKey(c => c.LabelId);
             modelBuilder.Entity<Snapshot_ProductHeader>().HasMany(x => x.Configurations).WithOptional().HasForeignKey(_ => _.ProductHeaderId);
 
-            //Shanpshot_LicenseProductConfiguration
-            modelBuilder.Entity<Snapshot_LicenseProductConfiguration>().ToTable("Snapshot_LicenseProductConfiguration");
-            modelBuilder.Entity<Snapshot_LicenseProductConfiguration>().HasKey(_ => _.LicenseProductConfigurationId);
 
             //Snapshot_Label
             modelBuilder.Entity<Snapshot_Label>().ToTable("Snapshot_Label");
@@ -350,14 +330,6 @@ namespace UMPG.USL.API.Data
             //Snapshot_LabelGroup
             modelBuilder.Entity<Snapshot_LabelGroup>().ToTable("Snapshot_LabelGroup");
             modelBuilder.Entity<Snapshot_LabelGroup>().HasKey(_ => _.SnapshotLabelGroupId);
-
-            //Snapshot_Contact
-            modelBuilder.Entity<Snapshot_Contact>().ToTable("Snapshot_Contact");
-            modelBuilder.Entity<Snapshot_Contact>().HasKey(_ => _.SnapshotContactId);
-            modelBuilder.Entity<Snapshot_Contact>().HasRequired(_ => _.Role).WithMany().HasForeignKey(_ => _.RoleId);
-            modelBuilder.Entity<Snapshot_Contact>().HasMany(_ => _.Address).WithOptional().HasForeignKey(_ => _.ContactId);
-            modelBuilder.Entity<Snapshot_Contact>().HasMany(_ => _.Phone).WithOptional().HasForeignKey(_ => _.ContactId);
-            modelBuilder.Entity<Snapshot_Contact>().HasMany(_ => _.Email).WithOptional().HasForeignKey(_ => _.ContactId);
 
             //Snapshot_Configuration
             modelBuilder.Entity<Snapshot_Configuration>().ToTable("Snapshot_Configuration");
@@ -499,47 +471,6 @@ namespace UMPG.USL.API.Data
 
             modelBuilder.Entity<Snapshot_AquisitionLocationCode>().ToTable("Snapshot_AquisitionLocationCode");
             modelBuilder.Entity<Snapshot_AquisitionLocationCode>().HasKey(_ => _.SnapshotAquisitionLocationCode);
-
-            modelBuilder.Entity<Snapshot_LicenseProductRecording>().ToTable("Snapshot_LicenseProductRecording");
-            modelBuilder.Entity<Snapshot_LicenseProductRecording>().HasKey(_ => _.SnapshotLicenseProductRecordingId);
-            modelBuilder.Entity<Snapshot_LicenseProductRecording>().Ignore(_ => _.StatusRollup);
-            // modelBuilder.Entity<Snapshot_LicenseProductRecording>().HasMany(_ => _.LicensePRWriters).WithOptional().HasForeignKey(_ => _.LicenseRecordingId); //Returns null in GetProductsNew
-
-            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriter>().ToTable("Snapshot_LicenseProductRecordingWriter");
-            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriter>().HasKey(_ => _.SnapshotLicenseProductRecordingWriterId);
-            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriter>().HasMany(_ => _.WriterNotes).WithOptional().HasForeignKey(_ => _.WriterCaeCode);
-            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriter>().HasMany(_ => _.RateList).WithOptional().HasForeignKey(_ => _.CaeCode);
-
-            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriterRate>().ToTable("Snapshot_LicenseProductRecordingWriterRate");
-            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriterRate>().HasKey(_ => _.SnapshotLicenseProductRecordingWriterRateId);
-            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriterRate>().HasRequired(_ => _.RateType).WithMany().HasForeignKey(_ => _.RateTypeId);
-            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriterRate>().HasRequired(_ => _.WritersConsentType).WithMany().HasForeignKey(_ => _.WritersConsentTypeId);
-            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriterRate>().HasMany(_ => _.SpecialStatusList).WithOptional().HasForeignKey(_ => _.LicenseWriterRateId);
-
-            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriterRateStatus>().ToTable("Snapshot_LicenseProductRecordingWriterRateStatus");
-            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriterRateStatus>().HasKey(_ => _.SnapshotLicenseProductRecordingWriterRateStatusId);
-            modelBuilder.Entity<Snapshot_LicenseProductRecordingWriterRateStatus>().HasRequired(_ => _.LU_SpecialStatuses).WithMany().HasForeignKey(_ => _.SpecialStatusId);
-
-            modelBuilder.Entity<Snapshot_LicenseeLabelGroup>().ToTable("Snapshot_LicenseeLabelGroup");
-            modelBuilder.Entity<Snapshot_LicenseeLabelGroup>().HasKey(_ => _.SnapshotLicenseeLabelGroupId);
-            modelBuilder.Entity<Snapshot_LicenseeLabelGroup>().HasMany(_ => _.LabelGroupLinks).WithOptional().HasForeignKey(_ => _.CloneLicenseeLabelGroupLinkId);
-            modelBuilder.Entity<Snapshot_LicenseeLabelGroup>().HasMany(_ => _.LabelGroupLinksFiltered).WithOptional().HasForeignKey(_ => _.CloneLicenseeLabelGroupLinkId);
-
-            modelBuilder.Entity<Snapshot_LicenseeLabelGroupLink>().ToTable("Snapshot_LicenseeLabelGroupLink");
-            modelBuilder.Entity<Snapshot_LicenseeLabelGroupLink>().HasKey(_ => _.SnapshotCloneLicenseeLabelGroupLinkId);
-            modelBuilder.Entity<Snapshot_LicenseeLabelGroupLink>().HasRequired(_ => _.Contact).WithMany().HasForeignKey(_ => _.ContactId);
-
-            modelBuilder.Entity<Snapshot_Address>().ToTable("Snapshot_Address");
-            modelBuilder.Entity<Snapshot_Address>().HasKey(_ => _.SnapshotAddressId);
-
-            modelBuilder.Entity<Snapshot_ContactEmail>().ToTable("Snapshot_ContactEmail");
-            modelBuilder.Entity<Snapshot_ContactEmail>().HasKey(_ => _.SnapshotContactEmailId);
-
-            modelBuilder.Entity<Snapshot_Phone>().ToTable("Snapshot_Phone");
-            modelBuilder.Entity<Snapshot_Phone>().HasKey(_ => _.SnapshotPhoneId);
-
-            modelBuilder.Entity<Snapshot_Licensee>().ToTable("Snapshot_Licensee");
-            modelBuilder.Entity<Snapshot_Licensee>().HasKey(_ => _.SnapshotLicenseeId);
 
             
             modelBuilder.Entity<Snapshot_Administrator>().ToTable("Snapshot_Administrator");
