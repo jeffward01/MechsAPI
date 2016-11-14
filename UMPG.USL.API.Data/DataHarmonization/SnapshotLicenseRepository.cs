@@ -97,11 +97,11 @@ namespace UMPG.USL.API.Data.DataHarmonization
             using (var context = new AuthContext())
             {
                 var licenseToBeDeleted = context.Snapshot_Licenses
-                    .Include("LicenseType")
-                    .Include("LicensePriority")
-                    .Include("LicenseStatus")
-                    .Include("LicenseProducts")
-                    .Include("LicenseMethod")
+                 //   .Include("LicenseType")
+                 //   .Include("LicensePriority")
+                 //   .Include("LicenseStatus")
+                 //   .Include("LicenseProducts")
+                 //   .Include("LicenseMethod")
                     .FirstOrDefault(sl => sl.CloneLicenseId == licenseId);
 
                 context.Snapshot_Licenses.Attach(licenseToBeDeleted);

@@ -1,0 +1,270 @@
+2016-11-14 10:14:51.9078|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:14:51.9078|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:14:51.9078|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:14:51.9078|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:14:51.9078|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:14:51.9078|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2016-11-14 10:14:51.9078|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :11/14/2016 10:14:51 AM
+2016-11-14 10:14:52.1378|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (24733) : elapsed :00:00:00.2250000
+2016-11-14 10:14:52.3118|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (64111) : elapsed :00:00:00.1730000
+2016-11-14 10:15:02.0688|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (22745) : elapsed :00:00:09.5330000
+2016-11-14 10:15:02.5168|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:10.6090000
+2016-11-14 10:15:02.5168|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:15:02.5168|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:15:02.5168|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:15:02.5168|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:15:02.5168|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:15:02.9288|INFO|UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseProductManager|ArtistRecsId: 4611
+2016-11-14 10:15:23.3358|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 196237
+2016-11-14 10:15:23.3358|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 196237
+2016-11-14 10:15:55.1648|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 196238
+2016-11-14 10:15:55.1648|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 196238
+2016-11-14 10:16:32.1608|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 196239
+2016-11-14 10:16:32.1608|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 196239
+2016-11-14 10:17:08.0178|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 196240
+2016-11-14 10:17:08.0178|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 196240
+2016-11-14 10:17:24.9358|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:17:24.9358|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:17:24.9358|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:17:24.9358|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:17:24.9358|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:17:24.9358|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2016-11-14 10:17:24.9358|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :11/14/2016 10:17:24 AM
+2016-11-14 10:17:25.1608|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (24733) : elapsed :00:00:00.2230000
+2016-11-14 10:17:25.3368|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (64111) : elapsed :00:00:00.1750000
+2016-11-14 10:17:35.3358|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (22745) : elapsed :00:00:09.7760000
+2016-11-14 10:17:35.7988|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:10.8630000
+2016-11-14 10:17:35.7988|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:17:35.7988|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:17:35.7988|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:17:35.7988|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:17:35.7988|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:27:58.2978|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:27:58.3088|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:27:58.3088|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:27:58.3088|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:27:58.3088|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:27:58.3088|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2016-11-14 10:27:58.3088|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :11/14/2016 10:27:58 AM
+2016-11-14 10:27:58.7498|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (24733) : elapsed :00:00:00.4330000
+2016-11-14 10:27:59.1148|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (64111) : elapsed :00:00:00.3640000
+2016-11-14 10:28:09.6618|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (22745) : elapsed :00:00:10.1870000
+2016-11-14 10:28:10.1288|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:11.8330000
+2016-11-14 10:28:10.1288|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:28:10.1288|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:28:10.1288|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:28:10.1288|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:28:10.1288|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:28:10.5928|INFO|UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseProductManager|ArtistRecsId: 4611
+2016-11-14 10:28:31.0068|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 196237
+2016-11-14 10:28:31.0068|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 196237
+2016-11-14 10:29:02.8378|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 196238
+2016-11-14 10:29:02.8378|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 196238
+2016-11-14 10:29:39.8878|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 196239
+2016-11-14 10:29:39.8878|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 196239
+2016-11-14 10:30:15.8228|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 196240
+2016-11-14 10:30:15.8228|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 196240
+2016-11-14 10:30:40.2068|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:30:40.2068|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:30:40.2068|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:30:40.2068|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:30:40.2068|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:30:40.2068|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2016-11-14 10:30:40.2068|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :11/14/2016 10:30:40 AM
+2016-11-14 10:30:40.4328|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (24733) : elapsed :00:00:00.2240000
+2016-11-14 10:30:40.6058|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (64111) : elapsed :00:00:00.1720000
+2016-11-14 10:30:50.5838|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (22745) : elapsed :00:00:09.7550000
+2016-11-14 10:30:51.0308|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:10.8240000
+2016-11-14 10:30:51.0308|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:30:51.0308|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:30:51.0308|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:30:51.0308|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:30:51.0308|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2016-11-14 10:30:52.9538|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, November 14, 2016 ||  At: 10:30:52 AM 
+
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at UMPG.USL.API.Business.DataHarmonization.RecCongruencyCheckService.FindTrackDifferences(List`1 recsTracks, List`1 snapshotWorksTracks) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\RecCongruencyCheckService.cs:line 595
+   at UMPG.USL.API.Business.DataHarmonization.RecCongruencyCheckService.CheckForAddedRemovedLicenseProducts(List`1 recsLicenseProducts, List`1 licenseProductsSnapshots) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\RecCongruencyCheckService.cs:line 73
+   at UMPG.USL.API.Business.DataHarmonization.RecCongruencyCheckService.CheckForLicenseProductChanges(List`1 recsLicenseProducts, List`1 licenseProductsSnapshots) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\DataHarmonization\RecCongruencyCheckService.cs:line 28
+   at UMPG.USL.API.Business.Recs.ProductManager.CheckSnapshotAgainstRecs(List`1 mechsLicenseProducts, List`1 licenseProductSnapshots) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Recs\ProductManager.cs:line 548
+   at Castle.Proxies.Invocations.IProductManager_FindOutOfSyncRecItems.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 25
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.IProductManagerProxy.FindOutOfSyncRecItems(List`1 licenseProducts, Int32 licenseId)
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36
+Origin: http://spa.local
+Token: c4e66703-7041-481b-b514-379288a9f24a
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/RECsCTRL/Products/FindOutOfSyncRecItems/24733, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+POST http://spa.service/api/RECsCTRL/Products/FindOutOfSyncRecItems/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-11-14 10:51:11.3718|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, November 14, 2016 ||  At: 10:51:11 AM 
+
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'Snapshot_LicenseProduct_SnapshotLicenseProductId'.
+Invalid column name 'Snapshot_LicenseProduct_SnapshotLicenseProductId'.
+Invalid column name 'Snapshot_LicenseProduct_SnapshotLicenseProductId'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:ebcc33d8-432a-4608-8951-6d73123744e5
+Error Number:207,State:1,Class:16
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36
+Postman-Token: 8596309d-082f-92fb-ae5c-838ede9ab460
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2016-11-14 10:52:16.9848|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Monday, November 14, 2016 ||  At: 10:52:16 AM 
+
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'Snapshot_LicenseProduct_SnapshotLicenseProductId'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:b00cbda4-aa19-4711-8085-760a3635afab
+Error Number:207,State:1,Class:16
+
+ 
+Headers:  
+Cache-Control: no-cache
+Connection: keep-alive
+Accept: */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36
+Postman-Token: 9e0ec3cf-f254-72af-87f6-56282558c1b9
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/testCTRL/testMethods/GetLicenseSnapshot/24733 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+

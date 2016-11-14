@@ -83,7 +83,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             ISnapshotWorksWriterRepository snapshotWorksWriterRepository,
             ISnapshotWorkTrackRepository snapshotWorkTrackRepository,
             ISnapshotLicenseProductRepository snapshotLicenseProductRepository,
-         
+
             ISnapshotWorksRecordingRepository snapshotWorksRecordingRepository,
             ISnapshotRecsConfigurationRepository snapshotRecsConfigurationRepository,
             ISnapshotProductHeaderRepository snapshotProductHeaderRepository,
@@ -123,7 +123,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             _snapshotKnownAsRepository = snapshotKnownAsRepository;
             _snapshotAffiliationRepository = snapshotAffiliationRepository;
             _snapshotWorksWriterRepository = snapshotWorksWriterRepository;
-            
+
             _snapshotWorkTrackRepository = snapshotWorkTrackRepository;
 
             _snapshotLabelGroupRepository = snapshotLabelGroupRepository;
@@ -140,12 +140,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
         public Snapshot_LicenseProduct SaveSnapshotLicenseProduct(Snapshot_LicenseProduct snapshotLicenseProduct)
         {
             var worksRecordings = snapshotLicenseProduct.Recordings;
-            var recsConfiguratons = snapshotLicenseProduct.ProductConfigurations;
+            var recsConfiguratons = snapshotLicenseProduct.ProductConfigurations;  
             var productHeader = snapshotLicenseProduct.ProductHeader;
 
             snapshotLicenseProduct.ProductHeader = null;
             snapshotLicenseProduct.Recordings = null;
-            snapshotLicenseProduct.ProductConfigurations = null;
+            snapshotLicenseProduct.ProductConfigurations = null;  //not used
 
             //Save productHeader
             if (productHeader != null)
@@ -166,12 +166,20 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 var recsConfig = productHeader.Configurations;
                 productHeader.Configurations = null;
 
-                _snapshotArtistRecsRepository.SaveSnapshotArtistRecs(artist);
+             var savedArtistOnProductHeader =   _snapshotArtistRecsRepository.SaveSnapshotArtistRecs(artist);
+                productHeader.SnapshotArtistRecsId = savedArtistOnProductHeader.SnapshotArtistRecsId;
 
-                _snapshotLabelRepository.SaveSnapshotLabel(label);
+                var savedLabelOnProductHeader =_snapshotLabelRepository.SaveSnapshotLabel(label);
+                productHeader.SnapshotLabelId = savedLabelOnProductHeader.SnapshotLabelId;
+
+
+                //Finally.. save productHEader
+                var savedProductHeader = _snapshotProductHeaderRepository.SaveSnapshotProductHeader(productHeader);
+                snapshotLicenseProduct.SnapshotProductHeaderId = savedProductHeader.SnapshotProductHeaderId;
 
                 foreach (var labelGroup in labelGroups)
                 {    //save labelGroup
+                    labelGroup.SnapshotLabelId = savedLabelOnProductHeader.SnapshotLabelId;
                     _snapshotLabelGroupRepository.SaveSnapshotLabelGroup(labelGroup);
                 }
 
@@ -182,20 +190,26 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         //save children
                         var configuration = config.Configuration;
                         config.Configuration = null;
+
+                        //Assign FK to recsConfig
+                        config.SnapshotProductHeaderId = savedProductHeader.SnapshotProductHeaderId;
+
+                        
                         if (configuration != null)
                         {
-                            _snapshotConfigurationRepository.SaveSnapshotConfiguration(configuration);
+                            
+                            var savedConfigOnRecsConfig = _snapshotConfigurationRepository.SaveSnapshotConfiguration(configuration);
+                            config.SnapshotConfigurationId = savedConfigOnRecsConfig.SnapshotConfigId;
                         }
-
                         //save parent
-                        _snapshotRecsConfigurationRepository.SaveSnapshotRecsConfiguration(config);
+                        var savedRecsConfigOnProductHeader = _snapshotRecsConfigurationRepository.SaveSnapshotRecsConfiguration(config);
                     }
                 }
 
-                //Finally.. save productHEader
-                _snapshotProductHeaderRepository.SaveSnapshotProductHeader(productHeader);
             }
 
+            var savedLicenseProduct =
+            _snapshotLicenseProductRepository.SaveSnapshotLicenseProduct(snapshotLicenseProduct);
             //Save works recordings
             if (worksRecordings != null)
             {
@@ -203,6 +217,9 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 {
                     if (workRec != null)
                     {
+                        //assign FK
+                        workRec.SnapshotLicenseProductId = savedLicenseProduct.SnapshotLicenseProductId;
+
                         //save track
                         var track = workRec.Track;
                         workRec.Track = null;
@@ -222,10 +239,14 @@ namespace UMPG.USL.API.Business.DataHarmonization
                             var artist = track.Artist;
                             track.Artist = null;
 
+                            //track.SnapshotWorksRecordingId = savedWorksRecording.SnapshotWorksRecodingId;
+
+                            var savedArtistOnTrack = _snapshotArtistRecsRepository.SaveSnapshotArtistRecs(artist);
+                            track.SnapshotArtistRecsId = savedArtistOnTrack.SnapshotArtistRecsId;
                             var savedTrack = _snapshotWorkTrackRepository.SaveWorksTrack(track);
 
+                            workRec.SnapshotWorkTrackId = savedTrack.SnapshotWorkTrackId;
                             //save artist
-                            _snapshotArtistRecsRepository.SaveSnapshotArtistRecs(artist);
 
                             foreach (var copyRight in copyRights)
                             {
@@ -381,8 +402,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                                             composerOriginalPublisherAffiliation.Affiliations;
                                                         composerOriginalPublisherAffiliation.Affiliations = null;
 
-                                                        
-
                                                         composerOriginalPublisherAffiliation
                                                                 .SnapshotComposerOriginalPublisherId =
                                                             savedComposerOriginalPublisher
@@ -438,8 +457,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                                                 var affiliationBases =
                                                                     composerOpAdminAffiliation.Affiliations;
                                                                 composerOpAdminAffiliation.Affiliations = null;
-
-                                                                
 
                                                                 composerOpAdminAffiliation
                                                                         .SnapshotComposerOriginalPublisherAdministratorId =
@@ -533,7 +550,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                 }
                             }
                         }
-
+                        var savedWorksRecording = _snapshotWorksRecordingRepository.SaveSnapshotWorksRecording(workRec);
                         if (writerList != null)
                         {
                             foreach (var writer in writerList)
@@ -549,6 +566,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
                                 //Set Foriegn Key
                                 writer.CloneWorksTrackId = track.CloneWorksTrackId;
+                                writer.SnapshotWorksRecordingId = savedWorksRecording.SnapshotWorksRecodingId;
                                 //save writer, get key
                                 var saveWorksWriter = _snapshotWorksWriterRepository.SaveWorksWriter(writer);
                                 //save writer affiliation
@@ -709,8 +727,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                                 }
                             }
                         }
-
-                        _snapshotWorksRecordingRepository.SaveSnapshotWorksRecording(workRec);
                     }
                 }
             }
@@ -739,7 +755,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 }
             }
 
-            return _snapshotLicenseProductRepository.SaveSnapshotLicenseProduct(snapshotLicenseProduct);
+            return snapshotLicenseProduct;
         }
 
         public Snapshot_LicenseProduct GetSnapshotLicenseProductByLicenseProductId(int snapshotLicenseProductId)

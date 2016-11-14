@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -74,11 +75,13 @@ namespace UMPG.USL.API.Data.DataHarmonization
             {
                 var recConfig = context.Snapshot_RecsConfigurations
 
-                           
-                     //      .Include("Configuration")
-                      //     .Include("LicenseProductConfiguration")
 
-                    .Where(_ => _.ProductHeaderId == productHeaderId).ToList();
+
+                    .Where(_ => _.SnapshotProductHeaderId == productHeaderId)
+                    .Include("Configuration").ToList();
+                       //   .Include("LicenseProductConfiguration").ToList();
+
+              
                 return recConfig;
             }
         }

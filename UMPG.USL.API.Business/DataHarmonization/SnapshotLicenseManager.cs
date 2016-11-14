@@ -1,5 +1,4 @@
 ﻿using NLog;
-using UMPG.USL.API.Data;
 using UMPG.USL.API.Data.DataHarmonization;
 using UMPG.USL.API.Data.LicenseData;
 using UMPG.USL.Models.DataHarmonization;
@@ -178,13 +177,37 @@ namespace UMPG.USL.API.Business.DataHarmonization
         public Snapshot_License GetSnapshotLicenseBySnapshotLicenseId(int snapshotLicenseId)
         {
             var licenseInformation = _snapshotLicenseRepository.GetLicenseSnapShotById(snapshotLicenseId);
+
             var licenseProducts =
                 _snapshotLicenseProductRepository.GetAllLicenseProductsForLicenseId(licenseInformation.CloneLicenseId);
+
+            foreach (var licenseProduct in licenseProducts)
+            {
+                var configs =
+                                   _snapshotRecsConfigurationRepository
+                                       .GetAllRecsConfigurationsRecordingsForProductHeaderId(
+                                           licenseProduct.ProductHeader.SnapshotProductHeaderId);
+                foreach (var config in configs)
+                {
+                    if (config.LicenseProductId != null && config.LicenseProductConfigurationId != null)
+                    {
+                        var lpc = _licenseProductConfigurationRepository
+                                  .GetLicenseProductConfigurationByProductIdAndLicenseProductConfigurationId((int)config.LicenseProductId, (int)config.LicenseProductConfigurationId);
+                        config.LicenseProductConfiguration = lpc;
+                    }
+                }
+
+                licenseProduct.ProductHeader.Configurations = configs;
+            }
+
+            licenseInformation.LicenseProducts = licenseProducts;
+            return licenseInformation;
+            /*
             using (var context = new AuthContext())
             {
                 try
                 {
-                    context.Configuration.AutoDetectChangesEnabled = false;
+                    context.Configuration.AutoDetectChangesEnabled = false;//not working
 
                     if (licenseProducts != null)
                     {
@@ -576,7 +599,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 lp.ProductHeader.Configurations = recConfig;
             }
             */
-            return licenseInformation;
+            // return licenseInformation;
         }
 
         //Jeffs new method.  V-1.0
@@ -593,7 +616,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             // DeleteLicenseeLabelGroup(license);  | temp off
 
             //Delete License Product List and children
-            DeleteLicenseProductAndChildEntities(license);
+         //   DeleteLicenseProductAndChildEntities(license);
 
             //Delete license
             return _snapshotLicenseRepository.DeleteSnapshotLicense(licenseId);
@@ -659,6 +682,11 @@ namespace UMPG.USL.API.Business.DataHarmonization
             var licenseProducts =
                 _snapshotLicenseProductRepository.GetAllLicenseProductsForLicenseId(license.CloneLicenseId);
 
+
+            //Massive delete
+
+
+
             foreach (var licenseProduct in licenseProducts)
             {
                 //Delete All RecsConfiguration and children
@@ -677,7 +705,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
         private void DeleteProductHeaderAndChildren(Snapshot_LicenseProduct licenseProduct)
         {
-            ;
+           
             if (licenseProduct.ProductHeaderId != null)
             {
                 var id = (int)licenseProduct.ProductHeaderId;
@@ -1126,15 +1154,11 @@ namespace UMPG.USL.API.Business.DataHarmonization
                     //Delete Config
                     _snapshotConfigurationRepository.DeleteConfigurationSnapshot(licenseProduct.SnapshotLicenseProductId);
 
-              
-
                     //delete recConfig
                     _snapshotRecsConfigurationRepository.DeleteWorkRecordingByRecordignSnapshotId(
                         licenseConfig.SnapshotRecsConfigurationId);
                 }
             }
         }
-
-      
     }
 }

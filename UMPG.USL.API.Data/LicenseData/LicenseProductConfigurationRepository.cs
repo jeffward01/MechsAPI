@@ -23,6 +23,15 @@ namespace UMPG.USL.API.Data.LicenseData
             }
         }
 
+        public LicenseProductConfiguration GetLicenseProductConfigurationByProductIdAndLicenseProductConfigurationId(int licenseproductId, int product_configuration_id)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.LicenseProductConfigurations.Where(x => x.LicenseProductId == licenseproductId && x.LicenseProductConfigurationId == product_configuration_id && !x.Deleted.HasValue).FirstOrDefault();
+            }
+        }
+
+
         public List<LicenseProductConfiguration> GetLicenseProductConfigurations(int licenseproductId)
         {
             using (var context = new AuthContext())

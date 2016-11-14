@@ -146,12 +146,13 @@ namespace UMPG.USL.API.Business.DataHarmonization
             snapshot.title = licenseProduct.title;
             snapshot.PaidQuarter = licenseProduct.PaidQuarter;
             snapshot.RelatedLicensesNo = licenseProduct.RelatedLicensesNo;
+            /*
             if (licenseProduct.ProductConfigurations != null)
             {
                 snapshot.ProductConfigurations = CastToRecsConfigurationsSnapshot(licenseProduct.ProductConfigurations,
                     (int)snapshot.ProductHeaderId);
             }
-
+            */
             snapshot.CreatedDate = licenseProduct.CreatedDate;
             snapshot.CreatedBy = licenseProduct.CreatedBy;
             snapshot.ModifiedDate = licenseProduct.ModifiedDate;
