@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Web;
 using System.Web.Http;
-using Amazon;
-using Amazon.S3;
+using System.Web.Http.Tracing;
 using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.Common;
 using UMPG.USL.Models;
@@ -15,24 +19,27 @@ using UMPG.USL.API.Data.LicenseData;
 using System.IO;
 using System.Web.Http.Tracing;
 using UMPG.USL.API.ActionFilters;
+using Amazon;
+using Amazon.S3;
 
 
 namespace UMPG.USL.API.Controllers.LicenseCTRL
 {
     using System.Configuration;
     using Amazon.S3.Model;
-
-   // [AuthorizationRequired]
+    // [AuthorizationRequired]
     [RoutePrefix("api/licenseCTRL/licenseAttachments")]
     public class LicenseAttachmentController : ApiController
     {
         private readonly ITraceWriter _tracer;
         private readonly ILicenseAttachmentManager _licenseAttachmentManager;
+
         public LicenseAttachmentController(ILicenseAttachmentManager licenseAttachmentManager)
         {
             _licenseAttachmentManager = licenseAttachmentManager;
             _tracer = GlobalConfiguration.Configuration.Services.GetTraceWriter();
         }
+
         //[Authorize]
         [Route("")]
         [HttpGet]
@@ -64,7 +71,6 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
                 Success = true,
                 Url = temporaryurl
             };
-
         }
 
         [Route("UpdateLicenseAttachment")]
@@ -91,16 +97,21 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
 
             var amazonHelper = new AmazonS3Helper();
             var httpRequest = HttpContext.Current.Request;
+          //  var fileName = "";
             if (httpRequest.Files.Count > 0)
             {
                 var docfiles = new List<LicenseAttachment>();
                 foreach (string file in httpRequest.Files)
                 {
                     var postedFile = httpRequest.Files[file];
-                    var fileName = postedFile.FileName;
-                    var amazonKeyName = amazonHelper.UploadStreamToAmazon(fileName, postedFile.InputStream, licenseid);
-                    string fileNameWithOutExtension = Path.GetFileNameWithoutExtension(postedFile.FileName);
-                    string fileExtension = Path.GetExtension(postedFile.FileName);
+                    var formatedFileName = amazonHelper.ConvertRightQuoteToSingleQuote(postedFile.FileName);
+                    var fileName = formatedFileName;
+
+
+                    var amazonKeyName = amazonHelper.UploadStreamToAmazon(formatedFileName, postedFile.InputStream, licenseid);
+                    var fileNameWithOutExtension = Path.GetFileNameWithoutExtension(formatedFileName);
+                    var fileExtension = Path.GetExtension(formatedFileName);
+
                     var license = new LicenseAttachment()
                     {
                         licenseId = licenseid,
@@ -115,8 +126,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
                     docfiles.Add(license);
                 }
 
-
-                foreach (LicenseAttachment licenseAttachment in docfiles)
+                foreach (var licenseAttachment in docfiles)
                 {
                     _licenseAttachmentManager.AddLicenseAttachment(licenseAttachment);
                 }
@@ -142,7 +152,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
         [HttpPost]
         public HttpResponseMessage UpdateProductConfigurationsAll(List<LicenseAttachment> licenseAttachments)
         {
-            foreach (LicenseAttachment licenseAttachment in licenseAttachments)
+            foreach (var licenseAttachment in licenseAttachments)
             {
                 _licenseAttachmentManager.RemoveLicenseAttachment(licenseAttachment);
             }
@@ -152,9 +162,8 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
         //[Authorize]
         [Route("Search")]
         [HttpPost]
-        public List<LicenseAttachment> Search([FromBody]string query)
+        public List<LicenseAttachment> Search([FromBody] string query)
         {
-
             return _licenseAttachmentManager.Search(query);
         }
 
@@ -162,7 +171,6 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
         //[HttpPost]
         //public PagedResponse<License> PagedSearch(LicenseRequest request)
         //{
-
         //    return _licenseeManager.PagedSearch(request);
         //}
 
@@ -172,7 +180,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
         //{
         //    return _licenseeManager.Add(licensee);
         //}
-        
+
         public string GetFileType(string fileType)
         {
             var text = string.Empty;
@@ -181,21 +189,12 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
                 case "text/plain":
                     text = "TXT";
                     break;
+
                 default:
                     text = "PDF";
                     break;
             }
             return text;
         }
-
-
     }
-
-
-    #region Helpers
-
-
-
-
-    #endregion
 }

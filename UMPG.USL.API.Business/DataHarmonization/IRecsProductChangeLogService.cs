@@ -13,6 +13,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
         List<RecsProductChanges> RecordingAddedToRecs(List<WorksRecording> licenseRecordings,
             List<int> RecordingIdsAdded);
 
+        List<RecsProductChanges> TracksRemovedFromRecs(List<Snapshot_WorksTrack> licenseRecordings,
+            List<int> RecordingIdsAdded);
+
+        List<RecsProductChanges> TracksAddedToRecs(List<WorksTrack> licenseRecordings,
+    List<int> RecordingIdsAdded);
+
         List<RecsProductChanges> RecordingRemovedFromRecs(List<Snapshot_WorksRecording> licenseRecordings,
             List<int> RecordingIdsAdded);
 
@@ -22,16 +28,16 @@ namespace UMPG.USL.API.Business.DataHarmonization
         List<RecsProductChanges> ConfigurationRemovedFromRecs(List<Snapshot_RecsConfiguration> recsConfigurations,
             List<int> RecordingIdsAdded);
 
-        List<RecsProductChanges> WritersAddedToRecs(List<WorksWriter> licenseRecordings, List<int> writerCaeCodesAdded);
+        List<RecsProductChanges> WritersAddedToRecs(List<WorksWriter> licenseRecordings, List<int> writerCaeCodesAdded, Snapshot_WorksRecording snapshotWorksRecording);
 
         List<RecsProductChanges> WritersRemovedFromRecs(List<Snapshot_WorksWriter> licenseRecordings,
-            List<int> writerCaeCodesAdded);
+            List<int> writerCaeCodesAdded, Snapshot_WorksRecording snapshotWorksRecording);
 
         List<RecsProductChanges> OriginalPublishersAddedToRecs(List<OriginalPublisher> licenseRecordings,
-            List<string> originalPublisherIpCodes);
+            List<string> originalPublisherIpCodes, Snapshot_WorksRecording snapshotWorksRecording);
 
         List<RecsProductChanges> OriginalPublishersRemovedFromRecs(List<Snapshot_OriginalPublisher> licenseRecordings,
-            List<string> originalPublisherIpCodes);
+            List<string> originalPublisherIpCodes, Snapshot_WorksRecording snapshotWorksRecording);
 
         List<RecsProductChanges> OriginalPublisherAffiliationAddedToRecs(List<Affiliation> licenseRecordings,
             List<string> originalPublisherIpCodes);
@@ -46,10 +52,10 @@ namespace UMPG.USL.API.Business.DataHarmonization
             List<string> productIdsAdded);
 
         List<RecsProductChanges> CopyrightsRemovedFromRecs(List<Snapshot_RecsCopyright> licenseRecordings,
-            List<string> originalPublisherIpCodes);
+            List<string> originalPublisherIpCodes, Snapshot_ProductHeader productHeader, Snapshot_WorksTrack snapshotTrack);
 
         List<RecsProductChanges> CopyrightsAddedToRecs(List<RecsCopyrights> licenseRecordings,
-            List<string> originalPublisherIpCodes);
+            List<string> originalPublisherIpCodes, Snapshot_ProductHeader productHeader, Snapshot_WorksTrack snapshotTrack);
 
         List<RecsProductChanges> ComposersAddedToRecs(List<WorksWriter> licenseRecordings,
             List<string> originalPublisherIpCodes);

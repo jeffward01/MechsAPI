@@ -56,11 +56,11 @@ namespace UMPG.USL.API.Data.Recs
             return response.Values;
         }
 
-        public bool UpdateProductPriority(UpdatePriorityRequest request)
+        public bool UpdateProductPriority(UpdatePriorityRequest request, string safeIdHeader)
         {
             var url = string.Format("{0}/http/recs/product/updateProductPriority", _recsConfigurationRetriever.RecsConfiguration.SecureUrl);
             
-            var response = _recsRequestHandler.PostSecureGetResponseWithStream(url, request);
+            var response = _recsRequestHandler.PostSecureGetResponseWithStreamWithHeader(url, request, safeIdHeader);
             //return response;
             return true;
 
@@ -100,6 +100,13 @@ namespace UMPG.USL.API.Data.Recs
             var url = string.Format("{0}/http/recs/product", _recsConfigurationRetriever.RecsConfiguration.SecureUrl);
             return _recsRequestHandler.PostSecureGetResponseWithStream(url, updateProductObject);
         }
+
+        public HttpWebResponseWithStream AddProductWithHeader(object updateProductObject, string safeIdHeader)
+        {
+            var url = string.Format("{0}/http/recs/product", _recsConfigurationRetriever.RecsConfiguration.SecureUrl);
+            return _recsRequestHandler.PostSecureGetResponseWithStreamWithHeader(url, updateProductObject, safeIdHeader);
+        }
+
 
         public ListResult<ArtistRecs> ArtistAutosuggest(string query)
         {
@@ -153,6 +160,13 @@ namespace UMPG.USL.API.Data.Recs
             var url = string.Format("{0}/http/recs/product/saveProductLink", _recsConfigurationRetriever.RecsConfiguration.SecureUrl);
             return _recsRequestHandler.PostSecureGetResponseWithStream(url, productLink);
         }
+
+        public HttpWebResponseWithStream SaveProductLinkWithHeader(ProductLink productLink, string header)
+        {
+            var url = string.Format("{0}/http/recs/product/saveProductLink", _recsConfigurationRetriever.RecsConfiguration.SecureUrl);
+            return _recsRequestHandler.PostSecureGetResponseWithStreamWithHeader(url, productLink, header);
+        }
+
 
         public List<GetProductLink> GetProductLinks(int productId)
         {

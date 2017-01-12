@@ -29,6 +29,52 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
+        public Snapshot_LicenseProduct GetLicenseProductByLicenseProductId(int id)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_LicenseProducts.FirstOrDefault(sl => sl.CloneLicenseProductId == id);
+            }
+        }
+        public Snapshot_LicenseProduct SaveMassiveSnapshotLicenseProduct(Snapshot_LicenseProduct licenseProductSnapshot)
+        {
+            using (var context = new AuthContext())
+            {
+                context.Snapshot_LicenseProducts.Add(licenseProductSnapshot);
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Logger.Debug(e.ToString());
+                    throw new Exception(e.ToString());
+                }
+                return licenseProductSnapshot;
+            }
+        }
+
+        //private bool InsertChildren(Snapshot_LicenseProduct licenseProductSnapshot)
+        //{
+        //    using (var context = new AuthContext())
+        //    {
+        //        context.Configuration.AutoDetectChangesEnabled = false;
+        //        context.Configuration.ValidateOnSaveEnabled = false;
+
+
+
+
+
+
+
+
+
+
+        //        context.Configuration.AutoDetectChangesEnabled = true;
+        //        context.Configuration.ValidateOnSaveEnabled =  true;
+        //    }
+        //}
+
         public Snapshot_LicenseProduct GetLicenseProductSnapShotById(int id)
         {
             using (var context = new AuthContext())
@@ -36,6 +82,16 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return context.Snapshot_LicenseProducts.FirstOrDefault(sl => sl.ProductId == id);
             }
         }
+
+        public Snapshot_LicenseProduct GetLicenseProductSnapShotByLPSnapId(int id)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_LicenseProducts.FirstOrDefault(sl => sl.SnapshotLicenseProductId == id);
+            }
+        }
+
+
 
         public List<int> GetLicenseProductIds(int licenseId)
         {
@@ -56,15 +112,15 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return
                     context.Snapshot_LicenseProducts
 
-                         .Include("ProductHeader")
-                         .Include("ProductHeader.Artist")
-                         .Include("ProductHeader.Label")
-                         .Include("ProductHeader.Label.RecordLabelGroups")
+                        .Include("ProductHeader")
+                        .Include("ProductHeader.Artist")
+                       // .Include("ProductHeader.Label")
+                       // .Include("ProductHeader.Label.RecordLabelGroups")
                          /*
                        .Include("ProductHeader.Configurations") //TEST
                        .Include("ProductHeader.Configurations.Configuration") 
                        .Include("ProductHeader.Configurations.LicenseProductConfiguration")
-                    */
+                         */
                       // Not needed .Include("ProductConfigurations") //comes back null, i think in the test license case its supposed
                          .Include("Schedule")
                          .Include("Recordings")
@@ -101,7 +157,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
                          .Include("Recordings.Track.Copyrights.LocalClients")
                          .Include("Recordings.Track.Copyrights.AquisitionLocationCodes")
                          .Include("Recordings.LicenseRecording")
-                     
+                          .AsNoTracking()
                     //   .Include("Recordings.LicenseRecording") //Add to database??  BROKEN, its in database, but when its 'on' recordings are not returned
 
 

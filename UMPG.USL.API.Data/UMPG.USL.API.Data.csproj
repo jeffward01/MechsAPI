@@ -61,6 +61,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -147,6 +148,8 @@
     <Compile Include="ContactData\IRoleRepository.cs" />
     <Compile Include="ContactData\LicenseeAdminRequest.cs" />
     <Compile Include="ContactData\RoleRepository.cs" />
+    <Compile Include="DataHarmonization\DataHarmonizationQueueRepository.cs" />
+    <Compile Include="DataHarmonization\IDataHarmonizationQueueRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotAdminAffiliationBaseRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotAdminAffiliationRepository.cs" />
     <Compile Include="DataHarmonization\ISnapshotAdministratorRepository.cs" />
@@ -225,6 +228,7 @@
     <Compile Include="DataHarmonization\Snapshot_ComposerOriginalPublisherAffiliationRepository.cs" />
     <Compile Include="DataHarmonization\Snapshot_ComposerOriginalPublisherKnownAsRepository.cs" />
     <Compile Include="DataHarmonization\Snapshot_ComposerOriginalPublisherRepository.cs" />
+    <Compile Include="IProcessorRepository.cs" />
     <Compile Include="LicenseData\GenerateLicenseQueueRepository.cs" />
     <Compile Include="LicenseData\IGenerateLicenseQueueRepository.cs" />
     <Compile Include="LicenseData\ILicenseAttachmentRepository.cs" />
@@ -292,6 +296,7 @@
     <Compile Include="LookupData\Priority.cs" />
     <Compile Include="LookupData\LicenseMethodRepository.cs" />
     <Compile Include="LookupData\StatRateRepository.cs" />
+    <Compile Include="ProcessorRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LicenseData\LicenseRepository.cs" />
     <Compile Include="ContactData\AddressRepository.cs" />

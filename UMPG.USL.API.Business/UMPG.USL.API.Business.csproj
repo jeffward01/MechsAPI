@@ -87,6 +87,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -116,6 +117,7 @@
     <Compile Include="DataHarmonization\ISnapshotLabelManger.cs" />
     <Compile Include="DataHarmonization\ISnapshotLicenseManager.cs" />
     <Compile Include="DataHarmonization\ISnapshotLicenseProductManager.cs" />
+    <Compile Include="DataHarmonization\ISnapshotManager.cs" />
     <Compile Include="DataHarmonization\ISnapshotProductHeaderManager.cs" />
     <Compile Include="DataHarmonization\ISnapshotRecsConfigurationManager.cs" />
     <Compile Include="DataHarmonization\ISnapshotWorksRecordingManager.cs" />
@@ -129,10 +131,12 @@
     <Compile Include="DataHarmonization\SnapshotLabelManger.cs" />
     <Compile Include="DataHarmonization\SnapshotLicenseManager.cs" />
     <Compile Include="DataHarmonization\SnapshotLicenseProductManager.cs" />
+    <Compile Include="DataHarmonization\SnapshotManager.cs" />
     <Compile Include="DataHarmonization\SnapshotPhoneManager.cs" />
     <Compile Include="DataHarmonization\SnapshotProductHeaderManager.cs" />
     <Compile Include="DataHarmonization\SnapshotRecsConfigurationManager.cs" />
     <Compile Include="DataHarmonization\SnapshotWorksRecordingManager.cs" />
+    <Compile Include="IServiceManager.cs" />
     <Compile Include="Licenses\GenerateLicenseManager.cs" />
     <Compile Include="Licenses\IGenerateLicenseManager.cs" />
     <Compile Include="Licenses\ILicenseAttachmentManager.cs" />
@@ -204,6 +208,7 @@
     </Compile>
     <Compile Include="Reports\IReportQueueManager.cs" />
     <Compile Include="Reports\ReportQueueManager.cs" />
+    <Compile Include="ServiceManager.cs" />
     <Compile Include="Token\ITokenServices.cs" />
     <Compile Include="Token\TokenServices.cs" />
   </ItemGroup>

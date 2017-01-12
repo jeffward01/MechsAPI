@@ -27,6 +27,20 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
+
+        public bool DoesExistAndComplete(int licenseId)
+        {
+            using (var context = new AuthContext())
+            {
+                var exist = context.Snapshot_Licenses.FirstOrDefault(_ => _.CloneLicenseId == licenseId && _.SnapshotComplete);
+                if (exist != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+ 
         public bool DoesLicenseSnapshotExist(int licenseId)
         {
             using (var context = new AuthContext())
@@ -92,20 +106,20 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
-        public bool DeleteSnapshotLicense(int licenseId)
+        public bool DeleteSnapshotLicense(Snapshot_License license)
         {
             using (var context = new AuthContext())
             {
-                var licenseToBeDeleted = context.Snapshot_Licenses
-                 //   .Include("LicenseType")
-                 //   .Include("LicensePriority")
-                 //   .Include("LicenseStatus")
-                 //   .Include("LicenseProducts")
-                 //   .Include("LicenseMethod")
-                    .FirstOrDefault(sl => sl.CloneLicenseId == licenseId);
+                //var licenseToBeDeleted = context.Snapshot_Licenses
+                // //   .Include("LicenseType")
+                // //   .Include("LicensePriority")
+                // //   .Include("LicenseStatus")
+                // //   .Include("LicenseProducts")
+                // //   .Include("LicenseMethod")
+                //    .FirstOrDefault(sl => sl.CloneLicenseId == licenseId);
 
-                context.Snapshot_Licenses.Attach(licenseToBeDeleted);
-                context.Snapshot_Licenses.Remove(licenseToBeDeleted);
+                context.Snapshot_Licenses.Attach(license);
+                context.Snapshot_Licenses.Remove(license);
                 try
                 {
                     context.SaveChanges();

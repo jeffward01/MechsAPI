@@ -13,5 +13,6 @@ namespace UMPG.USL.API.Data.DataHarmonization
         bool DeleteProductHeaderSnapshotBySnapshotId(int snapshotProductHeaderId);
 
         Snapshot_ProductHeader GetProductHeaderByProductHeaderId(int productHeaderId);
+        Snapshot_ProductHeader GetSnapshotProductHeaderByLabelSnapshotId(int labelSnapshotId);
     }
 }

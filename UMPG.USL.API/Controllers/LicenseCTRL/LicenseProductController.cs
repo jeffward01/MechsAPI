@@ -46,6 +46,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseProductManager.GetCatalogNumber(productConfigId);
         }
 
+        //Not in use
         [Route("GetLicenseProductOverview/{recProductId}")]
         [HttpGet]
         public LicenseProductOverview GetLicenseProductOverview(int recProductId)
@@ -53,7 +54,8 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseProductManager.GetLicenseProductOverview(recProductId);
         }
 
-        [Route("GetLicenseProductOverview2/{productId}")] // 17775
+        //Not in use
+        [Route("GetLicenseProductOverview2/{productId}")] // 17775  
         [HttpGet]
         public LicenseProductOverview2 GetLicenseProductOverview2(long productId)
         {

@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using System;
+using NLog;
 using UMPG.USL.API.Data.DataHarmonization;
 using UMPG.USL.Models.DataHarmonization;
 
@@ -135,6 +136,17 @@ namespace UMPG.USL.API.Business.DataHarmonization
             _snapshotWorksRecordingRepository = snapshotWorksRecordingRepository;
             _snapshotLicenseProductRepository = snapshotLicenseProductRepository;
             _snapshotLicenseRepository = snapshotLicenseRepository;
+        }
+
+        public Snapshot_ProductHeader GetProductForTrackId(int snapshotTrackId)
+        {
+            var snapshotTrack = _snapshotWorkTrackRepository.GetTrackBySnapshotWorksTrackId(snapshotTrackId);
+            var worksRecording =
+                _snapshotWorksRecordingRepository.GetWorksRecordingForSnapshotTrackId(snapshotTrack.SnapshotWorkTrackId);
+            var licenseProduct =
+                _snapshotLicenseProductRepository.GetLicenseProductByLicenseProductId(worksRecording.LicenseProductId);
+          return
+                _snapshotProductHeaderRepository.GetProductHeaderByProductHeaderId((int)licenseProduct.ProductHeaderId);
         }
 
         public Snapshot_LicenseProduct SaveSnapshotLicenseProduct(Snapshot_LicenseProduct snapshotLicenseProduct)
@@ -761,6 +773,11 @@ namespace UMPG.USL.API.Business.DataHarmonization
         public Snapshot_LicenseProduct GetSnapshotLicenseProductByLicenseProductId(int snapshotLicenseProductId)
         {
             return _snapshotLicenseProductRepository.GetLicenseProductSnapShotById(snapshotLicenseProductId);
+        }
+
+        public int GetProductHeaderIdForSnapshotLicenseProductId(int id)
+        {
+            return Convert.ToInt32(_snapshotLicenseProductRepository.GetLicenseProductSnapShotByLPSnapId(id).ProductHeaderId);
         }
     }
 }

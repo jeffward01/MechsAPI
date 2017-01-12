@@ -38,6 +38,14 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
+        public Snapshot_WorksRecording GetWorksRecordingForSnapshotTrackId(int trackId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_WorksRecordings.FirstOrDefault(_ => _.SnapshotWorkTrackId == trackId);
+            }
+        }
+
         public List<Snapshot_WorksRecording> GetAllWorksRecordingsForProductId(int? productId)
         {
             using (var context = new AuthContext())
@@ -52,6 +60,15 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return context.Snapshot_WorksRecordings.Where(_ => _.LicenseProductId == productId).ToList();
             }
         }
+
+        public Snapshot_WorksRecording GetSnapshotWorksRecordingForTrackId(int snapshotTrackId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_WorksRecordings.FirstOrDefault(_ => _.SnapshotWorkTrackId == snapshotTrackId);
+            }
+        }
+
         public bool DeleteWorkRecordingByRecordignSnapshotId(int recordingSnapshotIdea)
         {
             using (var context = new AuthContext())

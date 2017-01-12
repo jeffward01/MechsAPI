@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UMPG.USL.Models;
 using UMPG.USL.Models.LookupModel;
 
 namespace UMPG.USL.API.Data.LookupData
 {
     public class PaidQuarterRepository : IPaidQuarterRepository
     {
-
         public int Add(LU_PaidQuarter paidQuarter)
         {
             using (var context = new AuthContext())
@@ -40,16 +38,7 @@ namespace UMPG.USL.API.Data.LookupData
         {
             using (var context = new AuthContext())
             {
-                var currentyear = DateTime.Today.Year;
-
-                //now go back 10 years
-                var yearlist = context.LU_PaidQuarters
-                    .Where(c=>c.year >=currentyear - 10 && 
-                              c.year <=currentyear) 
-                    .OrderByDescending(c => c.year)
-                    .ThenByDescending(c => c.paidQuarter).ToList();
-
-                return yearlist;
+                return IsInFourthQuarter() ? GetFuture11Years(context) : GetFuture10Years(context);
             }
         }
 
@@ -70,5 +59,38 @@ namespace UMPG.USL.API.Data.LookupData
             }
         }
 
+        private static List<LU_PaidQuarter> GetFuture11Years(AuthContext context)
+        {
+            var nextYear = DateTime.Today.Year + 1;
+
+            //now go back 11 years
+            var yearlist = context.LU_PaidQuarters
+                .Where(c => c.year >= nextYear - 11 &&
+                          c.year <= nextYear)
+                .OrderByDescending(c => c.year)
+                .ThenByDescending(c => c.paidQuarter).ToList();
+
+            return yearlist;
+        }
+
+        private static List<LU_PaidQuarter> GetFuture10Years(AuthContext context)
+        {
+            var currentYear = DateTime.Today.Year;
+
+            //now go back 10 years
+            var yearlist = context.LU_PaidQuarters
+                .Where(c => c.year >= currentYear - 10 &&
+                          c.year <= currentYear)
+                .OrderByDescending(c => c.year)
+                .ThenByDescending(c => c.paidQuarter).ToList();
+
+            return yearlist;
+        }
+
+        public bool IsInFourthQuarter()
+        {
+            int[] fourthQuarterMonths = { 10, 11, 12 };
+            return fourthQuarterMonths.Contains(DateTime.Today.Month);
+        }
     }
 }

@@ -6,7 +6,9 @@ namespace UMPG.USL.API.Business.DataHarmonization
 {
     public interface IRecCongruencyCheckService
     {
-        List<RecsProductChanges> CheckForLicenseProductChanges(List<LicenseProduct> recsLicenseProducts,
-            List<Snapshot_LicenseProduct> licenseProductsSnapshots);
+
+
+        List<RecsProductChanges> CheckSnapshotAgainstRecs(List<LicenseProduct> mechsLicenseProducts,
+            List<Snapshot_LicenseProduct> licenseProductSnapshots);
     }
 }

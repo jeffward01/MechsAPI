@@ -31,8 +31,8 @@ namespace UMPG.USL.API.Business.Licenses
 
         public bool UpdateLicenseAttachement(LicenseAttachment licenseAttachment)
         {
-           var result = _licenseAttachmentRepository.UpdateLicenseAttachment(licenseAttachment);
-            return result;
+                _licenseAttachmentRepository.Update(licenseAttachment);
+            return true;
         }
         
         public List<LicenseAttachment> GetAll()
@@ -43,6 +43,11 @@ namespace UMPG.USL.API.Business.Licenses
         public List<LicenseAttachment> GetAllAttachmentsByLicenseId(int licenseId)
         {
             return _licenseAttachmentRepository.GetAll().Where(c=>c.licenseId == licenseId).ToList();
+        }
+
+        public bool DoesLicenseHaveLicenseAttachments(int licenseId)
+        {
+            return _licenseAttachmentRepository.DoesLicenseHaveLicenseAttachments(licenseId);
         }
 
         public LicenseAttachment GetLicenseAttachement(int licenseAttachmentId)

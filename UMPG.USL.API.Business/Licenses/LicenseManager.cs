@@ -1,11 +1,13 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using NLog;
 using UMPG.USL.API.Business.DataHarmonization;
+using UMPG.USL.API.Data.DataHarmonization;
 using UMPG.USL.API.Data.LicenseData;
 using UMPG.USL.API.Data.Recs;
 using UMPG.USL.Models;
+using UMPG.USL.Models.DataHarmonization;
 using UMPG.USL.Models.Enums;
 using UMPG.USL.Models.LicenseModel;
 
@@ -29,10 +31,11 @@ namespace UMPG.USL.API.Business.Licenses
         private readonly IRecsDataProvider _recsProvider;
         private readonly IDataHarmonizationManager _dataHarmonizationManager;
         private readonly ILicenseProductManager _licenseProductManager;
+        private readonly IDataHarmonizationQueueRepository _dataHarmonizationQueueRepository;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-
         public LicenseManager(
+            IDataHarmonizationQueueRepository dataHarmonizationQueueRepository,
             ILicenseProductManager licenseProductManager,
             ILicenseRepository licenseRepository,
             ILicenseProductRepository licenseProductRepository,
@@ -49,6 +52,7 @@ namespace UMPG.USL.API.Business.Licenses
             IDataHarmonizationManager dataHarmonizationManager
             )
         {
+            _dataHarmonizationQueueRepository = dataHarmonizationQueueRepository;
             _licenseProductManager = licenseProductManager;
             _dataHarmonizationManager = dataHarmonizationManager;
             _licenseRepository = licenseRepository;
@@ -484,55 +488,48 @@ namespace UMPG.USL.API.Business.Licenses
                             {
                                 if (recording.TrackId == worksRecording.Track.Id)
                                 {
-                                    // get the licenserecording object
-                                    recording.WorkCode = worksRecording.Track.Copyrights.FirstOrDefault().WorkCode;
-                                    //
-                                    // for writer % roll-ups at recording level
-                                    //
-                                    var workWriters = _recsProvider.RetrieveTrackWriters(recording.WorkCode);
-                                    var localWriters =
-                                        _licensePRWriterRepository.GetLicenseProductRecordingWritersBrief(
-                                            recording.LicenseRecordingId);
-
-                                    foreach (var workWriter in workWriters)
+                                    //Occasially licenses woudl fail on execution due to null Copyrights
+                                    if (worksRecording.Track.Copyrights != null)
                                     {
-                                        foreach (var writer in localWriters)
+                                        // get the licenserecording object
+                                        recording.WorkCode = worksRecording.Track.Copyrights.FirstOrDefault().WorkCode;
+                                        //
+                                        // for writer % roll-ups at recording level
+                                        //
+                                        var workWriters = _recsProvider.RetrieveTrackWriters(recording.WorkCode);
+                                        var localWriters =
+                                            _licensePRWriterRepository.GetLicenseProductRecordingWritersBrief(
+                                                recording.LicenseRecordingId);
+
+                                        foreach (var workWriter in workWriters)
                                         {
-                                            // Here we have to check if there is a Split override or a CE override at writer level
-                                            // if not, then use Recs contribution value
-                                            if (workWriter.CaeNumber == writer.CAECode)
+                                            foreach (var writer in localWriters)
                                             {
-                                                foreach (var rate in ratesToUpdate)
+                                                // Here we have to check if there is a Split override or a CE override at writer level
+                                                // if not, then use Recs contribution value
+                                                if (workWriter.CaeNumber == writer.CAECode)
                                                 {
-                                                    if (rate.LicenseWriterId == writer.LicenseWriterId)
+                                                    foreach (var rate in ratesToUpdate)
                                                     {
-                                                        if (rate.WriterRateInclude)  //Note this is only a small check for date, should be checked everywhere before executing. th
+                                                        if (rate.LicenseWriterId == writer.LicenseWriterId)
                                                         {
-                                                            writer.isLicensed = true;
-                                                            writer.LicensedDate = DateTime.Now;
-                                                            writer.ModifiedBy = license.ModifiedBy;
-                                                            writer.ModifiedDate = DateTime.Now;
+                                                            if (rate.WriterRateInclude)
+                                                                //Note this is only a small check for date, should be checked everywhere before executing. th
+                                                            {
+                                                                writer.isLicensed = true;
+                                                                writer.LicensedDate = DateTime.Now;
+                                                                writer.ModifiedBy = license.ModifiedBy;
+                                                                writer.ModifiedDate = DateTime.Now;
+                                                            }
                                                         }
                                                     }
-                                                }
 
-                                                if (writer.isLicensed == true)
-                                                {
-                                                    if (writer.SplitOverride >= 0)
-                                                    // has a split override
+                                                    if (writer.isLicensed == true)
                                                     {
-                                                        writer.ExecutedSplit = writer.SplitOverride;
-                                                        writer.ExecutedControlledWriter = true;
-                                                        writer.WriterChangeDate = DateTime.Now;
-                                                        writer.ModifiedDate = DateTime.Now;
-                                                        writer.ModifiedBy = license.ModifiedBy;
-                                                        _licensePRWriterRepository.Update(writer);
-                                                    }
-                                                    else
-                                                    {
-                                                        if (writer.ClaimExceptionOverride > 0)  // has a claim exception override
+                                                        if (writer.SplitOverride >= 0)
+                                                            // has a split override
                                                         {
-                                                            writer.ExecutedSplit = writer.ClaimExceptionOverride;
+                                                            writer.ExecutedSplit = writer.SplitOverride;
                                                             writer.ExecutedControlledWriter = true;
                                                             writer.WriterChangeDate = DateTime.Now;
                                                             writer.ModifiedDate = DateTime.Now;
@@ -540,24 +537,38 @@ namespace UMPG.USL.API.Business.Licenses
                                                             _licensePRWriterRepository.Update(writer);
                                                         }
                                                         else
-                                                        {       // take split from recs because you do not have either of the two above
-                                                            writer.ExecutedSplit = (decimal)workWriter.Contribution;
-                                                            writer.ExecutedControlledWriter = true;
-                                                            writer.WriterChangeDate = DateTime.Now;
-                                                            writer.ModifiedDate = DateTime.Now;
-                                                            writer.ModifiedBy = license.ModifiedBy;
-                                                            _licensePRWriterRepository.Update(writer);
+                                                        {
+                                                            if (writer.ClaimExceptionOverride > 0)
+                                                                // has a claim exception override
+                                                            {
+                                                                writer.ExecutedSplit = writer.ClaimExceptionOverride;
+                                                                writer.ExecutedControlledWriter = true;
+                                                                writer.WriterChangeDate = DateTime.Now;
+                                                                writer.ModifiedDate = DateTime.Now;
+                                                                writer.ModifiedBy = license.ModifiedBy;
+                                                                _licensePRWriterRepository.Update(writer);
+                                                            }
+                                                            else
+                                                            {
+                                                                // take split from recs because you do not have either of the two above
+                                                                writer.ExecutedSplit = (decimal) workWriter.Contribution;
+                                                                writer.ExecutedControlledWriter = true;
+                                                                writer.WriterChangeDate = DateTime.Now;
+                                                                writer.ModifiedDate = DateTime.Now;
+                                                                writer.ModifiedBy = license.ModifiedBy;
+                                                                _licensePRWriterRepository.Update(writer);
+                                                            }
                                                         }
                                                     }
-                                                }
-                                                else
-                                                {
-                                                    writer.ExecutedSplit = null;
-                                                    writer.ExecutedControlledWriter = null;
-                                                    writer.WriterChangeDate = DateTime.Now;
-                                                    writer.ModifiedDate = DateTime.Now;
-                                                    writer.ModifiedBy = license.ModifiedBy;
-                                                    _licensePRWriterRepository.Update(writer);
+                                                    else
+                                                    {
+                                                        writer.ExecutedSplit = null;
+                                                        writer.ExecutedControlledWriter = null;
+                                                        writer.WriterChangeDate = DateTime.Now;
+                                                        writer.ModifiedDate = DateTime.Now;
+                                                        writer.ModifiedBy = license.ModifiedBy;
+                                                        _licensePRWriterRepository.Update(writer);
+                                                    }
                                                 }
                                             }
                                         }
@@ -583,25 +594,8 @@ namespace UMPG.USL.API.Business.Licenses
                 //updates local license
                 _licenseRepository.UpdateLicense(localLicense);
 
-                //check if snapshot exists, if it exists delete it, then make a new one
-                var exist = _dataHarmonizationManager.DoesSnapshotExist(localLicense.LicenseId);
-                if (!exist)
-                {
-                    var localLicenseProducts = _licenseProductManager.GetProductsNew(localLicense.LicenseId);
-                    //save licenseDetails
-                    _dataHarmonizationManager.TakeLicenseSnapshot(localLicense, localLicenseProducts);
-                }
-                else
-                {
-                    //Delete existing
-                    _dataHarmonizationManager.DeleteLicenseSnapshot(localLicense.LicenseId);
-                    //make new snapshot
-                    
-                  Logger.Info("Delete Block hit");
-                }
-                // var newLicenseSnapshot = new Snapshot_License();
-                //  newLicenseSnapshot = localLicense;
-                //Data Harmonization Code
+                //Harmonize Data
+                HarmonizeData(localLicense);
 
                 result = true;
             }
@@ -710,6 +704,66 @@ namespace UMPG.USL.API.Business.Licenses
             {
                 return false;
             }
+        }
+
+        private void HarmonizeData(License localLicense)
+        {
+            try
+            {
+                //check if snapshot exists, if it exists send delete request. If note, send create request then make a new one
+                var exist = _dataHarmonizationManager.DoesSnapshotExist(localLicense.LicenseId);
+                if (!exist)
+                {
+                    Logger.Info("Sending Create License Snapshot request.  License Id: " + localLicense.LicenseId);
+                    //Send Create Request
+                    var request = CreateDataHarmonizationQueueItem(localLicense.LicenseId, 1);
+                    _dataHarmonizationQueueRepository.CreateDataHarmonizationRequest(request);
+                }
+                else
+                {
+                    Logger.Info("Sending Delete License Snapshot request.  License Id: " + localLicense.LicenseId);
+                    //send delete request
+                    var request = CreateDataHarmonizationQueueItem(localLicense.LicenseId, 2);
+                    _dataHarmonizationQueueRepository.CreateDataHarmonizationRequest(request);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Debug("Error occured Managing License Snapshot. Error: " + e.ToString());
+                throw new Exception("Error occured Managing License Snapshot. Error: " + e.ToString());
+            }
+
+
+            /*
+            //check if snapshot exists, if it exists delete it, then make a new one
+            var exist = _dataHarmonizationManager.DoesSnapshotExist(localLicense.LicenseId);
+            if (!exist)
+            {
+                var localLicenseProducts = _licenseProductManager.GetProductsNew(localLicense.LicenseId);
+                //save licenseDetails
+                _dataHarmonizationManager.TakeLicenseSnapshot(localLicense, localLicenseProducts);
+            }
+            else
+            {
+                //Delete existing
+                _dataHarmonizationManager.DeleteLicenseSnapshot(localLicense.LicenseId);
+                //make new snapshot
+
+                Logger.Info("Delete Block hit");
+            }
+
+            */
+        }
+
+        private DataHarmonizationQueue CreateDataHarmonizationQueueItem(int licenseId, int actionTypeId)
+        {
+            return new DataHarmonizationQueue
+            {
+                DataProcessorStatusId = 1,
+                ActionTypeId = actionTypeId,
+                LicenseId = licenseId,
+                CreatedDate = DateTime.Now
+            };
         }
 
         private Dictionary<string, int> GetStatusRollup(List<int> writerRatesIds)

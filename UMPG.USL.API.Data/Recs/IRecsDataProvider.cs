@@ -9,6 +9,7 @@ namespace UMPG.USL.API.Data.Recs
     public interface IRecsDataProvider
     {
         List<WorksRecording> RetrieveProductRecordings(int productId);
+        HttpWebResponseWithStream AddProductWithHeader(object updateProductObject, string header);
         List<WorksWriter> RetrieveTrackWriters(string pipsCode);
         ProductHeader RetrieveProductHeader(int productId);
         List<RecsConfigurations> RetrieveConfigurations();
@@ -22,6 +23,7 @@ namespace UMPG.USL.API.Data.Recs
         ListResult<WorksSearchResult> WorksSearch(WorksSearchRequest request);
         SingleResult<Track> RetrieveTrack(long trackId, CallerInfo callerInfo);
         HttpWebResponseWithStream SaveProductLink(ProductLink productLink);
+        HttpWebResponseWithStream SaveProductLinkWithHeader(ProductLink productLink, string header);
         List<GetProductLink> GetProductLinks(int productId);
         HttpWebResponseWithStream RemoveProductLink(ProductLink productLink);
         List<Label> GetLabels();
@@ -31,7 +33,7 @@ namespace UMPG.USL.API.Data.Recs
         List<LabelGroup> RetrieveLabelGroups(string query);
 
         List<WorksRecording> RetrieveTracksWithWriters(int productId);
-        bool UpdateProductPriority(UpdatePriorityRequest request);
+        bool UpdateProductPriority(UpdatePriorityRequest request, string safeIdHeader);
         List<VersionType> GetVersionTypes();
 
     }

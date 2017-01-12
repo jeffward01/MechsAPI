@@ -15,6 +15,7 @@ namespace UMPG.USL.API.Business.Licenses
     {
         List<LicenseProduct> GetProducts(int licenseId);
         string GetCatalogNumber(int productConfigId);
+        LicenseProduct GetLicenseProductForLicenseProductId(int id);
 
         List<LicenseProduct> GetProductsNew(int licenseId);
 

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using NLog;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using UMPG.USL.API.Data.LookupData;
 using UMPG.USL.Models;
 using UMPG.USL.Models.AuditModel;
 using UMPG.USL.Models.Authorization;
@@ -79,6 +79,8 @@ namespace UMPG.USL.API.Data
         public DbSet<LU_LicenseStatus> LU_LicenseStatuses { get; set; }
 
         public DbSet<LU_RateType> LU_RateTypes { get; set; }
+
+        public DbSet<LU_SolrProcessorStatus> LU_SolrProcessorStatuses { get; set; }
 
         public DbSet<LU_WritersConsentType> LU_WritersConsentTypes { get; set; }
 
@@ -162,30 +164,22 @@ namespace UMPG.USL.API.Data
 
         public DbSet<Snapshot_License> Snapshot_Licenses { get; set; }
         public DbSet<Snapshot_LicenseProduct> Snapshot_LicenseProducts { get; set; }
-        
 
         public DbSet<Snapshot_LabelGroup> Snapshot_LabelGroups { get; set; }
 
         public DbSet<Snapshot_Configuration> Snapshot_Configurations { get; set; }
 
-        
         public DbSet<Snapshot_Label> Snapshot_Labels { get; set; }
-        
 
         public DbSet<Snapshot_ProductHeader> Snapshot_ProductHeaders { get; set; }
         public DbSet<Snapshot_RecsConfiguration> Snapshot_RecsConfigurations { get; set; }
-        
+
         public DbSet<Snapshot_WorksRecording> Snapshot_WorksRecordings { get; set; }
         public DbSet<Snapshot_ArtistRecs> Snapshot_ArtistRecs { get; set; }
 
-        
         public DbSet<Snapshot_KnownAs> Snapshot_KnownAs { get; set; }
 
-        
-
         public DbSet<Snapshot_WorksTrack> Snapshot_Tracks { get; set; }
-
-        
 
         public DbSet<Snapshot_WorksWriter> Snapshot_WorksWriters { get; set; }
 
@@ -230,11 +224,7 @@ namespace UMPG.USL.API.Data
 
         public DbSet<Snapshot_ComposerOriginalPublisherAdminKnownAs> Snapshot_ComposerOriginalPublisherAdminKnownAs { get; set; }
 
-
-
-
-
-
+        public DbSet<DataHarmonizationQueue> DataHarmonizationQueues { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -279,10 +269,16 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<ContactEmail>().ToTable("ContactEmail");
             modelBuilder.Entity<ContactEmail>().HasKey(c => c.ContactEmailId);
 
+            //Start Dataharmonization Tables
+            modelBuilder.Entity<DataHarmonizationQueue>().ToTable("DataHarmonizationQueue");
+            modelBuilder.Entity<DataHarmonizationQueue>().HasKey(_ => _.DataHarmonizationQueueId);
+            modelBuilder.Entity<DataHarmonizationQueue>().HasRequired(_ => _.SolrProcessorStatus).WithMany().HasForeignKey(_ => _.DataProcessorStatusId);
+            modelBuilder.Entity<DataHarmonizationQueue>().HasRequired(_ => _.ActionType).WithMany().HasForeignKey(_ => _.ActionTypeId);
+
             //Snapshot_License
             modelBuilder.Entity<Snapshot_License>().ToTable("Snapshot_License");
             modelBuilder.Entity<Snapshot_License>().HasKey(x => x.SnapshotLicenseId);
-            modelBuilder.Entity<Snapshot_License>().HasMany(r => r.LicenseProducts).WithOptional().HasForeignKey(_ => _.LicenseId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Snapshot_License>().HasMany(r => r.LicenseProducts).WithOptional().HasForeignKey(_ => _.SnapshotLicenseId).WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicenseType).WithMany().HasForeignKey(c => c.LicenseTypeId).WillCascadeOnDelete(false);
             modelBuilder.Entity<Snapshot_License>().HasRequired(c => c.LicensePriority).WithMany().HasForeignKey(c => c.PriorityId).WillCascadeOnDelete(false);
@@ -306,7 +302,6 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_LicenseProduct>().Ignore(c => c.RelatedLicensesNo);
             modelBuilder.Entity<Snapshot_LicenseProduct>().Ignore(c => c.LicenseClaimException);
 
-            
             //Snapshot_recsConfiguration
             modelBuilder.Entity<Snapshot_RecsConfiguration>().ToTable("Snapshot_RecsConfiguration");
             modelBuilder.Entity<Snapshot_RecsConfiguration>().HasKey(x => x.SnapshotRecsConfigurationId);
@@ -319,7 +314,6 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_ProductHeader>().HasRequired(c => c.Artist).WithMany().HasForeignKey(c => c.SnapshotArtistRecsId).WillCascadeOnDelete(true);
             modelBuilder.Entity<Snapshot_ProductHeader>().HasRequired(c => c.Label).WithMany().HasForeignKey(c => c.SnapshotLabelId).WillCascadeOnDelete(true);
             modelBuilder.Entity<Snapshot_ProductHeader>().HasMany(x => x.Configurations).WithOptional().HasForeignKey(_ => _.SnapshotProductHeaderId).WillCascadeOnDelete(true);
-
 
             //Snapshot_Label
             modelBuilder.Entity<Snapshot_Label>().ToTable("Snapshot_Label");
@@ -340,7 +334,7 @@ namespace UMPG.USL.API.Data
 
             modelBuilder.Entity<Snapshot_WorksRecording>().ToTable("Snapshot_WorksRecording");
             modelBuilder.Entity<Snapshot_WorksRecording>().HasKey(_ => _.SnapshotWorksRecodingId);
-            modelBuilder.Entity<Snapshot_WorksRecording>().HasRequired(_ => _.Track).WithMany().HasForeignKey(_ => _.SnapshotWorkTrackId).WillCascadeOnDelete(true); 
+            modelBuilder.Entity<Snapshot_WorksRecording>().HasRequired(_ => _.Track).WithMany().HasForeignKey(_ => _.SnapshotWorkTrackId).WillCascadeOnDelete(true);
             modelBuilder.Entity<Snapshot_WorksRecording>().HasMany(_ => _.Writers).WithOptional().HasForeignKey(_ => _.SnapshotWorksRecordingId).WillCascadeOnDelete(true);
             modelBuilder.Entity<Snapshot_WorksRecording>().HasRequired(_ => _.LicenseRecording).WithMany().HasForeignKey(_ => _.LicenseProductRecordingId).WillCascadeOnDelete(false);
 
@@ -349,12 +343,12 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.OriginalPublishers).WithOptional().HasForeignKey(_ => _.SnapshotWorksWriterId);
             modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.WriterCaeNumber);
             modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.CloneWriterCaeCode);
-            modelBuilder.Entity<Snapshot_WorksWriter>().Ignore(_ => _.AffiliationsString);  
+            modelBuilder.Entity<Snapshot_WorksWriter>().Ignore(_ => _.AffiliationsString);
             // modelBuilder.Entity<Snapshot_WorksWriter>().HasRequired(_ => _.LicenseProductRecordingWriter).WithMany().HasForeignKey(_ => _.CloneCaeNumber); //? is thios correct?   || temp off
 
             modelBuilder.Entity<Snapshot_OriginalPublisher>().ToTable("Snapshot_OriginalPublisher");
             modelBuilder.Entity<Snapshot_OriginalPublisher>().HasKey(_ => _.SnapshotOriginalPublisherId);
-                modelBuilder.Entity<Snapshot_OriginalPublisher>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.SnapshotOriginalPublisherId);
+            modelBuilder.Entity<Snapshot_OriginalPublisher>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.SnapshotOriginalPublisherId);
             modelBuilder.Entity<Snapshot_OriginalPublisher>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.CloneWriterCaeCode);
 
             modelBuilder.Entity<Snapshot_OriginalPublisherAffiliation>()
@@ -364,10 +358,7 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_OriginalPublisherAffiliation>()
                 .HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.SnapshotOriginalPublisherAffiliationId).WillCascadeOnDelete(true);
 
-
             //modelBuilder.Entity<>()
-
-
 
             modelBuilder.Entity<Snapshot_OriginalPubAffiliationBase>().ToTable("Snapshot_OriginalPublisherAffiliationBase");
             modelBuilder.Entity<Snapshot_OriginalPubAffiliationBase>().HasKey(_ => _.SnapshotOriginalPubAffiliationBaseId);
@@ -383,7 +374,7 @@ namespace UMPG.USL.API.Data
 
             modelBuilder.Entity<Snapshot_Affiliation>().ToTable("Snapshot_Affiliation");
             modelBuilder.Entity<Snapshot_Affiliation>().HasKey(_ => _.SnapshotAffiliationId);
-              modelBuilder.Entity<Snapshot_Affiliation>().HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.SnapshotAffiliationId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Snapshot_Affiliation>().HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.SnapshotAffiliationId).WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Snapshot_WorksTrack>().ToTable("Snapshot_WorksTrack");
             modelBuilder.Entity<Snapshot_WorksTrack>().HasKey(_ => _.SnapshotWorkTrackId);
@@ -419,7 +410,6 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAffiliation>().HasKey(_ => _.SnapshotComposerOriginalPublisherAffiliationId);
             modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAffiliation>().HasMany(_ => _.Affiliations).WithOptional().HasForeignKey(_ => _.SnapshotComposerOriginalPublisherAffiliationId).WillCascadeOnDelete(true);
 
-
             modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdministrator>().ToTable("Snapshot_ComposerOriginalPublisherAdministrator");
             modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdministrator>().HasKey(_ => _.SnapshotComposerOriginalPublisherAdministratorId);
             modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdministrator>().Ignore(_ => _.AffiliationsString);
@@ -428,7 +418,6 @@ namespace UMPG.USL.API.Data
 
             modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminKnownAs>().ToTable("Snapshot_ComposerOriginalPublisherAdminKnownAs");
             modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminKnownAs>().HasKey(_ => _.SnapshotComposerOriginalPublisherAdminKnownAsId);
-
 
             modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminAffiliation>().ToTable("Snapshot_ComposerOriginalPublisherAdminAffiliation");
             modelBuilder.Entity<Snapshot_ComposerOriginalPublisherAdminAffiliation>().HasKey(_ => _.SnapshotComposerOriginalPublisherAdminAffiliationId);
@@ -471,7 +460,6 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_AquisitionLocationCode>().ToTable("Snapshot_AquisitionLocationCode");
             modelBuilder.Entity<Snapshot_AquisitionLocationCode>().HasKey(_ => _.SnapshotAquisitionLocationCode);
 
-            
             modelBuilder.Entity<Snapshot_Administrator>().ToTable("Snapshot_Administrator");
             modelBuilder.Entity<Snapshot_Administrator>().HasKey(_ => _.SnapshotAdministratorId);
             modelBuilder.Entity<Snapshot_Administrator>().Ignore(_ => _.AffiliationsString);
@@ -497,9 +485,6 @@ namespace UMPG.USL.API.Data
 
             modelBuilder.Entity<Snapshot_AffiliationBase>().ToTable("Snapshot_AffiliationBase");
             modelBuilder.Entity<Snapshot_AffiliationBase>().HasKey(_ => _.SnapshotAffiliationBaseId);
-
-
-
 
             //_____End Data Harmonization
 
@@ -535,6 +520,7 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<LicenseProduct>().Ignore(c => c.LicenseProductConfigurations);
             modelBuilder.Entity<LicenseProduct>().Ignore(c => c.LicenseProductRecordings);
 
+
             //LicenseProductConfiguration
             modelBuilder.Entity<LicenseProductConfiguration>().ToTable("LicenseProductConfiguration");
             modelBuilder.Entity<LicenseProductConfiguration>().HasKey(c => c.LicenseProductConfigurationId);
@@ -559,6 +545,7 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<LicenseProductRecording>().Ignore(c => c.WorkCode);
             modelBuilder.Entity<LicenseProductRecording>().Ignore(c => c.LicensePRWriters);
             modelBuilder.Entity<LicenseProductRecording>().Ignore(c => c.StatusRollup);
+
 
             // Role
             modelBuilder.Entity<Role>().ToTable("Role");
@@ -639,6 +626,12 @@ namespace UMPG.USL.API.Data
             //LU_AttachmentType
             modelBuilder.Entity<LU_AttachmentType>().ToTable("LU_AttachmentType");
             modelBuilder.Entity<LU_AttachmentType>().HasKey(c => c.AttachmentTypeId);
+
+            modelBuilder.Entity<LU_SolrProcessorStatus>().ToTable("LU_SOLRProcessorStatus");
+            modelBuilder.Entity<LU_SolrProcessorStatus>().HasKey(c => c.SOLRProcessorStatusId);
+
+            modelBuilder.Entity<LU_ActionType>().ToTable("LU_ActionType");
+            modelBuilder.Entity<LU_ActionType>().HasKey(c => c.ActionTypeId);
 
             // Licensee
             modelBuilder.Entity<Licensee>().ToTable("Licensee");

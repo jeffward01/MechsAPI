@@ -56,6 +56,11 @@ namespace UMPG.USL.API.Data.Recs
             return _recs.AddProduct(updateProductObject);
         }
 
+        public HttpWebResponseWithStream AddProductWithHeader(object updateProductObject, string header)
+        {
+            return _recs.AddProductWithHeader(updateProductObject, header);
+        }
+
         public ListResult<ArtistRecs> ArtistAutosuggest(string query)
         {
             return _recs.ArtistAutosuggest(StringHelper.EncodeSpecialCharactersOnly(query));
@@ -97,6 +102,12 @@ namespace UMPG.USL.API.Data.Recs
         {
             return _recs.SaveProductLink(productLink);
         }
+        public HttpWebResponseWithStream SaveProductLinkWithHeader(ProductLink productLink, string header)
+        {
+            return _recs.SaveProductLinkWithHeader(productLink, header);
+        }
+
+
 
         public List<GetProductLink> GetProductLinks(int productId)
         {
@@ -138,9 +149,9 @@ namespace UMPG.USL.API.Data.Recs
             return _recs.RetrieveTracksWithWriters(productId);
         }
 
-        public bool UpdateProductPriority(UpdatePriorityRequest request)
+        public bool UpdateProductPriority(UpdatePriorityRequest request, string safeIdHeader)
         {
-            return _recs.UpdateProductPriority(request);
+            return _recs.UpdateProductPriority(request, safeIdHeader);
         }
 
         public List<VersionType> GetVersionTypes()

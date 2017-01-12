@@ -169,6 +169,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return _snapshotLicenseRepository.DoesLicenseSnapshotExist(licenseId);
         }
 
+        public bool DoesSnapshotExistAndComplete(int licenseId)
+        {
+            return _snapshotLicenseRepository.DoesExistAndComplete(licenseId);
+        }
+
+
         public Snapshot_License SaveSnapshotLicense(Snapshot_License snapshotLicense)
         {
             return _snapshotLicenseRepository.SaveSnapshotLicense(snapshotLicense);
@@ -180,6 +186,25 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
             var licenseProducts =
                 _snapshotLicenseProductRepository.GetAllLicenseProductsForLicenseId(licenseInformation.CloneLicenseId);
+
+            foreach (var licenseProduct in licenseProducts)
+            {
+                if (licenseProduct.ProductHeader.SnapshotLabelId == 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    var label = _snapshotLabelRepository.GetSnapshotLabelByLabelId(licenseProduct.ProductHeader.LabelId);
+                    var labelGroup = _snapshotLabelGroupRepository.GetAllALabelGroupsForLabelId(label.CloneLabelId);
+                    label.RecordLabelGroups = labelGroup;
+                    licenseProduct.ProductHeader.Label = label;
+
+                }
+                //get all labels for product header id
+
+                //get all labelGroups for productheader Id
+            }
 
             foreach (var licenseProduct in licenseProducts)
             {
@@ -616,10 +641,10 @@ namespace UMPG.USL.API.Business.DataHarmonization
             // DeleteLicenseeLabelGroup(license);  | temp off
 
             //Delete License Product List and children
-         //   DeleteLicenseProductAndChildEntities(license);
+            DeleteLicenseProductAndChildEntities(license);
 
             //Delete license
-            return _snapshotLicenseRepository.DeleteSnapshotLicense(licenseId);
+            return _snapshotLicenseRepository.DeleteSnapshotLicense(license);
         }
 
         /*

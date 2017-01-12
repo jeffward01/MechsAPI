@@ -6,5 +6,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
     {
         Snapshot_ProductHeader SaveSnapshotProductHeader(Snapshot_ProductHeader snapshotProductHeader);
         Snapshot_ProductHeader GetSnapshotProductHeaderByProductHeaderId(int snapshotProductHeader);
+        Snapshot_ProductHeader GetSnapshotProductHeaderForLabelSnapshotId(int snapshotLabelId);
     }
 }

@@ -12,6 +12,7 @@ namespace UMPG.USL.API.Business.Licenses
         LicenseAttachment Get(int id);
         
         List<LicenseAttachment> Search(string query);
+        bool DoesLicenseHaveLicenseAttachments(int licenseId);
 
         List<LicenseAttachment> GetAllAttachmentsByLicenseId(int licenseId);
 

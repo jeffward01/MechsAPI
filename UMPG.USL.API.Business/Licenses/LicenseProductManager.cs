@@ -91,6 +91,11 @@ namespace UMPG.USL.API.Business.Licenses
             _licenseProductConfigurationManager = licneseLicenseProductConfigurationManager;
         }
 
+        public LicenseProduct GetLicenseProductForLicenseProductId(int id)
+        {
+            return _licenseProductRepository.Get(id);
+        }
+
         public List<ProductConfiguration> GetProductConfigurationsAll(GetProductConfigurationsAllRequest request)
         {
             var productConfigurationsList = new List<ProductConfiguration>();
@@ -2160,6 +2165,17 @@ namespace UMPG.USL.API.Business.Licenses
                     {
                         recsWriter.LicenseProductRecordingWriter = writer;
                     }
+                    //else  //Jeff added for USL-1346, not working
+                    //{
+                    //        var addedWriter = _licensePRWriterRepository.Add(new LicenseProductRecordingWriter
+                    //        {
+                    //            LicenseRecordingId = licenseRecordingId,
+                    //            CAECode = writer.CAECode,
+                    //            CreatedDate = DateTime.Now,
+                    //            ModifiedDate = DateTime.Now,
+                    //        });
+                    //    recsWriter.LicenseProductRecordingWriter = addedWriter;
+                    //}
                 }
             }
             return recsWriters;
@@ -2706,7 +2722,7 @@ namespace UMPG.USL.API.Business.Licenses
 
                 using (var context = new AuthContext())
                 {
-                    var sourceLicense = context.Licenses.AsNoTracking()
+                    var sourceLicense = context.Licenses
                         .Where(x => x.LicenseId == licenseId)
                         .FirstOrDefault();
 
@@ -2716,8 +2732,8 @@ namespace UMPG.USL.API.Business.Licenses
                     newLicense.LicenseStatusId = 2; // verifying
                     newLicense.CreatedBy = contactid;
                     newLicense.ModifiedBy = contactid;
-                    newLicense.CreatedDate = DateTime.Now.AddHours(-8);
-                    newLicense.ModifiedDate = DateTime.Now.AddHours(-8);
+                    newLicense.CreatedDate = DateTime.Now;
+                    newLicense.ModifiedDate = DateTime.Now;
 
                     // Increment the LicneseNumber with Dash and version
                     // increment version if already present
@@ -2775,13 +2791,35 @@ namespace UMPG.USL.API.Business.Licenses
 
                     if (clonetype == "Copy")
                     {
-                        List<LicenseAttachment> sourceLicenseAttachments = _licenseAttachmentManager.GetAllAttachmentsByLicenseId(licenseId);
-                        if (sourceLicenseAttachments.Count > 0)
+                        if (_licenseAttachmentManager.DoesLicenseHaveLicenseAttachments(licenseId))
                         {
-                            foreach (var attach in sourceLicenseAttachments)
+                            List<LicenseAttachment> sourceLicenseAttachments =
+                                _licenseAttachmentManager.GetAllAttachmentsByLicenseId(licenseId);
+                            if (sourceLicenseAttachments.Count > 0)
                             {
-                                attach.licenseId = newLicense.LicenseId;
-                                _licenseAttachmentManager.AddLicenseAttachment(attach);
+                                foreach (var attach in sourceLicenseAttachments)
+                                {
+                                    attach.licenseId = newLicense.LicenseId;
+
+                                    //var newLicenseAttachment = new LicenseAttachment
+                                    //{
+                                    //    licenseId = newLicense.LicenseId,
+                                    //    virtualFilePath = attach.virtualFilePath,
+                                    //    fileName = attach.fileName,
+                                    //    fileType = attach.fileType,
+                                    //    uploaddedDate = attach.uploaddedDate,
+                                    //    CreatedBy = attach.CreatedBy,
+                                    //    CreatedDate = attach.CreatedDate,
+                                    //    ModifiedBy = attach.ModifiedBy,
+                                    //    ModifiedDate = attach.ModifiedDate,
+                                    //    Deleted = attach.Deleted,
+                                    //    includeInLicense = attach.includeInLicense,
+                                    //    AttachmentTypeId = attach.AttachmentTypeId,
+                                    //    AttachmentType = attach.AttachmentType,
+                                    //};
+
+                                    _licenseAttachmentManager.AddLicenseAttachment(attach);
+                                }
                             }
                         }
                     }
@@ -2936,7 +2974,7 @@ namespace UMPG.USL.API.Business.Licenses
             }
             */
         }
-
+        
         public bool EditWriterIsIncluded(EditWriterIncludedSaveRequest request)
         {
             List<LicenseProductRecordingWriterRate> lwritersRates;
@@ -3377,6 +3415,12 @@ namespace UMPG.USL.API.Business.Licenses
 
         private bool CompareQrt(string qrt1, string qrt2)
         {
+            //Jeff added this to prevent error.
+            if (qrt1 == "" || qrt2 == "")
+            {
+                return false;
+            }
+
             if (qrt1 == "N/A" && qrt2 != "N/A")
             {
                 return false;

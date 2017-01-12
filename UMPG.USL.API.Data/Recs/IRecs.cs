@@ -15,8 +15,10 @@ namespace UMPG.USL.API.Data.Recs
         List<RecsConfigurations> RetrieveConfigurations();
         ProductHeader UpdateProduct(object request);
         HttpWebResponseWithStream AddProduct(object updateProductObject);
+        HttpWebResponseWithStream AddProductWithHeader(object updateProductObject, string header);
         ListResult<ArtistRecs> ArtistAutosuggest(string query);
         ListResult<AlbumSkinny> AlbumAutosuggest(AlbumAutosuggestRequest request);
+        HttpWebResponseWithStream SaveProductLinkWithHeader(ProductLink productLink, string header);
         ListResult<TrackRecs> TrackAutosuggest(TrackAutosuggestRequest request);
         List<RecordLabel> RetrieveLabels();
         ListResult<WorksSearchResult> WorksSearch(WorksSearchRequest request);
@@ -30,7 +32,7 @@ namespace UMPG.USL.API.Data.Recs
         ListResult<Track> RetrieveTracks(List<long> tracksIds, string safeId);
         List<RecsProductSummary> ProductSummary(List<long> productIds);
         List<LabelGroup> RetrieveLabelGroups(string query);
-        bool UpdateProductPriority(UpdatePriorityRequest request);
+        bool UpdateProductPriority(UpdatePriorityRequest request, string safeIdHeader);
         List<Models.Recs.VersionType> GetVersionTypes();
 
     }

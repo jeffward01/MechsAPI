@@ -21,5 +21,10 @@ namespace UMPG.USL.API.Business.DataHarmonization
         {
             return _snapshotProductHeaderRepository.GetSnapshotProductHeaderBySnapshotProductHeaderId(snapshotProductHeader);
         }
+
+        public Snapshot_ProductHeader GetSnapshotProductHeaderForLabelSnapshotId(int snapshotLabelId)
+        {
+            return _snapshotProductHeaderRepository.GetSnapshotProductHeaderByLabelSnapshotId(snapshotLabelId);
+        }
     }
 }

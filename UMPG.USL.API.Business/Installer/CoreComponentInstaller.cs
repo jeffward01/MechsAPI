@@ -55,6 +55,7 @@ namespace UMPG.USL.API.Business.Installer
             container.Register(Component.For<IReportQueueManager>().ImplementedBy<ReportQueueManager>());
             container.Register(Component.For<ITokenServices>().ImplementedBy<TokenServices>());
             container.Register(Component.For<IAttachmentTypeManager>().ImplementedBy<AttachmentTypeManager>());
+            container.Register(Component.For<IServiceManager>().ImplementedBy<ServiceManager>());
 
             //Data Harmonization Managers
             container.Register(Component.For<ISnapshotArtistRecsManager>().ImplementedBy<SnapshotArtistRecsManager>());
@@ -68,6 +69,8 @@ namespace UMPG.USL.API.Business.Installer
             container.Register(Component.For<IDataHarmonizationManager>().ImplementedBy<DataHarmonizationManager>());
             container.Register(Component.For<IRecsProductChangeLogService>().ImplementedBy<RecsProductChangeLogService>());
             container.Register(Component.For<IRecCongruencyCheckService>().ImplementedBy<RecCongruencyCheckService>());
+            container.Register(Component.For<ISnapshotManager>().ImplementedBy<SnapshotManager>());
+            
         }
     }
 }

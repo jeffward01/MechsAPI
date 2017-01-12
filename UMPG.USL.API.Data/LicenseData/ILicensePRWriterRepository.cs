@@ -15,6 +15,7 @@ namespace UMPG.USL.API.Data.LicenseData
         int GetLicenseProductRecordingLicensedWritersNo(int trackId);
         LicenseProductRecordingWriter Get(int writerId);
         List<LicenseProductRecordingWriter> GetLicenseProductRecordingWriters(int licenseRecordingId);
+        LicenseProductRecordingWriter GetByRecordingIdAndCaeNumber(int recordingId, int caeNumber, string ipCode);
 
         List<LicenseProductRecordingWriter> GetLicenseProductRecordingWritersBrief(int licenseRecordingId);
         void Update(LicenseProductRecordingWriter licenseRecordingWriter);

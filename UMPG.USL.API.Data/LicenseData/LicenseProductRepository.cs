@@ -251,6 +251,14 @@ namespace UMPG.USL.API.Data.LicenseData
             }
         }
 
+        public List<LicenseProduct> GetAllLicenseProductsForLicenseId(int licenseId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.LicenseProducts.Where(x => x.LicenseId == licenseId && !x.Deleted.HasValue).ToList();
+            }
+        }
+
 
 
         public LicenseProduct Get(int licenseProductId)

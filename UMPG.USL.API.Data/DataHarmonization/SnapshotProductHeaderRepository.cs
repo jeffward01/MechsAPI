@@ -32,6 +32,14 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
+        public Snapshot_ProductHeader GetSnapshotProductHeaderByLabelSnapshotId(int labelSnapshotId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_ProductHeaders.FirstOrDefault(_ => _.SnapshotLabelId == labelSnapshotId);
+            }
+        }
+
         public int GetSnapshotProductHeaderBySnapshotLicenseProductId(int snapshotLicenseProductId)
         {
             using (var context = new AuthContext())

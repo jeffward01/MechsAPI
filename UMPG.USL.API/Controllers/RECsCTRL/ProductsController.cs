@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Web.Http;
 using System.Web.Script.Serialization;
 using UMPG.USL.API.ActionFilters;
 using UMPG.USL.API.Business.Recs;
 using UMPG.USL.API.Business.Licenses;
+using UMPG.USL.API.ExtensionMethods;
 using UMPG.USL.Models;
 using UMPG.USL.Models.DataHarmonization;
 using UMPG.USL.Models.Recs;
@@ -56,9 +58,15 @@ namespace UMPG.USL.API.Controllers.RECsCTRL
 
         [Route("UpdateProductPriority")]
         [HttpPost]
-        public bool UpdateProductPriority(UpdatePriorityRequest request)
+        public bool UpdateProductPriority(UpdatePriorityRequest request, HttpRequestMessage headers)
         {
-            return _productManager.UpdateProductPriority(request);
+
+            var safeIdHeader = headers.GetHeaderValue("x-modified-by");
+            if (safeIdHeader == null) // add header handling
+            {
+                safeIdHeader = "";
+            }
+            return _productManager.UpdateProductPriority(request, safeIdHeader);
         }
 
         /// <summary>
@@ -91,13 +99,6 @@ namespace UMPG.USL.API.Controllers.RECsCTRL
         //    return _productManager.FindOutOfSyncRecItems(licenseId);
         //}
 
-
-        [Route("FindOutOfSyncRecItems/{licenseId}")]
-        [HttpPost]
-        public List<RecsProductChanges> FindOutOfSyncRecItems(List<LicenseProduct> products, int licenseId)
-        {
-            return _productManager.FindOutOfSyncRecItems(products, licenseId);
-        }
 
         /*
         /// <summary>
@@ -163,9 +164,14 @@ namespace UMPG.USL.API.Controllers.RECsCTRL
         /// <returns></returns>
         [Route("SaveProduct")]
         [HttpPost]
-        public AddProductResult SaveProduct(ProductHeader request)
+        public AddProductResult SaveProduct(ProductHeader request, HttpRequestMessage headers)
         {
-            return _productManager.SaveProduct(request);
+            var safeIdHeader = headers.GetHeaderValue("x-modified-by");
+            if (safeIdHeader == null) // add header handling
+            {
+                safeIdHeader = "";
+            }
+            return _productManager.SaveProduct(request, safeIdHeader);
         }
 
         /// <summary>
@@ -174,9 +180,14 @@ namespace UMPG.USL.API.Controllers.RECsCTRL
         /// <returns></returns>
         [Route("SaveProductLink")]
         [HttpPost]
-        public UpdateProductLinkResult SaveProductLink(ProductLink productLink)
+        public UpdateProductLinkResult SaveProductLink(ProductLink productLink, HttpRequestMessage headers)
         {
-            return _productManager.SaveProductLink(productLink);
+            var safeIdHeader = headers.GetHeaderValue("x-modified-by");
+            if (safeIdHeader == null) // add header handling
+            {
+                safeIdHeader = "";
+            }
+            return _productManager.SaveProductLinkWithHeader(productLink, safeIdHeader);
         }
 
         /// <summary>

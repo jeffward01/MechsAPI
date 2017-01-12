@@ -11,10 +11,17 @@ namespace UMPG.USL.API.Data.DataHarmonization
         {
             using (var context = new AuthContext())
             {
-                return context.Snapshot_Tracks.FirstOrDefault(_ => _.CloneWorksTrackId == cloneTrackId);
+                return context.Snapshot_Tracks.Include("Artist").FirstOrDefault(_ => _.CloneWorksTrackId == cloneTrackId);
             }
         }
 
+        public Snapshot_WorksTrack GetTrackBySnapshotWorksTrackId(int id)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_Tracks.FirstOrDefault(_ => _.SnapshotWorkTrackId == id);
+            }
+        }
 
         public Snapshot_WorksTrack SaveWorksTrack(Snapshot_WorksTrack worksTrack)
         {

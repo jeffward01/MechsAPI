@@ -5,12 +5,14 @@ using System.Dynamic;
 using System.Linq;
 using UMPG.USL.API.Business.DataHarmonization;
 using UMPG.USL.API.Business.Licenses;
+using UMPG.USL.API.Data.DataHarmonization;
 using UMPG.USL.API.Data.LicenseData;
 using UMPG.USL.API.Data.Recs;
 using UMPG.USL.Models;
 using UMPG.USL.Models.DataHarmonization;
 using UMPG.USL.Models.LicenseModel;
 using UMPG.USL.Models.Recs;
+using UMPG.USL.Models.Security;
 
 namespace UMPG.USL.API.Business.Recs
 {
@@ -23,13 +25,26 @@ namespace UMPG.USL.API.Business.Recs
         private readonly ILicenseProductManager _licenseProductManager;
         private readonly ISnapshotLicenseManager _snapshotLicenseManager;
         private readonly IRecCongruencyCheckService _recsProductChangeLogService;
+        private readonly ILicensePRWriterRepository _licensePrWriterRepository;
+        private readonly ISnapshotWorkTrackRepository _snapshotWorkTrackRepository;
+        private readonly ISnapshotLicenseProductManager _snapshotLicenseProductManager;
+        
+
         public ProductManager(ISearchProvider recSearchProvider, IRecsDataProvider recsProvider,
+        
+            ILicensePRWriterRepository licensePrWriterRepository,
+            ISnapshotLicenseProductManager snapshotLicenseProductManager,
              IRecCongruencyCheckService recsProductChangeLogService,
             ILicenseProductRecordingRepository licenseProductRecordingRepository,
             ILicenseProductRepository licenseProductRepository, ILicenseProductManager licenseProductManager,
-             ISnapshotLicenseManager snapshotLicenseManager
-        ) //, IRecordingWorkLinkRepository recordingWorkLinkRepository
+             ISnapshotLicenseManager snapshotLicenseManager,
+             ISnapshotWorkTrackRepository snapshotWorkTrackRepository
+        )
         {
+            
+            _snapshotLicenseProductManager = snapshotLicenseProductManager;
+            _snapshotWorkTrackRepository = snapshotWorkTrackRepository;
+            _licensePrWriterRepository = licensePrWriterRepository;
             _recsProductChangeLogService = recsProductChangeLogService;
             _snapshotLicenseManager = snapshotLicenseManager;
             _licenseProductManager = licenseProductManager;
@@ -66,9 +81,9 @@ namespace UMPG.USL.API.Business.Recs
             return product;
         }
 
-        public bool UpdateProductPriority(UpdatePriorityRequest request)
+        public bool UpdateProductPriority(UpdatePriorityRequest request, string safeIdHeader)
         {
-            return _recsProvider.UpdateProductPriority(request);
+            return _recsProvider.UpdateProductPriority(request, safeIdHeader);
         }
 
         /// <summary>
@@ -81,6 +96,41 @@ namespace UMPG.USL.API.Business.Recs
             var recs_recordings = _recsProvider.RetrieveProductRecordings(productId);
 
             // Now populate the UMPG % from adding the sum from call to composers work and adding up contributions on controlled writers.
+            //This populates each recording with more data.  turned off
+            foreach (var recording in recs_recordings)
+            {
+                if (recording.Track != null)
+                {
+                    var trackId = recording.Track.Id;
+                    if (recording.Track.Copyrights != null)
+                    {
+                        var workCode = recording.Track.Copyrights[0].WorkCode;
+                        recording.LicenseRecording =
+                            _licenseProductRecordingRepository.GetLicenseRecordingsByRecsTrackId(trackId);
+                        if (recording.LicenseRecording != null)
+                        {
+                            var recordingId = recording.LicenseRecording.LicenseRecordingId;
+                            recording.Writers = GetWorksWriters(workCode);
+                            if (recording.Writers != null)
+                            {
+                                foreach (var writer in recording.Writers)
+                                {
+                                    writer.LicenseProductRecordingWriter =
+                                        _licensePrWriterRepository.GetByRecordingIdAndCaeNumber(recordingId,
+                                            writer.CaeNumber,
+                                            writer.IpCode);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        recording.LicenseRecording =
+                          _licenseProductRecordingRepository.GetLicenseRecordingsByRecsTrackId(trackId);
+
+                    }
+                }
+            }
 
             foreach (var track in recs_recordings)
             {
@@ -149,7 +199,7 @@ namespace UMPG.USL.API.Business.Recs
             return _recsProvider.RetrieveLabels();
         }
 
-        public AddProductResult SaveProduct(ProductHeader request)
+        public AddProductResult SaveProduct(ProductHeader request, string header)
         {
             var addProductResult = new AddProductResult();
             addProductResult.success = false;
@@ -232,7 +282,7 @@ namespace UMPG.USL.API.Business.Recs
                     product.databaseVersion = request.DatabaseVersion;
                 }
 
-                HttpWebResponseWithStream response = _recsProvider.AddProduct(product);
+                HttpWebResponseWithStream response = _recsProvider.AddProductWithHeader(product, header);
                 //cast response stream based on status code
                 if (response.statusCode == System.Net.HttpStatusCode.OK)
                 {
@@ -364,7 +414,7 @@ namespace UMPG.USL.API.Business.Recs
             return _recsProvider.RetrieveTrack(request.trackId, request.callerInfo);
         }
 
-        public UpdateProductLinkResult SaveProductLink(ProductLink productLink)
+        public UpdateProductLinkResult SaveProductLinkWithHeader(ProductLink productLink, string header)
         {
             var updateProductLinkResult = new UpdateProductLinkResult();
             updateProductLinkResult.success = false;
@@ -404,7 +454,7 @@ namespace UMPG.USL.API.Business.Recs
 
             try
             {
-                HttpWebResponseWithStream response = _recsProvider.SaveProductLink(productLink);
+                var response = _recsProvider.SaveProductLinkWithHeader(productLink, header);
 
                 //cast response stream based on status code
                 if (response.statusCode == System.Net.HttpStatusCode.OK)
@@ -447,7 +497,7 @@ namespace UMPG.USL.API.Business.Recs
 
             try
             {
-                HttpWebResponseWithStream response = _recsProvider.RemoveProductLink(productLink);
+                var response = _recsProvider.RemoveProductLink(productLink);
 
                 //cast response stream based on status code
                 if (response.statusCode == System.Net.HttpStatusCode.OK)
@@ -509,54 +559,474 @@ namespace UMPG.USL.API.Business.Recs
         }
 
         //this compares the MechsLicenseData with the RecsLicenseProductData.  If there are inconsistencies, log them, then return them.
-        public List<RecsProductChanges> FindOutOfSyncRecItems(List<LicenseProduct> mechsLicenseProducts, int licenseId)
+        public List<RecsProductChanges> FindOutOfSyncRecItems(List<LicenseProduct> recsLicenseProducts, int licenseId)
         {
+//          recsLicenseProducts = TestWorksModifiedData(recsLicenseProducts);
             //MechsLicenseProducts === From Recs, displayted on licenseDetails and ProductDetail page
-            var exists = _snapshotLicenseManager.DoesSnapshotExists(licenseId);
+            var exists = _snapshotLicenseManager.DoesSnapshotExistAndComplete(licenseId);
             if (!exists)
             {
-                return new List<RecsProductChanges>();
+                return GetTrackDifferences(recsLicenseProducts, licenseId);
             }
             //snapshot product === our snapshot
             var snapshotLicense = _snapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(licenseId);
-            /*
-            var mechsProductIds = mechsLicenseProducts.Select(x => x.ProductId).ToList();
-            var recsLicenseProducts = new List<RecsLicenseProduct>();
 
-            //Get RecsLicenseProduct for each productId
-            foreach (var productId in mechsProductIds)
-            {
-                var result = BuildRecsLicenseProduct(productId);
-                recsLicenseProducts.Add(result);
-            }
-            */
+            // var mechsProductIds = mechsLicenseProducts.Select(x => x.ProductId).ToList();
+            // var recsLicenseProducts = new List<RecsLicenseProduct>();
+            //
+            // //Get RecsLicenseProduct for each productId
+            // foreach (var productId in mechsProductIds)
+            // {
+            //     var result = BuildRecsLicenseProduct(productId);
+            //     recsLicenseProducts.Add(result);
+            // }
+
             //do logic on recdsLicenseProducts againse mehcs
-            // old recsCongruenceyCheckmethod: var recsDifferences = RecsCongruencyCheck(mechsLicenseProducts, snapshotLicense.LicenseProducts);
-            var recsDifferences = CheckSnapshotAgainstRecs(mechsLicenseProducts, snapshotLicense.LicenseProducts);
+            var recsDifferences = _recsProductChangeLogService.CheckSnapshotAgainstRecs(recsLicenseProducts, snapshotLicense.LicenseProducts);
+            recsDifferences.AddRange(GetTrackDifferences(recsLicenseProducts, licenseId));  //Turned off, adds track check to E,A or I licenses
             return recsDifferences;
         }
 
-
-
-        public List<RecsProductChanges> CheckSnapshotAgainstRecs(List<LicenseProduct> mechsLicenseProducts,
-            List<Snapshot_LicenseProduct> licenseProductSnapshots)
+        private List<LicenseProduct> TestWorksModifiedData(List<LicenseProduct> recsLicenseProducts)
         {
-            //Start code_____________
+            foreach (var lp in recsLicenseProducts)
+            {
+                foreach (var recording in lp.Recordings)
+                {
+                    if (recording.TrackId == 246307)
+                    {
+                        //Test writer controlled staus changed
+                        var writer = recording.Writers[0];
+                        writer.Contribution = 99;
+                        writer.Controlled = false;
+                        writer.FullName = "TEST teST";
+                     recording.Writers[0] = writer;
+               
+               
+                       //Test Add writer
+                       var writer2 = new WorksWriter
+                       {
+                           CaeNumber = 123456789,
+                           Contribution = 50,
+                           IpCode = "000234564",
+                           FullName = "Jeff Ward",
+                           CapacityCode = "CA",
+                           Capacity = "Composer & Author",
+                           MechanicalCollectablePercentage = 50,
+                           MechanicalOwnershipPercentage = 75,
+                           Controlled = true
+                       };
+                       recording.Writers.Add(writer2);
+               //
+               //
+               //
+                       //Test Remove writer
+                       var writerToRemove = recording.Writers[1];
+                      recording.Writers.Remove(writerToRemove);
+                        #region testData
+                        // //Test original Publisher Changes
+                           var op = writer.OriginalPublishers[0];
+                            op.MechanicalOwnershipPercentage = 89;
+                            op.MechanicalCollectablePercentage = 99;
+                        op.Capacity = "Changed";
+                        op.CapacityCode = "Also changed";
+                            op.Controlled = !op.Controlled;
+                            op.CaeNumber = 988899;
+                            writer.OriginalPublishers[0] = op;
+                            
+                            
+                              //Test Add new Original Publisher
+                              var opToAdd = new OriginalPublisher
+                              {
+                                  CaeNumber = 88888888,
+                                  IpCode = "987654321",
+                                  FullName = "Awesome OP",
+                                  Capacity = "Original Publisher",
+                                  CapacityCode = "E",
+                                  MechanicalCollectablePercentage = 88,
+                                  MechanicalOwnershipPercentage = 74,
+                                  Controlled = true
+                              };
+                            
+                              writer.OriginalPublishers.Add(opToAdd);
+                            
+                            
+                            //Test remove OP
+                            writer.OriginalPublishers.Remove(op);
+
+                      //Test affiliation on OP
+                     
+                      var affBase = op.Affiliation[0].Affiliations[0];
+                      affBase.EndDate = DateTime.Today.AddDays(1);
+                       affBase.SocietyAcronym = "XYZ";
+
+                      op.Affiliation[0].Affiliations[0] = affBase;
+                     
+
+
+                          //Test Copyrights
+                          var copyRightToModify = recording.Track.Copyrights[0];
+                          copyRightToModify.MechanicalCollectablePercentage = 50;
+                          copyRightToModify.MechanicalOwnershipPercentage = 50;
+                          recording.Track.Copyrights[0] = copyRightToModify;
+                        
+                        #endregion
+                    }
+                }
+            }
+            return recsLicenseProducts;
+        }
+
+        public List<RecsProductChanges> GetTrackDifferences(List<LicenseProduct> recsLicenseProducts, int licenseId)
+        {
             var listOfChanges = new List<RecsProductChanges>();
+            IList<ProductTracks> listOfRecsProductTracks = new List<ProductTracks>();
+            //Get all tracks from licenseProducts.
+            //      var listOfProductsAndTracks = GetAllTrackIds(recsLicenseProducts, licenseId);  //Original, turned Off
+            foreach (var licenseProduct in recsLicenseProducts)
+            {
+                listOfRecsProductTracks.Add(new ProductTracks
+                {
+                    TrackIds = _recsProvider.RetrieveTracks(licenseProduct.ProductId).Select(_ => _.Track.Id).ToList(),
+                    ProductId = licenseProduct.ProductId,
+                    LicenseId = licenseProduct.LicenseId,
+                    LicenseProductId = licenseProduct.LicenseProductId
+                });
+            }
 
-            //check for product changes
-            listOfChanges.AddRange(_recsProductChangeLogService.CheckForLicenseProductChanges(mechsLicenseProducts, licenseProductSnapshots));
+            //Get Tracks that were originally on the license that may of been removed
+            var listOfMechsProductsAndTracks = GetOriginalMechsTracks(licenseId);
 
+            //Find differences
 
+            //Find if tracks were removed from recs
+            //listOfChanges.AddRange(FindTracksRemovedFromRecs(listOfProductsAndTracks, listOfMechsProductsAndTracks)); //Original, turned Off
+            listOfChanges.AddRange(FindTracksRemovedFromRecs(listOfRecsProductTracks, listOfMechsProductsAndTracks));
 
-            
-
-
+            //Find if tracks were added to recs
+            //listOfChanges.AddRange(FindTracksAddedToRecs(listOfProductsAndTracks,listOfMechsProductsAndTracks)); //Original, turned Off
+            listOfChanges.AddRange(FindTracksAddedToRecs(listOfRecsProductTracks, listOfMechsProductsAndTracks));
 
             return listOfChanges;
         }
 
+        private List<RecsProductChanges> FindTracksAddedToRecs(IList<ProductTracks> recsTracks,
+            IList<ProductTracks> originalMechsTracks)
+        {
+            var listOfChanges = new List<RecsProductChanges>();
+            for (var i = 0; i < recsTracks.Count; i++)
+            {
+                var firstRecsProduct = recsTracks[i];
 
-       
+                firstRecsProduct.TrackIds = GetTrackIdsFromRecs(firstRecsProduct.ProductId);
+
+                var firstOriginalMechsProduct = originalMechsTracks[i];
+
+                var recsTrackIds = firstRecsProduct.TrackIds.Except(firstOriginalMechsProduct.TrackIds).ToList();
+                var product = GetProductHeader(firstRecsProduct.ProductId);
+
+                foreach (var trackId in recsTrackIds)
+                {
+                    var track = _recsProvider.RetrieveTrack(trackId, GetCallerInfo());
+                    if (track == null)
+                    {
+                        track = GetTrackFromRecs(trackId, firstOriginalMechsProduct.ProductId);
+                    }
+                        if (track != null && track.Result != null)
+                    {
+                        var newChanges = new RecsProductChanges
+                        {
+                            PropertyLocation = "Track \"" + track.Result.Title + "\" added to Recs",
+
+                            PropertyChanged = "Track \"" + track.Result.Title + "\" added to Recs",
+                            ChangedValue = "\"" + track.Result.Title + "\"" + " By Artist: " + track.Result.Artist.name,
+                            OriginalValue = "N/A"
+                        };
+                        if (track.Result.Isrc != null && track.Result != null)
+                        {
+                            if (track.Result.Isrc.Trim() != "" && track.Result.Isrc.Trim().Length > 3)
+                            {
+                                newChanges.ChangeMessage = "Track: \"" + track.Result.Title + "\" isrc:(" +
+                                                           track.Result.Isrc + ") added to Recs on product \"" +
+                                                           product.Title + "\"";
+                            }
+                        }
+                        else
+                        {
+                            newChanges.ChangeMessage = "Track: \"" + track.Result.Title + "\" added to Recs on product \"" +
+                                                       product.Title + "\"";
+                        }
+
+                        listOfChanges.Add(newChanges);
+                    }
+                    else
+                    {
+                        var newChanges = new RecsProductChanges
+                        {
+                            PropertyLocation = "Track Id\"" + trackId + "\" added to Recs",
+                            ChangeMessage = "Track: \"" + trackId + "\" added to Recs. (Track Information could not be located in Recs) on product \"" + product.Title + "\"",
+                            PropertyChanged = "Track \"" + trackId + "\" added to Recs",
+                            OriginalValue = "N/A",
+                            ChangedValue = "Added to Recs"
+                        };
+                        listOfChanges.Add(newChanges);
+                    }
+                }
+
+                //Run this if a track has been added or removed from a product
+                if (firstRecsProduct.TrackIds.Count != firstOriginalMechsProduct.TrackIds.Count)
+                {
+                    //Turned off
+                    // listOfChanges.Add(GetTrackCountChanges(firstRecsProduct, firstOriginalMechsProduct));
+                }
+            }
+
+            return listOfChanges;
+        }
+
+        private RecsProductChanges GetTrackCountChanges(ProductTracks recsTracks,
+            ProductTracks originalMechsTracks)
+        {
+            var newChanges = new RecsProductChanges
+            {
+                PropertyLocation = "Track count on licenseId: " + recsTracks.LicenseId + " changed from " + recsTracks.OriginalTrackCountOnMechsLicense + " to " + originalMechsTracks.TrackIds.Count,
+                ChangeMessage = "Original License had " + recsTracks.OriginalTrackCountOnMechsLicense + " tracks.  Now mechs has: " + originalMechsTracks.TrackIds.Count + " and recs has " + recsTracks.TrackIds.Count,
+                PropertyChanged = "Track count has changed",
+                OriginalValue = "Mechs Original Track Count: " + recsTracks.OriginalTrackCountOnMechsLicense,
+                ChangedValue = "New track count on mechs: " + originalMechsTracks.TrackIds.Count + " -- " + recsTracks.TrackIds.Count
+            };
+            return newChanges;
+        }
+
+        private List<int> GetTrackIdsFromRecs(int productId)
+        {
+            var listOfIds = new List<int>();
+            var result = _recsProvider.RetrieveTracks(productId);
+            foreach (var track in result)
+            {
+                listOfIds.Add(track.Track.Id);
+            }
+            return listOfIds;
+        }
+
+        private List<RecsProductChanges> FindTracksRemovedFromRecs(IList<ProductTracks> recsTracks,
+            IList<ProductTracks> originalMechsTracks)
+        {
+        
+            var listOfChanges = new List<RecsProductChanges>();
+            for (var i = 0; i < recsTracks.Count; i++)
+            {
+                var firstRecsProduct = recsTracks[i];
+                var firstOriginalMechsProduct = originalMechsTracks[i];
+                var product = GetProductHeader(firstRecsProduct.ProductId);
+                var recsTrackIds = firstOriginalMechsProduct.TrackIds.Except(firstRecsProduct.TrackIds).ToList();
+
+                foreach (var trackId in recsTrackIds)
+                {
+                    bool added = false;
+                    var track = new SingleResult<Track>();
+                    var newResult = new SingleResult<Track>();
+                    track.Result = new Track();
+                     track = _recsProvider.RetrieveTrack(trackId, GetCallerInfo());
+                    if (track == null)
+                    {
+                        var result = _snapshotWorkTrackRepository.GetTrackForCloneTrackId(trackId);
+
+
+                        if (result != null)
+                        {
+                            
+                            
+
+                                var newArtist = new ArtistRecs
+                                {
+                                    name = result.Artist.Name
+                                };
+
+                                var newTrack = new Track
+                                {
+                                    Title = result.Title,
+                                    Artist = newArtist
+
+                                };
+                            newResult.Result = newTrack;
+
+                            if (newResult.Result != null)
+                            {
+                     //           var product =
+                     //_snapshotLicenseProductManager.GetProductForTrackId(firstSnapshotRecording.SnapshotWorkTrackId);
+
+                                var newChanges = new RecsProductChanges
+                                {
+                                    PropertyLocation = "Track \"" + newResult.Result.Title + "\" removed from Recs",
+                                    ChangeMessage = "Track: \"" + newResult.Result.Title + "\" removed from Recs on product \"" + product.Title+"\"",
+                                    PropertyChanged = "Track \"" + newResult.Result.Title + "\" removed from Recs",
+                                    OriginalValue =
+                                        "\"" + newResult.Result.Title + "\" By Artist: " + newResult.Result.Artist.name,
+                                };
+                                added = true;
+                                listOfChanges.Add(newChanges);
+                            }
+                        }
+                        
+                    }
+                  
+                    if (track != null && track.Result != null)
+                    {
+                        var newChanges = new RecsProductChanges
+                        {
+                            PropertyLocation = "Track \"" + track.Result.Title + "\" removed from Recs",
+                            ChangeMessage = "Track: \"" + track.Result.Title + "\" removed from Recs on product \"" + product.Title + "\"",
+                            
+                            PropertyChanged = "Track \"" + track.Result.Title + "\" removed from Recs",
+                            OriginalValue = "\"" + track.Result.Title + "\" By Artist: " + track.Result.Artist.name,
+                        };
+                        listOfChanges.Add(newChanges);
+                    } 
+                    else
+                    {
+                        if (!added)
+                        {
+                            var newChanges = new RecsProductChanges
+                            {
+                                PropertyLocation = "Track \"" + trackId + "\" removed from Recs",
+                                ChangeMessage =
+                                    "Track: \"" + trackId + "\" removed from Recs (Could not be located in Recs) on product " + product.Title,
+                            
+                                PropertyChanged = "Track \"" + trackId + "\" removed from Recs",
+                                OriginalValue =
+                                    "Track: \"" + trackId + "\" removed from Recs (Could not be located in Recs)",
+                            };
+                            listOfChanges.Add(newChanges);
+                        }
+                    }
+                }
+            }
+            return listOfChanges;
+        }
+
+        /* To be Implemented
+        private RecsProductChanges CheckForAddedOrRemovedProducts(List<ProductTracks> recsTracks,
+            List<ProductTracks> originalMechsTracks)
+        {
+            if (originalMechsTracks.Count == originalMechsTracks.Count)
+            {
+                return null;
+                return null;
+            }
+            else
+            {
+                if (originalMechsTracks[0].ProductId != recsTracks[0].ProductId)
+                {
+                }
+            }
+        }
+        */
+
+        private SingleResult<Track> GetTrackFromRecs(int trackId, int productId)
+        {
+            var worksRecording = _recsProvider.RetrieveTracks(productId).FirstOrDefault(_ => _.Track.Id == trackId);
+            if(worksRecording != null)
+            {
+
+                var track = new Track
+                {
+                    Title = worksRecording.Track.Title,
+                    Id = worksRecording.Track.Id,
+                    Artist = worksRecording.Track.Artists
+                };
+                var singleTrack = new SingleResult<Track>
+                {
+                    Result = track
+                };
+         
+                return singleTrack;
+            }
+            else
+            {
+                return new SingleResult<Track>();
+            }
+        }
+
+        private IList<ProductTracks> GetAllTrackIds(List<LicenseProduct> recsLicenseProducts, int licenseId)
+        {
+            var productsAndTrackList = new List<ProductTracks>();
+            foreach (var lp in recsLicenseProducts)
+            {
+                var productTracks = new ProductTracks
+                {
+                    OriginalTrackCountOnMechsLicense = lp.LicensePRecordingsNo,
+                    LicenseId = licenseId,
+                    ProductId = lp.ProductId,
+                    LicenseProductId = lp.LicenseProductId,
+                    TrackIds = ExtractTrackIds(lp)
+                };
+                productsAndTrackList.Add(productTracks);
+            }
+            return productsAndTrackList;
+        }
+
+        private List<int> ExtractTrackIds(LicenseProduct licenseProduct)
+        {
+            var listOfIds = new List<int>();
+            foreach (var recording in licenseProduct.Recordings)
+            {
+                listOfIds.Add(recording.Track.Id);
+            }
+            return listOfIds;
+        }
+
+        private List<int> ExtractTrackMechsIds(LicenseProduct licenseProduct)
+        {
+            var listOfIds = new List<int>();
+            foreach (var recording in licenseProduct.LicenseProductRecordings)
+            {
+                listOfIds.Add(recording.TrackId);
+            }
+            return listOfIds;
+        }
+
+        private IList<ProductTracks> GetOriginalMechsTracks(int licenseId)
+        {
+            var licenseProducts = GetLicenseProductsFromDataBase(licenseId);
+
+            var productsAndTracks = new List<ProductTracks>();
+            foreach (var lp in licenseProducts)
+            {
+                var productTrackInformation = new ProductTracks
+                {
+                    ProductId = lp.ProductId,
+                    LicenseId = lp.LicenseId,
+                    LicenseProductId = lp.LicenseProductId,
+                    TrackIds = ExtractTrackMechsIds(lp)
+                };
+                productsAndTracks.Add(productTrackInformation);
+            }
+            return productsAndTracks;
+        }
+
+        private IList<LicenseProduct> GetLicenseProductsFromDataBase(int licenseId)
+
+        {
+            var licenseProducts = _licenseProductRepository.GetAllLicenseProductsForLicenseId(licenseId);
+            foreach (var licenseProduct in licenseProducts)
+            {
+                licenseProduct.LicenseProductRecordings =
+                    _licenseProductRecordingRepository.GetLicenseRecordingsByLicenseProductId(
+                        licenseProduct.LicenseProductId);
+            }
+            return licenseProducts;
+        }
+
+        private CallerInfo GetCallerInfo()
+        {
+            var callerinfo = new CallerInfo
+            {
+                ContactId = 67,
+                SafeUserId = "53a18b03426600241eb125d1",
+                SiteLocationCode = "US2"
+            };
+            return callerinfo;
+        }
     }
 }

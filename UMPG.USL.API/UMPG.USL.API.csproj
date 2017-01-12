@@ -166,6 +166,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DataHarmonizationController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="ExtensionMethods\HttpRequestMessageExtensions.cs" />
     <Compile Include="Logging\NLogExceptionLogger.cs" />
     <Content Include="methods.html" />
     <Content Include="Web.config">
@@ -228,6 +231,7 @@
     <Content Include="NLog.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="app.manifest" />
     <None Include="Properties\PublishProfiles\DEPLOY_USL_API.pubxml" />
     <None Include="Properties\PublishProfiles\ngAuthenticationAPI.pubxml">
       <SubType>Designer</SubType>
@@ -269,6 +273,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

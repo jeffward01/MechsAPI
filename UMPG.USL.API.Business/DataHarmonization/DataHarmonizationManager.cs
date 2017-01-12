@@ -13,123 +13,57 @@ namespace UMPG.USL.API.Business.DataHarmonization
 {
     public class DataHarmonizationManager : IDataHarmonizationManager
     {
-        private readonly ISnapshotLicenseManager _snapshotLicenseManager;
-        
-        private readonly ISnapshotLicenseProductManager _snapshotLicenseProductManager;
+        private readonly ISnapshotManager _snapshotManager;
+
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public DataHarmonizationManager(ISnapshotLicenseManager snapshotLicenseManager,
-            
-            ISnapshotLicenseProductManager snapshotLicenseProductManager)
+        public DataHarmonizationManager(ISnapshotManager snapshotManager)
         {
-            _snapshotLicenseProductManager = snapshotLicenseProductManager;
-            _snapshotLicenseManager = snapshotLicenseManager;
+            _snapshotManager = snapshotManager;
         }
 
         public bool DoesSnapshotExist(int licenseId)
         {
-            return _snapshotLicenseManager.DoesSnapshotExists(licenseId);
+            return _snapshotManager.DoesLicenseSnapshotExist(licenseId);
+        }
+        public bool DoesSnapshotExistAndComplete(int licenseId)
+        {
+            return _snapshotManager.DoesLicenseSnapshotExistAndComplete(licenseId);
+        }
+
+        public bool IsSnapshotInProcess(int licenseId)
+        {
+            //check if license snapshot exists
+            var result = _snapshotManager.DoesLicenseSnapshotExist(licenseId);
+            if (result)
+            {
+                //check if snapshot is not complete
+                var complete =_snapshotManager.DoesLicenseSnapshotExistAndComplete(licenseId);
+                if (!complete)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public Snapshot_License GetLicenseSnapshot(int licenseId)
         {
-            return _snapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(licenseId);
+            return _snapshotManager.GeLicenseSnapshotByLicenseId(licenseId);
         }
 
         public bool TakeLicenseSnapshot(License licenseToBeSnapshotted, List<LicenseProduct> licenseProducts)
         {
-            var newLicense = new Snapshot_License();
-            newLicense.CloneLicenseId = licenseToBeSnapshotted.LicenseId;
-
-            newLicense.LicenseNumber = licenseToBeSnapshotted.LicenseNumber;
-            newLicense.LicenseName = licenseToBeSnapshotted.LicenseName;
-
-            newLicense.LicenseStatusId = licenseToBeSnapshotted.LicenseStatusId;
-
-            newLicense.EffectiveDate = licenseToBeSnapshotted.EffectiveDate;
-
-            newLicense.SignedDate = licenseToBeSnapshotted.SignedDate;
-
-            newLicense.ReceivedDate = licenseToBeSnapshotted.ReceivedDate;
-
-            newLicense.LicenseMethodId = licenseToBeSnapshotted.LicenseMethodId;
-
-            newLicense.ManagerApprovalDate = licenseToBeSnapshotted.ManagerApprovalDate;
-
-            newLicense.CountryId = licenseToBeSnapshotted.CountryId;
-
-            newLicense.LicenseeId = licenseToBeSnapshotted.LicenseeId;
-
-            newLicense.LicenseeLabelGroupId = licenseToBeSnapshotted.LicenseeLabelGroupId;
-
-            newLicense.HFARollupLicenseId = licenseToBeSnapshotted.HFARollupLicenseId;
-
-            newLicense.AssignedToId = licenseToBeSnapshotted.AssignedToId;
-
-            newLicense.PriorityId = licenseToBeSnapshotted.PriorityId;
-
-            newLicense.LicenseTypeId = licenseToBeSnapshotted.LicenseTypeId;
-
-            newLicense.ProductsNo = licenseToBeSnapshotted.ProductsNo;
-
-            newLicense.LicenseConfigurationRollup = licenseToBeSnapshotted.LicenseConfigurationRollup;
-
-            newLicense.Label = licenseToBeSnapshotted.Label;
-
-            newLicense.ArtistRollup = licenseToBeSnapshotted.ArtistRollup;
-
-            newLicense.ProductRollup = licenseToBeSnapshotted.ProductRollup;
-
-            //  newLicense.ContactId = licenseToBeSnapshotted.ContactId;
-
-            newLicense.ClaimException = licenseToBeSnapshotted.ClaimException;
-
-            newLicense.RelatedLicenseId = licenseToBeSnapshotted.RelatedLicenseId;
-
-            newLicense.amsLegacyPath = licenseToBeSnapshotted.amsLegacyPath;
-
-            newLicense.StatusReport = licenseToBeSnapshotted.StatusReport;
-
-            newLicense.StatusesRollup = licenseToBeSnapshotted.StatusesRollup;
-
-            //Virtuals?
-
-            //Snapshot here
-            try
-            {
-                
-                _snapshotLicenseManager.SaveSnapshotLicense(newLicense);
-                //snapshot LicenseProducts
-                SaveLocalLicenseProductSnapshot(licenseProducts);
-            }
-            catch (Exception exception)
-            {
-                Logger.Debug(exception.ToString);
-                return false;
-            }
-
-            return true;
+            return _snapshotManager.TakeLicenseSnapshot(licenseToBeSnapshotted, licenseProducts);
         }
 
-        private bool SaveLocalLicenseProductSnapshot(List<LicenseProduct> localLicenseProducts)
-        {
-            foreach (var lp in localLicenseProducts)
-            {
-                if (lp != null)
-                {
-                    var lpSnapshot = CastToLicenseProductSnapshot(lp);
-                    _snapshotLicenseProductManager.SaveSnapshotLicenseProduct(lpSnapshot);
-                }
-            }
-
-            return true;
-        }
 
         public bool DeleteLicenseSnapshot(int licenseSnapshotId)
         {
-            return _snapshotLicenseManager.DeleteLicenseSnapshotAndAllChildren(licenseSnapshotId);
+            return _snapshotManager.DeleteLicenseSnapshot(licenseSnapshotId);
         }
 
+        /*
         private Snapshot_LicenseProduct CastToLicenseProductSnapshot(LicenseProduct licenseProduct)
         {
             var snapshot = new Snapshot_LicenseProduct();
@@ -146,13 +80,13 @@ namespace UMPG.USL.API.Business.DataHarmonization
             snapshot.title = licenseProduct.title;
             snapshot.PaidQuarter = licenseProduct.PaidQuarter;
             snapshot.RelatedLicensesNo = licenseProduct.RelatedLicensesNo;
-            /*
-            if (licenseProduct.ProductConfigurations != null)
-            {
-                snapshot.ProductConfigurations = CastToRecsConfigurationsSnapshot(licenseProduct.ProductConfigurations,
-                    (int)snapshot.ProductHeaderId);
-            }
-            */
+            
+          //  if (licenseProduct.ProductConfigurations != null)
+          //  {
+          //      snapshot.ProductConfigurations = CastToRecsConfigurationsSnapshot(licenseProduct.ProductConfigurations,
+          //          (int)snapshot.ProductHeaderId);
+          //  }
+          //
             snapshot.CreatedDate = licenseProduct.CreatedDate;
             snapshot.CreatedBy = licenseProduct.CreatedBy;
             snapshot.ModifiedDate = licenseProduct.ModifiedDate;
@@ -721,7 +655,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             }
             return snapshotList;
         }
-        */
+       //
         //private List<Snapshot_LicenseProductRecordingWriterRateStatus> CastToLicenseProductRecordingWriterStatus(
         //    List<LicenseProductRecordingWriterRateStatus> lprwStatuses, int licenseWriterRateId)
         //{
@@ -1059,5 +993,10 @@ namespace UMPG.USL.API.Business.DataHarmonization
             snapshot.Type = configuration.type;
             return snapshot;
         }
+
+    */
     }
 }
+
+
+//db save changes, primary key http://stackoverflow.com/questions/17523568/entity-framework-retrieve-id-before-savechanges-inside-a-transaction

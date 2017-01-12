@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UMPG.USL.Models;
 using UMPG.USL.Models.LicenseModel;
 
 namespace UMPG.USL.API.Data.LicenseData
@@ -16,8 +15,8 @@ namespace UMPG.USL.API.Data.LicenseData
 
         List<LicenseAttachment> Search(string query);
 
+        bool DoesLicenseHaveLicenseAttachments(int licenseId);
 
         void Update(LicenseAttachment licenseAttachment);
-        bool UpdateLicenseAttachment(LicenseAttachment licenseAttachment);
     }
 }

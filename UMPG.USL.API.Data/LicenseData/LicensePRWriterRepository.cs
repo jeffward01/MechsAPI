@@ -71,6 +71,16 @@ namespace UMPG.USL.API.Data.LicenseData
             }
         }
 
+        public LicenseProductRecordingWriter GetByRecordingIdAndCaeNumber(int recordingId, int caeNumber, string ipCode)
+        {
+            using (var context = new AuthContext())
+            {
+                var licensePRwriterrate = context.LicenseProductRecordingWriters
+                    .FirstOrDefault(c => c.LicenseRecordingId == recordingId && c.CAECode == caeNumber && c.IpCode == ipCode);
+                return licensePRwriterrate;
+            }
+        }
+
 
         //public List<LicenseProductRecordingWriter> GetTrackWriters(int trackId)
         //{

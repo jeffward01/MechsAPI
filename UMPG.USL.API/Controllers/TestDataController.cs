@@ -9,6 +9,7 @@ using System.Web.Http.Cors;
 using System.Web.Http.Tracing;
 using UMPG.USL.API.Business.DataHarmonization;
 using UMPG.USL.API.Business.Licenses;
+using UMPG.USL.API.ExtensionMethods;
 using UMPG.USL.Models;
 
 namespace UMPG.USL.API.Controllers
@@ -58,18 +59,15 @@ namespace UMPG.USL.API.Controllers
             //throw new ArgumentOutOfRangeException();
         }
 
+
+        [Route("header")]
         [HttpGet]
-        [Route("GetLicenseSnapshot/{licenseId}")]
-        public IHttpActionResult GetLicenseSnapshot(int licenseId)
+        public string Header(HttpRequestMessage headers)
         {
-            var exists = _dataHarmonizationManager.DoesSnapshotExist(licenseId);
-            if (exists)
-            {
-                return Ok(_dataHarmonizationManager.GetLicenseSnapshot(licenseId));
-                
-            }
-            return NotFound();
+            return headers.GetHeaderValue("x-modified-by");
+
         }
+
     }
     #region Helpers
 
