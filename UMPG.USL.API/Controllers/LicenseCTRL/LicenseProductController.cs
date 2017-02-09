@@ -374,5 +374,11 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             return _licenseProductManager.EditPaidQuarter(request);
         }
 
+        [Route("GetLicenseProductRecordingWriter/{licenseRecordingId}/{caeNumber}/{writerIpCode}")]
+        [HttpGet]
+        public LicenseProductRecordingWriter GetLicenseProductRecordingWriter(int licenseRecordingId, int caeNumber, string writerIpCode)
+        {
+            return _licenseProductManager.GetLicenseProductRecordingWriter(licenseRecordingId,caeNumber, writerIpCode);
+        }
     }
 }

@@ -38,7 +38,24 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
-
+        public bool DeleteWorkRecordingByRecordignSnapshotId(int recordingSnapshotIdea)
+        {
+            using (var context = new AuthContext())
+            {
+                var recording = context.Snapshot_RecsConfigurations.Find(recordingSnapshotIdea);
+                context.Snapshot_RecsConfigurations.Attach(recording);
+                context.Snapshot_RecsConfigurations.Remove(recording);
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         public bool DoesRecConfigurationrecordignsExistForProductHeaderSnapshotId(int productHeaderSnapshotId)
         {
             using (var context = new AuthContext())
@@ -78,20 +95,47 @@ namespace UMPG.USL.API.Data.DataHarmonization
 
 
                     .Where(_ => _.SnapshotProductHeaderId == productHeaderId)
-                    .Include("Configuration").ToList();
-                       //   .Include("LicenseProductConfiguration").ToList();
+                    .Include("Configuration")
+                          .Include("LicenseProductConfiguration").ToList();
 
               
                 return recConfig;
             }
         }
 
-
-        public bool DeleteWorkRecordingByRecordignSnapshotId(int recordingSnapshotIdea)
+        public List<Snapshot_RecsConfiguration> GetAllRecsConfigurationsRecordingsForProductHeaderIdLite(int productHeaderId)
         {
             using (var context = new AuthContext())
             {
-                var recording = context.Snapshot_RecsConfigurations.Find(recordingSnapshotIdea);
+                var recConfig = context.Snapshot_RecsConfigurations
+
+
+
+                    .Where(_ => _.SnapshotProductHeaderId == productHeaderId)
+                    .Include("Configuration")
+                         .ToList();
+
+
+                return recConfig;
+            }
+        }
+
+        public Snapshot_RecsConfiguration UpdateSnapshotRecsConfiguration(Snapshot_RecsConfiguration snapshotRecsConfiguration)
+        {
+            using (var context = new AuthContext())
+            {
+                context.Entry(snapshotRecsConfiguration).State = (EntityState)System.Data.EntityState.Modified;
+                context.SaveChanges();
+                return snapshotRecsConfiguration;
+            }
+        }
+
+
+        public bool DeleteRecsConfigurationByRecsConfigSnapshotId(int recsConfigSnapshotId)
+        {
+            using (var context = new AuthContext())
+            {
+                var recording = context.Snapshot_RecsConfigurations.Find(recsConfigSnapshotId);
                 context.Snapshot_RecsConfigurations.Attach(recording);
                 context.Snapshot_RecsConfigurations.Remove(recording);
                 try

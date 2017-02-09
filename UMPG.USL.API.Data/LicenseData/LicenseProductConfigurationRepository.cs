@@ -27,7 +27,14 @@ namespace UMPG.USL.API.Data.LicenseData
         {
             using (var context = new AuthContext())
             {
-                return context.LicenseProductConfigurations.Where(x => x.LicenseProductId == licenseproductId && x.LicenseProductConfigurationId == product_configuration_id && !x.Deleted.HasValue).FirstOrDefault();
+                return context.LicenseProductConfigurations.FirstOrDefault(x => x.LicenseProductId == licenseproductId && x.product_configuration_id == product_configuration_id && x.Deleted == null);
+            }
+        }
+        public LicenseProductConfiguration GetLicenseProductConfigurationBLicenseProductConfigurationId(int product_configuration_id)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.LicenseProductConfigurations.FirstOrDefault(x => x.LicenseProductConfigurationId == product_configuration_id && x.Deleted == null);
             }
         }
 
@@ -59,7 +66,9 @@ namespace UMPG.USL.API.Data.LicenseData
         {
             using (var context = new AuthContext())
             {
-                return context.LicenseProductConfigurations.Where(x => x.LicenseProductConfigurationId == licenseProductConfigurationId && !x.Deleted.HasValue).FirstOrDefault();
+                return
+                    context.LicenseProductConfigurations.FirstOrDefault(
+                        x => x.LicenseProductConfigurationId == licenseProductConfigurationId && x.Deleted == null);
             }
         }
 

@@ -343,8 +343,9 @@ namespace UMPG.USL.API.Data
             modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.OriginalPublishers).WithOptional().HasForeignKey(_ => _.SnapshotWorksWriterId);
             modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.Affiliation).WithOptional().HasForeignKey(_ => _.WriterCaeNumber);
             modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.KnownAs).WithOptional().HasForeignKey(_ => _.CloneWriterCaeCode);
+           // modelBuilder.Entity<Snapshot_WorksWriter>().HasMany(_ => _.WriterNotes).WithOptional().HasForeignKey(_ => _.LicenseWriterId);
             modelBuilder.Entity<Snapshot_WorksWriter>().Ignore(_ => _.AffiliationsString);
-            // modelBuilder.Entity<Snapshot_WorksWriter>().HasRequired(_ => _.LicenseProductRecordingWriter).WithMany().HasForeignKey(_ => _.CloneCaeNumber); //? is thios correct?   || temp off
+           modelBuilder.Entity<Snapshot_WorksWriter>().HasRequired(_ => _.LicenseProductRecordingWriter).WithMany().HasForeignKey(_ => _.CloneCaeNumber); //? is thios correct?   || temp off
 
             modelBuilder.Entity<Snapshot_OriginalPublisher>().ToTable("Snapshot_OriginalPublisher");
             modelBuilder.Entity<Snapshot_OriginalPublisher>().HasKey(_ => _.SnapshotOriginalPublisherId);

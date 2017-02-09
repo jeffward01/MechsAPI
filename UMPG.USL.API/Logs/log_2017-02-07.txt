@@ -1,0 +1,1181 @@
+2017-02-07 10:26:52.3063|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 10:26:52 AM 
+
+System.Net.WebException: The remote server returned an error: (500) Internal Server Error.
+   at System.Net.HttpWebRequest.GetResponse()
+   at UMPG.USL.Common.Transport.HttpWebRequestExtensions.Send(HttpWebRequest request) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\HttpWebRequestExtensions.cs:line 120
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.Get[T](String url) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 22
+   at UMPG.USL.API.Data.Recs.Recs.RetrieveTracks(Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\Recs\Recs.cs:line 81
+   at UMPG.USL.API.Data.Recs.RecsDataProvider.RetrieveTracks(Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\Recs\RecsDataProvider.cs:line 83
+   at UMPG.USL.API.Business.Recs.ProductManager.GetTrackDifferences(List`1 recsLicenseProducts, Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Recs\ProductManager.cs:line 749
+   at UMPG.USL.API.Business.Recs.ProductManager.FindOutOfSyncRecItems(List`1 recsLicenseProducts, Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Recs\ProductManager.cs:line 640
+   at Castle.Proxies.Invocations.IProductManager_FindOutOfSyncRecItems.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 25
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.IProductManagerProxy.FindOutOfSyncRecItems(List`1 licenseProducts, Int32 licenseId)
+   at UMPG.USL.API.Controllers.DataHarmonizationController.FindOutOfSyncRecItems(List`1 products, Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\DataHarmonizationController.cs:line 84
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: f10c8c9c-ddcb-4e11-980f-8b3dde21b8f6
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/dataHarmonCTRL/methods/FindOutOfSyncRecItems/28750, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+POST http://spa.service/api/dataHarmonCTRL/methods/FindOutOfSyncRecItems/28750 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 10:37:03.9013|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 10:37:03 AM 
+
+System.ArgumentException: An item with the same key has already been added.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.createMethodsCacheKey() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 652
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.ClearCache() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 77
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 26
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.GetCatalogNumber(Int32 productConfigId)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.GetCatalogNumber(Int32 productConfigId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 46
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: 3ae7454c-f36f-43e4-93f7-76dd2629a3d9
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/58490, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/58490 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 10:37:04.1213|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 10:37:04 AM 
+
+System.ArgumentException: An item with the same key has already been added.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.createMethodsCacheKey() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 649
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.ClearCache() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 77
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 26
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.GetCatalogNumber(Int32 productConfigId)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.GetCatalogNumber(Int32 productConfigId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 46
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: 3ae7454c-f36f-43e4-93f7-76dd2629a3d9
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/58467, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/58467 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 10:38:49.8123|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 10:38:49 AM 
+
+System.Net.WebException: The remote server returned an error: (500) Internal Server Error.
+   at System.Net.HttpWebRequest.GetResponse()
+   at UMPG.USL.Common.Transport.HttpWebRequestExtensions.Send(HttpWebRequest request) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\HttpWebRequestExtensions.cs:line 120
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.Get[T](String url) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 22
+   at UMPG.USL.API.Data.Recs.Recs.RetrieveTracksWithWriters(Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\Recs\Recs.cs:line 73
+   at UMPG.USL.API.Data.Recs.RecsDataProvider.RetrieveTracksWithWriters(Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\Recs\RecsDataProvider.cs:line 149
+   at UMPG.USL.API.Business.Licenses.LicenseProductManager.GetLicenseProductRecordingsForLicenseDetailsNew(Int32 licenseProductId, License license, LicenseProduct licenseProduct, List`1& totals) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductManager.cs:line 3576
+   at UMPG.USL.API.Business.Licenses.LicenseProductManager.BuildLicenseProductOverview_tom_Original(Int32 productId, Int32 trackId, Int32 caecode) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductManager.cs:line 884
+   at Castle.Proxies.Invocations.ILicenseProductManager_BuildLicenseProductOverview_tom_Original.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 25
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.BuildLicenseProductOverview_tom_Original(Int32 productId, Int32 trackId, Int32 caecode)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.BuildLicenseProductOverview_tom_Original(Int32 productId, Int32 trackId, Int32 caecode) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 85
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: 94a56112-c0c2-435f-947a-da90feaeadb2
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/BuildLicenseProductOverview_tom_Original/67581/1/1, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseProductCTRL/licenseproducts/BuildLicenseProductOverview_tom_Original/67581/1/1 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 10:38:52.1053|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 10:38:52 AM 
+
+System.ArgumentException: An item with the same key has already been added.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.createMethodsCacheKey() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 651
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.ClearCache() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 77
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 26
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.GetCatalogNumber(Int32 productConfigId)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.GetCatalogNumber(Int32 productConfigId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 46
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: 9e97be6b-30d0-485d-b16f-a5ce2c91acca
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/52777, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/52777 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 10:38:52.3313|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 10:38:52 AM 
+
+System.ArgumentException: An item with the same key has already been added.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.createMethodsCacheKey() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 649
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.ClearCache() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 77
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 26
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.GetCatalogNumber(Int32 productConfigId)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.GetCatalogNumber(Int32 productConfigId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 46
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: 9e97be6b-30d0-485d-b16f-a5ce2c91acca
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/58484, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/58484 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 10:38:56.1753|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 10:38:56 AM 
+
+System.Net.WebException: The remote server returned an error: (500) Internal Server Error.
+   at System.Net.HttpWebRequest.GetResponse()
+   at UMPG.USL.Common.Transport.HttpWebRequestExtensions.Send(HttpWebRequest request) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\HttpWebRequestExtensions.cs:line 120
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.Get[T](String url) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 22
+   at UMPG.USL.API.Data.Recs.Recs.RetrieveTracksWithWriters(Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\Recs\Recs.cs:line 73
+   at UMPG.USL.API.Data.Recs.RecsDataProvider.RetrieveTracksWithWriters(Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\Recs\RecsDataProvider.cs:line 149
+   at UMPG.USL.API.Business.Licenses.LicenseProductManager.GetLicenseProductRecordingsForLicenseDetailsNew(Int32 licenseProductId, License license, LicenseProduct licenseProduct, List`1& totals) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductManager.cs:line 3576
+   at UMPG.USL.API.Business.Licenses.LicenseProductManager.BuildLicenseProductOverview_tom_Original(Int32 productId, Int32 trackId, Int32 caecode) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductManager.cs:line 884
+   at Castle.Proxies.Invocations.ILicenseProductManager_BuildLicenseProductOverview_tom_Original.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 25
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.BuildLicenseProductOverview_tom_Original(Int32 productId, Int32 trackId, Int32 caecode)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.BuildLicenseProductOverview_tom_Original(Int32 productId, Int32 trackId, Int32 caecode) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 85
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: 9e97be6b-30d0-485d-b16f-a5ce2c91acca
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/BuildLicenseProductOverview_tom_Original/67581/1/1, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseProductCTRL/licenseproducts/BuildLicenseProductOverview_tom_Original/67581/1/1 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 11:54:25.6004|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 11:54:25 AM 
+
+System.Net.WebException: The remote server returned an error: (500) Internal Server Error.
+   at System.Net.HttpWebRequest.GetResponse()
+   at UMPG.USL.Common.Transport.HttpWebRequestExtensions.Send(HttpWebRequest request) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\HttpWebRequestExtensions.cs:line 120
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.Get[T](String url) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 22
+   at UMPG.USL.API.Data.Recs.Recs.RetrieveTracksWithWriters(Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\Recs\Recs.cs:line 73
+   at UMPG.USL.API.Data.Recs.RecsDataProvider.RetrieveTracksWithWriters(Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\Recs\RecsDataProvider.cs:line 149
+   at UMPG.USL.API.Business.Licenses.LicenseProductManager.GetLicenseProductRecordingsForLicenseDetailsNew(Int32 licenseProductId, License license, LicenseProduct licenseProduct, List`1& totals) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductManager.cs:line 3576
+   at UMPG.USL.API.Business.Licenses.LicenseProductManager.BuildLicenseProductOverview_tom_Original(Int32 productId, Int32 trackId, Int32 caecode) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductManager.cs:line 884
+   at Castle.Proxies.Invocations.ILicenseProductManager_BuildLicenseProductOverview_tom_Original.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 25
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.BuildLicenseProductOverview_tom_Original(Int32 productId, Int32 trackId, Int32 caecode)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.BuildLicenseProductOverview_tom_Original(Int32 productId, Int32 trackId, Int32 caecode) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 85
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: 767fc871-c91d-4d89-a106-e7d70652050f
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/BuildLicenseProductOverview_tom_Original/67581/1/1, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseProductCTRL/licenseproducts/BuildLicenseProductOverview_tom_Original/67581/1/1 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 11:56:39.4109|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 11:56:39 AM 
+
+System.ArgumentException: An item with the same key has already been added.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.createMethodsCacheKey() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 651
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.ClearCache() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 77
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 26
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.GetCatalogNumber(Int32 productConfigId)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.GetCatalogNumber(Int32 productConfigId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 46
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: eeceb0ce-0546-4409-9deb-edd0835c8511
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/52672, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/52672 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 11:56:51.0929|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 11:56:51 AM 
+
+System.Net.WebException: The remote server returned an error: (500) Internal Server Error.
+   at System.Net.HttpWebRequest.GetResponse()
+   at UMPG.USL.Common.Transport.HttpWebRequestExtensions.Send(HttpWebRequest request) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\HttpWebRequestExtensions.cs:line 120
+   at UMPG.USL.Common.Transport.RecsJsonRequestHandler.Get[T](String url) in C:\Dev\projects\USL\svn\trunks\Source\Shared\UMPG.USL.Common\Transport\RecsJsonRequestHandler.cs:line 22
+   at UMPG.USL.API.Data.Recs.Recs.RetrieveTracksWithWriters(Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\Recs\Recs.cs:line 73
+   at UMPG.USL.API.Data.Recs.RecsDataProvider.RetrieveTracksWithWriters(Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Data\Recs\RecsDataProvider.cs:line 149
+   at UMPG.USL.API.Business.Licenses.LicenseProductManager.GetLicenseProductRecordingsForLicenseDetailsNew(Int32 licenseProductId, License license, LicenseProduct licenseProduct, List`1& totals) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductManager.cs:line 3576
+   at UMPG.USL.API.Business.Licenses.LicenseProductManager.BuildLicenseProductOverview_tom_Original(Int32 productId, Int32 trackId, Int32 caecode) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductManager.cs:line 884
+   at Castle.Proxies.Invocations.ILicenseProductManager_BuildLicenseProductOverview_tom_Original.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 25
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.BuildLicenseProductOverview_tom_Original(Int32 productId, Int32 trackId, Int32 caecode)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.BuildLicenseProductOverview_tom_Original(Int32 productId, Int32 trackId, Int32 caecode) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 85
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: c66e8254-ee6c-40bf-b191-9b5aef478acc
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/BuildLicenseProductOverview_tom_Original/67581/1/1, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseProductCTRL/licenseproducts/BuildLicenseProductOverview_tom_Original/67581/1/1 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 12:31:33.5119|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 12:31:33 PM 
+
+System.ArgumentException: An item with the same key has already been added.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.createMethodsCacheKey() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 652
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.ClearCache() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 77
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 26
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.IProductManagerProxy.GetWorksWriters(String worksCode)
+   at UMPG.USL.API.Controllers.RECsCTRL.ProductController.GetWorksWriters(String worksCode) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\RECsCTRL\ProductsController.cs:line 101
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: ed3ca386-f0ec-4e45-92d6-fb92432bab68
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/RECsCTRL/products/GetWorksWriters, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/RECsCTRL/products/GetWorksWriters 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 13:19:42.1069|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 1:19:42 PM 
+
+System.ArgumentException: An item with the same key has already been added.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.createMethodsCacheKey() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 651
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.ClearCache() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 77
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 26
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.IProductManagerProxy.GetWorksWriters(String worksCode)
+   at UMPG.USL.API.Controllers.RECsCTRL.ProductController.GetWorksWriters(String worksCode) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\RECsCTRL\ProductsController.cs:line 101
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: 05d114c3-5f51-4f9f-8635-d2fbb12e0522
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/RECsCTRL/products/GetWorksWriters, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/RECsCTRL/products/GetWorksWriters 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 13:43:09.7439|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 1:43:09 PM 
+
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at UMPG.USL.API.Business.Licenses.LicenseProductManager.GetLicenseProductNumber(Int32 licenseId, Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductManager.cs:line 1557
+   at Castle.Proxies.Invocations.ILicenseProductManager_GetLicenseProductNumber.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 25
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.GetLicenseProductNumber(Int32 licenseId, Int32 productId)
+   at UMPG.USL.API.Business.Recs.ProductManager.GetProductHeaderFull(Int32 productId, Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Recs\ProductManager.cs:line 91
+   at Castle.Proxies.Invocations.IProductManager_GetProductHeaderFull.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 25
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.IProductManagerProxy.GetProductHeaderFull(Int32 productId, Int32 licenseProductId)
+   at UMPG.USL.API.Controllers.RECsCTRL.ProductController.GetProductHeaderFull(Int32 licenseProductId, Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\RECsCTRL\ProductsController.cs:line 63
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: 8973d409-a034-421e-8db4-2cb67643e245
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/RECsCTRL/Products/GetProductHeaderFull/32812/70406, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/RECsCTRL/Products/GetProductHeaderFull/32812/70406 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 14:05:39.5569|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 2:05:39 PM 
+
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at UMPG.USL.API.Business.Licenses.LicenseProductManager.GetLicenseProductNumber(Int32 licenseId, Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductManager.cs:line 1557
+   at Castle.Proxies.Invocations.ILicenseProductManager_GetLicenseProductNumber.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 25
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.GetLicenseProductNumber(Int32 licenseId, Int32 productId)
+   at UMPG.USL.API.Business.Recs.ProductManager.GetProductHeaderFull(Int32 productId, Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Recs\ProductManager.cs:line 91
+   at Castle.Proxies.Invocations.IProductManager_GetProductHeaderFull.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 25
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.IProductManagerProxy.GetProductHeaderFull(Int32 productId, Int32 licenseProductId)
+   at UMPG.USL.API.Controllers.RECsCTRL.ProductController.GetProductHeaderFull(Int32 licenseProductId, Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\RECsCTRL\ProductsController.cs:line 63
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: 8973d409-a034-421e-8db4-2cb67643e245
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/RECsCTRL/Products/GetProductHeaderFull/32812/70406, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/RECsCTRL/Products/GetProductHeaderFull/32812/70406 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 14:08:58.2249|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246649
+2017-02-07 14:08:58.2459|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246649
+2017-02-07 14:09:18.9909|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246648
+2017-02-07 14:09:18.9909|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246648
+2017-02-07 14:09:39.5679|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246650
+2017-02-07 14:09:39.5709|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246650
+2017-02-07 14:11:59.2009|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246649
+2017-02-07 14:11:59.2009|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246649
+2017-02-07 14:12:19.7479|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246648
+2017-02-07 14:12:19.7479|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246648
+2017-02-07 14:12:40.2889|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246650
+2017-02-07 14:12:40.2889|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246650
+2017-02-07 14:14:32.1189|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246649
+2017-02-07 14:14:32.1189|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246649
+2017-02-07 14:14:52.6469|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246648
+2017-02-07 14:14:52.6469|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246648
+2017-02-07 14:15:13.4089|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246650
+2017-02-07 14:15:13.4089|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246650
+2017-02-07 14:25:08.9329|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246649
+2017-02-07 14:25:08.9479|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246649
+2017-02-07 14:25:29.5809|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246648
+2017-02-07 14:25:29.5809|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246648
+2017-02-07 14:25:50.1739|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246650
+2017-02-07 14:25:50.1739|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246650
+2017-02-07 14:26:18.2979|INFO|UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseProductManager|ArtistRecsId: 106
+2017-02-07 14:32:39.4589|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246649
+2017-02-07 14:32:39.4779|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246649
+2017-02-07 14:33:00.1789|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246648
+2017-02-07 14:33:00.1789|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246648
+2017-02-07 14:33:20.6539|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246650
+2017-02-07 14:33:20.6539|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246650
+2017-02-07 14:33:59.5899|INFO|UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseProductManager|ArtistRecsId: 106
+2017-02-07 14:37:12.5299|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246649
+2017-02-07 14:37:12.5299|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246649
+2017-02-07 14:37:33.1129|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246648
+2017-02-07 14:37:33.1129|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246648
+2017-02-07 14:37:53.5839|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246650
+2017-02-07 14:37:53.5839|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246650
+2017-02-07 14:38:42.9899|INFO|UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseProductManager|ArtistRecsId: 106
+2017-02-07 14:41:52.1659|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246649
+2017-02-07 14:41:52.1779|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246649
+2017-02-07 14:42:12.7989|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246648
+2017-02-07 14:42:12.7989|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246648
+2017-02-07 14:42:33.2869|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246650
+2017-02-07 14:42:33.2869|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246650
+2017-02-07 14:42:50.3309|INFO|UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseProductManager|ArtistRecsId: 106
+2017-02-07 14:43:25.6669|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246649
+2017-02-07 14:43:25.6809|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246649
+2017-02-07 14:43:46.2389|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246648
+2017-02-07 14:43:46.2389|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246648
+2017-02-07 14:44:06.6919|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|CLONE TRACK ID: 246650
+2017-02-07 14:44:06.6919|INFO|UMPG.USL.API.Data.DataHarmonization.SnapshotWorksRecordingRepository|TRACK ID: 246650
+2017-02-07 14:44:23.6719|INFO|UMPG.USL.API.Business.DataHarmonization.SnapshotLicenseProductManager|ArtistRecsId: 106
+2017-02-07 15:35:53.1499|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 3:35:53 PM 
+
+System.ArgumentException: An item with the same key has already been added.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.createMethodsCacheKey() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 651
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.ClearCache() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 77
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 26
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.GetLicenseWritersV2(Int32 licenseRecordingId, String worksCode)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.GetLicenseWritersV2(Int32 licenseRecordingId, String worksCode) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 298
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: f0ccb093-f156-4da7-9d95-b7b596940abd
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/GetLicenseWritersV2/47080, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/licenseProductCTRL/licenseproducts/GetLicenseWritersV2/47080 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-02-07 17:13:45.9389|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Tuesday, February 07, 2017 ||  At: 5:13:45 PM 
+
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at UMPG.USL.API.Business.Licenses.LicenseProductManager.GetLicenseProductNumber(Int32 licenseId, Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductManager.cs:line 1567
+   at Castle.Proxies.Invocations.ILicenseProductManager_GetLicenseProductNumber.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 25
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.GetLicenseProductNumber(Int32 licenseId, Int32 productId)
+   at UMPG.USL.API.Business.Recs.ProductManager.GetProductHeaderFull(Int32 productId, Int32 licenseId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Recs\ProductManager.cs:line 91
+   at Castle.Proxies.Invocations.IProductManager_GetProductHeaderFull.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 25
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.IProductManagerProxy.GetProductHeaderFull(Int32 productId, Int32 licenseProductId)
+   at UMPG.USL.API.Controllers.RECsCTRL.ProductController.GetProductHeaderFull(Int32 licenseProductId, Int32 productId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\RECsCTRL\ProductsController.cs:line 63
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+Origin: http://spa.local
+Token: 19274c84-10b2-4705-983d-bb392f2bb070
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/RECsCTRL/Products/GetProductHeaderFull/32812/70406, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/RECsCTRL/Products/GetProductHeaderFull/32812/70406 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+

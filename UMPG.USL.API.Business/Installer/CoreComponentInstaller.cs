@@ -9,6 +9,8 @@ using UMPG.USL.API.Business.DataHarmonization;
 using UMPG.USL.API.Business.Licenses;
 using UMPG.USL.API.Business.Lookups;
 using UMPG.USL.API.Business.LookUps;
+using UMPG.USL.API.Business.ProcessorManagers;
+using UMPG.USL.API.Business.Providers;
 using UMPG.USL.API.Business.Recs;
 using UMPG.USL.API.Business.Reports;
 using UMPG.USL.API.Business.Token;
@@ -56,6 +58,9 @@ namespace UMPG.USL.API.Business.Installer
             container.Register(Component.For<ITokenServices>().ImplementedBy<TokenServices>());
             container.Register(Component.For<IAttachmentTypeManager>().ImplementedBy<AttachmentTypeManager>());
             container.Register(Component.For<IServiceManager>().ImplementedBy<ServiceManager>());
+            container.Register(Component.For<IProcessorDataProvider>().ImplementedBy<ProcessorDataProvider>());
+            container.Register(Component.For<IEnvironmentManager>().ImplementedBy<EnvironmentManager>());
+            container.Register(Component.For<IRemoteServiceManager>().ImplementedBy<RemoteServiceManager>());
 
             //Data Harmonization Managers
             container.Register(Component.For<ISnapshotArtistRecsManager>().ImplementedBy<SnapshotArtistRecsManager>());

@@ -1,8 +1,7 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using NLog;
 using UMPG.USL.Models.DataHarmonization;
 using EntityState = System.Data.Entity.EntityState;
 
@@ -11,6 +10,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
     public class SnapshotLicenseProductRepository : ISnapshotLicenseProductRepository
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         public Snapshot_LicenseProduct SaveSnapshotLicenseProduct(Snapshot_LicenseProduct licenseProductSnapshot)
         {
             using (var context = new AuthContext())
@@ -36,6 +36,7 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return context.Snapshot_LicenseProducts.FirstOrDefault(sl => sl.CloneLicenseProductId == id);
             }
         }
+
         public Snapshot_LicenseProduct SaveMassiveSnapshotLicenseProduct(Snapshot_LicenseProduct licenseProductSnapshot)
         {
             using (var context = new AuthContext())
@@ -61,25 +62,82 @@ namespace UMPG.USL.API.Data.DataHarmonization
         //        context.Configuration.AutoDetectChangesEnabled = false;
         //        context.Configuration.ValidateOnSaveEnabled = false;
 
-
-
-
-
-
-
-
-
-
         //        context.Configuration.AutoDetectChangesEnabled = true;
         //        context.Configuration.ValidateOnSaveEnabled =  true;
         //    }
         //}
+        public bool DoesLicenseProductSnapshotExist(int licenseProductId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_LicenseProducts.Any(sl => sl.CloneLicenseProductId == licenseProductId);
+            }
+        }
+
+        public int GetSnapshotProductHeaderId(int licenseProductId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_LicenseProducts.FirstOrDefault(sl => sl.CloneLicenseProductId == licenseProductId).SnapshotProductHeaderId;
+            }
+        }
+
+        public int GetSnapshotCloneProductHeaderId(int snapshotProductHeaderId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_ProductHeaders.FirstOrDefault(sl => sl.SnapshotProductHeaderId == snapshotProductHeaderId).CloneProductHeaderId;
+            }
+        }
+
+        public bool DoesProductHeaderSnapshotExist(int licenseProductId)
+        {
+            using (var context = new AuthContext())
+            {
+                var result =context.Snapshot_LicenseProducts.FirstOrDefault(sl => sl.CloneLicenseProductId == licenseProductId);
+                if (result != null)
+                {
+                    return result.SnapshotProductHeaderId != 0;
+                }
+                return false;
+            }
+        }
+
+        public bool DoesProductHeaderSnapshotExistById(int cloneProductHeaderId)
+        {
+            using (var context = new AuthContext())
+            {
+                var result = context.Snapshot_ProductHeaders.FirstOrDefault(sl => sl.CloneProductHeaderId == cloneProductHeaderId);
+                if (result != null)
+                {
+                    return result.SnapshotProductHeaderId != 0;
+                }
+                return false;
+            }
+        }
+
 
         public Snapshot_LicenseProduct GetLicenseProductSnapShotById(int id)
         {
             using (var context = new AuthContext())
             {
                 return context.Snapshot_LicenseProducts.FirstOrDefault(sl => sl.ProductId == id);
+            }
+        }
+
+        public Snapshot_LicenseProduct GetSnapshotLicenseProductByLicenseProductId(int licenseProductId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_LicenseProducts.FirstOrDefault(sl => sl.CloneLicenseProductId == licenseProductId);
+            }
+        }
+
+        public Snapshot_LicenseProduct GetSnapshotLicenseProductBySnapshotProductHeaderId(int snapshotProductHeaderID)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_LicenseProducts.FirstOrDefault(sl => sl.SnapshotProductHeaderId == snapshotProductHeaderID);
             }
         }
 
@@ -90,8 +148,6 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return context.Snapshot_LicenseProducts.FirstOrDefault(sl => sl.SnapshotLicenseProductId == id);
             }
         }
-
-
 
         public List<int> GetLicenseProductIds(int licenseId)
         {
@@ -106,7 +162,6 @@ namespace UMPG.USL.API.Data.DataHarmonization
 
         public List<Snapshot_LicenseProduct> GetAllLicenseProductsForLicenseId(int licenseId)
         {
-
             using (var context = new AuthContext())
             {
                 return
@@ -114,14 +169,14 @@ namespace UMPG.USL.API.Data.DataHarmonization
 
                         .Include("ProductHeader")
                         .Include("ProductHeader.Artist")
-                       // .Include("ProductHeader.Label")
-                       // .Include("ProductHeader.Label.RecordLabelGroups")
+                         // .Include("ProductHeader.Label")
+                         // .Include("ProductHeader.Label.RecordLabelGroups")
                          /*
                        .Include("ProductHeader.Configurations") //TEST
-                       .Include("ProductHeader.Configurations.Configuration") 
+                       .Include("ProductHeader.Configurations.Configuration")
                        .Include("ProductHeader.Configurations.LicenseProductConfiguration")
                          */
-                      // Not needed .Include("ProductConfigurations") //comes back null, i think in the test license case its supposed
+                         // Not needed .Include("ProductConfigurations") //comes back null, i think in the test license case its supposed
                          .Include("Schedule")
                          .Include("Recordings")
                          .Include("Recordings.Writers")  //Add to database
@@ -160,7 +215,6 @@ namespace UMPG.USL.API.Data.DataHarmonization
                           .AsNoTracking()
                     //   .Include("Recordings.LicenseRecording") //Add to database??  BROKEN, its in database, but when its 'on' recordings are not returned
 
-
                     .Where(_ => _.LicenseId == licenseId)
                         .ToList();
             }
@@ -174,7 +228,6 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 return licneseProduct.ProductId;
             }
         }
-
 
         public int? GetLicenseProductIdFromSnapshotLicenseProductId(int snapshotLicenseProductId)
         {
@@ -202,6 +255,16 @@ namespace UMPG.USL.API.Data.DataHarmonization
                     return false;
                 }
                 return true;
+            }
+        }
+
+        public Snapshot_LicenseProduct UpdateSnapshotLicenseProduct(Snapshot_LicenseProduct snapshotLicenseProduct)
+        {
+            using (var context = new AuthContext())
+            {
+                context.Entry(snapshotLicenseProduct).State = (EntityState)System.Data.EntityState.Modified;
+                context.SaveChanges();
+                return snapshotLicenseProduct;
             }
         }
     }

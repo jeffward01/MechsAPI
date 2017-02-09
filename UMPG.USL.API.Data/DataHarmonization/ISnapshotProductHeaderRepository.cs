@@ -11,8 +11,11 @@ namespace UMPG.USL.API.Data.DataHarmonization
         int GetSnapshotProductHeaderBySnapshotLicenseProductId(int snapshotLicenseProductId);
 
         bool DeleteProductHeaderSnapshotBySnapshotId(int snapshotProductHeaderId);
+        Snapshot_ProductHeader GetProductHeaderLite(int productHeaderSnapshotId);
 
         Snapshot_ProductHeader GetProductHeaderByProductHeaderId(int productHeaderId);
         Snapshot_ProductHeader GetSnapshotProductHeaderByLabelSnapshotId(int labelSnapshotId);
+        Snapshot_ProductHeader GetSnapshotProductHeaderByLicenseId(int licenseId);
+        void UpdateSnapshotProductHeader(Snapshot_ProductHeader snapshotProductHeader);
     }
 }

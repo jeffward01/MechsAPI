@@ -29,269 +29,269 @@ namespace UMPG.USL.API.Tests.Manager_Tests.Licenses
     [TestFixture]
     public class LicenseProductConfigurationManagerTests
     {
-        [Test]
-        public void GetLicenseProductConfigurations_ReturnListLicenseProductConfiguration()
-        {
-            //Arrange
-            var mockILicenseRepository = A.Fake<ILicenseRepository>();
-            var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
-            var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
-            var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
-            var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
-            var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
-            var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
-            var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
-            var mockIRecs = A.Fake<IRecs>();
-            var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
-            var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
-            var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
+    //    [Test]
+    //    public void GetLicenseProductConfigurations_ReturnListLicenseProductConfiguration()
+    //    {
+    //        //Arrange
+    //        var mockILicenseRepository = A.Fake<ILicenseRepository>();
+    //        var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
+    //        var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
+    //        var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
+    //        var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
+    //        var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
+    //        var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
+    //        var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
+    //        var mockIRecs = A.Fake<IRecs>();
+    //        var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
+    //        var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
+    //        var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
 
-            //Build expected
-            List<LicenseProductConfiguration> expected = new List<LicenseProductConfiguration> { };
+    //        //Build expected
+    //        List<LicenseProductConfiguration> expected = new List<LicenseProductConfiguration> { };
             
-            A.CallTo(() => mockILicenseProductConfigurationRepository.GetLicenseProductConfigurations(A<int>.Ignored)).WithAnyArguments().Returns(expected);
+    //        A.CallTo(() => mockILicenseProductConfigurationRepository.GetLicenseProductConfigurations(A<int>.Ignored)).WithAnyArguments().Returns(expected);
 
-            //Act
-            LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
-            var result =  manager.GetLicenseProductConfigurations(A<int>.Ignored);
+    //        //Act
+    //        LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
+    //        var result =  manager.GetLicenseProductConfigurations(A<int>.Ignored);
 
-            //Assert
-            Assert.AreEqual(expected, result);
-        }
+    //        //Assert
+    //        Assert.AreEqual(expected, result);
+    //    }
 
-        [Test]
-        public void GetLicenseConfigurationList_ReturnListLicenseProductConfiguration()
-        {
-            //Arrange
-            var mockILicenseRepository = A.Fake<ILicenseRepository>();
-            var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
-            var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
-            var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
-            var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
-            var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
-            var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
-            var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
-            var mockIRecs = A.Fake<IRecs>();
-            var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
-            var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
-            var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
+    //    [Test]
+    //    public void GetLicenseConfigurationList_ReturnListLicenseProductConfiguration()
+    //    {
+    //        //Arrange
+    //        var mockILicenseRepository = A.Fake<ILicenseRepository>();
+    //        var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
+    //        var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
+    //        var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
+    //        var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
+    //        var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
+    //        var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
+    //        var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
+    //        var mockIRecs = A.Fake<IRecs>();
+    //        var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
+    //        var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
+    //        var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
 
-            //Build expected
-            List<LicenseProductConfiguration> expected = new List<LicenseProductConfiguration> { };
+    //        //Build expected
+    //        List<LicenseProductConfiguration> expected = new List<LicenseProductConfiguration> { };
 
-            A.CallTo(() => mockILicenseProductConfigurationRepository.GetLicenseConfigurationList(A<List<int>>.Ignored)).WithAnyArguments().Returns(expected);
+    //        A.CallTo(() => mockILicenseProductConfigurationRepository.GetLicenseConfigurationList(A<List<int>>.Ignored)).WithAnyArguments().Returns(expected);
 
-            //Act
-            LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
-            var result = manager.GetLicenseConfigurationList(A<List<int>>.Ignored);
+    //        //Act
+    //        LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
+    //        var result = manager.GetLicenseConfigurationList(A<List<int>>.Ignored);
 
-            //Assert
-            Assert.AreEqual(expected, result);
-        }
+    //        //Assert
+    //        Assert.AreEqual(expected, result);
+    //    }
 
-        [Test]
-        public void UpdateLicenseProductConfiguration_ReturnListLicenseProductConfiguration()
-        {
-            //Arrange
-            var mockILicenseRepository = A.Fake<ILicenseRepository>();
-            var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
-            var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
-            var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
-            var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
-            var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
-            var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
-            var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
-            var mockIRecs = A.Fake<IRecs>();
-            var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
-            var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
-            var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
+    //    [Test]
+    //    public void UpdateLicenseProductConfiguration_ReturnListLicenseProductConfiguration()
+    //    {
+    //        //Arrange
+    //        var mockILicenseRepository = A.Fake<ILicenseRepository>();
+    //        var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
+    //        var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
+    //        var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
+    //        var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
+    //        var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
+    //        var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
+    //        var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
+    //        var mockIRecs = A.Fake<IRecs>();
+    //        var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
+    //        var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
+    //        var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
 
-            //Build expected
-            List<LicenseProductConfiguration> expected = new List<LicenseProductConfiguration> {  };
+    //        //Build expected
+    //        List<LicenseProductConfiguration> expected = new List<LicenseProductConfiguration> {  };
 
-            //Build request
-            List<UpdateLicenseProductConfigurationRequest> request = new List<UpdateLicenseProductConfigurationRequest> {  };
+    //        //Build request
+    //        List<UpdateLicenseProductConfigurationRequest> request = new List<UpdateLicenseProductConfigurationRequest> {  };
        
-            //Act
-            LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
-            var result = manager.UpdateLicenseProductConfiguration(request);
+    //        //Act
+    //        LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
+    //        var result = manager.UpdateLicenseProductConfiguration(request);
 
-            //Assert
-            Assert.AreEqual(expected, result);
-        }
+    //        //Assert
+    //        Assert.AreEqual(expected, result);
+    //    }
 
-        [Test]
-        public void AddLicenseProductConfiguration_ReturUpdateLicenseProductConfigurationResult()
-        {
-            //Arrange
-            var mockILicenseRepository = A.Fake<ILicenseRepository>();
-            var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
-            var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
-            var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
-            var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
-            var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
-            var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
-            var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
-            var mockIRecs = A.Fake<IRecs>();
-            var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
-            var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
-            var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
+    //    [Test]
+    //    public void AddLicenseProductConfiguration_ReturUpdateLicenseProductConfigurationResult()
+    //    {
+    //        //Arrange
+    //        var mockILicenseRepository = A.Fake<ILicenseRepository>();
+    //        var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
+    //        var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
+    //        var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
+    //        var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
+    //        var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
+    //        var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
+    //        var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
+    //        var mockIRecs = A.Fake<IRecs>();
+    //        var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
+    //        var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
+    //        var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
 
-            //Build expected
-            UpdateLicenseProductConfigurationResult expected = new UpdateLicenseProductConfigurationResult { };
+    //        //Build expected
+    //        UpdateLicenseProductConfigurationResult expected = new UpdateLicenseProductConfigurationResult { };
 
-            //Build request
-            UpdateLicenseProductConfigurationRequest request = new UpdateLicenseProductConfigurationRequest { productId = 99 };
+    //        //Build request
+    //        UpdateLicenseProductConfigurationRequest request = new UpdateLicenseProductConfigurationRequest { productId = 99 };
 
-            ProductHeader productHeader = new ProductHeader { };
+    //        ProductHeader productHeader = new ProductHeader { };
 
-            A.CallTo(() => mockIRecs.RetrieveProductHeader(request.productId)).WithAnyArguments().Returns(productHeader);
+    //        A.CallTo(() => mockIRecs.RetrieveProductHeader(request.productId)).WithAnyArguments().Returns(productHeader);
 
-            //Act
-            LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
-            var result = manager.AddLicenseProductConfiguration(request);
+    //        //Act
+    //        LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
+    //        var result = manager.AddLicenseProductConfiguration(request);
 
-            //Assert
-            Assert.IsInstanceOf(typeof(UpdateLicenseProductConfigurationResult), result);
-        }
+    //        //Assert
+    //        Assert.IsInstanceOf(typeof(UpdateLicenseProductConfigurationResult), result);
+    //    }
 
-        [Test]
-        public void DeleteLicenseProductConfiguration_ReturnBoolTRUE()
-        {
-            //Arrange
-            var mockILicenseRepository = A.Fake<ILicenseRepository>();
-            var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
-            var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
-            var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
-            var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
-            var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
-            var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
-            var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
-            var mockIRecs = A.Fake<IRecs>();
-            var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
-            var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
-            var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
+    //    [Test]
+    //    public void DeleteLicenseProductConfiguration_ReturnBoolTRUE()
+    //    {
+    //        //Arrange
+    //        var mockILicenseRepository = A.Fake<ILicenseRepository>();
+    //        var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
+    //        var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
+    //        var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
+    //        var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
+    //        var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
+    //        var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
+    //        var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
+    //        var mockIRecs = A.Fake<IRecs>();
+    //        var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
+    //        var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
+    //        var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
 
-            //Build expected
-            UpdateLicenseProductConfigurationResult expected = new UpdateLicenseProductConfigurationResult { };
+    //        //Build expected
+    //        UpdateLicenseProductConfigurationResult expected = new UpdateLicenseProductConfigurationResult { };
 
-            //Build request
-            UpdateLicenseProductConfigurationRequest request = new UpdateLicenseProductConfigurationRequest { productId = 99, licenseProductConfigurationId =99 };
-            LicenseProductConfiguration lpc = new LicenseProductConfiguration { };
+    //        //Build request
+    //        UpdateLicenseProductConfigurationRequest request = new UpdateLicenseProductConfigurationRequest { productId = 99, licenseProductConfigurationId =99 };
+    //        LicenseProductConfiguration lpc = new LicenseProductConfiguration { };
 
-            ProductHeader productHeader = new ProductHeader { };
+    //        ProductHeader productHeader = new ProductHeader { };
 
-            A.CallTo(() => mockILicenseProductConfigurationRepository.Get(request.licenseProductConfigurationId)).WithAnyArguments().Returns(lpc);
+    //        A.CallTo(() => mockILicenseProductConfigurationRepository.Get(request.licenseProductConfigurationId)).WithAnyArguments().Returns(lpc);
 
-            //Act
-            LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
-            var result = manager.DeleteLicenseProductConfiguration(request);
+    //        //Act
+    //        LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
+    //        var result = manager.DeleteLicenseProductConfiguration(request);
 
-            //Assert
-            Assert.IsTrue(result);
-        }
+    //        //Assert
+    //        Assert.IsTrue(result);
+    //    }
 
-        [Test]
-        public void UpdateLicenseProductRollups_ReturnVoid()
-        {
-            //Arrange
-            var mockILicenseRepository = A.Fake<ILicenseRepository>();
-            var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
-            var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
-            var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
-            var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
-            var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
-            var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
-            var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
-            var mockIRecs = A.Fake<IRecs>();
-            var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
-            var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
-            var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
+    //    [Test]
+    //    public void UpdateLicenseProductRollups_ReturnVoid()
+    //    {
+    //        //Arrange
+    //        var mockILicenseRepository = A.Fake<ILicenseRepository>();
+    //        var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
+    //        var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
+    //        var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
+    //        var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
+    //        var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
+    //        var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
+    //        var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
+    //        var mockIRecs = A.Fake<IRecs>();
+    //        var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
+    //        var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
+    //        var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
 
-            //Build expected
-            UpdateLicenseProductConfigurationResult expected = new UpdateLicenseProductConfigurationResult { };
+    //        //Build expected
+    //        UpdateLicenseProductConfigurationResult expected = new UpdateLicenseProductConfigurationResult { };
 
-            //Build request
-           const int request = 99;
+    //        //Build request
+    //       const int request = 99;
 
-            A.CallTo(() => mockILicenseProductRepository.GetAllLicenseProducts(request)).WithAnyArguments();//.Returns(lpc);
+    //        A.CallTo(() => mockILicenseProductRepository.GetAllLicenseProducts(request)).WithAnyArguments();//.Returns(lpc);
 
-            //Act
-            LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
-            manager.UpdateLicenseProductRollups(request);
-            mockILicenseProductRepository.GetAllLicenseProducts(request);
+    //        //Act
+    //        LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
+    //        manager.UpdateLicenseProductRollups(request);
+    //        mockILicenseProductRepository.GetAllLicenseProducts(request);
 
-            //Assert
-            A.CallTo(() => mockILicenseProductRepository.GetAllLicenseProducts(request)).WithAnyArguments().MustHaveHappened();
-        }
+    //        //Assert
+    //        A.CallTo(() => mockILicenseProductRepository.GetAllLicenseProducts(request)).WithAnyArguments().MustHaveHappened();
+    //    }
 
 
-        [Test]
-        public void UpdateLicenseProductRollups2_ReturnVoid()
-        {
-            //Arrange
-            var mockILicenseRepository = A.Fake<ILicenseRepository>();
-            var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
-            var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
-            var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
-            var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
-            var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
-            var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
-            var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
-            var mockIRecs = A.Fake<IRecs>();
-            var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
-            var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
-            var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
+    //    [Test]
+    //    public void UpdateLicenseProductRollups2_ReturnVoid()
+    //    {
+    //        //Arrange
+    //        var mockILicenseRepository = A.Fake<ILicenseRepository>();
+    //        var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
+    //        var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
+    //        var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
+    //        var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
+    //        var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
+    //        var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
+    //        var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
+    //        var mockIRecs = A.Fake<IRecs>();
+    //        var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
+    //        var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
+    //        var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
 
-            //Build expected
-            UpdateLicenseProductConfigurationResult expected = new UpdateLicenseProductConfigurationResult { };
+    //        //Build expected
+    //        UpdateLicenseProductConfigurationResult expected = new UpdateLicenseProductConfigurationResult { };
 
-            //Build request
-            const int request = 99;
+    //        //Build request
+    //        const int request = 99;
 
-            A.CallTo(() => mockILicenseProductRepository.GetAllLicenseProducts(request)).WithAnyArguments();
+    //        A.CallTo(() => mockILicenseProductRepository.GetAllLicenseProducts(request)).WithAnyArguments();
 
-            //Act
-            LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
-            manager.UpdateLicenseProductRollups2(request);
-            mockILicenseProductRepository.GetAllLicenseProducts(request);
+    //        //Act
+    //        LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
+    //        manager.UpdateLicenseProductRollups2(request);
+    //        mockILicenseProductRepository.GetAllLicenseProducts(request);
 
-            //Assert
-            A.CallTo(() => mockILicenseProductRepository.GetAllLicenseProducts(request)).WithAnyArguments().MustHaveHappened();
-        }
+    //        //Assert
+    //        A.CallTo(() => mockILicenseProductRepository.GetAllLicenseProducts(request)).WithAnyArguments().MustHaveHappened();
+    //    }
 
-        [Test]
-        public void UpdateAllLicensesConfiguration_ReturnVoid()
-        {
-            //Arrange
-            var mockILicenseRepository = A.Fake<ILicenseRepository>();
-            var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
-            var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
-            var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
-            var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
-            var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
-            var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
-            var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
-            var mockIRecs = A.Fake<IRecs>();
-            var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
-            var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
-            var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
+    //    [Test]
+    //    public void UpdateAllLicensesConfiguration_ReturnVoid()
+    //    {
+    //        //Arrange
+    //        var mockILicenseRepository = A.Fake<ILicenseRepository>();
+    //        var mockILicenseProductRepository = A.Fake<ILicenseProductRepository>();
+    //        var mockILicenseProductConfigurationRepository = A.Fake<ILicenseProductConfigurationRepository>();
+    //        var mockILicenseProductRecordingRepository = A.Fake<ILicenseProductRecordingRepository>();
+    //        var mockILicensePRWriterNoteRepository = A.Fake<ILicensePRWriterNoteRepository>();
+    //        var mockILicensePRWriterRateRepository = A.Fake<ILicensePRWriterRateRepository>();
+    //        var mockILicensePRWriterRepository = A.Fake<ILicensePRWriterRepository>();
+    //        var mockILicensePRWriterRateStatusRepository = A.Fake<ILicensePRWriterRateStatusRepository>();
+    //        var mockIRecs = A.Fake<IRecs>();
+    //        var mockIRecordingMedleyRepository = A.Fake<IRecordingMedleyRepository>();
+    //        var mockILicenseRecordingMedleyRepository = A.Fake<ILicenseRecordingMedleyRepository>();
+    //        var mockILicenseSolrManager = A.Fake<ILicenseSolrManager>();
 
-            //Build expected
-            UpdateLicenseProductConfigurationResult expected = new UpdateLicenseProductConfigurationResult { };
-            List<License> licenses = new List<License> { };
-            //Build request
-            const int request = 99;
-            const int request1 = 99;
-            A.CallTo(() => mockILicenseRepository.GetAll(request, request1)).WithAnyArguments().Returns(licenses);
+    //        //Build expected
+    //        UpdateLicenseProductConfigurationResult expected = new UpdateLicenseProductConfigurationResult { };
+    //        List<License> licenses = new List<License> { };
+    //        //Build request
+    //        const int request = 99;
+    //        const int request1 = 99;
+    //        A.CallTo(() => mockILicenseRepository.GetAll(request, request1)).WithAnyArguments().Returns(licenses);
 
-            //Act
-            LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
-            manager.UpdateAllLicensesConfiguration(request, request1);
-            mockILicenseRepository.GetAll(request, request1);
+    //        //Act
+    //        LicenseProductConfigurationManager manager = new LicenseProductConfigurationManager(mockILicenseRepository, mockILicenseProductRepository, mockILicenseProductConfigurationRepository, mockILicenseProductRecordingRepository, mockILicensePRWriterNoteRepository, mockILicensePRWriterRateRepository, mockILicensePRWriterRepository, mockILicensePRWriterRateStatusRepository, mockIRecs, mockIRecordingMedleyRepository, mockILicenseRecordingMedleyRepository, mockILicenseSolrManager);
+    //        manager.UpdateAllLicensesConfiguration(request, request1);
+    //        mockILicenseRepository.GetAll(request, request1);
 
-            //Assert
-            A.CallTo(() => mockILicenseRepository.GetAll(request, request1)).WithAnyArguments().MustHaveHappened();
-        }
+    //        //Assert
+    //        A.CallTo(() => mockILicenseRepository.GetAll(request, request1)).WithAnyArguments().MustHaveHappened();
+    //    }
     }
 }

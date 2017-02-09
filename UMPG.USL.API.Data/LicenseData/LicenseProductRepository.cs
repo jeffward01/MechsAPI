@@ -260,6 +260,14 @@ namespace UMPG.USL.API.Data.LicenseData
         }
 
 
+        public bool DoeseLicenseProductHaveRecordings(int licenseProductId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_WorksRecordings.Any(_ => _.LicenseProductId == licenseProductId);
+            }
+        }
+
 
         public LicenseProduct Get(int licenseProductId)
         {

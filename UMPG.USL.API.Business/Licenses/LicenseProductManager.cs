@@ -4,7 +4,9 @@ using NLog.Targets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UMPG.USL.API.Business.DataHarmonization;
 using UMPG.USL.API.Data;
+using UMPG.USL.API.Data.DataHarmonization;
 using UMPG.USL.API.Data.LicenseData;
 using UMPG.USL.API.Data.LookupData;
 using UMPG.USL.API.Data.Recs;
@@ -23,7 +25,9 @@ namespace UMPG.USL.API.Business.Licenses
         private readonly ILicenseProductRecordingRepository _licenseProductRecordingRepository;
         private readonly ILicensePRWriterRepository _licensePRWriterRepository;
         private readonly ILicensePRWriterRateRepository _licensePRWriterRateRepository;
-
+        private readonly ISnapshotLicenseManager _snapshotLicenseManager;
+        private readonly ISnapshotLicenseRepository _snapshotLicenseRepository;
+        private readonly ISnapshotLicenseProductManager _snapshotLicenseProductManager;
         //        private readonly ILicensePRWriterRateNoteRepository _licensePRWriterRateNoteRepository;
         private readonly ILicensePRWriterNoteRepository _licensePRWriterNoteRepository;
 
@@ -46,7 +50,10 @@ namespace UMPG.USL.API.Business.Licenses
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public LicenseProductManager(
-            ILicenseRepository licenseRepository,
+            ISnapshotLicenseRepository snapshotLicenseRepository,
+                    ISnapshotLicenseManager snapshotLicenseManager,
+         ISnapshotLicenseProductManager snapshotLicenseProductManager,
+        ILicenseRepository licenseRepository,
             ILicenseSequenceRepository licenseSequenceRepository,
             ILicenseProductRepository licenseProductRepository,
             ILicenseProductRecordingRepository licenseProductRecordingRepository,
@@ -68,6 +75,9 @@ namespace UMPG.USL.API.Business.Licenses
             IWritersConsentTypeRepository writersConsentTypeRepository,
             ILicenseProductConfigurationManager licneseLicenseProductConfigurationManager)
         {
+            _snapshotLicenseRepository = snapshotLicenseRepository;
+            _snapshotLicenseProductManager = snapshotLicenseProductManager;
+            _snapshotLicenseManager = snapshotLicenseManager;
             _licenseRepository = licenseRepository;
             _licenseSequenceRepository = licenseSequenceRepository;
             _licenseProductRepository = licenseProductRepository;
@@ -277,7 +287,7 @@ namespace UMPG.USL.API.Business.Licenses
             }
 
             UpdateLicenseProductRollups(licenseId);
-
+            DeleteLicenseProductFromSnapshot(licenseId, productId, licenseProduct);
             return rv;
         }
 
@@ -942,9 +952,11 @@ namespace UMPG.USL.API.Business.Licenses
 
                 // get Recs Product Configs with UPCs
                 var recs_ProductConfigs = _recsProvider.RetrieveProductHeader(productId);
+                
                 //marry up the recs configs with the mechs configs.
                 //Fill LicenseProductConfigurations
-                List<LicenseProductConfiguration> licenseProductConfiguration = _licenseProductConfigurationRepository.GetLicenseConfigurationList(licenseProducts.Select(x => x.LicenseProductId).ToList());
+                 List<LicenseProductConfiguration> licenseProductConfiguration = _licenseProductConfigurationRepository.GetLicenseConfigurationList(licenseProducts.Select(x => x.LicenseProductId).ToList());
+                
                 license.LicenseProductConfigurations = licenseProductConfiguration;
                 foreach (var mechsconfig in license.LicenseProductConfigurations)
                 {
@@ -1549,6 +1561,12 @@ namespace UMPG.USL.API.Business.Licenses
             return _licensePRWriterRateRepository.GetLicenseProductRecordingWriterRates(licenseWriterId);
         }
 
+        public int GetLicenseProductNumber(int licenseId, int productId)
+        {
+            var result = _licenseProductRepository.GetLicenseProduct(licenseId, productId);
+            return result.LicenseProductId;
+
+        }
         public int GetLicenseProductRecordingWritersNo(int licenseRecordingId)
         {
             return _licensePRWriterRepository.GetLicenseProductRecordingWritersNo(licenseRecordingId);
@@ -2974,7 +2992,7 @@ namespace UMPG.USL.API.Business.Licenses
             }
             */
         }
-        
+
         public bool EditWriterIsIncluded(EditWriterIncludedSaveRequest request)
         {
             List<LicenseProductRecordingWriterRate> lwritersRates;
@@ -3140,6 +3158,51 @@ namespace UMPG.USL.API.Business.Licenses
                     break;
             };
             return true;
+        }
+
+        public LicenseProductRecordingWriter GetLicenseProductRecordingWriter(int licenseRecordingId, int caeNumber,
+            string ipCode)
+        {
+
+            var result = new LicenseProductRecordingWriter();
+
+
+            result =_licensePRWriterRepository.GetByRecordingIdAndCaeNumber(
+                      licenseRecordingId, caeNumber, ipCode);
+            if (result != null)
+            {
+
+
+                
+
+
+                //Get Rates
+                result.RateList =
+                    GetAllRates(licenseRecordingId);
+                //if (result.RateList != null)
+                //{
+                //    foreach (var rate in result.RateList)
+                //    {
+                //        if (rate.RateTypeId != null)
+                //        {
+                //            rate.RateType = 
+                //        }  
+                //    }
+                //}
+
+
+                //Get notes
+                result.WriterNotes =
+                _licensePRWriterNoteRepository.GetLicenseProductRecordingWriterNotesForLicenseWriterId(
+                    licenseRecordingId);
+
+            }
+            return result;
+        }
+
+        private List<LicenseProductRecordingWriterRate> GetAllRates(int licenseProductRecordingWriterId)
+        {
+            return _licensePRWriterRateRepository.GetLicenseProductRecordingWriterRates(licenseProductRecordingWriterId);
         }
 
         public bool EditPaidQuarter(EditPaidQuarterSaveRequest request)
@@ -4295,6 +4358,8 @@ namespace UMPG.USL.API.Business.Licenses
             }
         }
 
+   
+
         private void HarmonizeRecsWithNewLicense(LicenseProduct newLicenseProduct, int oldLicenseProductId)
         {
             _licenseProductConfigurationManager.AddLicenseRecordingForProductSafe(newLicenseProduct.ProductId,
@@ -4358,6 +4423,18 @@ namespace UMPG.USL.API.Business.Licenses
 
                 _licensePRWriterRateRepository.Add(licenseProductRecordingWriterRate);
             }
+        }
+
+        private void DeleteLicenseProductFromSnapshot(int licenseId, int productId, LicenseProduct licenseProduct)
+        {
+            //Get snapshot License
+            var snapshotLicense = _snapshotLicenseRepository.GetSnapshotLicenseByCloneLicenseId(licenseId);
+
+            //Get SnapshotLicenseProductId to Delete
+            var snapshotLicenseProductId =_snapshotLicenseProductManager.GetSnapshotLicenseProductByLicenseProductId(licenseProduct.LicenseProductId).SnapshotLicenseProductId;
+
+            _snapshotLicenseProductManager.DeleteLicenseProductAndChildEntities(snapshotLicense,
+                snapshotLicenseProductId);
         }
 
         //private void createLicenseProductRecordingIds(int licenseProductId, int configuration_id, string configuration_name, DateTime createdDate, int createdBy, int product_configuration_id, bool writerRateInclude)

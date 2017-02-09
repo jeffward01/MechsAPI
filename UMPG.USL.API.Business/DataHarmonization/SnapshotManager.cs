@@ -1,6 +1,11 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UMPG.USL.API.Business.Recs;
+using UMPG.USL.API.Data.DataHarmonization;
+using UMPG.USL.API.Data.LicenseData;
+using UMPG.USL.API.Data.Recs;
 using UMPG.USL.Models.DataHarmonization;
 using UMPG.USL.Models.LicenseModel;
 using UMPG.USL.Models.Recs;
@@ -9,13 +14,42 @@ namespace UMPG.USL.API.Business.DataHarmonization
 {
     public class SnapshotManager : ISnapshotManager
     {
+        private readonly ILicenseProductConfigurationRepository _licenseProductConfigurationRepository;
+        private readonly ILicenseProductRecordingRepository _licenseProductRecordingRepository;
+        private readonly ILicensePRWriterRepository _licensePrWriterRepository;
+        private readonly ILicensePRWriterNoteRepository _licensePrWriterNoteRepository;
+        private readonly ILicensePRWriterRateRepository _licensePrWriterRateRepository;
         private readonly ISnapshotLicenseManager _snapshotLicenseManager;
         private readonly ISnapshotLicenseProductManager _snapshotLicenseProductManager;
+        private readonly ISnapshotProductHeaderRepository _snapshotProductHeaderRepository;
+        private readonly ISnapshotRecsConfigurationRepository _snapshotRecsConfigurationRepository;
+        private readonly ILicenseRepository _licenseRepository;
+
+        private readonly IRecs _recsRepository;
+
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public SnapshotManager(ISnapshotLicenseManager snapshotLicenseManager,
-            ISnapshotLicenseProductManager snapshotLicenseProductManager)
+        public SnapshotManager(ISnapshotLicenseManager snapshotLicenseManager, ILicenseProductConfigurationRepository licenseProductConfigurationRepository,
+            ILicenseProductRepository licenseProductRepository,
+            ILicensePRWriterRepository licensePrWriterRepository,
+            ILicensePRWriterRateRepository licensePrWriterRateRepository,
+            ILicensePRWriterNoteRepository licensePrWriterNoteRepository,
+            ILicenseProductRecordingRepository licenseProductRecordingRepository,
+
+
+            ISnapshotLicenseProductManager snapshotLicenseProductManager, ILicenseRepository licenseRepository,
+            IRecs recsRepository, ISnapshotProductHeaderRepository snapshotProductHeaderRepository,
+            ISnapshotRecsConfigurationRepository snapshotRecsConfigurationRepository)
         {
+            _licenseProductRecordingRepository = licenseProductRecordingRepository;
+            _licensePrWriterNoteRepository = licensePrWriterNoteRepository;
+            _licensePrWriterRateRepository = licensePrWriterRateRepository;
+            _licensePrWriterRepository = licensePrWriterRepository;
+            _licenseProductConfigurationRepository = licenseProductConfigurationRepository;
+            _snapshotRecsConfigurationRepository = snapshotRecsConfigurationRepository;
+            _snapshotProductHeaderRepository = snapshotProductHeaderRepository;
+            _recsRepository = recsRepository;
+            _licenseRepository = licenseRepository;
             _snapshotLicenseProductManager = snapshotLicenseProductManager;
             _snapshotLicenseManager = snapshotLicenseManager;
         }
@@ -28,7 +62,33 @@ namespace UMPG.USL.API.Business.DataHarmonization
         public bool DoesLicenseSnapshotExistAndComplete(int licenseId)
         {
             return _snapshotLicenseManager.DoesSnapshotExistAndComplete(licenseId);
+        }
 
+        public Snapshot_ProductHeader GetSnapshotProductHeaderByLicenseId(int licenseId)
+        {
+            return _snapshotLicenseProductManager.GetSnapshotProductHeaderByLicenseId(licenseId);
+        }
+
+        public Snapshot_ProductHeader SnapshotProductHeader(ProductHeader productHeaderToBeSnapshotted)
+        {
+            var snapshotProductHeader = CastToProductHeaderSnapshot(productHeaderToBeSnapshotted);
+            return _snapshotLicenseProductManager.SaveProductHeaderSnapshot(snapshotProductHeader);
+        }
+
+        //This links the LicenseProductConfig to the snapshotRecsConfig.  MECHS sees the config as 'added' if it has a LicenseProductConfigAttached
+        public void LinkProductConfigurationToProductHeader(LicenseProductConfiguration licenseProductConfiguration,
+            int productHeaderSnapshotId)
+        {
+            var productHeader = _snapshotProductHeaderRepository.GetProductHeaderLite(productHeaderSnapshotId);
+
+            foreach (var config in productHeader.Configurations)
+            {
+                if (config.CloneRecsConfigurationId == licenseProductConfiguration.product_configuration_id)
+                {
+                    config.LicenseProductConfigurationId = licenseProductConfiguration.LicenseProductConfigurationId;
+                    _snapshotRecsConfigurationRepository.UpdateSnapshotRecsConfiguration(config);
+                }
+            }
         }
 
         public Snapshot_License GeLicenseSnapshotByLicenseId(int licenseId)
@@ -36,7 +96,74 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return _snapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(licenseId);
         }
 
+        public bool TakeLicenseSnapshotLite(License licenseToBeSnapshotted, bool snapshotComplete)
+        {
+            var newLicense = CastToSnapshotLicense(licenseToBeSnapshotted);
+            //Virtuals?
+
+            //Snapshot here
+            try
+            {
+                newLicense.SnapshotComplete = snapshotComplete;
+                var savedLicense = _snapshotLicenseManager.SaveSnapshotLicense(newLicense);
+            }
+            catch (Exception exception)
+            {
+                Logger.Debug(exception.ToString);
+                return false;
+            }
+
+            return true;
+        }
+
+        public Snapshot_LicenseProduct TakeLicenseProductSnapshotLite(LicenseProduct licenseProductToBeSnapshotted)
+        {
+            var newLicense = CastToLicenseProductSnapshot(licenseProductToBeSnapshotted);
+            //Virtuals?
+            var savedLicenseProduct = new Snapshot_LicenseProduct();
+            //Snapshot here
+            try
+            {
+                savedLicenseProduct = _snapshotLicenseProductManager.SaveSnapshotLicenseProduct(newLicense);
+            }
+            catch (Exception exception)
+            {
+                Logger.Debug(exception.ToString);
+            }
+
+            return savedLicenseProduct;
+        }
+
+        public bool TakeWorksRecordingSnapshot(List<WorksRecording> worksRecordings, int productId, int licenseProductId,
+            int createdBy, DateTime createdDate)
+        {
+            var snapshottedRecordings = CastToSnapshotRecordings(worksRecordings, productId, licenseProductId);
+
+            return _snapshotLicenseProductManager.SaveSnapshotWorksRecording(snapshottedRecordings, licenseProductId);
+        }
+
         public bool TakeLicenseSnapshot(License licenseToBeSnapshotted, List<LicenseProduct> licenseProducts)
+        {
+            var newLicense = CastToSnapshotLicense(licenseToBeSnapshotted);
+            //Virtuals?
+
+            //Snapshot here
+            try
+            {
+                var savedLicense = _snapshotLicenseManager.SaveSnapshotLicense(newLicense);
+                //snapshot LicenseProducts
+                SaveLocalLicenseProductSnapshot(licenseProducts, savedLicense);
+            }
+            catch (Exception exception)
+            {
+                Logger.Debug(exception.ToString);
+                return false;
+            }
+
+            return true;
+        }
+
+        private Snapshot_License CastToSnapshotLicense(License licenseToBeSnapshotted)
         {
             var newLicense = new Snapshot_License();
             newLicense.CloneLicenseId = licenseToBeSnapshotted.LicenseId;
@@ -91,23 +218,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             newLicense.StatusReport = licenseToBeSnapshotted.StatusReport;
 
             newLicense.StatusesRollup = licenseToBeSnapshotted.StatusesRollup;
-
-            //Virtuals?
-
-            //Snapshot here
-            try
-            {
-                var savedLicense = _snapshotLicenseManager.SaveSnapshotLicense(newLicense);
-                //snapshot LicenseProducts
-                SaveLocalLicenseProductSnapshot(licenseProducts, savedLicense);
-            }
-            catch (Exception exception)
-            {
-                Logger.Debug(exception.ToString);
-                return false;
-            }
-
-            return true;
+            return newLicense;
         }
 
         private bool SaveLocalLicenseProductSnapshot(List<LicenseProduct> localLicenseProducts,
@@ -132,10 +243,116 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return true;
         }
 
+        public void UpdateProductHeaderSnapshot(ProductHeader newproductHeader,
+            UpdateLicenseProductConfigurationRequest request)
+        {
+            //get product header
+            var snapshotLicense = GetLicenseSnapshotFull(request.licenseId);
+            foreach (var snapshotLicenseProduct in snapshotLicense.LicenseProducts)
+            {
+                updateSnapshotProductHeader(snapshotLicenseProduct.ProductHeader, newproductHeader);
+            }
+        }
+
+        private void updateSnapshotProductHeader(Snapshot_ProductHeader snapshotProductHeader,
+            ProductHeader newProductHeader)
+        {
+            foreach (var config in newProductHeader.Configurations)
+            {
+                foreach (var snapshotConfig in snapshotProductHeader.Configurations)
+                {
+                    if (snapshotConfig.CloneRecsConfigurationId == (int) config.configuration_id)
+                    {
+                        snapshotConfig.UPC = config.UPC;
+                        snapshotConfig.ReleaseDate = config.ReleaseDate;
+                        //update snapshotRecsConfig
+                        _snapshotRecsConfigurationRepository.UpdateSnapshotRecsConfiguration(snapshotConfig);
+                    }
+                }
+            }
+        }
+
+        public void DeleteRecsConfigAndChildrenForProductHeader(Snapshot_ProductHeader productHeader,
+            int cloneRecsConfigurationId)
+        {
+            _snapshotLicenseManager.DeleteRecsConfigAndChildrenForProductHeader(productHeader,
+                cloneRecsConfigurationId);
+        }
+
         public bool DeleteLicenseSnapshot(int licenseSnapshotId)
         {
             return _snapshotLicenseManager.DeleteLicenseSnapshotAndAllChildren(licenseSnapshotId);
         }
+
+        
+
+        public Snapshot_License GetLicenseSnapshotFull(int licenseId)
+        {
+            var licenseSnapshot = GeLicenseSnapshotByLicenseId(licenseId);
+
+            //Load up rates
+            foreach (var licenseProduct in licenseSnapshot.LicenseProducts)
+            {
+                if (licenseProduct.Recordings.Count >= 1)
+                {
+                    foreach (var recording in licenseProduct.Recordings)
+                    {
+                        GetRates(recording);
+                    }
+                }
+
+                //ensuure license prodcut config is there.
+                foreach (var config in licenseProduct.ProductHeader.Configurations)
+                {
+                    if (config.LicenseProductConfigurationId != null && config.LicenseProductConfiguration == null)
+                    {
+                        config.LicenseProductConfiguration =
+                            _licenseProductConfigurationRepository
+                                .GetLicenseProductConfigurationBLicenseProductConfigurationId(
+                                    config.LicenseProductConfigurationId.Value);
+                    }
+                }
+
+
+            }
+
+            return licenseSnapshot;
+        }
+
+        private void GetRates(Snapshot_WorksRecording snapshotWorksRecording)
+        {
+            if (snapshotWorksRecording != null)
+            {
+                snapshotWorksRecording.LicenseRecording =
+                    _licenseProductRecordingRepository.GetLicenseRecordingsByRecsTrackId(
+                        snapshotWorksRecording.Track.CloneWorksTrackId);
+
+                foreach (var writer in snapshotWorksRecording.Writers)
+                {
+                    writer.LicenseProductRecordingWriter =
+                        _licensePrWriterRepository.GetByRecordingIdAndCaeNumber(
+                            snapshotWorksRecording.LicenseRecording.LicenseRecordingId, writer.CloneCaeNumber,
+                            writer.IpCode);
+                    if (writer.LicenseProductRecordingWriter != null)
+                    {
+                        //Get Rates
+                        writer.LicenseProductRecordingWriter.RateList =
+                            GetAllRates(writer.LicenseProductRecordingWriter.LicenseWriterId);
+
+                        //Get notes
+                        writer.LicenseProductRecordingWriter.WriterNotes =
+                            _licensePrWriterNoteRepository.GetLicenseProductRecordingWriterNotesForLicenseWriterId(
+                                writer.LicenseProductRecordingWriter.LicenseWriterId);
+                    }
+                }
+            }
+        }
+
+        private List<LicenseProductRecordingWriterRate> GetAllRates(int licenseProductRecordingWriterId)
+        {
+            return _licensePrWriterRateRepository.GetLicenseProductRecordingWriterRates(licenseProductRecordingWriterId);
+        }
+
 
         #region CastToSnapshot
 
@@ -145,13 +362,16 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
             snapshot.CloneLicenseProductId = licenseProduct.LicenseProductId;
             snapshot.LicenseId = licenseProduct.LicenseId;
-            snapshot.ProductHeaderId = (int)licenseProduct.ProductHeader.Id;
-            snapshot.ProductHeader = CastToProductHeaderSnapshot(licenseProduct.ProductHeader);
+            if (licenseProduct.ProductHeader != null)
+            {
+                snapshot.ProductHeaderId = (int) licenseProduct.ProductHeader.Id;
+                snapshot.ProductHeader = CastToProductHeaderSnapshot(licenseProduct.ProductHeader);
+            }
             snapshot.ScheduleId = licenseProduct.ScheduleId;
             snapshot.ProductId = licenseProduct.ProductId;
             snapshot.LicensePRecordingsNo = licenseProduct.LicensePRecordingsNo;
             snapshot.LicenseClaimException = licenseProduct.LicenseClaimException;
-            snapshot.TotalLicenseConfigAmount = (int)licenseProduct.TotalLicenseConfigAmount;
+            snapshot.TotalLicenseConfigAmount = (int) licenseProduct.TotalLicenseConfigAmount;
             snapshot.title = licenseProduct.title;
             snapshot.PaidQuarter = licenseProduct.PaidQuarter;
             snapshot.RelatedLicensesNo = licenseProduct.RelatedLicensesNo;
@@ -190,9 +410,9 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.LicenseProductId = licenseProductId;
 
                 snapshot.CdIndex = rec.CdIndex;
-                snapshot.UmpgPercentageRollup = (int)rec.UmpgPercentageRollup;
+                snapshot.UmpgPercentageRollup = (int) rec.UmpgPercentageRollup;
                 snapshot.CdNumber = rec.CdNumber;
-                snapshot.LicensedRollup = (int)rec.LicensedRollup;
+                snapshot.LicensedRollup = (int) rec.LicensedRollup;
                 if (rec.LicenseRecording != null)
                 {
                     snapshot.LicenseProductRecordingId = rec.LicenseRecording.LicenseRecordingId;
@@ -218,7 +438,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             var snapshot = new Snapshot_WorksTrack();
             snapshot.CloneWorksTrackId = track.Id;
             snapshot.Title = track.Title;
-            snapshot.ArtistRecsId = (int)track.Artists.id;
+            snapshot.ArtistRecsId = (int) track.Artists.id;
             snapshot.WritersNo = track.WritersNo;
             snapshot.ControledWritersNo = track.ControledWritersNo;
             snapshot.Controlled = track.Controlled;
@@ -248,8 +468,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.PrincipalArtist = rec.PrincipalArtist;
                 snapshot.Writers = rec.Writers;
                 snapshot.WriteString = rec.WriteString;
-                snapshot.MechanicalCollectablePercentage = (int)rec.MechanicalCollectablePercentage;
-                snapshot.MechanicalOwnershipPercentage = (int)rec.MechanicalOwnershipPercentage;
+                snapshot.MechanicalCollectablePercentage = (int) rec.MechanicalCollectablePercentage;
+                snapshot.MechanicalOwnershipPercentage = (int) rec.MechanicalOwnershipPercentage;
                 if (rec.Composers != null)
                 {
                     snapshot.Composers = CastToSnapshotComposers(rec.Composers, workTrackId);
@@ -284,7 +504,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.CloneWorksTrackId = workTrackId;
                 if (writer.Contribution != null)
                 {
-                    snapshot.Contribution = (int)writer.Contribution;
+                    snapshot.Contribution = (int) writer.Contribution;
                 }
                 if (writer.OriginalPublishers != null)
                 {
@@ -332,7 +552,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return snapshotList;
         }
 
-        private List<Snapshot_ComposerAffiliationBase> castToComposerAffiliationsBases(List<AffiliationBase> affiliations,
+        private List<Snapshot_ComposerAffiliationBase> castToComposerAffiliationsBases(
+            List<AffiliationBase> affiliations,
             int caeNumber)
         {
             var snapshotList = new List<Snapshot_ComposerAffiliationBase>();
@@ -410,12 +631,13 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.FullName = admin.FullName;
                 snapshot.CapacityCode = admin.CapacityCode;
                 snapshot.Capacity = admin.Capacity;
-                snapshot.MechanicalOwnershipPercentage = (int)admin.MechanicalOwnershipPercentage;
-                snapshot.MechanicalCollectablePercentage = (int)admin.MechanicalCollectablePercentage;
+                snapshot.MechanicalOwnershipPercentage = (int) admin.MechanicalOwnershipPercentage;
+                snapshot.MechanicalCollectablePercentage = (int) admin.MechanicalCollectablePercentage;
                 snapshot.Controlled = admin.Controlled;
                 if (admin.Affiliation != null)
                 {
-                    snapshot.Affiliation = CastSnapshotComposerOriginalPublisherAdminAffiliations(admin.Affiliation, caeNumber);
+                    snapshot.Affiliation = CastSnapshotComposerOriginalPublisherAdminAffiliations(admin.Affiliation,
+                        caeNumber);
                 }
                 if (admin.KnownAs != null)
                 {
@@ -540,10 +762,11 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.PrincipalArtist = sample.PrincipalArtist;
                 snapshot.Writers = sample.Writers;
                 snapshot.WriteString = sample.WriteString;
-                snapshot.MechanicalCollectablePercentage = (int)sample.MechanicalCollectablePercentage;
-                snapshot.MechanicalOwnershipPercentage = (int)sample.MechanicalOwnershipPercentage;
+                snapshot.MechanicalCollectablePercentage = (int) sample.MechanicalCollectablePercentage;
+                snapshot.MechanicalOwnershipPercentage = (int) sample.MechanicalOwnershipPercentage;
                 snapshot.LocalClients = CastToLocalClientSnapshot(sample.LocalClients, workTrackId);
-                snapshot.AquisitionLocationCodes = CastToAquisitionLocationCodes(sample.AquisitionLocationCode, workTrackId);
+                snapshot.AquisitionLocationCodes = CastToAquisitionLocationCodes(sample.AquisitionLocationCode,
+                    workTrackId);
 
                 snapshotList.Add(snapshot);
             }
@@ -591,7 +814,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.CloneWorksTrackId = workTrackId;
                 if (writer.Contribution != null)
                 {
-                    snapshot.Contribution = (int)writer.Contribution;
+                    snapshot.Contribution = (int) writer.Contribution;
                 }
                 if (writer.OriginalPublishers != null)
                 {
@@ -797,8 +1020,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.CapacityCode = admin.CapacityCode;
                 snapshot.Capacity = admin.Capacity;
                 snapshot.Controlled = admin.Controlled;
-                snapshot.MechanicalCollectablePercentage = (int)admin.MechanicalCollectablePercentage;
-                snapshot.MechanicalOwnershipPercentage = (int)admin.MechanicalOwnershipPercentage;
+                snapshot.MechanicalCollectablePercentage = (int) admin.MechanicalCollectablePercentage;
+                snapshot.MechanicalOwnershipPercentage = (int) admin.MechanicalOwnershipPercentage;
                 snapshot.Affiliation = CastToAdminAffiliationSnapshot(admin.Affiliation, admin.CaeNumber);
                 if (admin.KnownAs != null)
                 {
@@ -810,7 +1033,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return snapshotList;
         }
 
-        private List<Snapshot_AdminAffiliation> CastToAdminAffiliationSnapshot(List<Affiliation> affiliations, int caeNumber)
+        private List<Snapshot_AdminAffiliation> CastToAdminAffiliationSnapshot(List<Affiliation> affiliations,
+            int caeNumber)
 
         {
             var snapshotList = new List<Snapshot_AdminAffiliation>();
@@ -830,7 +1054,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return snapshotList;
         }
 
-        private List<Snapshot_AdminAffiliationBase> CastToAdminAffiliationBaseSnapshot(List<AffiliationBase> affiliationBases, int writerCaeCode)
+        private List<Snapshot_AdminAffiliationBase> CastToAdminAffiliationBaseSnapshot(
+            List<AffiliationBase> affiliationBases, int writerCaeCode)
         {
             var snapshotList = new List<Snapshot_AdminAffiliationBase>();
 
@@ -861,7 +1086,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return snapshotList;
         }
 
-        private List<Snapshot_OriginalPublisherAffiliation> CastToOriginalPublisherAffiliationSnapshot(List<Affiliation> affiliations, int caeNumber)
+        private List<Snapshot_OriginalPublisherAffiliation> CastToOriginalPublisherAffiliationSnapshot(
+            List<Affiliation> affiliations, int caeNumber)
         {
             var snapshotList = new List<Snapshot_OriginalPublisherAffiliation>();
 
@@ -871,7 +1097,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.CloneWriterCaeNumber = caeNumber;
                 snapshot.WriterCaeNumber = caeNumber;
                 snapshot.IncomeGroup = affilation.IncomeGroup;
-                snapshot.Affiliations = CastToOriginalPublisherAffiliationBaseSnapshot(affilation.Affiliations, caeNumber);
+                snapshot.Affiliations = CastToOriginalPublisherAffiliationBaseSnapshot(affilation.Affiliations,
+                    caeNumber);
                 snapshotList.Add(snapshot);
             }
 
@@ -895,7 +1122,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return snapshotList;
         }
 
-        private List<Snapshot_OriginalPubAffiliationBase> CastToOriginalPublisherAffiliationBaseSnapshot(List<AffiliationBase> affiliationBases, int caeNumber)
+        private List<Snapshot_OriginalPubAffiliationBase> CastToOriginalPublisherAffiliationBaseSnapshot(
+            List<AffiliationBase> affiliationBases, int caeNumber)
         {
             var snapshotList = new List<Snapshot_OriginalPubAffiliationBase>();
 
@@ -912,7 +1140,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return snapshotList;
         }
 
-        private List<Snapshot_AffiliationBase> CastToAffiliationBaseSnapshot(List<AffiliationBase> affiliationBases, int caeNumber)
+        private List<Snapshot_AffiliationBase> CastToAffiliationBaseSnapshot(List<AffiliationBase> affiliationBases,
+            int caeNumber)
         {
             var snapshotList = new List<Snapshot_AffiliationBase>();
 
@@ -929,7 +1158,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return snapshotList;
         }
 
-        private List<Snapshot_LocalClientCopyright> CastToSnapshotLocalClientCopyrights(List<LocalClientCopyright> localClientCopyrights, int workTrackId)
+        private List<Snapshot_LocalClientCopyright> CastToSnapshotLocalClientCopyrights(
+            List<LocalClientCopyright> localClientCopyrights, int workTrackId)
         {
             var snapshotList = new List<Snapshot_LocalClientCopyright>();
 
@@ -946,7 +1176,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return snapshotList;
         }
 
-        private List<Snapshot_AquisitionLocationCode> CastToSnapshotAquisitionLocationCode(List<string> aquisitionLocationCodes, int workTrackId)
+        private List<Snapshot_AquisitionLocationCode> CastToSnapshotAquisitionLocationCode(
+            List<string> aquisitionLocationCodes, int workTrackId)
         {
             var snapshotList = new List<Snapshot_AquisitionLocationCode>();
 
@@ -964,30 +1195,36 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private Snapshot_ProductHeader CastToProductHeaderSnapshot(ProductHeader productHeader)
         {
             var snapshotProductHeader = new Snapshot_ProductHeader();
-            snapshotProductHeader.CloneProductHeaderId = (int)productHeader.Id;
+            snapshotProductHeader.CloneProductHeaderId = (int) productHeader.Id;
             snapshotProductHeader.Title = productHeader.Title;
             snapshotProductHeader.CatalogueId = productHeader.CatalogueId;
             snapshotProductHeader.AlbumArtUrl = productHeader.AlbumArtUrl;
             snapshotProductHeader.DatabaseVersion = productHeader.DatabaseVersion;
             if (productHeader.SoundscanSales != null)
             {
-                snapshotProductHeader.SoundscanSales = (int)productHeader.SoundscanSales;
+                snapshotProductHeader.SoundscanSales = (int) productHeader.SoundscanSales;
             }
             snapshotProductHeader.MechsPriority = productHeader.MechsPriority;
             snapshotProductHeader.RelatedLicensesNo = productHeader.RelatedLicensesNo;
-            snapshotProductHeader.ArtistRecsId = (int)productHeader.Artist.id;
-            snapshotProductHeader.Artist = CastToArtistRecsSnapshot(productHeader.Artist);
-            snapshotProductHeader.LabelId = (int)productHeader.Label.label_id;
+            snapshotProductHeader.ArtistRecsId = (int) productHeader.Artist.id;
+            if (productHeader.Artist != null)
+            {
+                snapshotProductHeader.Artist = CastToArtistRecsSnapshot(productHeader.Artist);
+            }
+            snapshotProductHeader.LabelId = (int) productHeader.Label.label_id;
             snapshotProductHeader.Label = CastToLabelSnapshot(productHeader.Label);
-            snapshotProductHeader.Configurations = CastToRecsConfigurationsSnapshot(productHeader.Configurations, (int)productHeader.Id);
-
+            if (productHeader.Configurations != null)
+            {
+                snapshotProductHeader.Configurations = CastToRecsConfigurationsSnapshot(productHeader.Configurations,
+                    (int) productHeader.Id);
+            }
             return snapshotProductHeader;
         }
 
         private Snapshot_ArtistRecs CastToArtistRecsSnapshot(ArtistRecs artistRecs)
         {
             var snapshotArtists = new Snapshot_ArtistRecs();
-            snapshotArtists.CloneArtistRecsId = (int)artistRecs.id;
+            snapshotArtists.CloneArtistRecsId = (int) artistRecs.id;
             snapshotArtists.Name = artistRecs.name;
             return snapshotArtists;
         }
@@ -995,7 +1232,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private Snapshot_Label CastToLabelSnapshot(Label label)
         {
             var snapshot = new Snapshot_Label();
-            snapshot.CloneLabelId = (int)label.label_id;
+            snapshot.CloneLabelId = (int) label.label_id;
             snapshot.RecordLabelGroups = CastToLabelGroupSnapshot(label.recordLabelGroups, label);
             snapshot.Name = label.name;
             return snapshot;
@@ -1003,13 +1240,13 @@ namespace UMPG.USL.API.Business.DataHarmonization
 
         private List<Snapshot_LabelGroup> CastToLabelGroupSnapshot(List<LabelGroup> labelGroup, Label label)
         {
-            var labelId = (int)label.label_id;
+            var labelId = (int) label.label_id;
             var snapshotList = new List<Snapshot_LabelGroup>();
 
             foreach (var group in labelGroup)
             {
                 var snapshot = new Snapshot_LabelGroup();
-                snapshot.CloneLabelGroupId = (int)group.id;
+                snapshot.CloneLabelGroupId = (int) group.id;
                 snapshot.Name = group.Name;
                 snapshot.CloneLabelId = labelId;
                 snapshotList.Add(snapshot);
@@ -1026,12 +1263,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
             foreach (var config in recsConfigurations)
             {
                 var snapshot = new Snapshot_RecsConfiguration();
-                snapshot.CloneRecsConfigurationId = (int)config.configuration_id;
+                snapshot.CloneRecsConfigurationId = (int) config.configuration_id;
                 if (config.LicenseProductConfiguration != null)
                 {
                     snapshot.LicenseProductId = config.LicenseProductConfiguration.LicenseProductId;
                 }
-                snapshot.ConfigurationId = (int)config.Configuration.ConfigId;
+                snapshot.ConfigurationId = (int) config.Configuration.ConfigId;
                 snapshot.Configuration = CastToConfigurationSnapshot(config.Configuration);
                 snapshot.ProductHeaderId = productHeaderId;
                 snapshot.Name = config.name;
@@ -1053,7 +1290,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
         private Snapshot_Configuration CastToConfigurationSnapshot(Configuration configuration)
         {
             var snapshot = new Snapshot_Configuration();
-            snapshot.CloneConfigId = (int)configuration.ConfigId;
+            snapshot.CloneConfigId = (int) configuration.ConfigId;
             snapshot.Name = configuration.name;
             snapshot.Type = configuration.type;
             return snapshot;

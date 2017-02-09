@@ -42,14 +42,239 @@ namespace UMPG.USL.API.Controllers
             return Ok(_repo.RestartService("LicenseProcessor"));
         }
 
+        [Route("RestartProcessor/{processorName}")]
+        [HttpGet]
+        public IHttpActionResult RestartProcessor(string processorName)
+        {
+            return Ok(_repo.RestartService(processorName));
+        }
+        
+        [Route("ClearRestartInProcess")]
+        [HttpGet]
+        public IHttpActionResult ClearRestartInProcess()
+        {
+            return Ok(_repo.ClearRestartInProcess());
+        }
+
         [Route("GetAllProcessorStatus")]
         [HttpGet]
         public IHttpActionResult GetAllProcessorStatus()
         {
             return Ok(_repo.GetAllProcessorStatus());
         }
-
         
+        [Route("GetProcessorStatus/{processorName}")]
+        [HttpGet]
+        public IHttpActionResult GetAllProcessorStatus(string processorName)
+        {
+            return Ok(_repo.GetServiceInformation(processorName));
+        }
+
+        [Route("GetRestartInProgress")]
+        [HttpGet]
+        public IHttpActionResult GetRestartInProgress()
+        {
+            return Ok(_repo.GetRestartInProgress());
+        }
+
+        [Route("TestRestartProcessor/{processorName}")]
+        [HttpGet]
+        public IHttpActionResult TestRestartProcessor(string processorName)
+        {
+            return Ok(_repo.TestStartRemoteService(processorName));
+        }
+
+
+        [Route("IsAdmin/{contactId}")]
+        [HttpGet]
+        public IHttpActionResult IsAdmin(int contactId)
+        {
+            return Ok(_repo.IsAdmin(contactId));
+        }
+
+
+        [Route("SolrFailedItems")]
+        [HttpGet]
+        public IHttpActionResult SolrFailedItems()
+        {
+            return Ok(_repo.GetAllFailedSolrItems());
+        }
+
+
+        [Route("SolrUnProcessedItems")]
+        [HttpGet]
+        public IHttpActionResult SolrUnProcessedItems()
+        {
+            return Ok(_repo.GetAllUnProcessedSolrItems());
+        }
+
+
+        [Route("LicenseUnProcessedItems")]
+        [HttpGet]
+        public IHttpActionResult LicenseUnProcessedItems()
+        {
+            return Ok(_repo.GetUnProcessedLicenseItems());
+        }
+
+        [Route("LicenseFailedItems")]
+        [HttpGet]
+        public IHttpActionResult LicenseFailedItems()
+        {
+            return Ok(_repo.GetAllFailedLicenseItems());
+        }
+
+
+        [Route("DataHarmonizingUnProcessedItems")]
+        [HttpGet]
+        public IHttpActionResult DataHarmonizingUnProcessedItems()
+        {
+            return Ok(_repo.GetAllUnProcessedDataHarmonizationItems());
+        }
+
+
+        [Route("DataHarmonizingFailedItems")]
+        [HttpGet]
+        public IHttpActionResult DataHarmonizingFailedItems()
+        {
+            return Ok(_repo.GetAllFailedDataHarmonizationItems());
+        }
+
+
+
+        [Route("SetAllUnProcessedSolrItemsToPending")]
+        [HttpGet]
+        public IHttpActionResult SetAllUnProcessedSolrItemsToPending()
+        {
+            _repo.SetAllUnProcessedSolrItemsToPending();
+            return Ok();
+        }
+
+
+        [Route("DeleteAllUnProcessedSolrItems")]
+        [HttpGet]
+        public IHttpActionResult DeleteAllUnProcessedSolrItems()
+        {
+            _repo.DeleteAllUnProcessedSolrItems();
+            return Ok();
+        }
+
+
+        [Route("SetSingleUnProcessedSolrItemToPending/{solrIndexId}")]
+        [HttpPost]
+        public IHttpActionResult SetSingleUnProcessedSolrItemToPending(int solrIndexId)
+        {
+            _repo.SetIndividualSolrItemToPending(solrIndexId);
+            return Ok();
+        }
+
+
+        [Route("DeleteSingleUnProcessedSolrItem/{solrIndexId}")]
+        [HttpPost]
+        public IHttpActionResult DeleteSingleUnProcessedSolrItem(int solrIndexId)
+        {
+            _repo.DeleteIndividualSolrItem(solrIndexId);
+            return Ok();
+        }
+
+
+        [Route("SetAllUnProcessedDHItemsToPending")]
+        [HttpGet]
+        public IHttpActionResult SetAllUnProcessedDHItemsToPending()
+        {
+            _repo.SetAllUnProcessedDhItemsToPending();
+            return Ok();
+        }
+
+
+        [Route("DeleteAllUnProcessedDHItems")]
+        [HttpGet]
+        public IHttpActionResult DeleteAllUnProcessedDHItems()
+        {
+            _repo.DeleteAllUnProcessedDhItems();
+            return Ok();
+        }
+
+
+        [Route("SetSingleUnProcessedDHItemToPending/{DHIndexId}")]
+        [HttpPost]
+        public IHttpActionResult SetSingleUnProcessedDHItemToPending(int DHIndexId)
+        {
+            _repo.SetIndividualDHItemToPending(DHIndexId);
+            return Ok();
+        }
+
+
+        [Route("DeleteAllFailedLicenseItems")]
+        [HttpGet]
+        public IHttpActionResult DeleteAllFailedLicenseItems()
+        {
+            _repo.DeleteAllFailedLicenseItems();
+            return Ok();
+        }
+
+        [Route("DeleteAllUnProcessedLicenseItems")]
+        [HttpGet]
+        public IHttpActionResult DeleteAllUnProcessedLicenseItems()
+        {
+            _repo.DeleteAllUnProcessedLicenseItems();
+            return Ok();
+        }
+
+
+        [Route("SetSingleUnProcessedLicenseItemToPending/{LicenseIndexId}")]
+        [HttpPost]
+        public IHttpActionResult SetSingleUnProcessedLicenseItemToPending(int LicenseIndexId)
+        {
+            _repo.SetIndividualDHItemToPending(LicenseIndexId);
+            return Ok();
+        }
+
+
+        [Route("DeleteSingleUnProcessedLicenseItem/{LicenseIndexId}")]
+        [HttpPost]
+        public IHttpActionResult DeleteSingleUnProcessedLicenseItem(int LicenseIndexId)
+        {
+            _repo.DeleteSingleLicenseItem(LicenseIndexId);
+            return Ok();
+        }
+
+
+        [Route("DeleteAllFailedSolrItems")]
+        [HttpPost]
+        public IHttpActionResult DeleteAllFailedSolrItems()
+        {
+            _repo.DeleteAllFailedSolrItems();
+            return Ok();
+        }
+
+        [Route("SetAllFailedSolrItemsToPending")]
+        [HttpPost]
+        public IHttpActionResult SetAllFailedSolrItemsToPending()
+        {
+            _repo.SetAllFailedSolrItemsToPending();
+            return Ok();
+        }
+
+
+        [Route("DeleteSingleDhItem/{itemId}")]
+        [HttpPost]
+        public IHttpActionResult DeleteSingleDhItem(int itemId)
+        {
+            _repo.DeleteSingleDhItem(itemId);
+            return Ok();
+        }
+
+
+
+        [Route("SetAllFailedDhItemsToPending")]
+        [HttpPost]
+        public IHttpActionResult DeleteSingleDhItem()
+        {
+            _repo.SetAllFailedDhItemsToPending();
+            return Ok();
+        }
+
+
 
 
 

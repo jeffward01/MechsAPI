@@ -57,7 +57,21 @@ namespace UMPG.USL.API.Data.DataHarmonization
         {
             using (var context = new AuthContext())
             {
-                return context.Snapshot_WorksRecordings.Where(_ => _.LicenseProductId == productId).ToList();
+                return context.Snapshot_WorksRecordings.
+                    
+                    Include("Track").
+                    Include("Track.Copyrights").
+                    Include("Track.Copyrights.Composers").
+                    Include("Track.Copyrights.Samples").
+                    Include("Track.Copyrights.Samples.LocalClients").
+                    Include("Track.Copyrights.Samples.AquisitionLocationCodes").
+                    Include("Track.Copyrights.LocalClients").
+                    Include("Track.Copyrights.AquisitionLocationCodes").
+                    Include("Track.Artist").
+                    Include("LicenseRecording").
+                    Include("Writers").
+
+                    Where(_ => _.LicenseProductId == productId).ToList();
             }
         }
 

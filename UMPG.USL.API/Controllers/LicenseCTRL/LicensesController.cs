@@ -36,6 +36,7 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
             _contactGenerateLicenseQueueManager = contactGenerateLicenseQueueManager;
             _generateLicenseManager = generateLicenseManager;
         }
+
         [AuthorizationRequired]
         [Route("")]
         [HttpGet]

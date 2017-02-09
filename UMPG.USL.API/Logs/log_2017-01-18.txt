@@ -1,0 +1,433 @@
+2017-01-18 09:18:16.3715|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, January 18, 2017 ||  At: 9:18:16 AM 
+
+System.Data.SqlClient.SqlException (0x80131904): The DELETE statement conflicted with the REFERENCE constraint "FK_GenerateLicenseAttachment_GenerateLicenseQueue". The conflict occurred in database "Mechs", table "dbo.GenerateLicenseAttachment", column 'GenerateLicenseQueueId'.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.NonQuery(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.Mapping.Update.Internal.DynamicUpdateCommand.Execute(Dictionary`2 identifierValues, List`1 generatedValues)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+ClientConnectionId:171e9680-c1ce-4810-a578-f2b83b181faf
+Error Number:547,State:0,Class:16
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36
+Origin: http://spa.local
+Token: 0f2a3f5b-7062-4fb2-9d23-fcf09b1cc74b
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/serviceController/DeleteSingleUnProcessedLicenseItem/1, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+POST http://spa.service/api/serviceController/DeleteSingleUnProcessedLicenseItem/1 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-01-18 09:21:38.0415|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, January 18, 2017 ||  At: 9:21:38 AM 
+
+System.Data.SqlClient.SqlException (0x80131904): The DELETE statement conflicted with the REFERENCE constraint "FK_GenerateLicenseAttachment_GenerateLicenseQueue". The conflict occurred in database "Mechs", table "dbo.GenerateLicenseAttachment", column 'GenerateLicenseQueueId'.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.NonQuery(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.Mapping.Update.Internal.DynamicUpdateCommand.Execute(Dictionary`2 identifierValues, List`1 generatedValues)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+ClientConnectionId:5eaa1e15-0b43-41bf-95bb-a969ce1947d3
+Error Number:547,State:0,Class:16
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36
+Origin: http://spa.local
+Token: 0f2a3f5b-7062-4fb2-9d23-fcf09b1cc74b
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/serviceController/DeleteSingleUnProcessedLicenseItem/1, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+POST http://spa.service/api/serviceController/DeleteSingleUnProcessedLicenseItem/1 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-01-18 11:11:06.7785|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:06.7785|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:06.7785|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:06.7785|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:06.7785|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:06.7785|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-18 11:11:06.7785|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/18/2017 11:11:06 AM
+2017-01-18 11:11:07.0625|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (29797) : elapsed :00:00:00.2820000
+2017-01-18 11:11:07.4635|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:07.4635|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:07.4635|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:07.4635|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:07.4635|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:07.4635|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-18 11:11:07.4635|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/18/2017 11:11:07 AM
+2017-01-18 11:11:07.4795|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (11981) : elapsed :00:00:00.4160000
+2017-01-18 11:11:07.6895|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (29795) : elapsed :00:00:00.2240000
+2017-01-18 11:11:07.9475|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (67581) : elapsed :00:00:00.2580000
+2017-01-18 11:11:08.8835|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:08.8835|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:08.8835|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:08.8835|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:08.8835|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:08.8835|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-18 11:11:08.8835|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/18/2017 11:11:08 AM
+2017-01-18 11:11:09.1085|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (29792) : elapsed :00:00:00.2230000
+2017-01-18 11:11:09.4235|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (11918) : elapsed :00:00:00.3140000
+2017-01-18 11:11:16.3105|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (27779) : elapsed :00:00:08.6060000
+2017-01-18 11:11:16.5715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:09.7940000
+2017-01-18 11:11:16.5715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:16.5715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:16.5715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:16.5715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:16.5715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:17.6865|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (27777) : elapsed :00:00:09.5160000
+2017-01-18 11:11:19.2485|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:11.7850000
+2017-01-18 11:11:19.2485|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:19.2485|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:19.2485|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:19.2485|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:19.2485|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:50.9475|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (27776) : elapsed :00:00:41.3010000
+2017-01-18 11:11:51.1735|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:42.2900000
+2017-01-18 11:11:51.1735|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:51.1735|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:51.1735|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:51.1735|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:11:51.1735|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:14:49.7415|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:14:49.7415|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:14:49.7415|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:14:49.7415|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:14:49.7415|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:14:49.7415|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-18 11:14:49.7415|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/18/2017 11:14:49 AM
+2017-01-18 11:14:50.0175|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (29792) : elapsed :00:00:00.2710000
+2017-01-18 11:14:50.3295|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (11918) : elapsed :00:00:00.3120000
+2017-01-18 11:15:55.4755|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (27776) : elapsed :00:01:04.9130000
+2017-01-18 11:15:55.7215|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:01:05.9800000
+2017-01-18 11:15:55.7215|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:15:55.7215|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:15:55.7215|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:15:55.7215|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:15:55.7215|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:26:11.4215|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:26:11.4215|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:26:11.4215|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:26:11.4215|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:26:11.4215|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:26:11.4215|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-18 11:26:11.4215|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/18/2017 11:26:11 AM
+2017-01-18 11:26:11.6545|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (71) : elapsed :00:00:00.2270000
+2017-01-18 11:26:12.0025|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (39666) : elapsed :00:00:00.3480000
+2017-01-18 11:26:36.3085|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (71) : elapsed :00:00:24.0820000
+2017-01-18 11:26:36.5375|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:25.1170000
+2017-01-18 11:26:36.5375|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:26:36.5375|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:26:36.5375|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:26:36.5375|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:26:36.5375|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:35:16.1715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:35:16.1715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:35:16.1715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:35:16.1715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:35:16.1715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:35:16.1715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-18 11:35:16.1715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/18/2017 11:35:16 AM
+2017-01-18 11:35:16.3975|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (71) : elapsed :00:00:00.2230000
+2017-01-18 11:35:16.7665|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (39666) : elapsed :00:00:00.3690000
+2017-01-18 11:35:40.0675|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (71) : elapsed :00:00:23.0720000
+2017-01-18 11:35:40.2905|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:24.1190000
+2017-01-18 11:35:40.2905|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:35:40.2905|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:35:40.2905|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:35:40.2905|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:35:40.2905|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:41:46.3855|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:41:46.3855|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:41:46.3855|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:41:46.3855|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:41:46.3855|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:41:46.3855|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-18 11:41:46.3855|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/18/2017 11:41:46 AM
+2017-01-18 11:41:46.6135|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (71) : elapsed :00:00:00.2230000
+2017-01-18 11:41:46.9305|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (39666) : elapsed :00:00:00.3160000
+2017-01-18 11:42:10.5355|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (71) : elapsed :00:00:23.3820000
+2017-01-18 11:42:10.7605|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:24.3750000
+2017-01-18 11:42:10.7605|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:42:10.7605|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:42:10.7605|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:42:10.7605|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:42:10.7605|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:49:37.7645|INFO|UMPG.USL.API.Business.Licenses.LicenseManager|Sending Create License Snapshot request.  License Id: 71
+2017-01-18 11:49:42.2025|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:49:42.2025|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:49:42.2025|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:49:42.2025|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:49:42.2025|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:49:42.2025|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-18 11:49:42.2025|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/18/2017 11:49:42 AM
+2017-01-18 11:49:42.4325|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (71) : elapsed :00:00:00.2240000
+2017-01-18 11:49:42.6325|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (39666) : elapsed :00:00:00.2000000
+2017-01-18 11:50:06.5085|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (71) : elapsed :00:00:23.6500000
+2017-01-18 11:50:06.7355|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:24.5330000
+2017-01-18 11:50:06.7355|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:50:06.7355|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:50:06.7355|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:50:06.7355|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 11:50:06.7355|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 13:02:15.4465|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 13:02:15.4465|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 13:02:15.4465|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 13:02:15.4465|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 13:02:15.4465|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 13:02:15.4465|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-18 13:02:15.4465|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/18/2017 1:02:15 PM
+2017-01-18 13:02:15.6855|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (71) : elapsed :00:00:00.2360000
+2017-01-18 13:02:16.0695|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (39666) : elapsed :00:00:00.3830000
+2017-01-18 13:02:50.9155|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (71) : elapsed :00:00:34.6210000
+2017-01-18 13:02:52.0305|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:36.5840000
+2017-01-18 13:02:52.0305|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 13:02:52.0305|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 13:02:52.0305|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 13:02:52.0305|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 13:02:52.0325|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 13:03:30.5615|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, January 18, 2017 ||  At: 1:03:30 PM 
+
+System.ArgumentException: An item with the same key has already been added.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.createMethodsCacheKey() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 649
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.ClearCache() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 77
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 26
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.GetCatalogNumber(Int32 productConfigId)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.GetCatalogNumber(Int32 productConfigId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 46
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36
+Origin: http://spa.local
+Token: 016f0ec9-80e5-4d7a-a105-0ae2bd72c5b6
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/58466, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/58466 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-01-18 14:43:47.5545|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, January 18, 2017 ||  At: 2:43:47 PM 
+
+System.ArgumentException: An item with the same key has already been added.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.createMethodsCacheKey() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 651
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.ClearCache() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 77
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 26
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.IProductManagerProxy.GetWorksWriters(String worksCode)
+   at UMPG.USL.API.Controllers.RECsCTRL.ProductController.GetWorksWriters(String worksCode) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\RECsCTRL\ProductsController.cs:line 93
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36
+Origin: http://spa.local
+Token: b610fdbb-9cb3-4e2a-8a07-e1e08e3af152
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: POST, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/RECsCTRL/products/GetWorksWriters, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: MS_FormatterParameterBinding_CancellationToken -- Value: System.Threading.CancellationToken
+
+ 
+Request Method:  
+POST http://spa.service/api/RECsCTRL/products/GetWorksWriters 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-01-18 14:51:49.7995|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:51:49.8005|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:51:49.8005|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:51:49.8005|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:51:49.8005|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:51:49.8005|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-18 14:51:49.8005|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/18/2017 2:51:49 PM
+2017-01-18 14:51:50.4065|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (29795) : elapsed :00:00:00.6050000
+2017-01-18 14:51:50.7355|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (67581) : elapsed :00:00:00.3280000
+2017-01-18 14:51:59.6965|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (27777) : elapsed :00:00:08.7370000
+2017-01-18 14:52:01.2745|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:11.4760000
+2017-01-18 14:52:01.2745|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:52:01.2745|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:52:01.2815|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:52:01.2815|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:52:01.2815|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:52:45.9625|INFO|UMPG.USL.API.Business.Licenses.LicenseManager|Sending Create License Snapshot request.  License Id: 29795
+2017-01-18 14:52:51.3865|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:52:51.3865|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:52:51.3905|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:52:51.3905|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:52:51.3905|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:52:51.3905|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-18 14:52:51.3905|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/18/2017 2:52:51 PM
+2017-01-18 14:52:51.6175|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (29795) : elapsed :00:00:00.2240000
+2017-01-18 14:52:51.7885|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (67581) : elapsed :00:00:00.1710000
+2017-01-18 14:53:00.5945|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (27777) : elapsed :00:00:08.5820000
+2017-01-18 14:53:02.1655|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:10.7790000
+2017-01-18 14:53:02.1655|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:53:02.1715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:53:02.1715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:53:02.1715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-18 14:53:02.1715|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------

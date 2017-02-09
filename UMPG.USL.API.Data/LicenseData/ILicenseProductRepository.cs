@@ -15,7 +15,9 @@ namespace UMPG.USL.API.Data.LicenseData
         List<LicenseProduct> GetAllLicenseProductsForLicenseId(int licenseId);
 
         int GetLicensesNo(int productId);
-        
+        bool DoeseLicenseProductHaveRecordings(int licenseProductId);
+
+
         List<int> GetProductsIds(int licenseId);
 
         List<int> GetLicenseIds(int productId);

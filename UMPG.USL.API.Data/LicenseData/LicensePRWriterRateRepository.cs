@@ -108,7 +108,11 @@ namespace UMPG.USL.API.Data.LicenseData
         {
             using (var context = new AuthContext())
             {
-                return context.LicenseProductRecordingWriterRates.Where(x => x.LicenseWriterId == licenseWriterId && !x.Deleted.HasValue).ToList();
+                return context.LicenseProductRecordingWriterRates.
+                    Include("RateType")
+                    .Include("WritersConsentType")
+                    .Include("SpecialStatusList").
+                    Where(x => x.LicenseWriterId == licenseWriterId && !x.Deleted.HasValue).ToList();
             }
         }
 

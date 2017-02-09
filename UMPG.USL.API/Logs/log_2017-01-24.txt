@@ -1,0 +1,48 @@
+2017-01-24 09:14:27.8426|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:14:27.8696|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:14:27.8696|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:14:27.8696|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:14:27.8696|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:14:27.8696|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-24 09:14:27.8786|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/24/2017 9:14:27 AM
+2017-01-24 09:14:28.2506|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (29800) : elapsed :00:00:00.2710000
+2017-01-24 09:14:28.6536|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (70401) : elapsed :00:00:00.4030000
+2017-01-24 09:15:05.1036|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (27782) : elapsed :00:00:36.1900000
+2017-01-24 09:15:05.3486|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:37.5070000
+2017-01-24 09:15:05.3486|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:15:05.3486|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:15:05.3486|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:15:05.3486|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:15:05.3486|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:18:14.0646|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:18:14.0646|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:18:14.0646|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:18:14.0646|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:18:14.0646|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:18:14.0646|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-24 09:18:14.0646|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/24/2017 9:18:14 AM
+2017-01-24 09:18:14.2906|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (29800) : elapsed :00:00:00.2230000
+2017-01-24 09:18:14.4786|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (70401) : elapsed :00:00:00.1880000
+2017-01-24 09:18:50.2576|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (27782) : elapsed :00:00:35.5560000
+2017-01-24 09:18:50.4816|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:36.4170000
+2017-01-24 09:18:50.4816|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:18:50.4816|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:18:50.4816|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:18:50.4816|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:18:50.4816|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:23:28.2236|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:23:28.2236|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:23:28.2236|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:23:28.2236|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:23:28.2236|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:23:28.2236|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-24 09:23:28.2236|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/24/2017 9:23:28 AM
+2017-01-24 09:23:28.4506|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (29800) : elapsed :00:00:00.2240000
+2017-01-24 09:23:28.7906|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (70401) : elapsed :00:00:00.3400000
+2017-01-24 09:24:32.5926|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (27782) : elapsed :00:01:03.5800000
+2017-01-24 09:24:33.0906|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:01:04.8670000
+2017-01-24 09:24:33.0906|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:24:33.0906|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:24:33.0906|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:24:33.0906|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-24 09:24:33.0906|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------

@@ -1,0 +1,252 @@
+2017-01-25 14:58:09.2960|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:58:09.2960|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:58:09.2960|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:58:09.2960|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:58:09.2960|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:58:09.2960|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-25 14:58:09.3170|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/25/2017 2:58:09 PM
+2017-01-25 14:58:09.8220|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (29792) : elapsed :00:00:00.4570000
+2017-01-25 14:58:10.2620|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (11918) : elapsed :00:00:00.4400000
+2017-01-25 14:59:14.7770|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:59:14.7850|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:59:14.7850|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:59:14.7850|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:59:14.7850|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:59:14.7850|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-25 14:59:14.7850|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/25/2017 2:59:14 PM
+2017-01-25 14:59:15.1370|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (26746) : elapsed :00:00:00.3430000
+2017-01-25 14:59:15.4890|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (64812) : elapsed :00:00:00.3510000
+2017-01-25 14:59:24.9000|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (27776) : elapsed :00:01:14.2980000
+2017-01-25 14:59:25.2260|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:01:15.9310000
+2017-01-25 14:59:25.2260|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:59:25.2260|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:59:25.2390|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:59:25.2390|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:59:25.2390|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:59:54.9430|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (24766) : elapsed :00:00:39.0330000
+2017-01-25 14:59:55.2250|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:40.4480000
+2017-01-25 14:59:55.2250|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:59:55.2250|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:59:55.2360|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:59:55.2360|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 14:59:55.2360|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 16:15:49.1000|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 16:15:49.1320|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 16:15:49.2480|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 16:15:49.2480|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 16:15:49.2480|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 16:15:49.2480|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|--GetProductsNew (CURRENT) starts-------------
+2017-01-25 16:15:49.2650|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|----StartTime :1/25/2017 4:15:49 PM
+2017-01-25 16:15:49.7790|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|.End GetLicenseProducts (29800) : elapsed :00:00:00.5110000
+2017-01-25 16:15:50.1280|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|..End RetrieveProductHeader (70401) : elapsed :00:00:00.3480000
+2017-01-25 16:16:40.8470|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|***End GetLicenseProductRecordingsForLicenseDetails (27782) : elapsed :00:00:50.3810000
+2017-01-25 16:16:41.1270|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|GetProductsNew (__CURRENT__) total elapsed :00:00:52.0290000
+2017-01-25 16:16:41.1270|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 16:16:41.1350|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 16:16:41.1350|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 16:16:41.1350|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 16:16:41.1350|DEBUG|UMPG.USL.API.Business.Licenses.LicenseProductManager|-------------------------------------
+2017-01-25 16:57:19.1870|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, January 25, 2017 ||  At: 4:57:19 PM 
+
+System.ArgumentException: An item with the same key has already been added.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.createMethodsCacheKey() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 652
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.ClearCache() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 77
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 26
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.GetCatalogNumber(Int32 productConfigId)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.GetCatalogNumber(Int32 productConfigId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 46
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36
+Origin: http://spa.local
+Token: b9c7c331-d872-40cc-b672-ad527317e394
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/55241, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/55241 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-01-25 16:57:19.5180|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, January 25, 2017 ||  At: 4:57:19 PM 
+
+System.ArgumentException: An item with the same key has already been added.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.createMethodsCacheKey() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 649
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.ClearCache() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 77
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 26
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.GetCatalogNumber(Int32 productConfigId)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.GetCatalogNumber(Int32 productConfigId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 46
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36
+Origin: http://spa.local
+Token: b9c7c331-d872-40cc-b672-ad527317e394
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/408, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/408 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+
+2017-01-25 17:08:13.2170|DEBUG|UMPG.USL.API.Logging.NLogExceptionLogger| 
+-------------------------------------------
+
+______New Exception______
+Occurred On: Wednesday, January 25, 2017 ||  At: 5:08:13 PM 
+
+System.ArgumentException: An item with the same key has already been added.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.createMethodsCacheKey() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 651
+   at UMPG.USL.API.Business.Licenses.LicenseProductSolrManager.ClearCache() in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseProductSolrManager.cs:line 77
+   at UMPG.USL.API.Business.Licenses.LicenseUpdateIntercepror.Intercept(IInvocation invocation) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Business\Licenses\LicenseUpdateInterceptor.cs:line 26
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Castle.Proxies.ILicenseProductManagerProxy.GetCatalogNumber(Int32 productConfigId)
+   at UMPG.USL.API.Controllers.LicenseCTRL.LicenseProductController.GetCatalogNumber(Int32 productConfigId) in C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API\Controllers\LicenseCTRL\LicenseProductController.cs:line 46
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+
+ 
+Headers:  
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US, en; q=0.8
+Host: spa.service
+Referer: http://spa.local/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36
+Origin: http://spa.local
+Token: b9c7c331-d872-40cc-b672-ad527317e394
+
+ 
+ 
+Properties on request Object:  
+Key: MS_OwinContext -- Value: Microsoft.Owin.OwinContext
+Key: MS_RequestContext -- Value: System.Web.Http.Owin.OwinHttpRequestContext
+Key: MS_SynchronizationContext -- Value: System.Web.AspNetSynchronizationContext
+Key: MS_HttpConfiguration -- Value: System.Web.Http.HttpConfiguration
+Key: MS_CorsRequestContextKey -- Value: Origin: http://spa.local, HttpMethod: GET, IsPreflight: False, Host: spa.service, AccessControlRequestMethod: null, RequestUri: http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/52091, AccessControlRequestHeaders: {}
+Key: MS_RoutingContext -- Value: System.Web.Http.Routing.RoutingContext
+Key: MS_HttpRouteData -- Value: System.Web.Http.Routing.RouteCollectionRoute+RouteCollectionRouteData
+Key: MS_DependencyScope -- Value: UMPG.USL.API.Installers.WindsorDependencyScope
+Key: MS_DisposableRequestResources -- Value: System.Collections.Generic.List`1[System.IDisposable]
+Key: MS_HttpActionDescriptor -- Value: System.Web.Http.Controllers.ReflectedHttpActionDescriptor
+Key: {8572540D-3BD9-46DA-B112-A1E6C9086003} -- Value: System.Web.Http.ValueProviders.Providers.QueryStringValueProvider
+Key: {C0E50671-A1D4-429E-93C9-2AA63779924F} -- Value: System.Web.Http.ValueProviders.Providers.RouteDataValueProvider
+
+ 
+Request Method:  
+GET http://spa.service/api/licenseProductCTRL/licenseproducts/GetCatalogNumber/52091 
+ 
+______End Exception______
+-------------------------------------------
+ 
+ 
+

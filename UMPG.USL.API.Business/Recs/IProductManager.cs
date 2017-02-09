@@ -12,10 +12,12 @@ namespace UMPG.USL.API.Business.Recs
 {
     public interface IProductManager
     {
+        List<RecsProductChanges> CheckLicenseBackDateProblems(int licenseId);
         PagedResponse<Product> PagedSearch(ProductRequest request);
         List<RecsProductChanges> GetTrackDifferences(List<LicenseProduct> recsLicenseProducts, int licenseId);
         ProductHeader GetProductHeader(int productId);
         List<WorksRecording> GetProductRecsRecordings(int productId);
+        ProductHeader GetProductHeaderFull(int productId, int licenseProductId);
         List<WorksWriter> GetWorksWriters(string worksCode);
         //ProductHeader AddProductConfiguration(UpdateProductRequest updateProductRequest);
         AddProductResult AddProduct(AddProductRequest updateProductRequest);

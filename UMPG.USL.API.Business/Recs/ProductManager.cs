@@ -28,10 +28,10 @@ namespace UMPG.USL.API.Business.Recs
         private readonly ILicensePRWriterRepository _licensePrWriterRepository;
         private readonly ISnapshotWorkTrackRepository _snapshotWorkTrackRepository;
         private readonly ISnapshotLicenseProductManager _snapshotLicenseProductManager;
-        
+        private readonly ILicenseProductConfigurationManager _licenseProductConfigurationManager;
 
         public ProductManager(ISearchProvider recSearchProvider, IRecsDataProvider recsProvider,
-        
+         ILicenseProductConfigurationManager licenseProductConfigurationManager,
             ILicensePRWriterRepository licensePrWriterRepository,
             ISnapshotLicenseProductManager snapshotLicenseProductManager,
              IRecCongruencyCheckService recsProductChangeLogService,
@@ -41,7 +41,7 @@ namespace UMPG.USL.API.Business.Recs
              ISnapshotWorkTrackRepository snapshotWorkTrackRepository
         )
         {
-            
+            _licenseProductConfigurationManager = licenseProductConfigurationManager;
             _snapshotLicenseProductManager = snapshotLicenseProductManager;
             _snapshotWorkTrackRepository = snapshotWorkTrackRepository;
             _licensePrWriterRepository = licensePrWriterRepository;
@@ -76,10 +76,34 @@ namespace UMPG.USL.API.Business.Recs
         public ProductHeader GetProductHeader(int productId)
         {
             var product = _recsProvider.RetrieveProductHeader(productId);
+
+         
+
             product.RelatedLicensesNo =
                 _licenseProductRepository.GetLicensesNo(productId);
             return product;
         }
+
+        public ProductHeader GetProductHeaderFull(int productId, int licenseId)
+        {
+            var product = _recsProvider.RetrieveProductHeader(productId);
+
+            var licenseProductId = _licenseProductManager.GetLicenseProductNumber(licenseId, productId);
+
+            //try to retrieve licenseProductConfigs
+            foreach (var config in product.Configurations)
+            {
+                
+                    var Result =_licenseProductConfigurationManager.GetLicenseProductConfigurationByProductConfigurationId(licenseProductId, (int)config.configuration_id);
+                config.LicenseProductConfiguration = Result;
+            }
+
+
+            product.RelatedLicensesNo =
+                _licenseProductRepository.GetLicensesNo(productId);
+            return product;
+        }
+
 
         public bool UpdateProductPriority(UpdatePriorityRequest request, string safeIdHeader)
         {
@@ -558,6 +582,36 @@ namespace UMPG.USL.API.Business.Recs
             return newRecsLicenseProduct;
         }
 
+
+        public List<RecsProductChanges> CheckLicenseBackDateProblems(int licenseId)
+        {
+            var recsLicenseProducts = _licenseProductManager.GetProductsNew(licenseId);
+            //          recsLicenseProducts = TestWorksModifiedData(recsLicenseProducts);
+            //MechsLicenseProducts === From Recs, displayted on licenseDetails and ProductDetail page
+            var exists = _snapshotLicenseManager.DoesSnapshotExistAndComplete(licenseId);
+            if (!exists)
+            {
+                return GetTrackDifferences(recsLicenseProducts, licenseId);
+            }
+            //snapshot product === our snapshot
+            var snapshotLicense = _snapshotLicenseManager.GetSnapshotLicenseBySnapshotLicenseId(licenseId);
+
+            // var mechsProductIds = mechsLicenseProducts.Select(x => x.ProductId).ToList();
+            // var recsLicenseProducts = new List<RecsLicenseProduct>();
+            //
+            // //Get RecsLicenseProduct for each productId
+            // foreach (var productId in mechsProductIds)
+            // {
+            //     var result = BuildRecsLicenseProduct(productId);
+            //     recsLicenseProducts.Add(result);
+            // }
+
+            //do logic on recdsLicenseProducts againse mehcs
+            var recsDifferences = _recsProductChangeLogService.CheckSnapshotAgainstRecs(recsLicenseProducts, snapshotLicense.LicenseProducts);
+            recsDifferences.AddRange(GetTrackDifferences(recsLicenseProducts, licenseId));  //Turned off, adds track check to E,A or I licenses
+            return recsDifferences;
+        }
+
         //this compares the MechsLicenseData with the RecsLicenseProductData.  If there are inconsistencies, log them, then return them.
         public List<RecsProductChanges> FindOutOfSyncRecItems(List<LicenseProduct> recsLicenseProducts, int licenseId)
         {
@@ -679,6 +733,13 @@ namespace UMPG.USL.API.Business.Recs
 
         public List<RecsProductChanges> GetTrackDifferences(List<LicenseProduct> recsLicenseProducts, int licenseId)
         {
+            //if null
+            if ( recsLicenseProducts == null)
+            {
+                return new List<RecsProductChanges>();
+            }
+
+
             var listOfChanges = new List<RecsProductChanges>();
             IList<ProductTracks> listOfRecsProductTracks = new List<ProductTracks>();
             //Get all tracks from licenseProducts.

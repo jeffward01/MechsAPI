@@ -14,10 +14,14 @@ namespace UMPG.USL.API.Business.Licenses
     public interface ILicenseProductManager
     {
         List<LicenseProduct> GetProducts(int licenseId);
+
+        LicenseProductRecordingWriter GetLicenseProductRecordingWriter(int licenseRecordingId, int caeNumber,
+            string ipCode);
         string GetCatalogNumber(int productConfigId);
         LicenseProduct GetLicenseProductForLicenseProductId(int id);
 
         List<LicenseProduct> GetProductsNew(int licenseId);
+        int GetLicenseProductNumber(int licenseId, int productId);
 
         LicenseProductOverview2 BuildLicenseProductOverview2(long licenseProductId);
 

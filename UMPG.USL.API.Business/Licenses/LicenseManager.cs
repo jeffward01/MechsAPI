@@ -203,7 +203,12 @@ namespace UMPG.USL.API.Business.Licenses
                 newLicense.LicenseeLabelGroupId = license.LicenseeLabelGroup.LicenseeLabelGroupId;
             };
 
+
+            
             var returnLicense = _licenseRepository.Add(newLicense);
+            newLicense.LicenseId = returnLicense.LicenseId;
+            
+            _dataHarmonizationManager.TakeLicenseSnapshotLite(newLicense, true);
             return _licenseRepository.Get(returnLicense.LicenseId);
         }
 
@@ -331,6 +336,8 @@ namespace UMPG.USL.API.Business.Licenses
             };
 
             _licenseRepository.UpdateLicense(localLicense);
+            //Take snapshot
+            _dataHarmonizationManager.TakeLicenseSnapshotLite(localLicense, true);
             return localLicense;
         }
 

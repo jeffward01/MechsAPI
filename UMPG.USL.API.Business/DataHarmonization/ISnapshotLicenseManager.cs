@@ -11,8 +11,12 @@ namespace UMPG.USL.API.Business.DataHarmonization
         bool DoesSnapshotExists(int licenseId);
 
         bool DoesSnapshotExistAndComplete(int licenseId);
+        void DeleteLicenseProductAndChildEntities(Snapshot_License license, int productId);
 
         bool DeleteLicenseSnapshotAndAllChildren(int licenseId);
+
+        void DeleteRecsConfigAndChildrenForProductHeader(Snapshot_ProductHeader productHeader,
+            int cloneRecsConfigurationId);
 
         //bool DeleteLicenseSnapshot(int licenseId);
     }

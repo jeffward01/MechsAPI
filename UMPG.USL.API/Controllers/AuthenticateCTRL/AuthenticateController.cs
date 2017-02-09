@@ -35,6 +35,14 @@ namespace UMPG.USL.API.Controllers.AuthenticateCTRL
             _tokenServices = tokenServices;
         }
 
+
+        [Route("GetUser")]
+        [HttpPost]
+        public IHttpActionResult GetUser(string safeId)
+        {
+            return Ok(_authenticator.AuthenticateSafeId(safeId));
+        }
+
         [Route("Login")]
         [HttpPost]
         public HttpResponseMessage Login(UserCredentials userCredentials)

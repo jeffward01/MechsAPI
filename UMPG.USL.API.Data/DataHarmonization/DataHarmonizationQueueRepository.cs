@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UMPG.USL.Models.DataHarmonization;
 
 namespace UMPG.USL.API.Data.DataHarmonization
@@ -15,6 +12,16 @@ namespace UMPG.USL.API.Data.DataHarmonization
             using (var context = new AuthContext())
             {
                 return context.DataHarmonizationQueues.Count(_ => _.DataProcessorStatusId == 1);
+            }
+        }
+
+        public void Delete(DataHarmonizationQueue indexQueueItem)
+        {
+            using (var context = new AuthContext())
+            {
+                context.DataHarmonizationQueues.Attach(indexQueueItem);
+                context.DataHarmonizationQueues.Remove(indexQueueItem);
+                context.SaveChanges();
             }
         }
 
@@ -60,6 +67,37 @@ namespace UMPG.USL.API.Data.DataHarmonization
             }
         }
 
+        public IList<DataHarmonizationQueue> GetAllInProcessItems()
+        {
+            using (var context = new AuthContext())
+            {
+                return context.DataHarmonizationQueues.Where(_ => _.DataProcessorStatusId == 2).ToList();
+            }
+        }
+
+        public DataHarmonizationQueue GetDhItemById(int id)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.DataHarmonizationQueues.FirstOrDefault(_ => _.DataHarmonizationQueueId == id);
+            }
+        }
+
+        public IList<DataHarmonizationQueue> GetAllFailedItems()
+        {
+            using (var context = new AuthContext())
+            {
+                return context.DataHarmonizationQueues.Where(_ => _.DataProcessorStatusId == 4).ToList();
+            }
+        }
+
+        public IList<DataHarmonizationQueue> GetAllUnProcessItems()
+        {
+            using (var context = new AuthContext())
+            {
+                return context.DataHarmonizationQueues.Where(_ => _.DataProcessorStatusId == 2|| _.DataProcessorStatusId == 1).ToList();
+            }
+        }
         public DataHarmonizationQueue CreateDataHarmonizationRequest(DataHarmonizationQueue dataHarmonizationQueueItem)
         {
             using (var context = new AuthContext())

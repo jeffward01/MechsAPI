@@ -38,7 +38,8 @@ namespace UMPG.USL.API.Data
         {
             using (var context = new AuthContext())
             {
-                return context.SolrIndexQueues.Count(_ => _.SolrQueueStatus == 4);
+                var count = context.SolrIndexQueues.Count(_ => _.SolrQueueStatus == 4);
+                return count;
             }
         }
 
@@ -49,12 +50,15 @@ namespace UMPG.USL.API.Data
                 return context.GenerateLicenseQueue.Count(_ => _.GenerateLicenseStatusId == 4);
             }
         }
+
+       
         //Get unprocessed item count for SolrProcessor
         public int GetUnProcessedSolrProcessorCount()
         {
             using (var context = new AuthContext())
             {
-                return context.SolrIndexQueues.Count(_ => _.SolrQueueStatus == 1 || _.SolrQueueStatus == 2);
+                var count = context.SolrIndexQueues.Count(_ => _.SolrQueueStatus == 1 || _.SolrQueueStatus == 2);
+                return count;
             }
         }
 

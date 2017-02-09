@@ -1,12 +1,9 @@
-﻿using NLog;
-using System;
+﻿using System;
+using NLog;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using UMPG.USL.API.Business.Licenses;
+using UMPG.USL.API.Data.LicenseData;
 using UMPG.USL.Models.DataHarmonization;
 using UMPG.USL.Models.LicenseModel;
-using UMPG.USL.Models.Recs;
 using License = UMPG.USL.Models.LicenseModel.License;
 
 namespace UMPG.USL.API.Business.DataHarmonization
@@ -14,11 +11,22 @@ namespace UMPG.USL.API.Business.DataHarmonization
     public class DataHarmonizationManager : IDataHarmonizationManager
     {
         private readonly ISnapshotManager _snapshotManager;
-
+        private readonly ISnapshotLicenseManager _snapshotLicenseManager;
+        private readonly ILicenseProductRecordingRepository _licenseProductRecordingRepository;
+        private readonly ILicensePRWriterRepository _licensePrWriterRepository;
+        private readonly ILicensePRWriterRateRepository _licensePrWriterRateRepository;
+        private readonly ILicensePRWriterNoteRepository _licensePrWriterNoteRepository;
+        private readonly ILicenseProductConfigurationRepository _licenseProductConfigurationRepository;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public DataHarmonizationManager(ISnapshotManager snapshotManager)
+        public DataHarmonizationManager(ISnapshotManager snapshotManager, ILicenseProductRecordingRepository licenseProductRecordingRepository, ILicensePRWriterRepository licensePrWriterRepository, ILicensePRWriterRateRepository licensePrWriterRateRepository, ILicensePRWriterNoteRepository licensePrWriterNoteRepository, ISnapshotLicenseManager snapshotLicenseManager, ILicenseProductConfigurationRepository licenseProductConfigurationRepository)
         {
+            _licenseProductConfigurationRepository = licenseProductConfigurationRepository;
+            _snapshotLicenseManager = snapshotLicenseManager;
+            _licensePrWriterNoteRepository = licensePrWriterNoteRepository;
+            _licensePrWriterRateRepository = licensePrWriterRateRepository;
+            _licensePrWriterRepository = licensePrWriterRepository;
+            _licenseProductRecordingRepository = licenseProductRecordingRepository;
             _snapshotManager = snapshotManager;
         }
 
@@ -26,6 +34,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
         {
             return _snapshotManager.DoesLicenseSnapshotExist(licenseId);
         }
+
         public bool DoesSnapshotExistAndComplete(int licenseId)
         {
             return _snapshotManager.DoesLicenseSnapshotExistAndComplete(licenseId);
@@ -38,7 +47,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             if (result)
             {
                 //check if snapshot is not complete
-                var complete =_snapshotManager.DoesLicenseSnapshotExistAndComplete(licenseId);
+                var complete = _snapshotManager.DoesLicenseSnapshotExistAndComplete(licenseId);
                 if (!complete)
                 {
                     return true;
@@ -47,9 +56,90 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return false;
         }
 
+        public Snapshot_ProductHeader GetSnapshotProductHeaderForLicenseId(int licenseId)
+        {
+            return _snapshotManager.GetSnapshotProductHeaderByLicenseId(licenseId);
+        }
+
+        public bool RemoveLicenseProductFromSnapshot(int licenseId, int productId)
+        {
+            // get LicenseSnapshot
+            var licenseSnapshot = GetLicenseSnapshotFull(licenseId);
+
+            //Delete licenseProduct and chuldren
+            //try
+           // {
+                _snapshotLicenseManager.DeleteLicenseProductAndChildEntities(licenseSnapshot, productId);
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //    return false;
+            //}
+            return true;
+        }
+
+
+
+
         public Snapshot_License GetLicenseSnapshot(int licenseId)
         {
             return _snapshotManager.GeLicenseSnapshotByLicenseId(licenseId);
+        }
+
+        public Snapshot_License GetLicenseSnapshotFull(int licenseId)
+        {
+            return _snapshotManager.GetLicenseSnapshotFull(licenseId);
+        }
+
+        /*
+
+                foreach (var writer in license.LicenseProductRecordingWriters)
+                {
+                    List<int> writerIds = new List<int>();
+                    writerIds.Add(writer.LicenseWriterId);
+                    writer.RateList = _licensePRWriterRateRepository.GetLicenseRecordingWriterRatesFromIds(writerIds, licenseProductConfiguration.Select(x => (int)x.product_configuration_id).ToList());
+
+                    //Populate RateList with UPC codes & Populate  License Name/Id/Number
+
+                    var writerCaeCode = writer.CAECode;
+                    foreach (var rate in writer.RateList)
+                    {
+                        foreach (var config in license.LicenseProductConfigurations)
+                        {
+                            if (config.product_configuration_id == rate.product_configuration_id)
+                            {
+                                rate.CaeCode = writerCaeCode;
+                                rate.LicenseId = license.LicenseId;
+                                rate.LicenseNumber = license.LicenseNumber;
+                                rate.LicenseTitle = license.LicenseName;
+                                rate.upc = config.upc_code;
+                                //This call is slow and we can fill it in JavaScript much faster.
+                                //if (rate.RateTypeId != null)
+                                //{
+                                //    rate.RateType = _rateTypeRepository.Get((int)rate.RateTypeId);
+                                //}
+                                //if (rate.writersConsentTypeId != null)
+                                //{
+                                //    rate.WritersConsentType = _writersConsentTypeRepository.Get((int)rate.writersConsentTypeId);
+                                //}
+                            }
+                        }
+                    }
+
+                    // add notes here as well
+                    writer.WriterNotes = _licensePRWriterNoteRepository.GetLicenseProductRecordingWriterNotes(writerIds);
+                }
+         */
+
+        public bool TakeLicenseSnapshotLite(License licenseToBeSnapshotted, bool snapshotComplete)
+        {
+            return _snapshotManager.TakeLicenseSnapshotLite(licenseToBeSnapshotted, snapshotComplete);
+        }
+
+        public Snapshot_LicenseProduct TakeLicenseProductSnapshotLite(LicenseProduct licenseProductToBeSnapshotted)
+        {
+            return _snapshotManager.TakeLicenseProductSnapshotLite(licenseProductToBeSnapshotted);
         }
 
         public bool TakeLicenseSnapshot(License licenseToBeSnapshotted, List<LicenseProduct> licenseProducts)
@@ -57,11 +147,13 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return _snapshotManager.TakeLicenseSnapshot(licenseToBeSnapshotted, licenseProducts);
         }
 
-
         public bool DeleteLicenseSnapshot(int licenseSnapshotId)
         {
             return _snapshotManager.DeleteLicenseSnapshot(licenseSnapshotId);
         }
+
+       
+        #region oldCastToSnapshotCode
 
         /*
         private Snapshot_LicenseProduct CastToLicenseProductSnapshot(LicenseProduct licenseProduct)
@@ -80,7 +172,7 @@ namespace UMPG.USL.API.Business.DataHarmonization
             snapshot.title = licenseProduct.title;
             snapshot.PaidQuarter = licenseProduct.PaidQuarter;
             snapshot.RelatedLicensesNo = licenseProduct.RelatedLicensesNo;
-            
+
           //  if (licenseProduct.ProductConfigurations != null)
           //  {
           //      snapshot.ProductConfigurations = CastToRecsConfigurationsSnapshot(licenseProduct.ProductConfigurations,
@@ -234,11 +326,8 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.Capacity = writer.Capacity;
                 snapshot.MechanicalCollectablePercentage = writer.MechanicalCollectablePercentage.ToString();
                 snapshot.MechanicalOwnershipPercentage = writer.MechanicalOwnershipPercentage.ToString();
-          
+
                 snapshotList.Add(snapshot);
-
-
-
             }
             return snapshotList;
         }
@@ -271,7 +360,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.StartDate = affiliation.StartDate;
                 snapshot.SocietyAcronym = affiliation.SocietyAcronym;
                 snapshot.CloneWriterCaeNumber = caeNumber;
-                
 
                 snapshotList.Add(snapshot);
             }
@@ -321,7 +409,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                         CastSnapshotComposerOriginalPublisherAdministrators(originalPublisher.Administrator, caeNumber);
                 }
 
-
                 snapshotList.Add(snapshot);
             }
             return snapshotList;
@@ -369,12 +456,9 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.Affiliations = CastToComposerOriginalPublisherAdminAffiliationBase(affiliation.Affiliations,
                     caeNumber);
 
-
-
                 snapshotList.Add(snapshot);
             }
             return snapshotList;
-
         }
 
         private List<Snapshot_ComposerOriginalPublisherAdminAffiliationBase>
@@ -438,7 +522,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.Affiliations = CastTiSnapshotComposerOriginalPublisherAffiliationBases(
                     affiliation.Affiliations, caeNumber);
 
-
                 snapshotList.Add(snapshot);
             }
             return snapshotList;
@@ -466,7 +549,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
             var snapshotList = new List<Snapshot_Sample>();
             foreach (var sample in samples)
             {
-                
                 var snapshot = new Snapshot_Sample();
                 snapshot.CloneWorksTrackId = workTrackId;
                 snapshot.WorkCode = sample.WorkCode;
@@ -478,10 +560,10 @@ namespace UMPG.USL.API.Business.DataHarmonization
                 snapshot.MechanicalOwnershipPercentage = (int) sample.MechanicalOwnershipPercentage;
                 snapshot.LocalClients = CastToLocalClientSnapshot(sample.LocalClients, workTrackId);
                 snapshot.AquisitionLocationCodes = CastToAquisitionLocationCodes(sample.AquisitionLocationCode,workTrackId);
-                    
+
                 snapshotList.Add(snapshot);
             }
-            
+
             return snapshotList;
         }
 
@@ -513,7 +595,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
             }
             return snapshotList;
         }
-
 
         private List<Snapshot_WorksWriter> CastToSnapshotWorksWriter(List<WorksWriter> writers, int workTrackId)
         {
@@ -863,7 +944,6 @@ namespace UMPG.USL.API.Business.DataHarmonization
             return snapshotList;
         }
 
- 
         private List<Snapshot_LocalClientCopyright> CastToSnapshotLocalClientCopyrights(List<LocalClientCopyright> localClientCopyrights, int workTrackId)
         {
             var snapshotList = new List<Snapshot_LocalClientCopyright>();
@@ -995,8 +1075,9 @@ namespace UMPG.USL.API.Business.DataHarmonization
         }
 
     */
+
+        #endregion oldCastToSnapshotCode
     }
 }
-
 
 //db save changes, primary key http://stackoverflow.com/questions/17523568/entity-framework-retrieve-id-before-savechanges-inside-a-transaction

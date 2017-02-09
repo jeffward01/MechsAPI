@@ -76,7 +76,7 @@ namespace UMPG.USL.API.Data.LicenseData
             using (var context = new AuthContext())
             {
                 var licensePRwriterrate = context.LicenseProductRecordingWriters
-                    .FirstOrDefault(c => c.LicenseRecordingId == recordingId && c.CAECode == caeNumber && c.IpCode == ipCode);
+                    .FirstOrDefault(c => c.LicenseRecordingId == recordingId && c.CAECode == caeNumber);
                 return licensePRwriterrate;
             }
         }

@@ -22,5 +22,8 @@ namespace UMPG.USL.API.Business.Licenses
         void AddLicenseRecordingForProduct(int productId, DateTime createdDate, int createdBy, int licenseProductId);
 
         bool UpdateAllLicensesConfiguration(int startLicenseIdIndex, int endLicenseIdIndex);
+
+        LicenseProductConfiguration GetLicenseProductConfigurationByProductConfigurationId(int licensePRoductId,
+            int productConfigId);
     }
 }

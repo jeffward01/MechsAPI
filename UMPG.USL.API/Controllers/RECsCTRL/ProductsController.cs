@@ -55,6 +55,14 @@ namespace UMPG.USL.API.Controllers.RECsCTRL
             return _productManager.GetProductHeader(productId);
         }
 
+        [Route("GetProductHeaderFull/{licenseProductId}/{productId}")]
+        [HttpGet]
+        public ProductHeader GetProductHeaderFull(int licenseProductId, int productId)
+        {
+            
+            return _productManager.GetProductHeaderFull(productId, licenseProductId);
+        }
+
 
         [Route("UpdateProductPriority")]
         [HttpPost]

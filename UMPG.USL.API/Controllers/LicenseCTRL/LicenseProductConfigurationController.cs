@@ -54,8 +54,6 @@ namespace UMPG.USL.API.Controllers.LicenseCTRL
         [HttpPost]
         public List<UpdateLicenseProductConfigurationResult> AddLicenseProductConfiguration(List<UpdateLicenseProductConfigurationRequest> requests)
         {
-         
-           
             return _licenseProductConfigurationManager.UpdateLicenseProductConfiguration(requests);
         }
         [Route("UpdateAllLicensesConfiguration/{startIndex}/{endIndex}")]

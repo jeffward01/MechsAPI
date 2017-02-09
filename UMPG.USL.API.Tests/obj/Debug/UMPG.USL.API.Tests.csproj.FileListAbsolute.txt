@@ -20,8 +20,8 @@ C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\Microsoft
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\Castle.Windsor.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\NLog.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\Castle.Core.dll
-C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\Newtonsoft.Json.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\EntityFramework.dll
+C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\Newtonsoft.Json.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\System.Net.Http.Formatting.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\Owin.dll
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\Castle.Facilities.Logging.dll
@@ -52,8 +52,8 @@ C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\Microsoft
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\Castle.Windsor.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\NLog.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\Castle.Core.xml
-C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\Newtonsoft.Json.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\EntityFramework.xml
+C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\Newtonsoft.Json.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\System.Net.Http.Formatting.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\Castle.Facilities.Logging.xml
 C:\Dev\projects\USL\svn\trunks\Source\API\UMPG.USL.API.Tests\bin\Debug\System.Web.Http.Owin.xml

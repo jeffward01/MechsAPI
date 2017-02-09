@@ -19,9 +19,10 @@ namespace UMPG.USL.API.Controllers
         private readonly ITraceWriter _tracer;
         private readonly IDataHarmonizationManager _dataHarmonizationManager;
         private readonly IProductManager _productManager;
-
-        public DataHarmonizationController(IDataHarmonizationManager dataHarmonizationManager, IProductManager productManager)
+        private readonly ISnapshotManager _snapshotManager;
+        public DataHarmonizationController(IDataHarmonizationManager dataHarmonizationManager, IProductManager productManager, ISnapshotManager snapshotManager)
         {
+            _snapshotManager = snapshotManager;
             _productManager = productManager;
             _dataHarmonizationManager = dataHarmonizationManager;
             _tracer = GlobalConfiguration.Configuration.Services.GetTraceWriter();
@@ -36,6 +37,19 @@ namespace UMPG.USL.API.Controllers
             if (exists)
             {
                 return Ok(_dataHarmonizationManager.GetLicenseSnapshot(licenseId));
+
+            }
+            return NotFound();
+        }
+
+        [HttpGet]
+        [Route("GetLicenseSnapshotFull/{licenseId}")]
+        public IHttpActionResult GetLicenseSnapshotFull(int licenseId)
+        {
+            var exists = _dataHarmonizationManager.DoesSnapshotExist(licenseId);
+            if (exists)
+            {
+                return Ok(_dataHarmonizationManager.GetLicenseSnapshotFull(licenseId));
 
             }
             return NotFound();
@@ -68,6 +82,27 @@ namespace UMPG.USL.API.Controllers
         public IList<RecsProductChanges> FindOutOfSyncRecItems(List<LicenseProduct> products, int licenseId)
         {
             return _productManager.FindOutOfSyncRecItems(products, licenseId);
+        }
+
+
+        [Route("CheckLicenseBackDateProblems/{licenseId}")]
+        [HttpGet]
+        public IList<RecsProductChanges> CheckLicenseBackDateProblems(int licenseId)
+        {
+            return _productManager.CheckLicenseBackDateProblems(licenseId);
+        }
+
+        [Route("DeleteLicenseProductFromLicenseSnapshot/{licenseId}/{productId}")]
+        [HttpPost]
+        public IHttpActionResult DeleteLicenseProductFromLicenseSnapshot(int licenseId, int productId)
+        {
+            return Ok(_dataHarmonizationManager.RemoveLicenseProductFromSnapshot(licenseId, productId));
+        }
+        [Route("GetSnapshotProductHeader/{licenseId}")]
+        [HttpGet]
+        public IHttpActionResult GetSnapshotProductHeader(int licenseId)
+        {
+            return Ok(_dataHarmonizationManager.GetSnapshotProductHeaderForLicenseId(licenseId));
         }
     }
 }

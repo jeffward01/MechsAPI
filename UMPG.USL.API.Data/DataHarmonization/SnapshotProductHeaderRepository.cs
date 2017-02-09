@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using UMPG.USL.Models.DataHarmonization;
 
@@ -20,10 +21,45 @@ namespace UMPG.USL.API.Data.DataHarmonization
         {
             using (var context = new AuthContext())
             {
-                return context.Snapshot_ProductHeaders.Find(snapshotProductHeaderId);
+                return context.Snapshot_ProductHeaders.
+                           Include("Configurations")
+                    .Include("Configurations.Configuration")
+                       .Include("Artist")
+                    .Include("Label").
+
+                    FirstOrDefault(_ => _.SnapshotProductHeaderId == snapshotProductHeaderId);
             }
         }
 
+        public Snapshot_ProductHeader GetSnapshotProductHeaderByLicenseId(int licenseId)
+        {
+            using (var context = new AuthContext())
+            {
+                var licenseProduct =  context.Snapshot_LicenseProducts.FirstOrDefault(_ => _.LicenseId == licenseId && _.Deleted == null);
+                var result =
+                    context.Snapshot_ProductHeaders
+                    .Include("Configurations")
+                //    .Include("Configurations.Configuration")
+                    //.Include("Configurations.LicenseProductConfiguration")
+                    .Include("Artist")
+                    .Include("Label").
+                    FirstOrDefault(
+                        _ => _.SnapshotProductHeaderId == licenseProduct.SnapshotProductHeaderId);
+
+
+                return result;
+            }
+        }
+
+
+        public void UpdateSnapshotProductHeader(Snapshot_ProductHeader snapshotProductHeader)
+        {
+            using (var context = new AuthContext())
+            {
+                context.Entry(snapshotProductHeader).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
         public Snapshot_ProductHeader GetProductHeaderByProductHeaderId(int productHeaderId)
         {
             using (var context = new AuthContext())
@@ -47,6 +83,17 @@ namespace UMPG.USL.API.Data.DataHarmonization
                 var licenseProduct = context.Snapshot_LicenseProducts.Find(snapshotLicenseProductId);
                 return licenseProduct.SnapshotLicenseProductId;
             }
+        }
+
+        public Snapshot_ProductHeader GetProductHeaderLite(int productHeaderSnapshotId)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.Snapshot_ProductHeaders.
+                    Include("Configurations").
+                    FirstOrDefault(_ => _.SnapshotProductHeaderId == productHeaderSnapshotId);
+            }
+
         }
 
         public bool DeleteProductHeaderSnapshotBySnapshotId(int snapshotProductHeaderId)

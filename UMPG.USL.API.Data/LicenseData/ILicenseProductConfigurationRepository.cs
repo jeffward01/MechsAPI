@@ -22,6 +22,9 @@ namespace UMPG.USL.API.Data.LicenseData
 
         void Update(LicenseProductConfiguration licenseProductConfiguration);
 
+        LicenseProductConfiguration GetLicenseProductConfigurationBLicenseProductConfigurationId(
+            int product_configuration_id);
+
         LicenseProductConfiguration GetLicenseProductConfiguration(int licenseproductId, int product_configuration_id);
 
         List<LicenseProductConfiguration> GetLicenseConfigurationList(List<int> licenseProductIds);

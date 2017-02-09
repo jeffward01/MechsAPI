@@ -30,7 +30,36 @@ namespace UMPG.USL.API.Data.LicenseData
             }
         }
 
+        public IList<SolrIndexQueueItem> GetAllInProcessIndexQueueItems()
+        {
+            using (var context = new AuthContext())
+            {
+                return context.SolrIndexQueues.Where(i => i.SolrQueueStatus == (int) SolrIndexQueueState.InProcess).ToList();
+            }
+        }
 
+        public SolrIndexQueueItem GetSolrIndexQueueItemById(int id)
+        {
+            using (var context = new AuthContext())
+            {
+                return context.SolrIndexQueues.FirstOrDefault(i => i.SolrIndexQueueId == id);
+            }
+        }
+        
+        public IList<SolrIndexQueueItem> GetAllUnProcessIndexQueueItems()
+        {
+            using (var context = new AuthContext())
+            {
+                return context.SolrIndexQueues.Where(i => i.SolrQueueStatus == (int)SolrIndexQueueState.InProcess || i.SolrQueueStatus == (int)SolrIndexQueueState.Pending).ToList();
+            }
+        }
+        public IList<SolrIndexQueueItem> GetAllFailed()
+        {
+            using (var context = new AuthContext())
+            {
+                return context.SolrIndexQueues.Where(i => i.SolrQueueStatus == (int)SolrIndexQueueState.Failed).ToList();
+            }
+        }
         public void Delete(SolrIndexQueueItem indexQueueItem)
         {
             using (var context = new AuthContext())
